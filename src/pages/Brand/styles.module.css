@@ -1,0 +1,42 @@
+.pageBrand {
+  padding: 0px 140px;
+  margin-bottom: 30px;
+}
+.loginBrand {
+  display: flex;
+  margin-top: 20px;
+}
+.loginBrand div {
+  font-family: 'Be Vietnam Pro';
+  color: rgba(61, 61, 61);
+}
+.title > div:last-child {
+  font-weight: 600;
+  font-size: 1.75rem;
+  font-family: 'Oswald';
+  margin: 30px 0px 15px 0px;
+}
+/*muốn mỗi hàng có 5 thằng con thì css như sau: */
+.brandParent {
+  flex-wrap: wrap; /*các thằng con sẽ xuống dòng khi nó vượt quá chiều dài thằng mẹ */
+  display: flex;
+  justify-content: space-between;
+}
+.brandItem {
+  width: 19%;
+  margin-bottom: 15px;
+  cursor: pointer;
+  box-shadow: 0px 0px 2px gray; /* Tự tìm hiểu */
+}
+.brandItem:hover {
+  border: 1px solid rgb(60, 60, 237);
+}
+.brandItem img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.brandItem > div {
+  text-align: center;
+  font-size: 18px;
+}

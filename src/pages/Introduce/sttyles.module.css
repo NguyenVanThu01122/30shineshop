@@ -1,0 +1,118 @@
+.introduce {
+  display: flex;
+  padding: 10px 0px;
+  margin: 20px 0px 20px 100px;
+}
+.introduce > div:first-child {
+  margin-right: 10px;
+}
+.imgWax img {
+  width: 100%;
+}
+.itroduce30shine {
+  padding: 0px 150px;
+}
+.blockHead {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 75px;
+  margin-bottom: 50px;
+}
+.blockHead div {
+  width: 69%;
+}
+.blockHead > div:first-child {
+  font-family: Oswald, sans-serif;
+  margin-bottom: 20px;
+  font-size: 30px;
+  font-weight: 600;
+}
+.blockHead > div:last-child {
+  font-family: Be Vietnam, sans-serif;
+  color: rgba(33, 31, 31, 0.932);
+}
+.blockTwo {
+  display: flex;
+  justify-content: space-between;
+}
+.blockTwo > div {
+  text-align: center;
+  width: 32%;
+}
+.productValue > div:nth-child(2) {
+  margin: 13px 0px;
+  font-family: Oswald, sans-serif;
+  font-size: 18px;
+  font-weight: 550;
+}
+.productValue > div:last-child {
+  font-family: Be Vietnam, sans-serif;
+  color: rgba(33, 31, 31, 0.932);
+}
+.myProduct img {
+  width: 100%;
+}
+.myProduct div {
+  width: 100%;
+}
+.myProduct {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.product > div:first-child {
+  font-family: Oswald, sans-serif;
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 550;
+}
+.product > div:last-child {
+  font-family: Be Vietnam, sans-serif;
+  color: rgba(33, 31, 31, 0.932);
+}
+.blockFour {
+  text-align: center !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center !important;
+  margin: 60px 0px;
+  padding: 0px 200px;
+}
+.blockFour > div:first-child {
+  font-family: Oswald, sans-serif;
+  margin-bottom: 15px;
+  font-size: 26px;
+  font-weight: 550;
+}
+.blockFour > div:last-child {
+  font-family: Be Vietnam, sans-serif;
+  color: rgba(33, 31, 31, 0.932);
+}
+.ourPolicy {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+.blockEnd > div:first-child {
+  margin-bottom: 25px;
+}
+.commitments {
+  background-color: rgba(16, 8, 8, 0.068);
+  border: 1px solid white;
+  padding: 15px;
+  width: 32%;
+}
+.commitments > div:nth-child(2) {
+  margin: 15px 0px;
+  font-family: Be Vietnam, sans-serif;
+  color: rgba(14, 13, 13, 0.932);
+  font-size: 18px;
+  font-weight: 550;
+}
+.commitments > div:last-child {
+  font-family: Oswald, sans-serif;
+  font-size: 14px;
+}

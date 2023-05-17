@@ -1,0 +1,169 @@
+
+.headerBlog {
+  display: flex;
+  padding: 15px 100px;
+  background-color: rgba(148, 142, 142, 0.226);
+}
+.headerBlog >div:last-child{
+  margin-left: 8px;
+}
+.sectionTwo {
+  display: flex;
+  padding: 30px 120px;
+}
+.productIntroduction {
+  cursor: pointer;
+  width: 70%;
+  padding-right: 30px;
+}
+.blog {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+.blog > div:first-child {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 18px;
+}
+.blog span {
+  font-weight: 600;
+  font-size: 17px;
+}
+.select {
+  outline: none;
+  padding: 15px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(172, 170, 170, 0.671);
+  margin-left: 10px;
+}
+.select option {
+  font-size: 15px;
+}
+.introduceWax {
+  display: flex;
+  justify-content: space-between;
+}
+.introduceWax img:first-child {
+  width: 40%;
+  margin-bottom: 50px;
+}
+.productDescription {
+  width: 58%;
+}
+.fontIcon {
+  width: 16px;
+}
+.productDescription > div:first-child {
+  font-weight: 600;
+  font-size: 19px;
+  font-family: Be Vietnam, sans-serif;
+  margin-top: 4px;
+}
+.productDescription > div:first-child:hover {
+  color: rgba(255, 204, 51);
+}
+.time {
+  margin: 10px 0px;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  --tw-text-opacity: 1;
+  color: rgba(61, 61, 61, var(--tw-text-opacity));
+}
+.productDescription > div:last-child {
+  font-size: 17px;
+  color: rgb(84, 83, 83);
+  margin-bottom: 30px;
+}
+.Categories {
+  width: 35%;
+}
+.serviceSelection {
+  border: 1px solid rgba(255, 204, 51);
+  margin-bottom: 40px;
+}
+.serviceSelection div {
+  padding: 15px;
+  cursor: pointer;
+  border: 1px solid rgb(228, 228, 228);
+}
+.serviceSelection > div:nth-child(5) {
+  color: rgba(255, 204, 51);
+}
+.selectDiv {
+  font-size: 17px;
+  --tw-text-opacity: 1;
+  color: rgba(61, 61, 61);
+}
+.selectDiv:hover {
+  color: rgba(255, 204, 51);
+}
+.service {
+  border: none !important;
+  font-size: 20px;
+  font-weight: 550;
+  --tw-bg-opacity: 1;
+  background-color: rgba(255, 204, 51, var(--tw-bg-opacity));
+}
+.posts > div:first-child {
+  font-size: 1.5rem;
+  font-size: 20px;
+  font-weight: 550;
+}
+.postsImagesWax {
+  width: 60%;
+  cursor: pointer;
+}
+.posts > div:nth-child(3) {
+  font-weight: 550;
+  font-size: 17px;
+  cursor: pointer;
+}
+.posts > div:nth-child(3):hover {
+  color: rgba(255, 204, 51);
+}
+.posts .time {
+  margin-bottom: 50px;
+}
+.productAnswer {
+  display: flex;
+  cursor: pointer;
+
+  justify-content: space-between;
+}
+.imgWax {
+  width: 27%;
+  margin-bottom: 50px;
+  cursor: pointer;
+}
+.useWax {
+  margin-top: 5px;
+  width: 65%;
+}
+.useWax span {
+  font-family: Be Vietnam, sans-serif;
+  --tw-text-opacity: 1;
+  color: rgba(61, 61, 61);
+}
+.useWax > div:first-child:hover {
+  color: rgba(255, 204, 51);
+}
+.sectionEnd{
+  display: flex;
+  justify-content: center;
+
+}
+.sectionEnd div{
+  padding: 10px 15px;
+  border: 1px solid #e8e8e8;
+  font-size: 20px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.sectionEnd div:hover{
+  background-color: rgba(255, 204, 51);
+}
+.sectionEnd >div:nth-child(3){
+  background-color: rgba(255, 204, 51);
+}

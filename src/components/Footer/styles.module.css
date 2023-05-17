@@ -1,0 +1,165 @@
+.pageFooter {
+  --tw-bg-opacity: 1;
+  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer {
+  display: flex;
+  justify-content: space-around;
+  padding: 50px 0px;
+  position: relative;
+  width: 83%;
+}
+.footer > div {
+  width: 30%;
+  color: white;
+}
+.information div:first-child {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+.information div {
+  margin-bottom: 12px;
+}
+.images {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.imgNotification {
+  width: 135px;
+  margin-right: 15px;
+}
+.imgDMCA {
+  width: 80px;
+  text-align: center;
+}
+.text {
+  margin-top: 25px;
+  margin-bottom: 6px;
+}
+.imgPay {
+  width: 65px;
+  margin-right: 15px;
+}
+.imgVisa {
+  width: 38px;
+  width: 65px;
+}
+.imgGoogle {
+  width: 120px;
+  margin-right: 15px;
+}
+.imgApstore {
+  width: 120px;
+  margin-right: 10px;
+}
+.support > di:first-child {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.support div {
+  margin-bottom: 12px;
+}
+.support div:hover {
+  color: rgba(250, 189, 5, 0.788);
+  cursor: pointer;
+}
+.support > div:first-child {
+  color: white;
+  cursor: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.feedback > div:first-child {
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.feedback > div:nth-child(2) {
+  margin: 12px 0px 30px 0px;
+}
+.order {
+  font-weight: 500;
+  font-size: 1.25rem;
+  color: rgba(250, 189, 5, 0.788);
+  margin-bottom: 10px;
+  margin-top: 30px;
+}
+.phoneNumber {
+  color: rgba(250, 189, 5, 0.922);
+  font-size: 1rem;
+  line-height: 1.5rem;
+  font-family: 500;
+  border: 1px solid rgba(250, 189, 5, 0.922);
+  border-radius: 5px;
+  padding: 12px 20px;
+}
+.selectionPackage {
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px 0px;
+  border-top: 1px solid rgba(105, 104, 104, 0.605);
+}
+.selectionPackage > div:first-child {
+  width: 33%;
+  --tw-text-opacity: 1;
+  color: rgba(95, 95, 95, var(--tw-text-opacity));
+}
+.selectionPackage div {
+  color: aliceblue;
+}
+.select {
+  display: flex;
+  justify-content: space-around;
+  width: 33%;
+}
+.select div {
+  padding: 8px 15px;
+}
+.select div:hover {
+  color: rgba(250, 189, 5, 0.788);
+  cursor: pointer;
+}
+.fontIcons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  bottom: 100px;
+  right: 0px;
+}
+.iconPhone {
+  width: 90px;
+  height: 90px;
+  padding: 15px 15px;
+  color: black;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.iconMessenger {
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.iconZalo {
+  width: 55px;
+  height: 55px;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.iconUp {
+  width: 47px;
+  height: 47px;
+  padding: 10px 10px;
+  color: aliceblue;
+  border-radius: 10px;
+  background-color: rgba(255, 192, 1, 0.806);
+  cursor: pointer;
+}

@@ -1,0 +1,105 @@
+.pageSellingProducts{
+  padding: 0px 135px;
+  .homeSellingProducts{
+    display: flex;
+    margin: 20px 0px 25px 0px;
+    color: rgba(61,61,61);
+    font-size: .875rem;
+    & >span{
+      margin: 0px 5px;
+    }
+  }
+  .sellingProducts{
+    .listProducts{
+      width: 75%;
+      &>div:first-child{
+        font-size: 1.75rem;
+        font-family: 'Oswald';
+        font-weight: 600;
+        margin-bottom: 10px;
+      }
+      .foundProduct{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        &>div:first-child{
+          color: rgba(61,61,61);
+          font-size: .875rem;
+        }
+        .sortProduct{
+          display: flex;
+          align-items: center;
+          &>div:first-child{
+            margin-right: 10px;
+            font-weight: 600;
+            font-family: 'Oswald';
+          }
+          &>select{
+            padding: 10px;
+            border-radius:5px;
+            border: 1px solid rgb(207, 204, 204);
+          }
+        }
+      }
+      .product{
+          display: flex;
+          justify-content: space-between;
+        .informationProduct{
+          cursor: pointer;
+          // box-shadow: 0px 0px 20px  rgb(170, 168, 168);
+          // border: 1px solid black;
+          padding: 10px;
+          width: 23%;
+          &:hover{
+          box-shadow: 0px 0px 20px rgb(132, 129, 129);
+
+          }
+          &>div:first-child img{
+            width: 100%;
+          }
+          &>div:last-child img{
+            margin-top: 5px;
+            width: 42%;
+          }
+          &>div:nth-child(2){
+            color: rgba(61,61,61);
+            font-size: .875rem;
+            font-weight: 400;
+            font-family: "Be Vietnam Pro";
+            margin-bottom: 8px;
+          }
+          .priceProduct{
+            display: flex;
+            &>div:first-child{
+              font-size: 1.25rem;
+              font-family: 'Oswald';
+              color: rgba(229,77,62);
+              font-weight: 600;
+            }
+            &>div:last-child{
+              font-size: 14px;
+              font-weight: 400;
+              text-decoration: line-through;
+              color: rgb(163, 163, 163);
+              font-family: 'Oswald';
+              margin-top: 3px;
+
+            }
+            &>div:first-child span{
+              margin-right: 8px;
+              color: rgba(229,77,62);
+              font-family: 'Oswald';
+              text-decoration: underline;
+            }
+            &>div:last-child span{
+              color: rgb(163, 163, 163);
+              font-family: 'Oswald';
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+    }
+  }
+}

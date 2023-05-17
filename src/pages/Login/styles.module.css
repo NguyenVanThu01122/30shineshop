@@ -1,0 +1,104 @@
+.page {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login {
+  width: 40%;
+  padding: 20px;
+}
+.login .parent {
+  padding: 0px 20px;
+}
+.section {
+  display: flex;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.section > div:first-child {
+  background: #337ab7;
+  padding: 10px 0px;
+  color: #ffff;
+  font-size: 14px;
+  border-bottom: 1px solid #777;
+  width: 50%;
+  text-align: center;
+  /* padding-left: 50px; */
+  text-align: center;
+}
+
+.section > div:last-child {
+  width: 50%;
+  text-align: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid #d6d3d3f9;
+}
+
+.email {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.input {
+  border: 1px solid black;
+  padding-left: 10px;
+  margin-bottom: 10px;
+  border-color: #dbdbdb;
+  color: #777;
+}
+.input input {
+  width: 90%;
+  background: transparent;
+}
+.input input:focus {
+  outline: none;
+}
+.icon {
+  width: 20px;
+  font-size: 15px;
+}
+.input input {
+  border: none;
+  padding: 10px 0px;
+  margin-left: 10px;
+}
+.password {
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.link a {
+  color: #337ab7;
+  text-decoration: none;
+}
+.link a:hover {
+  text-decoration: underline;
+}
+
+.loginButton {
+  margin-top: 20px;
+  width: 60%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  background-image: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%);
+  color: #fff;
+  cursor: pointer;
+}
+.register:hover {
+  background-color: coral;
+}
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+.errorText{
+  color: red;
+  text-align: center;
+}
+/* responsive */
+@media screen and (max-width: 576px) {
+}

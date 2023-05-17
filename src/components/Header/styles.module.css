@@ -1,0 +1,137 @@
+.header {
+  display: flex;
+  padding: 10px 0px;
+  position: relative;
+}
+.header > div:first-child {
+  width: 30%;
+}
+.img img {
+  width: 150px;
+  padding-left: 15px;
+  margin-left: 130px;
+  cursor: pointer;
+}
+.header > div:last-child {
+  width: 70%;
+}
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.informationAccount{
+  font-weight: 600;
+  margin-left: 10px;
+  padding: 10px;
+  border: 1px solid rgb(167, 167, 167);
+  background: rgba(0, 0, 0, 0.128);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.search > div:first-child {
+  padding: 14px 20px;
+  border: 1px solid rgba(0, 0, 0, 0.196);
+  font-weight: bold;
+  font-size: 20px;
+  border-top-left-radius: 0.375rem;
+  border-bottom-left-radius: 0.375rem;
+  background-color: rgba(0, 0, 0, 0.128);
+}
+.search input {
+  border: none;
+  padding: 17px 20px;
+  background-color: rgba(68, 68, 68, 0.03);
+  text-decoration: none;
+  width: 300px;
+}
+.loginInput span {
+  color: rgba(163, 163, 163);
+  font-size: 20px;
+}
+.loginInput input{
+  outline: none;
+}
+.search > div:nth-child(2) {
+  border: 1px solid rgba(0, 0, 0, 0.196);
+  border-top-right-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  margin-right: 15px;
+}
+.login {
+  align-items: center;
+  display: flex;
+  padding: 15px 25px;
+  border-radius: 0.3rem;
+  border: 1px solid white;
+  font-weight: bold;
+  background-color: rgba(255, 204, 51, 0.913);
+}
+.login div {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.icon {
+  color: rgba(0, 0, 0, 0.507);
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(0, 0, 0, 0.148);
+  border-radius: 50%;
+  padding: 10px 10px;
+  margin-left: 10px;
+  background-color: rgba(50, 50, 50, 0.03);
+  cursor: pointer;
+}
+.option div {
+  margin-left: 30px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+}
+.option div:hover {
+  color: #fff;
+}
+.option span:hover {
+  color: #fff;
+}
+.option {
+  display: flex;
+  padding: 15px 0px 15px 130px;
+  background-color: rgba(255, 204, 51, 0.913);
+}
+.option span {
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+/* product section */
+.productItem {
+  position: absolute;
+  background-color: white;
+  display: flex;
+  padding: 30px 140px;
+}
+.selectionItem {
+  margin-right: 30px;
+}
+.selectionItem div {
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.selectionItem > div:first-child {
+  font-weight: 550;
+  margin-left: none;
+}
+.selectionItem div:first-child:hover {
+  color: rgba(255, 204, 51, 0.913);
+}
+.item div:hover {
+  color: rgba(255, 204, 51, 0.913);
+}
+.item {
+  margin-left: 9px;
+}
+.optionChild {
+  display: flex;
+}

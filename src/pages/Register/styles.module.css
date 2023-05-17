@@ -1,0 +1,128 @@
+.pageRegister {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 40%;
+  margin: auto;
+  height: 100vh;
+}
+
+.pageRegister select {
+  width: 85%;
+}
+
+.pageRegister select option {
+  padding: 20px 0px !important;
+}
+
+.register {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  cursor: pointer;
+}
+.information {
+  width: 100%;
+}
+.information > div {
+  width: 48%;
+}
+.register > div:first-child {
+  width: 50%;
+  text-align: center;
+  padding: 10px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+.register > div:last-child {
+  text-align: center;
+  color: #fff;
+  background: #03599d;
+  width: 50%;
+  padding: 10px 0px;
+}
+.information {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+}
+.informationChild > div {
+  color: #777;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.informationChild input {
+  border: none; 
+  margin-left: 5px;
+  width: 90%;
+}
+.informationChild input:focus {
+  outline: none;
+
+}
+.iconInput {
+  border: 1px solid rgba(0, 0, 0, 0.123);
+  padding: 10px 12px;
+  border-radius: 2px;
+}
+.information span {
+  margin-right: 4px;
+  color: red;
+}
+.option {
+  border: none;
+  outline: none;
+}
+.checkboxChild {
+  padding: 10px;
+}
+.checkboxChild > span {
+  color: #777;
+  font-size: 16px;
+}
+.checkboxChild a {
+  text-decoration: none;
+}
+.checkboxChild a:hover {
+  text-decoration: underline;
+}
+.registerLogin {
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.registerLogin > div:first-child {
+  padding: 15px 35px;
+  background-image: linear-gradient(to right, #fc3606 0%, #f76c46 51%, #f78421 100%);
+  color: #fff;
+  margin: 10px 10px;
+  border-radius: 5px;
+}
+.registerLogin > div:last-child {
+  padding: 15px 35px;
+  background-image: linear-gradient(to right, #0a64a7 0%, #258dcf 51%, #3db1f3 100%);
+  color: #fff;
+  border-radius: 5px;
+}
+.error {
+  margin-bottom: 30px;
+  text-align: center;
+  color: red;
+}
+.errorText {
+  text-align: center;
+  color: red !important;
+}
+.login:hover {
+  background-color: #f76c46;
+}
+
+/* responsive */
+@media screen and (max-width: 576px) {
+  .information {
+    display: block;
+  }
+  .information > div {
+    width: 100%;
+  }
+}
