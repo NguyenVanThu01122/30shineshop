@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const privateAxios = axios.create({
-  baseURL: 'https://shop30shine.herokuapp.com',
+  baseURL: 'https://localhost:3030',
   timeout: 4000,
   headers: {
     Authorization: `Bearer ${localStorage.getItem('token')}`
@@ -9,7 +9,7 @@ const privateAxios = axios.create({
 })
 
 const publicAxios = axios.create({
-  baseURL: 'https://shop30shine.herokuapp.com',
+  baseURL: 'https://localhost:3030',
   timeout: 4000
 })
 
