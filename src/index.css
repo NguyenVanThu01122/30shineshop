@@ -4,8 +4,14 @@
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
-  font-family: "Be Vietnam Pro";
+  font-family: 'Be Vietnam Pro';
 }
-.hien{
+.hien {
   display: block;
+}
+.border-red {
+  border: 1px solid red !important;
+}
+.display-none{
+  display: none;
 }

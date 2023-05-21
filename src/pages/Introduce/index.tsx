@@ -1,17 +1,12 @@
 import styles from './sttyles.module.css'
 export default function Introduce() {
-  let token = localStorage.getItem('token')
-  if (!token) {
-    alert('Bạn chưa đăng nhập')
-    window.location.assign('/login')
-  }
-
   return (
     <div className={styles.pageIntroduce}>
-      <div className={styles.introduce}>
+      {/* <div className={styles.introduce}>
         <div>Trang chủ /</div>
         <div>Giới thiệu</div>
-      </div>
+      </div> */}
+      <div className={styles.titleIntro}>GIỚI THIỆU</div>
       <div className={styles.imgWax}>
         <img src='https://theme.hstatic.net/1000306701/1000727092/14/about03_banner_bkg.jpg?v=333' alt='img' />
       </div>

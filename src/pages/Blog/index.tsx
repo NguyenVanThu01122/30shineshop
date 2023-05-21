@@ -4,11 +4,6 @@ import { AiOutlineClockCircle } from 'react-icons/ai'
 import styles from './styles.module.css'
 
 export default function Blog() {
-  let token = localStorage.getItem('token')
-  if (!token) {
-    alert('Bạn chưa đăng nhập')
-    window.location.assign('/login')
-  }
   // https://shop30shine.herokuapp.com/blog
   // https://shop30shine.herokuapp.com/brand // api thương hiệu dây nhé
 
@@ -23,7 +18,7 @@ export default function Blog() {
         setTextError('')
       })
       .catch((error) => {
-        setTextError('Không có bài viết')
+        setTextError('Lỗi server')
       })
   }, [])
 
@@ -71,10 +66,10 @@ export default function Blog() {
   // ]
   return (
     <div className={styles.pageBlog}>
-      <div className={styles.headerBlog}>
+      {/* <div className={styles.headerBlog}>
         <div>Trang chủ /</div>
         <div>Blog</div>
-      </div>
+      </div> */}
       <div className={styles.sectionTwo}>
         <div className={styles.productIntroduction}>
           <div className={styles.blog}>

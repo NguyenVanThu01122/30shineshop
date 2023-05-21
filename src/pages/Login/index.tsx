@@ -2,11 +2,15 @@ import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
+import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
 import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
+import { message } from 'antd'
+
 export default function Login() {
+  let navigate = useNavigate()
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
 
@@ -16,30 +20,38 @@ export default function Login() {
   let handleEmail = (e: any) => {
     let valueEmail = e.target.value
     setEmail(valueEmail)
-    if (!email) {
-      setErrorEmail('Vui Lòng Nhập Email')
+    let emailElement = document.getElementById('email')
+    if (!valueEmail) {
+      setErrorEmail('Vui lòng nhập email')
+      emailElement?.classList.add('border-red')
     } else {
       setErrorEmail('')
+      emailElement?.classList.remove('border-red')
     }
   }
 
   let handlePassword = (e: any) => {
     let valuePassword = e.target.value
     setPassword(valuePassword)
+    let passwordElement = document.getElementById('password')
     if (!valuePassword) {
-      setErrorPassword('Vui Lòng Nhập Password')
+      setErrorPassword('Vui lòng nhập mật khẩu')
+      passwordElement?.classList.add('border-red')
     } else {
       setErrorPassword('')
+      passwordElement?.classList.remove('border-red')
     }
   }
 
   let handleOnSubmit = (e: any) => {
-    // e.preventDefault()
+    e.preventDefault()
     if (!email) {
-      setErrorEmail('Vui Lòng Nhập Email')
+      document.getElementById('email')?.classList.add('border-red')
+      setErrorEmail('Vui lòng nhập email')
     }
     if (!password) {
-      setErrorPassword('Vui Lòng Nhập Password')
+      document.getElementById('password')?.classList.add('border-red')
+      setErrorPassword('Vui lòng nhập mật khẩu')
     }
     if (email && password && !errorEmail && !errorPassword) {
       let data = {
@@ -49,16 +61,30 @@ export default function Login() {
       publicAxios
         .post('/login', data)
         .then((response) => {
-          console.log(response.data)
           let result = response.data
           localStorage.setItem('token', result?.token)
           localStorage.setItem('name', result?.user?.name)
-          window.location.assign('/')
+          navigate('/')
         })
         .catch((error) => {
           let objError = error?.response?.data
-          alert(objError?.message)
+          message.error(objError?.message)
         })
+    }
+  }
+
+  const handleBlurEmail = () => {
+    let emailElement = document.getElementById('email')
+    if (!email) {
+      emailElement?.classList.add('border-red')
+      setErrorEmail('Vui lòng nhập email')
+    }
+  }
+  const handleBlurPassword = () => {
+    let passwordElement = document.getElementById('password')
+    if (!password) {
+      passwordElement?.classList.add('border-red')
+      setErrorPassword('Vui lòng nhập mật khẩu')
     }
   }
 
@@ -72,23 +98,34 @@ export default function Login() {
           </div>
         </div>
         <div className={styles.parent}>
-          <div className={styles.email}>Email</div>
-
-          <div className={styles.input}>
-            <FontAwesomeIcon icon={faUser} className={styles.icon} />
-            <input type='text' value={email} name='Email' placeholder='Email' id='email' onChange={handleEmail} />
+          <div className={styles.email}>
+            <span>*</span>Email
           </div>
-          <div className={styles.errorText}>{errorEmail}</div>
-
-          <div className={styles.password}>Mật khẩu</div>
-          <div className={styles.input}>
+          <div className={styles.input} id='email'>
+            <FontAwesomeIcon icon={faUser} className={styles.icon} />
+            <input
+              onBlur={handleBlurEmail}
+              type='text'
+              value={email}
+              name='Email'
+              placeholder='Email'
+              onChange={handleEmail}
+            />
+          </div>
+          <div className={styles.errorText} id='error-email'>
+            {errorEmail}
+          </div>
+          <div className={styles.password}>
+            <span>*</span>Mật khẩu
+          </div>
+          <div className={styles.input} id='password'>
             <FontAwesomeIcon icon={faLock} className={styles.icon} />
             <input
+              onBlur={handleBlurPassword}
               value={password}
               type='password'
               name='password'
               placeholder='Mật khẩu'
-              id='password'
               onChange={handlePassword}
             />
           </div>
@@ -102,6 +139,11 @@ export default function Login() {
           <div className={styles.loginButton} onClick={handleOnSubmit}>
             ĐĂNG NHẬP
           </div>
+          {/* {email && password && !errorEmail && !errorPassword ? (
+            <div className={styles.loginButton} onClick={handleOnSubmit}>
+              ĐĂNG NHẬP
+            </div>
+          ) : null} */}
         </div>
       </div>
     </div>

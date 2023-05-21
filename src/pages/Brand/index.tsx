@@ -2,11 +2,6 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 export default function Brand() {
-  let token = localStorage.getItem('token')
-  if (!token) {
-    alert('Bạn chưa đăng nhập')
-    window.location.assign('/login')
-  }
   /* Cho tôi ví dụ về localStorage
     Quên kiến thức
     localStorage.setItem(key, value); 
@@ -58,17 +53,17 @@ Sau đó lấy giá trị của mảng, và tính tổng các phần tử của 
         setError('')
       })
       .catch((error) => {
-        setError('Không có bài viết')
+        setError('Lỗi server')
       })
   }, [])
 
   return (
     <div className={styles.pageBrand}>
       <div className={styles.title}>
-        <div className={styles.loginBrand}>
+        {/* <div className={styles.loginBrand}>
           <div>Trang chủ /</div>
           <div>Thương hiệu</div>
-        </div>
+        </div> */}
         <div>THƯƠNG HIỆU</div>
       </div>
       <div className={styles.brandParent}>

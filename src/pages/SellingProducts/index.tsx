@@ -1,10 +1,5 @@
 import styles from './styles.module.scss'
 export default function SellingProducts() {
-  let token = localStorage.getItem('token')
-  if (!token) {
-    alert('Bạn chưa đăng nhập')
-    window.location.assign('/login')
-  }
   return (
     <div className={styles.pageSellingProducts}>
       <div className={styles.homeSellingProducts}>

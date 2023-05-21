@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { checkLogin } from '../../helper'
 import styles from './styles.module.css'
+import { useNavigate } from 'react-router-dom'
 export default function Account() {
+  let navigate = useNavigate()
   let [name, setName] = useState('')
   let [email, setEmail] = useState('')
   let [birthday, setBirthday] = useState('')
@@ -60,18 +62,17 @@ export default function Account() {
     }
   }
   let handleLogOut =()=>{
-     let token:any = localStorage.removeItem('token')
-    if(!token){
-      window.location.assign('/login')
-    }
+    localStorage.removeItem('token');
+    navigate('/login')
+    
   }
   return (
     <div className={styles.pageAccount}>
-      <div className={styles.title}>
+      {/* <div className={styles.title}>
         <div>Trang chủ</div>
         <div>/ Tài khoản /</div>
         <div>Thông tin tài khoản</div>
-      </div>
+      </div> */}
       <div className={styles.account}>
         <div className={styles.information}>
           <div className={styles.informationSelection}>

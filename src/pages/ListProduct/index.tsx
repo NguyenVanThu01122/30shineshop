@@ -1,15 +1,11 @@
+import { StarOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
 export default function ListProduct() {
   const navigate = useNavigate()
-  let token = localStorage.getItem('token')
-  if(!token){
-    window.location.assign('/login')
-    alert('Bạn chưa đăng nhập')
-
-  }
   const listCategory = {
     suaRuaMat: '64341dab40c628f4c65323f0',
     dauGoi: '64341dab40c628f4c65323f2',
@@ -35,7 +31,6 @@ export default function ListProduct() {
       maxPrice?: string
       minPrice?: string
     }
-
     const params: IParams = {
       sort
     }
@@ -52,16 +47,13 @@ export default function ListProduct() {
     if (maxPrice) {
       params.maxPrice = maxPrice
     }
-
     setLoading(true)
-// 
     axios
       .get('http://shop30shine.herokuapp.com/product', {
         params
       })
       .then((response) => {
         setLoading(false)
-        console.log(response.data?.data)
         setList(response.data?.data)
         setError('')
       })
@@ -70,51 +62,73 @@ export default function ListProduct() {
         setError('Lỗi server')
       })
   }
-
   useEffect(() => {
     handleSearch()
-  }, [keyword, minPrice, maxPrice, sort, category])
+  }, [])
   return (
     <div className={styles.pageProduct}>
       <div className={styles.searchProduct}>
         <div className={styles.category}>
           <div>Danh mục</div>
-          <div>
-            <span>Tất cả</span>
-            <input type='radio' name='category' onClick={() => setCategory('')} />
-            <span>Dầu gội</span>
-            <input type='radio' name='category' onClick={() => setCategory(listCategory.dauGoi)} />
-            <span>Sữa rửa mặt</span>
-            <input type='radio' name='category' onClick={() => setCategory(listCategory.suaRuaMat)} />
-            <span>Sữa tắm</span>
-            <input type='radio' name='category' onClick={() => setCategory(listCategory.suaTam)} />
-            <span>Sắp vuốt tóc</span>
-            <input type='radio' name='category' onClick={() => setCategory(listCategory.sapVuotToc)} />
+          <div className={styles.detailCategory}>
+            <div onClick={() => setCategory('')} className={`${category === '' ? styles.activeCategory : ''}`}>
+              Tất cả
+            </div>
+            {/* <input type='radio' name='category' onClick={() => setCategory('')} /> */}
+            <div
+              onClick={() => setCategory(listCategory.dauGoi)}
+              className={`${category === listCategory.dauGoi ? styles.activeCategory : ''}`}
+            >
+              Dầu gội
+            </div>
+            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.dauGoi)} /> */}
+            <div
+              onClick={() => setCategory(listCategory.suaRuaMat)}
+              className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
+            >
+              Sữa rửa mặt
+            </div>
+            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.suaRuaMat)} /> */}
+            <div
+              onClick={() => setCategory(listCategory.suaTam)}
+              className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
+            >
+              Sữa tắm
+            </div>
+            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.suaTam)} /> */}
+            <div
+              onClick={() => setCategory(listCategory.sapVuotToc)}
+              className={`${category === listCategory.sapVuotToc ? styles.activeCategory : ''}`}
+            >
+              Sắp vuốt tóc
+            </div>
+            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.sapVuotToc)} /> */}
           </div>
         </div>
-
         <div className={styles.nameProduct}>
-          <div>Tên sản phẩm</div>
+          <span>Tên sản phẩm</span>
           <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
         </div>
-
         <div className={styles.numberPrice}>
           <div>Khoảng giá</div>
-          <span>Giá thấp nhất</span>
-          <input type='number' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
-          <span>Giá cao nhất</span>
-          <input type='number' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+          <div className={styles.priceRange}>
+            <span>Giá thấp nhất</span>
+            <input type='number' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+            <span>Giá cao nhất</span>
+            <input type='number' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+          </div>
         </div>
-
         <div className={styles.selectPrice}>
-          <div>Sắp xếp theo</div>
+          <span>Sắp xếp theo</span>
           <select value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value='-1'>Giá mặc định</option>
             <option value='0'>Giá từ thấp đến cao</option>
             <option value='1'>Giá từ cao đến thấp</option>
           </select>
         </div>
-
+        <Button type='primary' size='large' onClick={handleSearch}>
+          Tìm kiếm
+        </Button>
         {/* <div className={styles.buttonSearch}>
           <button onClick={handleSearch}>Tìm kiếm sản phẩm</button>
         </div> */}
@@ -123,14 +137,16 @@ export default function ListProduct() {
       <div className={styles.findProducts}>
         <div>{list.length} sản phẩm được tìm thấy</div>
       </div>
-
-      {/* <img src='https://i.stack.imgur.com/hzk6C.gif' alt='' /> */}
       <div className={styles.listProduct}>
-        {loading && <img src='https://i.stack.imgur.com/hzk6C.gif' alt='' />}
+        {loading && (
+          <div className={styles.loading}>
+            <img src='https://i.stack.imgur.com/hzk6C.gif' alt='loading' />
+          </div>
+        )}
         {!loading &&
           list.map((item: any) => {
             return (
-              <div className={styles.itemProduct}>
+              <div className={styles.itemProduct} key={item.id}>
                 <div key={item.id} className={styles.product} onClick={() => navigate(`/detail-product/${item.id}`)}>
                   <div className={styles.images}>
                     <img src={item.image} alt='images' />
@@ -147,16 +163,59 @@ export default function ListProduct() {
                     </div>
                   </div>
                   <div className={styles.iconStar}>
-                    {item.star === 5 && <img src='' alt='5 sao' />}
-                    {item.star === 4 && <img src='' alt='4 sao' />}
-                    {item.star === 3 && <img src='' alt='3 sao' />}
-                    {item.star === 2 && <img src='' alt='2 sao' />}
-                    {item.star === 1 && <img src='' alt='1 sao' />}
+                    {item.star === 5 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                      </div>
+                    )}
+                    {item.star === 4 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                      </div>
+                    )}
+                    {item.star === 3 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                      </div>
+                    )}
+                    {item.star === 2 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                      </div>
+                    )}
+                    {item.star === 1 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                      </div>
+                    )}
                     {item.star === 0 && (
-                      <img
-                        src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-                        alt='iconStar'
-                      />
+                      <div>
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                        <StarOutlined style={{ color: 'gray' }} />
+                      </div>
                     )}
                   </div>
                 </div>

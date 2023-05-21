@@ -2,11 +2,7 @@ import { useState } from 'react'
 import styles from './styles.module.css'
 export default function Contact() {
   let token = localStorage.getItem('token')
-  if (!token) {
-    alert('Bạn chưa đăng nhập')
-    window.location.assign('/login')
 
-  }
   let [name, setName] = useState('')
   let [phone, setPhone] = useState('')
   let [content, setContent] = useState('')
@@ -69,10 +65,10 @@ export default function Contact() {
   }
   return (
     <div className={styles.pageContact}>
-      <div className={styles.homeContact}>
+      {/* <div className={styles.homeContact}>
         <div>Trang chủ /</div>
         <div>Liên hệ</div>
-      </div>
+      </div> */}
       <div className={styles.contact}>
         <div>Liên hệ</div>
         <div>
