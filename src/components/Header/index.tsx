@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
-import { publicAxios } from '../../service/axios'
+import { myAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Header() {
@@ -24,31 +24,32 @@ export default function Header() {
   //   suaTam: '64341dab40c628f4c65323f3',
   //   sapVuotToc: '64341dab40c628f4c65323f1'
   // }
-  let handleOnchange = () => {
-    interface IParam {
-      keyword?: string
-    }
-    const params: IParam = {
-      keyword
-    }
-    if (keyword) {
-      params.keyword = keyword
-    }
-    publicAxios
-      .get('http://shop30shine.herokuapp.com/product', {
-        params
-      })
-      .then((res) => {
-        setlist(res.data?.data)
-        setError('')
-      })
-      .catch((error) => {
-        setError('Lỗi server')
-      })
-  }
-  useEffect(() => {
-    handleOnchange()
-  }, [keyword])
+  // let handleOnchange = () => {
+  //   interface IParam {
+  //     keyword?: string
+  //   }
+  //   const params: IParam = {
+  //     keyword
+  //   }
+  //   if (keyword) {
+  //     params.keyword = keyword
+  //   }
+  //   myAxios
+  //     .get('http://shop30shine.herokuapp.com/product', {
+  //       params
+  //     })
+  //     .then((res) => {
+  //       setlist(res.data?.data)
+  //       setError('')
+  //     })
+  //     .catch((error) => {
+  //       setError('Lỗi server')
+  //     })
+  // }
+
+  // useEffect(() => {
+  //   handleOnchange()
+  // }, [keyword])
   return (
     <div className={styles.pageHeader}>
       <div className={styles.header}>
@@ -96,7 +97,7 @@ export default function Header() {
         <div onClick={() => handleDirection('/')}>DANH SÁCH SẢN PHẨM</div>
         <div onClick={() => handleDirection('brand')}>THƯƠNG HIỆU</div>
         <div onClick={() => handleDirection('/introduce')}>GIỚI THIỆU</div>
-        <div onClick={() => handleDirection('/contact')}>LIÊN HỆ VỚI CHÚNG TÔI</div>
+        <div onClick={() => handleDirection('/contact')}>LIÊN HỆ</div>
         <div onClick={() => handleDirection('/blog')}>TIN TỨC LÀM ĐẸP</div>
         <div onClick={() => handleDirection('/account')}>QUẢN LÝ TÀI KHOẢN</div>
       </div>

@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
+import { privateAxios, myAxios } from '../../service/axios'
 export default function Brand() {
   /* Cho tôi ví dụ về localStorage
     Quên kiến thức
@@ -46,8 +46,8 @@ Sau đó lấy giá trị của mảng, và tính tổng các phần tử của 
   let [error, setError] = useState('')
 
   useEffect(() => {
-    axios
-      .get('https://shop30shine.herokuapp.com/brand')
+    myAxios
+      .get('/brand')
       .then((response) => {
         setList(response.data.brand)
         setError('')

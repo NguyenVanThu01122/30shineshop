@@ -1,27 +1,28 @@
 import { faStar } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
 import styles from './index.module.scss'
+import { myAxios } from '../../service/axios'
+import { StarOutlined } from '@ant-design/icons'
 
 function DetailProduct() {
- 
+
   let params = useParams();
   // GET: https://shop30shine.herokuapp.com/product/relate/:id
   const [detailProduct, setDetailProduct] = useState<any>({})
   // http://shop30shine.herokuapp.com/product/${params.id}
   useEffect(() => {
-    axios
-      .get('https://shop30shine.herokuapp.com/product/relate/:id')
+    myAxios
+      .get(`/product/${params.id}`)
       .then((res) => {
         console.log(res.data?.data)
-        // setDetailProduct(res.data.data)
+        setDetailProduct(res.data?.data)
       })
-      .catch((_error) => {})
-    setDetailProduct('lỗi')
+      .catch((_error) => { })
+    setDetailProduct('Lỗi server')
   }, [])
   let [count, setCount] = useState(1)
 
@@ -32,7 +33,7 @@ function DetailProduct() {
     if (count < 10) {
       setCount(count + 1)
     } else {
-      alert('bạn không được mua quá 10 sản phẩm')
+      alert('Bạn không được mua quá 10 sản phẩm')
     }
   }
   return (
@@ -41,26 +42,76 @@ function DetailProduct() {
         <div className={styles.headerProduct}>
           <div className={styles.product}>
             <div className={styles.imgProduct}>
-              <img src='https://static.30shine.com/shop-admin/2023/03/06/30S4BMAN-COMBO%201.jpg' alt='' />
+              <img src={detailProduct?.images ? detailProduct?.images[0] : ''} alt='' />
             </div>
             <div className={styles.detailnformation}>
-              <div>Combo Da Sạch Mụn Sáng Mịn</div>
+              <div>{detailProduct?.name}</div>
               <div className={styles.number}>
-                <div>0</div>
-                <img
-                  src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-                  alt=''
-                />
-                <div>|</div>
-                <div>0 đánh giá</div>
+                <div>{detailProduct?.star}</div>
+                <div>
+                  {detailProduct?.star === 5 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                    </div>
+                  )}
+                  {detailProduct?.star === 4 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                    </div>
+                  )}
+                  {detailProduct?.star === 3 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                    </div>
+                  )}
+                  {detailProduct?.star === 2 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                    </div>
+                  )}
+                  {detailProduct?.star === 1 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                    </div>
+                  )}
+                  {detailProduct?.star === 0 && (
+                    <div>
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                    </div>
+                  )}
+                </div>
+                <div>{detailProduct?.totalEvaluate} đánh giá</div>
               </div>
-              <div>Thương hiệu:</div>
-              <div>
-                479.000 <span>đ</span>
+              <div style={{ fontSize: '18px' }}>
+                {detailProduct?.salePrice} VND
               </div>
               <div className={styles.salePrice}>
-                <div>508.000 ₫</div>
-                <div>Giảm 6%</div>
+                <div>{detailProduct?.originPrice} VND</div>
+                <div>Giảm {Math.floor((detailProduct?.originPrice - detailProduct?.salePrice) / detailProduct?.originPrice * 100)}%</div>
               </div>
               <div className={styles.quantity}>
                 <div>Số lượng</div>
@@ -77,7 +128,7 @@ function DetailProduct() {
                   </div>
                   <div>THÊM GIỎ HÀNG</div>
                 </div>
-                <div className={styles.buyNow}>
+                <div className={styles.buyNow}>~
                   <div>MUA NGAY</div>
                   <div>Không ưng đổi ngay trong 30 ngày</div>
                 </div>
@@ -101,15 +152,64 @@ function DetailProduct() {
               <div>Phản hồi khách hàng</div>
               <div className={styles.feedback}>
                 <div className={styles.noFeedback}>
-                  <div>0</div>
-                  <div className={styles.FontAwesomeIcon}>
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} className={styles.iconStar} />
-                    <FontAwesomeIcon icon={faStar} />
-                    <FontAwesomeIcon icon={faStar} className={styles.iconStar} />
-                    <FontAwesomeIcon icon={faStar} />
+                  <div>{detailProduct?.star}</div>
+                  <div>
+                    {detailProduct?.star === 5 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                      </div>
+                    )}
+                    {detailProduct?.star === 4 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      </div>
+                    )}
+                    {detailProduct?.star === 3 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      </div>
+                    )}
+                    {detailProduct?.star === 2 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      </div>
+                    )}
+                    {detailProduct?.star === 1 && (
+                      <div>
+                        <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      </div>
+                    )}
+                    {detailProduct?.star === 0 && (
+                      <div>
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                        <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
+                      </div>
+                    )}
                   </div>
-                  <div>0 phản hồi</div>
+                  <div>{detailProduct?.totalEvaluate} phản hồi</div>
                 </div>
                 <div className={styles.starOder}>
                   <div className={styles.reviewStar}>
@@ -123,7 +223,7 @@ function DetailProduct() {
                         />
                       </div>
                       <div className={styles.Crossbar}></div>
-                      <div>0</div>
+                      <div>{detailProduct?.listStar?.fiveStar}</div>
                     </div>
                     <div className={styles.star}>
                       <div>4</div>
@@ -135,7 +235,7 @@ function DetailProduct() {
                         />
                       </div>
                       <div className={styles.Crossbar}></div>
-                      <div>0</div>
+                      <div>{detailProduct?.listStar?.fourStar}</div>
                     </div>
                     <div className={styles.star}>
                       <div>3</div>
@@ -147,7 +247,7 @@ function DetailProduct() {
                         />
                       </div>
                       <div className={styles.Crossbar}></div>
-                      <div>0</div>
+                      <div>{detailProduct?.listStar?.threeStar}</div>
                     </div>
                     <div className={styles.star}>
                       <div>2</div>
@@ -159,7 +259,7 @@ function DetailProduct() {
                         />
                       </div>
                       <div className={styles.Crossbar}></div>
-                      <div>0</div>
+                      <div>{detailProduct?.listStar?.twoStar}</div>
                     </div>
                     <div className={styles.star}>
                       <div>1</div>
@@ -172,7 +272,7 @@ function DetailProduct() {
                         />
                       </div>
                       <div className={styles.Crossbar}></div>
-                      <div>0</div>
+                      <div>{detailProduct?.listStar?.oneStar}</div>
                     </div>
                   </div>
                   <div>VIẾT ĐÁNH GIÁ</div>

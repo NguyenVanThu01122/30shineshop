@@ -1,9 +1,9 @@
 import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
+import { privateAxios, myAxios } from '../../service/axios'
 export default function ListProduct() {
   const navigate = useNavigate()
   const listCategory = {
@@ -48,8 +48,8 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-    axios
-      .get('http://shop30shine.herokuapp.com/product', {
+    myAxios
+      .get('/product', {
         params
       })
       .then((response) => {

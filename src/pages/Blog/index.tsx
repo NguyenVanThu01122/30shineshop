@@ -1,7 +1,7 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import styles from './styles.module.css'
+import { privateAxios, myAxios } from '../../service/axios'
 
 export default function Blog() {
   // https://shop30shine.herokuapp.com/blog
@@ -11,8 +11,8 @@ export default function Blog() {
   let [textError, setTextError] = useState('')
 
   useEffect(() => {
-    axios
-      .get('https://shop30shine.herokuapp.com/blog')
+    myAxios
+      .get('/blog')
       .then((response) => {
         setList(response.data.data)
         setTextError('')
