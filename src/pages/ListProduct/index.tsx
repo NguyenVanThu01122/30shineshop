@@ -2,7 +2,7 @@ import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function ListProduct() {
   const navigate = useNavigate()
@@ -48,8 +48,8 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-    privateAxios
-      .get('http://shop30shine.herokuapp.com/product', {
+    publicAxios
+      .get('/product', {
         params
       })
       .then((response) => {
@@ -58,6 +58,7 @@ export default function ListProduct() {
         setError('')
       })
       .catch((error) => {
+        console.log(error?.response)
         setLoading(false)
         setError('Lỗi server')
       })

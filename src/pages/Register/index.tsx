@@ -200,7 +200,7 @@ export default function Register() {
           setRepeat('')
           setBirthday('')
           setGender('')
-          ;(document.getElementById('checkbox') as any).checked = false
+            ; (document.getElementById('checkbox') as any).checked = false
           navigate('/login')
         })
         .catch((error) => {
@@ -417,7 +417,7 @@ export default function Register() {
           <div className={styles.errorText}>{errorCheck}</div>
         </div>
         <div className={styles.registerLogin}>
-          <div onClick={handleSubmit}>{}ĐĂNG KÝ</div>
+          <div onClick={handleSubmit}>{ }ĐĂNG KÝ</div>
           {/* {name &&
         phone &&
         repeat &&
