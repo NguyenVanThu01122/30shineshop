@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
-import { myAxios } from '../../service/axios'
+import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 import { message } from 'antd'
@@ -58,7 +58,7 @@ export default function Login() {
         password: password,
         email: email
       }
-      myAxios
+      publicAxios
         .post('/login', data)
         .then((response) => {
           let result = response.data

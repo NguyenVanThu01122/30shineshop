@@ -1,27 +1,25 @@
-import { faStar } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { StarOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
+import { publicAxios } from '../../service/axios'
 import styles from './index.module.scss'
-import { myAxios } from '../../service/axios'
-import { StarOutlined } from '@ant-design/icons'
 
 function DetailProduct() {
-
-  let params = useParams();
-  // GET: https://shop30shine.herokuapp.com/product/relate/:id
+  let params = useParams()
+  // Lấy chi tiết sản phẩm: // http://shop30shine.herokuapp.com/product/${params.id}
+  // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
   const [detailProduct, setDetailProduct] = useState<any>({})
-  // http://shop30shine.herokuapp.com/product/${params.id}
+
   useEffect(() => {
-    myAxios
+    publicAxios
       .get(`/product/${params.id}`)
       .then((res) => {
         console.log(res.data?.data)
         setDetailProduct(res.data?.data)
       })
-      .catch((_error) => { })
+      .catch((_error) => {})
     setDetailProduct('Lỗi server')
   }, [])
   let [count, setCount] = useState(1)
@@ -106,12 +104,16 @@ function DetailProduct() {
                 </div>
                 <div>{detailProduct?.totalEvaluate} đánh giá</div>
               </div>
-              <div style={{ fontSize: '18px' }}>
-                {detailProduct?.salePrice} VND
-              </div>
+              <div style={{ fontSize: '18px' }}>{detailProduct?.salePrice} VND</div>
               <div className={styles.salePrice}>
                 <div>{detailProduct?.originPrice} VND</div>
-                <div>Giảm {Math.floor((detailProduct?.originPrice - detailProduct?.salePrice) / detailProduct?.originPrice * 100)}%</div>
+                <div>
+                  Giảm{' '}
+                  {Math.floor(
+                    ((detailProduct?.originPrice - detailProduct?.salePrice) / detailProduct?.originPrice) * 100
+                  )}
+                  %
+                </div>
               </div>
               <div className={styles.quantity}>
                 <div>Số lượng</div>
@@ -128,8 +130,8 @@ function DetailProduct() {
                   </div>
                   <div>THÊM GIỎ HÀNG</div>
                 </div>
-                <div className={styles.buyNow}>~
-                  <div>MUA NGAY</div>
+                <div className={styles.buyNow}>
+                  ~<div>MUA NGAY</div>
                   <div>Không ưng đổi ngay trong 30 ngày</div>
                 </div>
               </div>

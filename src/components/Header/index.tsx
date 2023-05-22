@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
-import { myAxios } from '../../service/axios'
+import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Header() {
@@ -34,7 +34,7 @@ export default function Header() {
   //   if (keyword) {
   //     params.keyword = keyword
   //   }
-  //   myAxios
+  //   publicAxios
   //     .get('http://shop30shine.herokuapp.com/product', {
   //       params
   //     })

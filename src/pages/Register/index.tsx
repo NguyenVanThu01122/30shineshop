@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
-import { myAxios } from '../../service/axios'
+import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 import { message } from 'antd'
 
@@ -189,7 +189,7 @@ export default function Register() {
         telephone: phone,
         date: birthday
       }
-      myAxios
+      publicAxios
         .post('/register', data)
         .then((response) => {
           alert(response.data?.message)

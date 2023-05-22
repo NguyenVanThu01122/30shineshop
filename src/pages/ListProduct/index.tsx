@@ -2,8 +2,8 @@ import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
-import { privateAxios, myAxios } from '../../service/axios'
 export default function ListProduct() {
   const navigate = useNavigate()
   const listCategory = {
@@ -48,7 +48,7 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-    myAxios
+    publicAxios
       .get('/product', {
         params
       })
@@ -58,6 +58,7 @@ export default function ListProduct() {
         setError('')
       })
       .catch((error) => {
+        console.log(error?.response)
         setLoading(false)
         setError('Lỗi server')
       })
