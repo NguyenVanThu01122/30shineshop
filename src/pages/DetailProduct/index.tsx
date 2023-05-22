@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useParams } from 'react-router-dom'
-import { publicAxios } from '../../service/axios'
+import { privateAxios } from '../../service/axios'
 import styles from './index.module.scss'
 
 function DetailProduct() {
@@ -13,7 +13,7 @@ function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState<any>({})
 
   useEffect(() => {
-    publicAxios
+    privateAxios
       .get(`/product/${params.id}`)
       .then((res) => {
         console.log(res.data?.data)
@@ -554,5 +554,5 @@ function DetailProduct() {
 }
 export default DetailProduct
 {
-  // /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div> 
+  // /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div>
 }

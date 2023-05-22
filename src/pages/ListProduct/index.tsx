@@ -2,7 +2,7 @@ import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { publicAxios } from '../../service/axios'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function ListProduct() {
   const navigate = useNavigate()
@@ -48,7 +48,7 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-    publicAxios
+    privateAxios
       .get('/product', {
         params
       })

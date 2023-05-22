@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
-import { privateAxios, publicAxios } from '../../service/axios'
 export default function Brand() {
   /* Cho tôi ví dụ về localStorage
     Quên kiến thức
@@ -46,7 +46,7 @@ Sau đó lấy giá trị của mảng, và tính tổng các phần tử của 
   let [error, setError] = useState('')
 
   useEffect(() => {
-    publicAxios
+    privateAxios
       .get('/brand')
       .then((response) => {
         setList(response.data.brand)
