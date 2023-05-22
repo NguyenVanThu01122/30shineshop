@@ -1,8 +1,8 @@
 import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function ListProduct() {
   const navigate = useNavigate()
@@ -48,7 +48,7 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-    axios
+    privateAxios
       .get('http://shop30shine.herokuapp.com/product', {
         params
       })
@@ -147,6 +147,13 @@ export default function ListProduct() {
           list.map((item: any) => {
             return (
               <div className={styles.itemProduct} key={item.id}>
+                <div className={styles.stickerPercen}>
+                  <div></div>
+                  <div>
+                    <span>-</span> {100 - (item.salePrice / item.originPrice) * 100} %
+                  </div>
+                  <div></div>
+                </div>
                 <div key={item.id} className={styles.product} onClick={() => navigate(`/detail-product/${item.id}`)}>
                   <div className={styles.images}>
                     <img src={item.image} alt='images' />

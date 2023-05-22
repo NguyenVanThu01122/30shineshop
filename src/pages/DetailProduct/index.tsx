@@ -15,7 +15,7 @@ function DetailProduct() {
   // http://shop30shine.herokuapp.com/product/${params.id}
   useEffect(() => {
     axios
-      .get('https://shop30shine.herokuapp.com/product/relate/:id')
+      .get(`https://shop30shine.herokuapp.com/product/relate/${params.id}`)
       .then((res) => {
         console.log(res.data?.data)
         // setDetailProduct(res.data.data)
@@ -452,5 +452,5 @@ function DetailProduct() {
 }
 export default DetailProduct
 {
-  /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div> */
+  // /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div> 
 }
