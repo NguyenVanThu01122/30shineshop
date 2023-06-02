@@ -70,6 +70,7 @@
   font-size: 20px;
 }
 .login {
+
   padding: 18px;
   background-color: white;
 }
@@ -81,9 +82,23 @@
   width: 50%;
   padding: 15px;
   border-radius: 5px;
+  outline: none;
   border: 1px solid rgb(223, 218, 218);
   --tw-bg-opacity: 1;
   background-color: rgba(238, 238, 238);
+}
+.input{
+  width: 80%;
+}
+.login >div:nth-child(6){
+  margin: 10px 0px;
+}
+.login >div:last-child{
+  margin-top: 6px;
+}
+.borderRed{
+  /* background-color: red !important; */
+  border: 1px solid red !important;
 }
 .loginInput div {
   font-family: Be Vietnam, sans-serif;
@@ -116,4 +131,5 @@
 .errorText{
   color: red;
   padding-left: 160px;
+  font-style: italic;
 }

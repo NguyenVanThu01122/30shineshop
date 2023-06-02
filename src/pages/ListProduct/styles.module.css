@@ -139,7 +139,7 @@
 .stickerPercen {
   padding: 5px;
   position: absolute;
-  right: 0px;
+  right: 10px;
   top: -5px;
   width: 22%;
   height: 35px;
@@ -153,33 +153,38 @@
   position: absolute;
   border-bottom: 12px solid rgba(229, 77, 62, 0.75);
   border-left: 12px solid transparent;
-  top: -14px;
-  right: 68px;
+  top: -64%;
+  right: 100%;
 }
-.stickerPercen > div:nth-child(2) {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+.percent {
+  /* width: 100%;
   position: absolute;
-  right: 12px;
-  top: -2px;
-  color: rgb(255, 255, 255);
+  right: -5%;
+  top: -2%; */
+  /* font-size: 1; */
+  /* width: 15%; */
+  /* width: 50%; */
+  color: rgb(249, 249, 249);
 }
-.stickerPercen span{
-  margin-right: 5px;
+.stickerPercen span {
+  /* font-size: 100%; */
+  /* margin: 0px 3px; */
+  /* width: 10%; */
+  /* width: 5%; */
+
 }
 .stickerPercen > div:last-child {
-    position: absolute;
-    border-left: 34px solid transparent;
-    border-right: 36px solid transparent;
-    border-top: 20px solid #e54d3e;
-    top: 20px;
-    right: 0;
-  }
-  .product {
+  position: absolute;
+  border-left: 34px solid transparent;
+  border-right: 36px solid transparent;
+  border-top: 20px solid #e54d3e;
+  top: 100%;
+  right: 0%;
+  /* width: 100%; */
+}
+.product {
   padding: 10px;
-  border-radius: 6px;  
+  border-radius: 6px;
   /* border: 1px solid black; */
 }
 .product:hover {
@@ -432,4 +437,84 @@
   justify-content: center;
   border-radius: 7px;
   border: 1px solid rgb(188, 186, 186);
+}
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .pageProduct {
+    padding: 0px 20px;
+  }
+  .searchProduc {
+  }
+  .category {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .detailCategory {
+    text-align: center;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .detailCategory div {
+    margin-bottom: 15px;
+    margin-right: 0px;
+    width: 100%;
+  }
+  .nameProduct {
+    /* display: block; */
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+  }
+  .nameProduct span {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .numberPrice {
+    display: block;
+    text-align: center;
+  }
+  .priceRange {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 0px;
+  }
+  .priceRange span {
+    margin-bottom: 8px;
+  }
+  .priceRange span:nth-child(3) {
+    margin-left: 0px;
+  }
+  .selectPrice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .selectPrice span {
+    margin-bottom: 10px;
+    margin-right: 0px;
+  }
+  .button {
+    display: flex;
+    justify-content: center;
+  }
+  .listProduct {
+  }
+  .itemProduct {
+    width: 50%;
+  }
+  .percent {
+    font-size: 100%;
+  }
+  .percent span{
+    font-size: 100%;
+
+    /* width: 10%;   */
+  }
 }

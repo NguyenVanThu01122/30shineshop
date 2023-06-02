@@ -1,10 +1,25 @@
 .pageDetailProduct{
-  padding: 30px 140px;
+  padding: 40px 140px;
   .detailProduct{
     display: flex;
     justify-content: space-between;
     .headerProduct{
       width: 76%;
+      .imgProduct{
+        display: flex;
+        margin-top: 10px;
+        padding-top: 20px;
+        
+        & >div img{
+          width: 60px;
+          margin-right: 15px;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .borderYellow{
+          border: 1px solid yellow;
+        }
+      }
     .product{
       display: flex;
       .imgProduct{
@@ -15,13 +30,16 @@
         width: 100%;
         height: 400px;
         object-fit: cover;
-        
+      }
+      .imgProduct img:hover{
+        transform: scale(1.1);      
+  
       }
       .detailnformation{
         width: 60%;
         & >div:first-child{
           font-size: 1.25rem;
-          font-family: "Be Vietnam Pro";
+          color: rgba(58, 58, 58, 0.991);
         }
         .number{
           margin: 10px 0px 30px 0px;
@@ -47,7 +65,7 @@
           }
         }
         & >div:nth-child(3){
-          margin: 25px 0px;
+          margin: 20px 0px;
           font-size: .875rem;
         }
         &> div:nth-child(4){
@@ -125,7 +143,7 @@
         .orderProducts{
           display: flex;
           .addCart{
-            width: 45%;
+            width: 40%;
             border: 1px solid black;
             border-radius: 0.25rem;
             display: flex;
@@ -142,14 +160,14 @@
               margin-right: 10px;
             }
             .icon{
-              font-size: 25px;
+              font-size: 20px;
             }
           }
           .buyNow{
-            width: 48%;
+            width: 45%;
             cursor: pointer;
             text-align: center;
-            padding: 5px 10px;
+            padding: 3px 10px;
             border-radius: 0.25rem;
             border: 1px solid rgba(255,204,51);
             background-color: rgba(255,204,51);

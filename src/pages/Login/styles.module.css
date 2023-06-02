@@ -56,6 +56,9 @@
   margin-right: 4px;
   color: red;
 }
+.borderRed {
+  border: 1px solid red !important;
+}
 .input {
   border: 1px solid black;
   padding-left: 10px;
@@ -64,16 +67,22 @@
   color: #777;
 }
 .input input {
-  width: 90%;
+  width: 88%;
   background: transparent;
 }
 .input input:focus {
   outline: none;
 }
+
+.iconEye{
+  cursor: pointer;
+  width: 18px;
+}
 .icon {
   width: 20px;
   font-size: 15px;
 }
+
 .input input {
   border: none;
   padding: 10px 0px;
@@ -112,6 +121,7 @@
   font-size: 12px;
   color: red;
   margin-bottom: 7px;
+  font-style: italic;
 }
 /* responsive */
 @media screen and (max-width: 576px) {

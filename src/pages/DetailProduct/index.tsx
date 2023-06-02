@@ -1,4 +1,5 @@
 import { StarOutlined } from '@ant-design/icons'
+import { Button, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
@@ -10,17 +11,23 @@ function DetailProduct() {
   let params = useParams()
   // Lấy chi tiết sản phẩm: // http://shop30shine.herokuapp.com/product/${params.id}
   // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
+  const [loading, setLoading] = useState(false)
   const [detailProduct, setDetailProduct] = useState<any>({})
-
-  useEffect(() => {
+  const [img, setImg] = useState('')
+  const [disabled, setDisabled] = useState(false)
+  const getDetailProduct = (id: any) => {
     privateAxios
-      .get(`/product/${params.id}`)
+      .get(`/product/${id}`)
       .then((res) => {
-        console.log(res.data?.data)
         setDetailProduct(res.data?.data)
       })
-      .catch((_error) => {})
-    setDetailProduct('Lỗi server')
+      .catch((error) => {
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    getDetailProduct(params.id)
   }, [])
   let [count, setCount] = useState(1)
 
@@ -34,8 +41,36 @@ function DetailProduct() {
       alert('Bạn không được mua quá 10 sản phẩm')
     }
   }
+  let handlOnclickImage = () => {
+    let imgElement = document.getElementById('img')
+    imgElement?.classList.add('border-red')
+  }
+  const handleAddCart = (id: string, amount: number) => {
+    setDisabled(true)
+    setLoading(true)
+    privateAxios
+      .post('/cart', {
+        id,
+        amount
+      })
+      .then((res) => {
+        setLoading(false)
+        setDisabled(false)
+        message.success(
+          `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
+        )
+      })
+      .catch((error) => {
+        message.error(error.responese.data?.message)
+        setLoading(false)
+        setDisabled(false)
+      })
+  }
   return (
     <div className={styles.pageDetailProduct}>
+      {/* <Button disabled={disabled} loading={loading} onClick={() => handleAddCart(detailProduct.id, count)}>
+        Thêm giỏ hàng
+      </Button> */}
       <div className={styles.detailProduct}>
         <div className={styles.headerProduct}>
           <div className={styles.product}>
@@ -45,7 +80,7 @@ function DetailProduct() {
             <div className={styles.detailnformation}>
               <div>{detailProduct?.name}</div>
               <div className={styles.number}>
-                <div>{detailProduct?.star}</div>
+                <div>{detailProduct.star}</div>
                 <div>
                   {detailProduct?.star === 5 && (
                     <div>
@@ -104,7 +139,9 @@ function DetailProduct() {
                 </div>
                 <div>{detailProduct?.totalEvaluate} đánh giá</div>
               </div>
-              <div style={{ fontSize: '18px' }}>{detailProduct?.salePrice} VND</div>
+              <div style={{ fontSize: '25px', color: 'rgba(229,77,62', fontFamily: 'Oswald', fontWeight: '600' }}>
+                {detailProduct?.salePrice} VND
+              </div>
               <div className={styles.salePrice}>
                 <div>{detailProduct?.originPrice} VND</div>
                 <div>
@@ -130,11 +167,43 @@ function DetailProduct() {
                   </div>
                   <div>THÊM GIỎ HÀNG</div>
                 </div>
+
                 <div className={styles.buyNow}>
-                  ~<div>MUA NGAY</div>
+                  <div>MUA NGAY</div>
                   <div>Không ưng đổi ngay trong 30 ngày</div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div className={styles.imgProduct}>
+            <div>
+              <img
+                id='img'
+                onClick={handlOnclickImage}
+                src='https://static.30shine.com/shop-admin/2022/04/08/30SM98K3-SRM%20Than%20ho%E1%BA%A1t%20t%C3%ADnh%20-%20USP.jpg'
+                alt='image'
+              />
+            </div>
+            <div>
+              <img
+                src='https://static.30shine.com/shop-admin/2021/09/29/30SC491Q-Than%203%20%C4%90%E1%BA%B7c%20t%E1%BA%A3.jpg'
+                alt='image'
+              />
+            </div>
+            <div>
+              <img src='https://static.30shine.com/shop-admin/2021/09/29/30STCFFW-Than%204.jpg' alt='image' />
+            </div>
+            <div>
+              <img
+                src='https://static.30shine.com/shop-admin/2021/12/28/30SC5CNT-SRM%20Than%20ho%E1%BA%A1t%20t%C3%ADnh%20-%20Info.jpg'
+                alt='image'
+              />
+            </div>
+            <div>
+              <img
+                src='https://static.30shine.com/shop-admin/2022/04/08/30SM98K3-SRM%20Than%20ho%E1%BA%A1t%20t%C3%ADnh%20-%20USP.jpg'
+                alt='image'
+              />
             </div>
           </div>
           <div className={styles.informationItem}>
@@ -353,9 +422,7 @@ function DetailProduct() {
               <div>
                 690.000<span>đ</span>
               </div>
-              <div>
-                828.000<span>đ</span>
-              </div>
+              <div></div>
             </div>
             <div>
               <img

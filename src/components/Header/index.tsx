@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
-import { AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai'
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
-import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Header() {
@@ -66,9 +67,7 @@ export default function Header() {
               name='text'
               placeholder='Nhập tên sản phẩm, thương hiệu ...'
             />
-            <span>
-              <AiOutlineSearch />
-            </span>
+            <FontAwesomeIcon className={styles.iconSeach} icon={faMagnifyingGlass} />
           </div>
           <div className={styles.login}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
@@ -79,7 +78,7 @@ export default function Header() {
               <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
             )}
           </div>
-          <AiOutlineShoppingCart className={styles.icon} />
+          <AiOutlineShoppingCart className={styles.icon} onClick={()=>navigate('/cart')} />
           {/* <div className={styles.informationAccount} onClick={()=>handleDirection('/account')}>Thông tin tài khoản</div> */}
         </div>
       </div>

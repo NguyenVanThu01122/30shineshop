@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
+import { useNavigate } from 'react-router-dom'
 import { checkLogin } from '../../helper'
 import styles from './styles.module.css'
-import { useNavigate } from 'react-router-dom'
+
 export default function Account() {
   let navigate = useNavigate()
   let [name, setName] = useState('')
@@ -18,8 +19,8 @@ export default function Account() {
     setName(name)
     if (!name) {
       setErrorName('Vui lòng nhập tên')
-    } else if (name.length < 2 || name.length > 15) {
-      setErrorName('Vui lòng nhập độ dài từ 2 đến 10 kí tự')
+    } else if (name.length < 6 || name.length > 15) {
+      setErrorName('Vui lòng nhập độ dài từ 6 đến 15 kí tự')
     } else {
       setErrorName('')
     }
@@ -61,10 +62,24 @@ export default function Account() {
       setBirthday('')
     }
   }
-  let handleLogOut =()=>{
-    localStorage.removeItem('token');
+  let handleLogOut = () => {
+    localStorage.removeItem('token')
     navigate('/login')
-    
+  }
+  let handleOnclickName = () => {
+    if (!name) {
+      setErrorName('Vui lòng nhập tên')
+    }
+  }
+  let handleOnclickEmail = () => {
+    if (!email) {
+      setErrorEmail('Vui lòng nhập Email')
+    }
+  }
+  let handleOnclickBirthday = () => {
+    if (!birthday) {
+      setErrorBirthday('Vui lòng nhập ngày sinh')
+    }
   }
   return (
     <div className={styles.pageAccount}>
@@ -98,10 +113,11 @@ export default function Account() {
           </div>
           <div className={styles.list}>
             <BsBoxArrowRight />
-            {
-              checkLogin() && <div className={styles.logOut} onClick={handleLogOut}>Đăng xuất</div>
-         
-            }
+            {checkLogin() && (
+              <div className={styles.logOut} onClick={handleLogOut}>
+                Đăng xuất
+              </div>
+            )}
           </div>
         </div>
         <div className={styles.accountInformation}>
@@ -109,7 +125,17 @@ export default function Account() {
           <div className={styles.login}>
             <div className={styles.loginInput}>
               <div>Họ tên</div>
-              <input type='text' placeholder='Họ tên' value={name} onChange={handleOnChangeName} />
+              <div className={styles.input}>
+                <input
+                  id='name'
+                  className={`${errorName ? styles.borderRed : ''}`}
+                  type='text'
+                  placeholder='Họ tên'
+                  value={name}
+                  onChange={handleOnChangeName}
+                  onClick={handleOnclickName}
+                />
+              </div>
             </div>
             <div className={styles.errorText}>{errorName}</div>
             <div className={styles.loginInput}>
@@ -118,12 +144,33 @@ export default function Account() {
             </div>
             <div className={styles.loginInput}>
               <div>Email</div>
-              <input type='email' name='email' id='' placeholder='Email' value={email} onChange={handleOnchageEmail} />
+              <div className={styles.input}>
+                <input
+                  className={`${errorEmail ? styles.borderRed : ''}`}
+                  id='email'
+                  type='email'
+                  name='email'
+                  placeholder='Email'
+                  value={email}
+                  onClick={handleOnclickEmail}
+                  onChange={handleOnchageEmail}
+                />
+              </div>
             </div>
             <div className={styles.errorText}>{errorEmail}</div>
             <div className={styles.loginInput}>
               <div>Ngày sinh</div>
-              <input type='date' name='birthday' value={birthday} onChange={handleOnchageBirthday} />
+              <div className={styles.input}>
+                <input
+                  className={`${errorBirthday ? styles.borderRed : ''}`}
+                  id='birthday'
+                  onClick={handleOnclickBirthday}
+                  type='date'
+                  name='birthday'
+                  value={birthday}
+                  onChange={handleOnchageBirthday}
+                />
+              </div>
             </div>
             <div className={styles.errorText}>{errorBirthday}</div>
             <div onClick={handleSubmit}>Cập nhật</div>

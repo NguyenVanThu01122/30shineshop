@@ -54,7 +54,8 @@ export default function ListProduct() {
       })
       .then((response) => {
         setLoading(false)
-        setList(response.data?.data)
+        console.log(response)
+        setList(response.data.data)
         setError('')
       })
       .catch((error) => {
@@ -127,14 +128,15 @@ export default function ListProduct() {
             <option value='1'>Giá từ cao đến thấp</option>
           </select>
         </div>
-        <Button type='primary' size='large' onClick={handleSearch}>
-          Tìm kiếm
-        </Button>
-        {/* <div className={styles.buttonSearch}>
+        <div  className={styles.button}>
+          <Button type='primary' size='large' onClick={handleSearch}>
+            Tìm kiếm
+          </Button>
+          {/* <div className={styles.buttonSearch}>
           <button onClick={handleSearch}>Tìm kiếm sản phẩm</button>
         </div> */}
+        </div>
       </div>
-
       <div className={styles.findProducts}>
         <div>{list.length} sản phẩm được tìm thấy</div>
       </div>
@@ -150,8 +152,8 @@ export default function ListProduct() {
               <div className={styles.itemProduct} key={item.id}>
                 <div className={styles.stickerPercen}>
                   <div></div>
-                  <div>
-                    <span>-</span> {100 - (item.salePrice / item.originPrice) * 100} %
+                  <div className={styles.percent}>
+                    <span>-</span> {Math.floor(100 - (item.salePrice / item.originPrice) * 100)}%
                   </div>
                   <div></div>
                 </div>

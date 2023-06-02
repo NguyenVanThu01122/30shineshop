@@ -1,11 +1,11 @@
-import { faCakeCandles, faEnvelope, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faCakeCandles, faEnvelope, faEye, faLock, faPhone, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
 import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
-import { message } from 'antd'
 
 export default function Register() {
   let navigate = useNavigate()
@@ -26,99 +26,86 @@ export default function Register() {
   let [errorRepeat, setErrorRepeat] = useState('')
   let [errorCheck, setErrorCheck] = useState('')
 
+  let [isPassword, setIsPassword] = useState(false)
+  let [isRepeatPassword, setIsRepeatPassword] = useState(false)
   let handleOnchageName = (e: any) => {
     let name = e.target.value
     setName(name)
-    let nameElement = document.getElementById('name')
     if (!name) {
       setErrorName('x Vui lòng nhập tên')
-      nameElement?.classList.add('border-red')
     } else if (name.length <= 5 || name.length >= 16) {
       setErrorName('x Vui lòng nhập tên từ 6-15 kí tự trở lên')
     } else {
       setErrorName('')
-      nameElement?.classList.remove('border-red')
     }
   }
   let handleOnchagePassword = (e: any) => {
     let password = e.target.value
+    // const arr = ['!', '@', '$', '%', '&', '*']
     setPassword(password)
-    let passwordElement = document.getElementById('password')
     if (!password) {
-      passwordElement?.classList.add('border-red')
       setErrorPassword('x Vui lòng nhập mật khẩu')
-    } else if (password.length <= 5) {
-      passwordElement?.classList.add('border-red')
+    }
+    //  else if (arr.indexOf(password[0]) === -1) {
+    //   setErrorPassword('ký tự đầu tiên phải là ký tự đặt biệt')
+    // }
+    else if (password.length <= 5) {
       setErrorPassword('x Vui lòng nhập từ 6 kí tự trở lên')
     } else {
       setErrorPassword('')
-      passwordElement?.classList.remove('border-red')
     }
   }
   let handleOnchageBirthday = (e: any) => {
     let birthday = e.target.value
     setBirthday(birthday)
-    let birthdayElement = document.getElementById('birthday')
     if (!birthday) {
-      birthdayElement?.classList.add('border-red')
       setErrorBirthday('x Vui lòng nhập ngày sinh')
     } else {
       setErrorBirthday('')
-      birthdayElement?.classList.remove('border-red')
     }
   }
   let handleOnchageEmail = (e: any) => {
-    let email = e.target.value
+    let email: string = e.target.value
     setEmail(email)
-    let emailElement = document.getElementById('email')
     if (!email) {
-      emailElement?.classList.add('border-red')
       setErrorEmail('x Vui lòng nhập email')
+    } else if (email.includes('@') === false) {
+      setErrorEmail('Vui lòng nhập đúng định dạng')
     } else {
       setErrorEmail('')
-      emailElement?.classList.remove('border-red')
     }
   }
   let handleOnchagePhone = (e: any) => {
-    let phone = e.target.value
+    let phone = String(e.target.value)
     setPhone(phone)
-    let phoneElement = document.getElementById('phone')
     if (!phone) {
-      phoneElement?.classList.add('border-red')
       setErrorPhone('x Vui lòng nhập số điện thoại')
+    } else if (phone[0] !== '0') {
+      setErrorPhone('x Số điện thoại phải bắt đầu bằng số 0')
     } else if (phone.length !== 10) {
-      phoneElement?.classList.add('border-red')
       setErrorPhone('x Vui lòng nhập đầy đủ số điện thoại')
     } else {
       setErrorPhone('')
-      phoneElement?.classList.remove('border-red')
     }
   }
   let handleOnchageRepeat = (e: any) => {
     let repeat = e.target.value
     setRepeat(repeat)
-    let repeatElement = document.getElementById('repeatPassword')
     if (!repeat) {
-      repeatElement?.classList.add('border-red')
       setErrorRepeat('x Vui lòng nhập lại mật khẩu')
     } else if (password !== repeat) {
-      repeatElement?.classList.add('border-red')
       setErrorRepeat('x Vui lòng nhập đúng mật khẩu')
     } else {
       setErrorRepeat('')
-      repeatElement?.classList.remove('border-red')
     }
   }
   let handleOnchageGender = (e: any) => {
     let gender = e.target.value
     setGender(gender)
-    let genderElement = document.getElementById('gender')
     if (!gender) {
-      genderElement?.classList.add('border-red')
       setErrorGender('x Vui lòng chọn giới tính')
     } else {
       setErrorGender('')
-      genderElement?.classList.remove('border-red')
     }
   }
   let handleCheckbox = (e: any) => {
@@ -135,35 +122,24 @@ export default function Register() {
       setErrorCheck('')
     }
     if (!name) {
-      document.getElementById('name')?.classList.add('border-red')
       setErrorName('x Vui lòng nhập tên')
     }
     if (!password) {
-      document.getElementById('password')?.classList.add('border-red')
       setErrorPassword('x Vui lòng nhập mật khẩu')
     }
     if (!phone) {
-      document.getElementById('phone')?.classList.add('border-red')
       setErrorPhone('x Vui lòng nhập số điện thoại')
     }
     if (!gender) {
-      document.getElementById('gender')?.classList.add('border-red')
       setErrorGender('x Vui lòng chọn giới tính')
     }
-    if (!checkbox) {
-      document.getElementById('checkbox')?.classList.add('border-red')
-      setErrorCheck('x Vui lòng xác nhận')
-    }
     if (!email) {
-      document.getElementById('email')?.classList.add('border-red')
       setErrorEmail('x Vui lòng nhập email')
     }
     if (!repeat) {
-      document.getElementById('repeatPassword')?.classList.add('border-red')
       setErrorRepeat('x Vui lòng nhập lại mật khẩu')
     }
     if (!birthday) {
-      document.getElementById('birthday')?.classList.add('border-red')
       setErrorBirthday('x Vui lòng nhập ngày sinh')
     }
     if (
@@ -200,7 +176,7 @@ export default function Register() {
           setRepeat('')
           setBirthday('')
           setGender('')
-            ; (document.getElementById('checkbox') as any).checked = false
+          ;(document.getElementById('checkbox') as any).checked = false
           navigate('/login')
         })
         .catch((error) => {
@@ -221,53 +197,59 @@ export default function Register() {
     }
   }
   let handleBlurName = () => {
-    let nameElement = document.getElementById('name')
     if (!name) {
-      nameElement?.classList.add('border-red')
       setErrorName('x Vui lòng nhập tên')
     }
   }
   let handleBlurEmail = () => {
-    let emailElement = document.getElementById('email')
     if (!email) {
-      emailElement?.classList.add('border-red')
       setErrorEmail('x Vui lòng nhập email')
     }
   }
   let handleBlurPassword = () => {
-    let passwordElement = document.getElementById('password')
     if (!password) {
-      passwordElement?.classList.add('border-red')
       setErrorPassword('x Vui lòng nhập mật khẩu')
     }
   }
   let handleBlurBirthday = () => {
-    let birthdayElement = document.getElementById('birthday')
     if (!birthday) {
-      birthdayElement?.classList.add('border-red')
       setErrorBirthday('x Vui lòng chọn ngày sinh')
     }
   }
   let handleBlurGender = () => {
-    let genderElement = document.getElementById('gender')
     if (!gender) {
-      genderElement?.classList.add('border-red')
       setErrorGender('x Vui lòng chọn giới tính')
     }
   }
   let handleBlurPhone = () => {
-    let phoneElement = document.getElementById('phone')
     if (!phone) {
-      phoneElement?.classList.add('border-red')
       setErrorPhone('x Vui lòng nhập số điện thoại')
     }
   }
   let handleBlurRepeat = () => {
-    let repeatElement = document.getElementById('repeatPassword')
     if (!repeat) {
-      repeatElement?.classList.add('border-red')
       setErrorRepeat('x Vui lòng nhập lại mật khẩu')
     }
+  }
+  let handleClickPassword = () => {
+    setIsPassword(!isPassword)
+    // let elementPassword = document.getElementById('password')
+    // let valuePassword = elementPassword?.getAttribute('type')
+    // if (valuePassword === 'password') {
+    //   elementPassword?.setAttribute('type', 'text')
+    // } else if (valuePassword === 'text') {
+    //   elementPassword?.setAttribute('type', 'password')
+    // }
+  }
+  let handleClickRepeat = () => {
+    setIsRepeatPassword(!isRepeatPassword)
+    // let elementRepeat = document.getElementById('repeat')
+    // let valueRepeat = elementRepeat?.getAttribute('type')
+    // if (valueRepeat === 'password') {
+    //   elementRepeat?.setAttribute('type', 'text')
+    // } else if (valueRepeat === 'text') {
+    //   elementRepeat?.setAttribute('type', 'number')
+    // }
   }
   return (
     <div className={styles.registerWrapper}>
@@ -282,7 +264,7 @@ export default function Register() {
               <div>
                 <span>*</span>Họ tên
               </div>
-              <div className={styles.iconInput} id='name'>
+              <div className={`${styles.iconInput} ${errorName ? styles.borderRed : ''}`}>
                 <input
                   onBlur={handleBlurName}
                   className={styles.input}
@@ -299,16 +281,18 @@ export default function Register() {
               <div>
                 <span>*</span>Mật khẩu
               </div>
-              <div className={styles.iconInput} id='password'>
+              <div className={`${styles.iconInput} ${errorPassword ? styles.borderRed : ''}`}>
                 <FontAwesomeIcon icon={faLock} />
                 <input
+                  id='password'
                   onBlur={handleBlurPassword}
                   value={password}
-                  type='password'
+                  type={isPassword ? 'text' : 'password'}
                   name='password'
                   placeholder='Mật khẩu'
                   onChange={handleOnchagePassword}
                 />
+                <FontAwesomeIcon icon={faEye} onClick={handleClickPassword} />
               </div>
               <div className={styles.errorText}>{errorPassword}</div>
             </div>
@@ -316,7 +300,8 @@ export default function Register() {
               <div>
                 <span>*</span>Ngày sinh
               </div>
-              <div className={styles.iconInput} id='birthday'>
+              <div className={`${styles.iconInput} ${errorBirthday ? styles.borderRed : ''}`}>
+                {' '}
                 <FontAwesomeIcon icon={faCakeCandles} />
                 <input
                   onBlur={handleBlurBirthday}
@@ -333,7 +318,8 @@ export default function Register() {
               <div>
                 <span>*</span>Số điện thoại
               </div>
-              <div className={styles.iconInput} id='phone'>
+              <div className={`${styles.iconInput} ${errorPhone ? styles.borderRed : ''}`}>
+                {' '}
                 <FontAwesomeIcon icon={faPhone} />
                 <input
                   onBlur={handleBlurPhone}
@@ -352,7 +338,8 @@ export default function Register() {
               <div>
                 <span>*</span>Email
               </div>
-              <div className={styles.iconInput} id='email'>
+              <div className={`${styles.iconInput} ${errorEmail ? styles.borderRed : ''}`}>
+                {' '}
                 <FontAwesomeIcon icon={faEnvelope} />
                 <input
                   onBlur={handleBlurEmail}
@@ -369,16 +356,19 @@ export default function Register() {
               <div>
                 <span>*</span>Xác thực lại mật khẩu
               </div>
-              <div className={styles.iconInput} id='repeatPassword'>
+              <div className={`${styles.iconInput} ${errorRepeat ? styles.borderRed : ''}`}>
+                {' '}
                 <FontAwesomeIcon icon={faLock} />
                 <input
+                  id='repeat'
                   onBlur={handleBlurRepeat}
                   value={repeat}
-                  type='password'
+                  type={isRepeatPassword ? 'text' : 'password'}
                   name='password'
                   placeholder='Xác thực lại mật khẩu'
                   onChange={handleOnchageRepeat}
                 />
+                <FontAwesomeIcon icon={faEye} onClick={handleClickRepeat} />
               </div>
               <div className={styles.errorText}>{errorRepeat}</div>
             </div>
@@ -386,7 +376,8 @@ export default function Register() {
               <div>
                 <span>*</span>Giới tính
               </div>
-              <div className={styles.iconInput} id='gender'>
+              <div className={`${styles.iconInput} ${errorGender ? styles.borderRed : ''}`}>
+                {' '}
                 <FontAwesomeIcon icon={faUser} />
                 <select
                   onBlur={handleBlurGender}
@@ -417,7 +408,7 @@ export default function Register() {
           <div className={styles.errorText}>{errorCheck}</div>
         </div>
         <div className={styles.registerLogin}>
-          <div onClick={handleSubmit}>{ }ĐĂNG KÝ</div>
+          <div onClick={handleSubmit}>{}ĐĂNG KÝ</div>
           {/* {name &&
         phone &&
         repeat &&

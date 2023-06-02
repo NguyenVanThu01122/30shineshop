@@ -1,15 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './styles.module.css'
 export default function Contact() {
   let token = localStorage.getItem('token')
 
   let [name, setName] = useState('')
   let [phone, setPhone] = useState('')
+  let [email, setEmail] = useState('')
   let [content, setContent] = useState('')
 
   let [errorName, setErrorName] = useState('')
   let [errorPhone, setErrorPhone] = useState('')
+  let [errorEmail, setErrorEmail] = useState('')
   let [errorContent, setErrorContent] = useState('')
+
   let handleOnchageName = (e: any) => {
     const name = e.target.value
     setName(name)
@@ -33,6 +36,15 @@ export default function Contact() {
       setErrorPhone('')
     }
   }
+  let handleOnchagEmail = (e: any) => {
+    const email = e.target.value
+    setEmail(email)
+    if (!email) {
+      setErrorEmail('Vui lòng nhập Email')
+    } else {
+      setErrorEmail('')
+    }
+  }
   let handleOnchageContent = (e: any) => {
     const content = e.target.value
     setContent(content)
@@ -42,12 +54,13 @@ export default function Contact() {
       setErrorContent('')
     }
   }
-
   let handleOnSubmit = () => {
     if (!name) {
       setErrorName('vui lòng nhập tên')
     }
-
+    if (!email) {
+      setErrorEmail('Vui lòng nhập Email')
+    }
     if (!phone) {
       setErrorPhone('vui lòng nhập số điện thoại')
     }
@@ -63,6 +76,39 @@ export default function Contact() {
       setContent('')
     }
   }
+  let handleOnBlurName = () => {
+    if (!name) {
+      setErrorName('Vui lòng nhập tên')
+    }
+    else{
+      setErrorName('')
+    }
+  }
+  let handleOnBlurEmail = () => {
+    if (!email) {
+      setErrorEmail('Vui lòng nhập Email')
+    }
+    else{
+      setErrorEmail('')
+    }
+  }
+  let handleOnBlurPhone = () => {
+    if (!phone) {
+      setErrorPhone('Vui lòng nhập số điện thoại')
+    }
+    else{
+      setErrorPhone('')
+    }
+  }
+  let handleOnBlurContent =()=>{
+    if(!content){
+      setErrorContent('Vui lòng nhập nội dung')
+    }
+    else{
+      setErrorContent('')
+    }
+  }
+
   return (
     <div className={styles.pageContact}>
       {/* <div className={styles.homeContact}>
@@ -117,28 +163,52 @@ export default function Contact() {
             </div>
             <div className={styles.loginName}>
               <div>Họ và tên *</div>
-              <input value={name} type='text' placeholder='Nhập họ và tên của bạn' onChange={handleOnchageName} />
+              <div id='name' className={`${errorName ? styles.borderRed : ''}`}>
+                <input
+                  onBlur={handleOnBlurName}
+                  value={name}
+                  type='text'
+                  placeholder='Nhập họ và tên của bạn'
+                  onChange={handleOnchageName}
+                />
+              </div>
               <div className={styles.errorText}>{errorName}</div>
             </div>
             <div className={styles.loginPhone}>
-              <div>
+              <div className={styles.phone}>
                 <div>Số điện thoại *</div>
-                <input
-                  value={phone}
-                  type='text'
-                  placeholder='Nhập số điện thoại của bạn '
-                  onChange={handleOnchagePhone}
-                />
+                <div id='phone' className={`${errorPhone ? styles.borderRed : ''}`}>
+                  <input
+                    onBlur={handleOnBlurPhone}
+                    value={phone}
+                    type='text'
+                    placeholder='Nhập số điện thoại của bạn '
+                    onChange={handleOnchagePhone}
+                  />
+                </div>
                 <div className={styles.errorText}>{errorPhone}</div>
               </div>
-              <div>
+              <div className={styles.loginEmail}>
                 <div>Email</div>
-                <input type='text' name='' id='' placeholder='Nhập địa chỉ Email của bạn' />
+                <div id='email' className={`${errorEmail ? styles.borderRed : ''}`}>
+                  <input
+                    onBlur={handleOnBlurEmail}
+                    onChange={handleOnchagEmail}
+                    value={email}
+                    type='text'
+                    name=''
+                    id=''
+                    placeholder='Nhập địa chỉ Email của bạn'
+                  />
+                </div>
+                <div className={styles.errorText}>{errorEmail}</div>
               </div>
             </div>
             <div className={styles.content}>
               <div>Nội dung liên hệ *</div>
-              <textarea value={content} onChange={handleOnchageContent} placeholder='Nội dung liên hệ'></textarea>
+              <div id='content' className={`${errorContent ? styles.borderRed : ''}`}>
+                <textarea onBlur={handleOnBlurContent} value={content} onChange={handleOnchageContent} placeholder='Nội dung liên hệ'></textarea>
+              </div>
               <div className={styles.errorText}>{errorContent}</div>
               <div onClick={handleOnSubmit}>GỬI THÔNG TIN</div>
             </div>

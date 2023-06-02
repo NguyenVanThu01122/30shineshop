@@ -1,10 +1,9 @@
-
 .headerBlog {
   display: flex;
   padding: 15px 100px;
   background-color: rgba(148, 142, 142, 0.226);
 }
-.headerBlog >div:last-child{
+.headerBlog > div:last-child {
   margin-left: 8px;
 }
 .sectionTwo {
@@ -46,8 +45,12 @@
   justify-content: space-between;
 }
 .introduceWax img:first-child {
+  transition: transform 0.2s ease;
   width: 40%;
   margin-bottom: 50px;
+}
+.introduceWax img:first-child:hover {
+  transform: scale(1.2);
 }
 .productDescription {
   width: 58%;
@@ -129,13 +132,16 @@
 .productAnswer {
   display: flex;
   cursor: pointer;
-
   justify-content: space-between;
 }
 .imgWax {
   width: 27%;
   margin-bottom: 50px;
   cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.imgWax:hover {
+  transform: scale(1.2);
 }
 .useWax {
   margin-top: 5px;
@@ -149,21 +155,20 @@
 .useWax > div:first-child:hover {
   color: rgba(255, 204, 51);
 }
-.sectionEnd{
+.sectionEnd {
   display: flex;
   justify-content: center;
-
 }
-.sectionEnd div{
+.sectionEnd div {
   padding: 10px 15px;
   border: 1px solid #e8e8e8;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
 }
-.sectionEnd div:hover{
+.sectionEnd div:hover {
   background-color: rgba(255, 204, 51);
 }
-.sectionEnd >div:nth-child(3){
+.sectionEnd > div:nth-child(3) {
   background-color: rgba(255, 204, 51);
 }

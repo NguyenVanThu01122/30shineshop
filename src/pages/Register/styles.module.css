@@ -65,11 +65,15 @@
 .informationChild input {
   border: none;
   margin-left: 5px;
-  width: 90%;
+  width: 84%;
 }
 .informationChild input:focus {
   outline: none;
 }
+.borderRed {
+  border: 1px solid red !important;
+}
+
 .iconInput {
   border: 1px solid rgba(0, 0, 0, 0.123);
   padding: 10px 12px;
@@ -123,6 +127,7 @@
 .errorText {
   font-size: 12px !important;
   color: red !important;
+  font-style: italic;
 }
 .login:hover {
   background-color: #f76c46;

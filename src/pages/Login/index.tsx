@@ -1,57 +1,49 @@
-import { faLock, faUser } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import {RxEyeOpen  } from "react-icons/ri";
 import { useState } from 'react'
 
+import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
 import { publicAxios } from '../../service/axios'
 import styles from './styles.module.css'
-
-import { message } from 'antd'
-
 export default function Login() {
   let navigate = useNavigate()
   let [email, setEmail] = useState('')
   let [password, setPassword] = useState('')
-
   let [errorEmail, setErrorEmail] = useState('')
   let [errorPassword, setErrorPassword] = useState('')
-
-  let handleEmail = (e: any) => {
+  let [isShowPassword, setIsPassword] = useState(false)
+  let handleOnChangeEmail = (e: any) => {
     let valueEmail = e.target.value
     setEmail(valueEmail)
-    let emailElement = document.getElementById('email')
     if (!valueEmail) {
-      setErrorEmail('Vui lòng nhập email')
-      emailElement?.classList.add('border-red')
+      setErrorEmail('x Vui lòng nhập email')
+    } else if (valueEmail.indexOf('@') === -1) {
+      setErrorEmail('x Vui lòng nhập đúng định dạng Email')
     } else {
       setErrorEmail('')
-      emailElement?.classList.remove('border-red')
     }
   }
 
-  let handlePassword = (e: any) => {
+  let handleOnChangePassword = (e: any) => {
     let valuePassword = e.target.value
     setPassword(valuePassword)
-    let passwordElement = document.getElementById('password')
     if (!valuePassword) {
-      setErrorPassword('Vui lòng nhập mật khẩu')
-      passwordElement?.classList.add('border-red')
+      setErrorPassword('x Vui lòng nhập mật khẩu')
     } else {
       setErrorPassword('')
-      passwordElement?.classList.remove('border-red')
     }
   }
 
   let handleOnSubmit = (e: any) => {
     e.preventDefault()
     if (!email) {
-      document.getElementById('email')?.classList.add('border-red')
-      setErrorEmail('Vui lòng nhập email')
+      setErrorEmail('x Vui lòng nhập email')
     }
     if (!password) {
-      document.getElementById('password')?.classList.add('border-red')
-      setErrorPassword('Vui lòng nhập mật khẩu')
+      setErrorPassword('x Vui lòng nhập mật khẩu')
     }
     if (email && password && !errorEmail && !errorPassword) {
       let data = {
@@ -74,20 +66,30 @@ export default function Login() {
   }
 
   const handleBlurEmail = () => {
-    let emailElement = document.getElementById('email')
     if (!email) {
-      emailElement?.classList.add('border-red')
-      setErrorEmail('Vui lòng nhập email')
+      setErrorEmail('x Vui lòng nhập email')
     }
   }
   const handleBlurPassword = () => {
-    let passwordElement = document.getElementById('password')
     if (!password) {
-      passwordElement?.classList.add('border-red')
-      setErrorPassword('Vui lòng nhập mật khẩu')
+      setErrorPassword('x Vui lòng nhập mật khẩu')
     }
   }
-
+  const handleClickPassword = () => {
+    // if (isShowPassword === true) {
+    //   setIsPassword(false)
+    // } else {
+    //   setIsPassword(true)
+    // }
+    setIsPassword(!isShowPassword)
+    // let elementPassword = document.getElementById('password')
+    // let valueTypeElement = elementPassword?.getAttribute('type')
+    // if (valueTypeElement === 'password') {
+    //   elementPassword?.setAttribute('type', 'text')
+    // } else if (valueTypeElement === 'text') {
+    //   elementPassword?.setAttribute('type', 'password')
+    // }
+  }
   return (
     <div className={styles.page}>
       <div className={styles.login}>
@@ -101,7 +103,7 @@ export default function Login() {
           <div className={styles.email}>
             <span>*</span>Email
           </div>
-          <div className={styles.input} id='email'>
+          <div className={`${styles.input} ${errorEmail ? styles.borderRed : ''}`}>
             <FontAwesomeIcon icon={faUser} className={styles.icon} />
             <input
               onBlur={handleBlurEmail}
@@ -109,7 +111,7 @@ export default function Login() {
               value={email}
               name='Email'
               placeholder='Email'
-              onChange={handleEmail}
+              onChange={handleOnChangeEmail}
             />
           </div>
           <div className={styles.errorText} id='error-email'>
@@ -118,19 +120,20 @@ export default function Login() {
           <div className={styles.password}>
             <span>*</span>Mật khẩu
           </div>
-          <div className={styles.input} id='password'>
+          <div className={`${styles.input} ${errorPassword ? styles.borderRed : ''}`}>
             <FontAwesomeIcon icon={faLock} className={styles.icon} />
             <input
               onBlur={handleBlurPassword}
               value={password}
-              type='password'
+              id='password'
+              type={isShowPassword ? 'text' : 'password'}
               name='password'
               placeholder='Mật khẩu'
-              onChange={handlePassword}
+              onChange={handleOnChangePassword}
             />
+            <FontAwesomeIcon id='iconFont' onClick={handleClickPassword} className={styles.iconEye} icon={faEye} />
           </div>
           <div className={styles.errorText}>{errorPassword}</div>
-
           <div className={styles.link}>
             <a href='#doimatkhau-pop-up' className='fancybox-fast-view'>
               Quên mật khẩu?
