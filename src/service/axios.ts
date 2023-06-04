@@ -7,6 +7,15 @@ const privateAxios = axios.create({
     Authorization: `Bearer ${localStorage.getItem('token')}`
   }
 })
+
+privateAxios.interceptors.request.use(
+  (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    return config
+  },
+  (error) => Promise.reject(error)
+)
 // // Add a response interceptor privateAxios
 // axios.interceptors.response.use(
 //   function (response) {
@@ -21,11 +30,6 @@ const privateAxios = axios.create({
 //   }
 // )
 
-const publicAxios = axios.create({
-  baseURL: 'http://shop30shine.herokuapp.com',
-  timeout: 4000
-})
-
 // export default publicAxios
 
-export { privateAxios, publicAxios }
+export { privateAxios }

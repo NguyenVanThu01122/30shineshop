@@ -161,7 +161,7 @@ function DetailProduct() {
                 </div>
               </div>
               <div className={styles.orderProducts}>
-                <div className={styles.addCart}>
+                <div className={styles.addCart} onClick={() => handleAddCart(detailProduct.id, count)}>
                   <div>
                     <BsCartPlus className={styles.icon} />
                   </div>

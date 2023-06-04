@@ -8,13 +8,6 @@ export default function Cart() {
   let [listCart, setListCart] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
-  const [category, setCategory] = useState('')
-  const listCategory: any = {
-    suaTamKhuMui: '6478daf5a45b4e114aee1e72',
-    dauGoi: '6478db0da45b4e114aee1e97',
-    suaRuaMat: '6478db3aa45b4e114aee1ece',
-    suaRuaMatTaoBot: '647971e0a45b4e114aee1fc4'
-  }
 
   const getListCart = () => {
     privateAxios
@@ -87,7 +80,7 @@ export default function Cart() {
                   return (
                     <div className='detailProduct' key={item.id}>
                       <div className='informationProduct'>
-                        <input type='checkbox' id='checkbox' onClick={() => setCategory(listCategory)} />
+                        <input type='checkbox' id='checkbox' />
                         <img className='imgProduct' src={item.image} alt='image' />
                         <div>{item.productName}</div>
                         <div className='priceProduct'>
@@ -130,6 +123,7 @@ export default function Cart() {
               {totalPrice} <span>đ</span>
             </div>
           </div>
+
           <div className='totalMoney'>
             <div className='money'>
               <div>Tổng tiền</div>
@@ -140,7 +134,7 @@ export default function Cart() {
             <div>Đã bao gồm VAT (nếu có)</div>
           </div>
         </div>
-        <div className={`order ${category ? 'borderRed' : '   '}`}>
+        <div className='order'>
           <div>TIẾN HÀNH ĐẶT HÀNG</div>
           <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
         </div>
