@@ -64,6 +64,7 @@ export default function Account() {
   }
   let handleLogOut = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('name')
     navigate('/login')
   }
   let handleOnclickName = () => {

@@ -1,13 +1,16 @@
-import { AiOutlineDelete } from 'react-icons/ai'
-
 import { message } from 'antd'
 import { useEffect, useState } from 'react'
+import { AiOutlineDelete } from 'react-icons/ai'
+import { useNavigate } from 'react-router'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper } from './style'
 export default function Cart() {
+  const navigate = useNavigate()
   let [listCart, setListCart] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
+
+  const [listCartId, setListCardId] = useState<any>([])
 
   const getListCart = () => {
     privateAxios
@@ -58,6 +61,34 @@ export default function Cart() {
         message.error(error.response?.data?.message)
       })
   }
+
+  const handleSelectCart = (cardId: string) => {
+    if (listCartId.includes(cardId)) {
+      const index = listCartId.findIndex((item: any) => item === cardId)
+      if (index !== -1) {
+        listCartId.splice(index, 1)
+        setListCardId([...listCartId])
+      }
+    } else {
+      listCartId.push(cardId)
+      setListCardId([...listCartId])
+    }
+  }
+
+  const handleOrder = () => {
+    if (listCartId.length === 0) {
+      message.error('Vui lòng chọn ít nhất một sản phẩm')
+    } else {
+      privateAxios
+        .post('/payment/order', {
+          listCartId
+        })
+        .then((res) => {
+          const paymentId = res.data?.paymentId
+          navigate(`/payment/${paymentId}`)
+        })
+    }
+  }
   return (
     <CartWrapper>
       <div className='itemCart'>
@@ -66,7 +97,7 @@ export default function Cart() {
           <div className='product'>
             <div className='itemTitle'>
               <div className='checkboxProduct'>
-                <input type='checkbox' />
+                {/* <input type='checkbox' /> */}
                 <span>Sản phẩm</span>
               </div>
               <div className='titleProduct'>
@@ -80,7 +111,7 @@ export default function Cart() {
                   return (
                     <div className='detailProduct' key={item.id}>
                       <div className='informationProduct'>
-                        <input type='checkbox' id='checkbox' />
+                        <input type='checkbox' id='checkbox' onClick={() => handleSelectCart(item.id)} />
                         <img className='imgProduct' src={item.image} alt='image' />
                         <div>{item.productName}</div>
                         <div className='priceProduct'>
@@ -134,7 +165,7 @@ export default function Cart() {
             <div>Đã bao gồm VAT (nếu có)</div>
           </div>
         </div>
-        <div className='order'>
+        <div className='order' onClick={handleOrder}>
           <div>TIẾN HÀNH ĐẶT HÀNG</div>
           <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
         </div>

@@ -1,8 +1,31 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { privateAxios } from '../../service/axios'
 import { OderSuccessWrapper } from './styled'
-import { useNavigate } from 'react-router-dom'
+
+const orderStatus = {
+  processing: 'processing',
+  inTransit: 'in_transit',
+  delivered: 'delivered',
+  canceled: 'canceled'
+}
+
+const methodPayment = {
+  offline: 'offline',
+  online: 'online'
+}
 
 export default function OrderSuccess() {
+  const params = useParams()
+  const orderId = params.id
+  const [orderDetail, setOrderDetail] = useState<any>({})
+  useEffect(() => {
+    privateAxios.get(`/order/${orderId}`).then((res) => {
+      // console.log(res.data?.data)
+      setOrderDetail(res.data?.data)
+    })
+  }, [])
   const navigate = useNavigate()
   return (
     <OderSuccessWrapper>
@@ -18,32 +41,47 @@ export default function OrderSuccess() {
         <div>Thông Tin Đơn Hàng</div>
         <div className='informationPayment'>
           <div>Mã đơn hàng</div>
-          <div>#230602YS8BU7</div>
+          <div>{orderDetail?.orderId}</div>
         </div>
         <div className='informationPayment'>
           <div>Trạng thái thanh toán</div>
-          <div>Chờ thanh toán</div>
+          <div>
+            {orderDetail?.orderStatus === orderStatus.processing
+              ? 'Chờ thanh toán'
+              : orderDetail?.orderStatus === orderStatus.inTransit
+              ? 'Đang vận chuyển'
+              : orderDetail?.orderStatus === orderStatus.delivered
+              ? 'Đã giao hàng'
+              : 'Đã bị hủy'}
+          </div>
         </div>
         <div className='informationPayment'>
           <div>Phương thức thanh toán</div>
-          <div>Thanh toán khi nhận hàng</div>
+          <div>
+            {orderDetail?.methodPayment === methodPayment.offline ? 'Thanh toán khi nhận hàng' : 'Thanh toán online'}
+          </div>
         </div>
         <div className='informationPayment'>
           <div>Tổng thanh toán</div>
-          <div>1.036.000 ₫</div>
+          <div>{orderDetail?.totalPrice} ₫</div>
         </div>
         <div className='informationPayment'>
           <div>Thông tin nhận hàng</div>
-          <div  className='personalInformation'>
-            <div>Đàm Anh Tuấn</div>
-            <div>0923975560</div>
-            <div>Thái bình, Xã Việt Lâm, Huyện Vị Xuyên, Tỉnh Hà Giang</div>
+          <div className='personalInformation'>
+            <div>{orderDetail?.address?.name}</div>
+            <div>{orderDetail?.address?.phone}</div>
+            <div>{orderDetail?.address?.detailAddress}</div>
           </div>
         </div>
       </div>
       <div className='orderDetail'>
         <div>Chi tiết đơn hàng</div>
-        <div onClick={()=> navigate('/list-Product')}>Tiếp tục mua sắm <span><ArrowRightOutlined /></span></div>
+        <div onClick={() => navigate('/list-Product')}>
+          Tiếp tục mua sắm{' '}
+          <span>
+            <ArrowRightOutlined />
+          </span>
+        </div>
       </div>
     </OderSuccessWrapper>
   )

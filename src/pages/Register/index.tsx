@@ -4,7 +4,7 @@ import { message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
-import { publicAxios } from '../../service/axios'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Register() {
@@ -165,7 +165,7 @@ export default function Register() {
         telephone: phone,
         date: birthday
       }
-      publicAxios
+      privateAxios
         .post('/register', data)
         .then((response) => {
           alert(response.data?.message)

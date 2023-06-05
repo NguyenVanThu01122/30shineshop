@@ -1,20 +1,38 @@
 import { Input } from 'antd'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
+import { privateAxios } from '../../service/axios'
 import { PaymentWrapper } from './styled'
 // import { PaymentWrapper } from './styled'
 
 export default function DetailPayment() {
+  const params = useParams()
+  const navigate = useNavigate()
+  const paymentId = params?.id
+
   let [name, setName] = useState('')
   let [phone, setPhone] = useState('')
   let [email, setEmail] = useState('')
   let [address, setAddress] = useState('')
   let [note, setNote] = useState('')
 
+  const [timeDelivery, setTimeDelivery] = useState(1)
+
   let [errorNote, setErrorNote] = useState('')
   let [errorName, setErrorName] = useState('')
   let [errorPhone, setErrorPhone] = useState('')
   let [errorAddress, setErrorAddress] = useState('')
   let [errorEmail, setErrorEmail] = useState('')
+
+  const [detailPayment, setDetailPayment] = useState<any>({})
+
+  useEffect(() => {
+    privateAxios.get(`/payment/${paymentId}`).then((res) => {
+      // console.log(res.data?.data)
+      setDetailPayment(res.data?.data)
+    })
+  }, [])
+
   let handleOnchangeName = (e: any) => {
     let valueName = e.target.value
     setName(valueName)
@@ -68,7 +86,8 @@ export default function DetailPayment() {
       setErrorNote('')
     }
   }
-  let handleClick = () => {
+
+  const handleOrder = () => {
     if (!name) {
       setErrorName('x Vui lòng nhập tên')
     }
@@ -80,6 +99,27 @@ export default function DetailPayment() {
     }
     if (!email) {
       setErrorEmail('x Vui lòng nhập Email')
+    }
+
+    if (name && phone && email && address) {
+      privateAxios
+        .post('/order', {
+          paymentId: paymentId,
+          address: {
+            name,
+            email,
+            phone,
+            detailAddress: address
+          },
+          noteOrder: note,
+          timeDelivery,
+          methodPayment: 'offline'
+        })
+        .then((res) => {
+          // console.log(res.data?.orderId)
+          const orderId = res.data?.orderId
+          navigate(`/order-success/${orderId}`)
+        })
     }
   }
   return (
@@ -134,19 +174,19 @@ export default function DetailPayment() {
               <div>Thời Gian Nhận Hàng</div>
               <div className='inputDelivery'>
                 {/* <input type="radio" /> */}
-                <Input type='radio' name='address-delivery' checked={true} />
+                <Input type='radio' name='address-delivery' defaultChecked={true} onClick={() => setTimeDelivery(1)} />
                 <div>
                   Chỉ giao hàng giờ hành chính <span>(phù hợp với địa chỉ văn phòng/cơ quan)</span>
                 </div>
               </div>
               <div className='inputDelivery'>
-                <Input type='radio' name='address-delivery' />
+                <Input type='radio' name='address-delivery' onClick={() => setTimeDelivery(2)} />
                 <div>
                   Tất cả các ngày trong tuần <span>(phù hợp với địa chỉ nhà riêng, luôn có người nhận hàng)</span>
                 </div>
               </div>
               <div className='inputDelivery'>
-                <Input type='radio' name='address-delivery' />
+                <Input type='radio' name='address-delivery' onClick={() => setTimeDelivery(3)} />
                 <div>
                   Giao nhanh trong 2h <span>(áp dụng với địa chỉ giao hàng tại Hà Nội và Hồ Chí Minh)</span>
                 </div>
@@ -166,91 +206,57 @@ export default function DetailPayment() {
           </div>
           <div className='itemProduct'>
             <div>Sản Phẩm</div>
-            <div className='product'>
-              <img
-                src='https://static.30shine.com/shop-admin/2022/04/08/30S01VB6-1_usp_4680d06064b54acb913b59bd7bc30118.jpg'
-                alt='imageProduct'
-              />
-              <div className='detailProdut'>
-                <div>Gel rửa mặt cho da dầu mụn, sưng viêm La Roche-Posay</div>
-                <div>phiên bản: Default</div>
+            {detailPayment?.products?.map((product: any) => (
+              <div className='product' key={product?.id}>
+                <img src={product?.image} alt='imageProduct' />
+                <div className='detailProdut'>
+                  <div>{product?.name}</div>
+                </div>
+                <div className='priceNumber'>
+                  {product?.price}
+                  <span>₫</span>
+                </div>
+                <div>x{product?.amount}</div>
+                <div className='priceQuantity'>
+                  {product?.price * product?.amount}
+                  <span>₫</span>
+                </div>
               </div>
-              <div className='priceNumber'>
-                229.000<span>₫</span>
-              </div>
-              <div>x3</div>
-              <div className='priceQuantity'>
-                687.000<span>₫</span>
-              </div>
-            </div>
-            <div className='product'>
-              <img
-                src='https://static.30shine.com/shop-admin/2022/04/08/30S01VB6-1_usp_4680d06064b54acb913b59bd7bc30118.jpg'
-                alt='imageProduct'
-              />
-              <div className='detailProdut'>
-                <div>Gel rửa mặt cho da dầu mụn, sưng viêm La Roche-Posay</div>
-                <div>phiên bản: Default</div>
-              </div>
-              <div className='priceNumber'>
-                229.000<span>₫</span>
-              </div>
-              <div>x3</div>
-              <div className='priceQuantity'>
-                687.000<span>₫</span>
-              </div>
-            </div>
-            <div className='product'>
-              <img
-                src='https://static.30shine.com/shop-admin/2022/04/08/30S01VB6-1_usp_4680d06064b54acb913b59bd7bc30118.jpg'
-                alt='imageProduct'
-              />
-              <div className='detailProdut'>
-                <div>Gel rửa mặt cho da dầu mụn, sưng viêm La Roche-Posay</div>
-                <div>phiên bản: Default</div>
-              </div>
-              <div className='priceNumber'>
-                229.000<span>₫</span>
-              </div>
-              <div>x3</div>
-              <div className='priceQuantity'>
-                687.000<span>₫</span>
-              </div>
-            </div>
-            <div className='product'>
-              <img
-                src='https://static.30shine.com/shop-admin/2022/04/08/30S01VB6-1_usp_4680d06064b54acb913b59bd7bc30118.jpg'
-                alt='imageProduct'
-              />
-              <div className='detailProdut'>
-                <div>Gel rửa mặt cho da dầu mụn, sưng viêm La Roche-Posay</div>
-                <div>phiên bản: Default</div>
-              </div>
-              <div className='priceNumber'>
-                229.000<span>₫</span>
-              </div>
-              <div>x3</div>
-              <div className='priceQuantity'>
-                687.000<span>₫</span>
-              </div>
-            </div>
+            ))}
           </div>
+          {/* <div className='product'>
+            <img
+              src='https://static.30shine.com/shop-admin/2022/04/08/30S01VB6-1_usp_4680d06064b54acb913b59bd7bc30118.jpg'
+              alt='imageProduct'
+            />
+            <div className='detailProdut'>
+              <div>Gel rửa mặt cho da dầu mụn, sưng viêm La Roche-Posay</div>
+              <div>phiên bản: Default</div>
+            </div>
+            <div className='priceNumber'>
+              229.000<span>₫</span>
+            </div>
+            <div>x3</div>
+            <div className='priceQuantity'>
+              687.000<span>₫</span>
+            </div>
+          </div> */}
         </div>
         <div className='informationLine'>
           <div className='information'>
             <div>THÔNG TIN ĐƠN HÀNG</div>
             <div className='itemProvisional'>
               <div>
-                Tạm tính <span>(4 sản phẩm)</span>
+                Tạm tính <span>({detailPayment?.products?.length} sản phẩm)</span>
               </div>
               <div>
-                5.429.000 <span>₫</span>
+                {detailPayment?.totalOriginPrice} <span>₫</span>
               </div>
             </div>
             <div className='itemProvisional'>
               <div>Phí giao hàng</div>
               <div>
-                0<span>đ</span>
+                {detailPayment?.deliveryPrice} <span>đ</span>
               </div>
             </div>
             <div className='itemProvisional'>
@@ -263,7 +269,7 @@ export default function DetailPayment() {
             <div className='totalMoney'>
               <div>Tổng tiền</div>
               <div>
-                5.429.000 <span>₫</span>
+                {detailPayment?.totalPrice} <span>₫</span>
               </div>
             </div>
             <div>Đã bao gồm VAT (nếu có)</div>
@@ -274,14 +280,14 @@ export default function DetailPayment() {
               <Input type='radio' name='payment' checked={true} />
               <div>Thanh toán khi nhận hàng</div>
             </div>
-            <div className='paymentCheckbox'>
+            {/* <div className='paymentCheckbox'>
               <Input type='radio' name='payment' />
               <div>Thanh toán qua cổng VNpay</div>
-            </div>
+            </div> */}
           </div>
           <div className='itemOrder'>
-            <div className='order'>
-              <div onClick={handleClick}>ĐẶT HÀNG</div>
+            <div className='order' onClick={handleOrder}>
+              <div>ĐẶT HÀNG</div>
               <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
             </div>
             <div>

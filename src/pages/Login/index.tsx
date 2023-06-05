@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { handleDirection } from '../../helper'
-import { publicAxios } from '../../service/axios'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function Login() {
   let navigate = useNavigate()
@@ -50,7 +50,7 @@ export default function Login() {
         password: password,
         email: email
       }
-      publicAxios
+      privateAxios
         .post('/login', data)
         .then((response) => {
           let result = response.data
@@ -58,7 +58,7 @@ export default function Login() {
           localStorage.setItem('name', result?.user?.name)
           navigate('/')
         })
-        .catch((error) => {
+        .catch((error: any) => {
           let objError = error?.response?.data
           message.error(objError?.message)
         })

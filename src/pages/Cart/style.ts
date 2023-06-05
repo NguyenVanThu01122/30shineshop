@@ -2,6 +2,7 @@ import styled from 'styled-components'
 export const CartWrapper = styled.div`
   padding: 0px 135px;
   margin-top: 40px;
+  margin-bottom: 40px;
   display: flex;
   gap: 20px;
   .itemCart {
@@ -127,10 +128,13 @@ export const CartWrapper = styled.div`
               & > div:first-child {
                 padding: 0px 15px;
                 font-size: 30px;
+                cursor: pointer;
               }
               & > div:last-child {
                 padding: 0px 15px;
                 font-size: 30px;
+                cursor: pointer;
+
               }
             }
             & > div:nth-child(2) {
@@ -143,6 +147,7 @@ export const CartWrapper = styled.div`
             .iconDelete {
               font-size: 25px;
               margin-left: 30px;
+              cursor: pointer;
             }
           }
         }
@@ -217,7 +222,7 @@ export const CartWrapper = styled.div`
       cursor: pointer;
       text-align: center;
       padding: 10px;
-      background-color: rgb(222, 218, 218);
+      background-color: yellow;
       & > div:first-child {
         font-family: 'Oswald';
         font-weight: 600;
@@ -229,8 +234,8 @@ export const CartWrapper = styled.div`
       }
     }
     .borderRed {
-        border: 1px solid red;
-        background-color: rgba(255, 204, 51, 0.913);
-      }
+      border: 1px solid red;
+      background-color: rgba(255, 204, 51, 0.913);
+    }
   }
 `

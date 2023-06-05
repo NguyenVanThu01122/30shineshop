@@ -1,15 +1,20 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BsArrowUp, BsTelephoneMinusFill } from 'react-icons/bs'
 import styles from './styles.module.css'
 export default function Footer() {
+  const [showIcon, setShowIcon] = useState(false)
 
-  // const [showIcon, setShowIcon] = useState(false);
+  useEffect(() => {
+    window.addEventListener('scroll', function (event) {
+      const top = document.documentElement.scrollTop
+      if (top > 500) {
+        setShowIcon(true)
+      } else {
+        setShowIcon(false)
+      }
+    })
+  }, [])
 
-  // const handleScroll = (e: any) => {
-  //   const { scrollTop } = e.target;
-  //   setShowIcon(scrollTop >= 100)
-  // };
-  // onScroll={handleScroll} 
   return (
     <div className={styles.pageFooter}>
       <div className={styles.footer}>
@@ -67,14 +72,14 @@ export default function Footer() {
           <div>Shine Member</div>
         </div>
       </div>
-      {/* {showIcon && */}
+      {showIcon && (
         <div className={styles.fontIcons}>
           <img src='https://shop.30shine.com/images/Phone.png' alt='img' className={styles.iconPhone} />
           <img src='https://shop.30shine.com/images/Message.png' alt='img' className={styles.iconMessenger} />
           <img src='https://shop.30shine.com/images/Zalo.png' alt='img' className={styles.iconZalo} />
           <BsArrowUp className={styles.iconUp} />
         </div>
-      {/* } */}
+      )}
     </div>
   )
 }

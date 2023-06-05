@@ -54,7 +54,6 @@ export default function ListProduct() {
       })
       .then((response) => {
         setLoading(false)
-        console.log(response)
         setList(response.data.data)
         setError('')
       })

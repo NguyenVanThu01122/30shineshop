@@ -78,7 +78,7 @@ export default function Header() {
               <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
             )}
           </div>
-          <AiOutlineShoppingCart className={styles.icon} onClick={()=>navigate('/cart')} />
+          <AiOutlineShoppingCart className={styles.icon} onClick={() => navigate('/cart')} />
           {/* <div className={styles.informationAccount} onClick={()=>handleDirection('/account')}>Thông tin tài khoản</div> */}
         </div>
       </div>

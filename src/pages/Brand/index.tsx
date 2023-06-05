@@ -10,7 +10,7 @@ export default function Brand() {
     privateAxios
       .get('/brand')
       .then((response) => {
-        console.log(response)
+
         setList(response.data?.brand)
         setError('')
       })

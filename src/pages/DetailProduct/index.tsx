@@ -1,45 +1,40 @@
 import { StarOutlined } from '@ant-design/icons'
-import { Button, message } from 'antd'
+import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
 import styles from './index.module.scss'
 
 function DetailProduct() {
   let params = useParams()
+  const navigate = useNavigate()
   // Lấy chi tiết sản phẩm: // http://shop30shine.herokuapp.com/product/${params.id}
   // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
   const [loading, setLoading] = useState(false)
   const [detailProduct, setDetailProduct] = useState<any>({})
   const [img, setImg] = useState('')
   const [disabled, setDisabled] = useState(false)
-  const getDetailProduct = (id: any) => {
+
+  useEffect(() => {
     privateAxios
-      .get(`/product/${id}`)
+      .get(`/product/${params.id}`)
       .then((res) => {
         setDetailProduct(res.data?.data)
       })
       .catch((error) => {
         setLoading(false)
       })
-  }
+  }, [params.id])
 
-  useEffect(() => {
-    getDetailProduct(params.id)
-  }, [])
   let [count, setCount] = useState(1)
 
   let reduceNumber = () => {
-    if (count > 0) setCount(count - 1)
+    if (count > 1) setCount(count - 1)
   }
   let increaseNumber = () => {
-    if (count < 10) {
-      setCount(count + 1)
-    } else {
-      alert('Bạn không được mua quá 10 sản phẩm')
-    }
+    setCount(count + 1)
   }
   let handlOnclickImage = () => {
     let imgElement = document.getElementById('img')
@@ -64,6 +59,19 @@ function DetailProduct() {
         message.error(error.responese.data?.message)
         setLoading(false)
         setDisabled(false)
+      })
+  }
+
+  const handleBuyNow = (id: string, amount: number) => {
+    privateAxios
+      .post('/payment/buy-now', {
+        id,
+        amount
+      })
+      .then((res) => {
+        // api sẽ trả về cho mình paymentId
+        const paymentId = res.data?.paymentId
+        navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
       })
   }
   return (
@@ -168,7 +176,7 @@ function DetailProduct() {
                   <div>THÊM GIỎ HÀNG</div>
                 </div>
 
-                <div className={styles.buyNow}>
+                <div className={styles.buyNow} onClick={() => handleBuyNow(detailProduct.id, count)}>
                   <div>MUA NGAY</div>
                   <div>Không ưng đổi ngay trong 30 ngày</div>
                 </div>
@@ -413,11 +421,14 @@ function DetailProduct() {
       <div className={styles.otherProducts}>
         <div>SẢN PHẨM CÙNG LOẠI</div>
         <div className={styles.sameProducts}>
-          <div className={styles.informationProduct}>
+          <div
+            className={styles.informationProduct}
+            // onClick={() => navigate('/detail-product/64357b7a431573bb82a5f028')}
+          >
             <div>
               <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
             </div>
-            <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
+            <div>Combo combo..</div>
             <div className={styles.priceProduct}>
               <div>
                 690.000<span>đ</span>
