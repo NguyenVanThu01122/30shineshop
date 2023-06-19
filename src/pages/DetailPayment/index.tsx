@@ -27,8 +27,8 @@ export default function DetailPayment() {
   const [detailPayment, setDetailPayment] = useState<any>({})
 
   useEffect(() => {
-    privateAxios.get(`/payment/${paymentId}`).then((res) => {
-      // console.log(res.data?.data)
+    privateAxios.get(`/payment/${paymentId}`)
+    .then((res) => {
       setDetailPayment(res.data?.data)
     })
   }, [])
@@ -116,7 +116,7 @@ export default function DetailPayment() {
           methodPayment: 'offline'
         })
         .then((res) => {
-          // console.log(res.data?.orderId)
+          console.log(res.data)
           const orderId = res.data?.orderId
           navigate(`/order-success/${orderId}`)
         })

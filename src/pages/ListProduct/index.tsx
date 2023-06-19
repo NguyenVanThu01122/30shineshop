@@ -49,8 +49,8 @@ export default function ListProduct() {
     }
     setLoading(true)
     privateAxios
-      .get('/product', {
-        params
+      .get('/product',{
+        params 
       })
       .then((response) => {
         setLoading(false)
@@ -58,7 +58,6 @@ export default function ListProduct() {
         setError('')
       })
       .catch((error) => {
-        console.log(error?.response)
         setLoading(false)
         setError('Lỗi server')
       })
@@ -156,9 +155,9 @@ export default function ListProduct() {
                   </div>
                   <div></div>
                 </div>
-                <div key={item.id} className={styles.product} onClick={() => navigate(`/detail-product/${item.id}`)}>
+                <div key={item.id} className={styles.product}  >
                   <div className={styles.images}>
-                    <img src={item.image} alt='images' />
+                    <img src={item.image} alt='images' onClick={() => navigate(`/detail-product/${item.id}`)}/>
                   </div>
                   <div>{item.name}</div>
                   <div className={styles.productPrice}>

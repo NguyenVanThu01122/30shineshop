@@ -55,7 +55,7 @@ export default function Login() {
         .then((response) => {
           let result = response.data
           localStorage.setItem('token', result?.token)
-          localStorage.setItem('name', result?.user?.name)
+          localStorage.setItem('name',result?.user?.name)
           navigate('/')
         })
         .catch((error: any) => {

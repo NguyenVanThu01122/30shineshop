@@ -14,23 +14,36 @@ function DetailProduct() {
   // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
   const [loading, setLoading] = useState(false)
   const [detailProduct, setDetailProduct] = useState<any>({})
-  const [img, setImg] = useState('')
+  const [listProduct, setlistlProduct] = useState([])
   const [disabled, setDisabled] = useState(false)
-
-  useEffect(() => {
+  const handleDetail = () => {
     privateAxios
       .get(`/product/${params.id}`)
       .then((res) => {
         setDetailProduct(res.data?.data)
       })
       .catch((error) => {
-        setLoading(false)
+        // setLoading(false)
       })
+  }
+  useEffect(() => {
+    handleDetail()
   }, [params.id])
+
+  const handelRelate = () => {
+    privateAxios.get(`/product/relate/${params.id}`).then((res) => {
+      setlistlProduct(res.data?.data)
+      handleDetail()
+      console.log(res.data?.data)
+    })
+  }
+  useEffect(() => {
+    handelRelate()
+  }, [])
 
   let [count, setCount] = useState(1)
 
-  let reduceNumber = () => {
+  let decreaseNumber = () => {
     if (count > 1) setCount(count - 1)
   }
   let increaseNumber = () => {
@@ -41,24 +54,18 @@ function DetailProduct() {
     imgElement?.classList.add('border-red')
   }
   const handleAddCart = (id: string, amount: number) => {
-    setDisabled(true)
-    setLoading(true)
     privateAxios
       .post('/cart', {
         id,
         amount
       })
       .then((res) => {
-        setLoading(false)
-        setDisabled(false)
         message.success(
           `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
         )
       })
       .catch((error) => {
-        message.error(error.responese.data?.message)
-        setLoading(false)
-        setDisabled(false)
+        message.error(error.response?.data)
       })
   }
 
@@ -71,6 +78,7 @@ function DetailProduct() {
       .then((res) => {
         // api sẽ trả về cho mình paymentId
         const paymentId = res.data?.paymentId
+        // console.log(res.data)
         navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
       })
   }
@@ -163,7 +171,7 @@ function DetailProduct() {
               <div className={styles.quantity}>
                 <div>Số lượng</div>
                 <div className={styles.count}>
-                  <div onClick={reduceNumber}>-</div>
+                  <div onClick={decreaseNumber}>-</div>
                   <div>{count}</div>
                   <div onClick={increaseNumber}>+</div>
                 </div>
@@ -421,48 +429,87 @@ function DetailProduct() {
       <div className={styles.otherProducts}>
         <div>SẢN PHẨM CÙNG LOẠI</div>
         <div className={styles.sameProducts}>
-          <div
-            className={styles.informationProduct}
-            // onClick={() => navigate('/detail-product/64357b7a431573bb82a5f028')}
-          >
-            <div>
-              <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
-            </div>
-            <div>Combo combo..</div>
-            <div className={styles.priceProduct}>
-              <div>
-                690.000<span>đ</span>
+          {listProduct.map((item: any) => {
+            return (
+              <div
+                className={styles.informationProduct}
+                onClick={() => window.location.assign(`/detail-product/${item.id}`)}
+              >
+                <div>
+                  <img src={item.image} alt='icon' />
+                </div>
+                <div>{item.name}</div>
+                <div className={styles.priceProduct}>
+                  <div>
+                    {item.originPrice}
+                    <span>đ</span>
+                  </div>
+                  <div>
+                    {item.salePrice}
+                    <span>đ</span>
+                  </div>
+                </div>
+                <div>
+                  {item.star === 5 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                    </div>
+                  )}
+                  {item.star === 4 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                    </div>
+                  )}
+                  {item.star === 3 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                    </div>
+                  )}
+                  {item.star === 2 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                    </div>
+                  )}
+                  {item.star === 1 && (
+                    <div>
+                      <StarOutlined style={{ color: 'yellow' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                    </div>
+                  )}
+                  {item.star === 0 && (
+                    <div>
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                      <StarOutlined style={{ color: 'gray' }} />
+                    </div>
+                  )}
+                </div>
               </div>
-              <div></div>
-            </div>
-            <div>
-              <img
-                src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-                alt=''
-              />
-            </div>
-          </div>
-          <div className={styles.informationProduct}>
-            <div>
-              <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
-            </div>
-            <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
-            <div className={styles.priceProduct}>
-              <div>
-                690.000<span>đ</span>
-              </div>
-              <div>
-                828.000<span>đ</span>
-              </div>
-            </div>
-            <div>
-              <img
-                src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-                alt=''
-              />
-            </div>
-          </div>
-          <div className={styles.informationProduct}>
+            )
+          })}
+
+          {/* <div className={styles.informationProduct}>
             <div>
               <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
             </div>
@@ -521,7 +568,7 @@ function DetailProduct() {
                 alt=''
               />
             </div>
-          </div>
+          </div> */}
         </div>
         <div>SẢN PHẨM ĐÃ XEM</div>
         <div className={styles.sameProducts}>

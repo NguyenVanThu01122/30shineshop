@@ -134,7 +134,6 @@ export const CartWrapper = styled.div`
                 padding: 0px 15px;
                 font-size: 30px;
                 cursor: pointer;
-
               }
             }
             & > div:nth-child(2) {
@@ -222,7 +221,7 @@ export const CartWrapper = styled.div`
       cursor: pointer;
       text-align: center;
       padding: 10px;
-      background-color: yellow;
+      background:yellow;
       & > div:first-child {
         font-family: 'Oswald';
         font-weight: 600;
@@ -233,6 +232,9 @@ export const CartWrapper = styled.div`
         font-size: 12px;
       }
     }
+    /* .border {
+      background-color: yellow;
+    } */
     .borderRed {
       border: 1px solid red;
       background-color: rgba(255, 204, 51, 0.913);

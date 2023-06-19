@@ -22,7 +22,7 @@ export default function OrderSuccess() {
   const [orderDetail, setOrderDetail] = useState<any>({})
   useEffect(() => {
     privateAxios.get(`/order/${orderId}`).then((res) => {
-      // console.log(res.data?.data)
+      console.log(res.data?.data)
       setOrderDetail(res.data?.data)
     })
   }, [])

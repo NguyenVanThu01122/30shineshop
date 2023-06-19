@@ -9,8 +9,8 @@ export default function Cart() {
   let [listCart, setListCart] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
-
   const [listCartId, setListCardId] = useState<any>([])
+  const [checkbox, setCheckbox] = useState('')
 
   const getListCart = () => {
     privateAxios
@@ -63,16 +63,20 @@ export default function Cart() {
   }
 
   const handleSelectCart = (cardId: string) => {
-    if (listCartId.includes(cardId)) {
-      const index = listCartId.findIndex((item: any) => item === cardId)
-      if (index !== -1) {
-        listCartId.splice(index, 1)
-        setListCardId([...listCartId])
-      }
-    } else {
-      listCartId.push(cardId)
-      setListCardId([...listCartId])
-    }
+    // if (listCartId.includes(cardId)) {
+    //   const index = listCartId.findIndex((item: any) => item === cardId)
+    //   if (index !== -1) {
+    //     listCartId.splice(index, 1)
+    //     setListCardId([...listCartId])
+    //   }
+    // } else {
+
+    listCartId.push(cardId)
+    setListCardId([...listCartId])
+    let elementCheck = (document.getElementById('checkbox') as any).checked
+    setCheckbox(elementCheck)
+
+    // }
   }
 
   const handleOrder = () => {
@@ -89,6 +93,8 @@ export default function Cart() {
         })
     }
   }
+
+  console.log(listCartId)
   return (
     <CartWrapper>
       <div className='itemCart'>
@@ -111,7 +117,12 @@ export default function Cart() {
                   return (
                     <div className='detailProduct' key={item.id}>
                       <div className='informationProduct'>
-                        <input type='checkbox' id='checkbox' onClick={() => handleSelectCart(item.id)} />
+                        <input
+                          type='checkbox'
+                          id='checkbox'
+                          value={checkbox}
+                          onClick={() => handleSelectCart(item.id)}
+                        />
                         <img className='imgProduct' src={item.image} alt='image' />
                         <div>{item.productName}</div>
                         <div className='priceProduct'>

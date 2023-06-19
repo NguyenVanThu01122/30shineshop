@@ -132,6 +132,7 @@
   position: fixed;
   bottom: 100px;
   right: 0px;
+  transition: all .5s;
 }
 .iconPhone {
   width: 90px;

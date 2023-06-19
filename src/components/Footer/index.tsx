@@ -73,7 +73,7 @@ export default function Footer() {
         </div>
       </div>
       {showIcon && (
-        <div className={styles.fontIcons}>
+        <div className={styles.fontIcons} id='fontIcon'>
           <img src='https://shop.30shine.com/images/Phone.png' alt='img' className={styles.iconPhone} />
           <img src='https://shop.30shine.com/images/Message.png' alt='img' className={styles.iconMessenger} />
           <img src='https://shop.30shine.com/images/Zalo.png' alt='img' className={styles.iconZalo} />
