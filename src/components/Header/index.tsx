@@ -2,55 +2,35 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
+import { addListProduct } from '../../redux/actions/detailProduct'
+import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Header() {
-  let [list, setlist] = useState([])
-  let [error, setError] = useState('')
-  let [keyword, setKeyword] = useState('')
-  const [isHidden, setIsHidden] = useState(false)
-  let [isRender, setIsRender] = useState(false)
-  let handleOnMouseEter = () => {
+  const [keyword, setKeyword] = useState('')
+  const [isRender, setIsRender] = useState(false)
+  const handleOnMouseEter = () => {
     setIsRender(true)
   }
-  let handleOnMouseLeave = () => {
+  const handleOnMouseLeave = () => {
     setIsRender(false)
   }
   const navigate = useNavigate()
-  // const listCategory = {
-  //   suaRuaMat: '64341dab40c628f4c65323f0',
-  //   dauGoi: '64341dab40c628f4c65323f2',
-  //   suaTam: '64341dab40c628f4c65323f3',
-  //   sapVuotToc: '64341dab40c628f4c65323f1'
-  // }
-  // let handleOnchange = () => {
-  //   interface IParam {
-  //     keyword?: string
-  //   }
-  //   const params: IParam = {
-  //     keyword
-  //   }
-  //   if (keyword) {
-  //     params.keyword = keyword
-  //   }
-  //   publicAxios
-  //     .get('http://shop30shine.herokuapp.com/product', {
-  //       params
-  //     })
-  //     .then((res) => {
-  //       setlist(res.data?.data)
-  //       setError('')
-  //     })
-  //     .catch((error) => {
-  //       setError('Lỗi server')
-  //     })
-  // }
-
-  // useEffect(() => {
-  //   handleOnchange()
-  // }, [keyword])
+  const dispatch = useDispatch()
+  const handleSearch = () => {
+    privateAxios
+      .get('/product', {
+        params: {
+          keyword
+        }
+      })
+      .then((res) => {
+        dispatch(addListProduct(res.data?.data))
+      })
+  }
   return (
     <div className={styles.pageHeader}>
       <div className={styles.header}>
@@ -62,12 +42,12 @@ export default function Header() {
           <div className={styles.loginInput}>
             <input
               value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
+              onChange={(e: any) => setKeyword(e.target.value)}
               type='text'
-              name='text'
+              name='keyword'
               placeholder='Nhập tên sản phẩm, thương hiệu ...'
             />
-            <FontAwesomeIcon className={styles.iconSeach} icon={faMagnifyingGlass} />
+            <FontAwesomeIcon onClick={handleSearch} className={styles.iconSeach} icon={faMagnifyingGlass} />
           </div>
           <div className={styles.login}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
@@ -167,4 +147,7 @@ export default function Header() {
       )}
     </div>
   )
+}
+function dispatch(arg0: { type: string; payload: any }) {
+  throw new Error('Function not implemented.')
 }

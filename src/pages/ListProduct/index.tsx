@@ -1,10 +1,56 @@
 import { StarOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { addListProduct } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function ListProduct() {
+  /*
+GET LIST: http://shop30shine.herokuapp.com/products
+fetch: 
+GET LIST + GET DETAIL + DELETE
+fetch(url, {
+  params: {
+
+  }
+}).then(res => res.json()).then(json => {
+  console.log(json)
+}).catch(error => {
+
+})
+
+
+const obj = {
+  password: 'abc',
+  email: 122
+}
+
+POST:
+fetch('url, {
+  method: 'POST',
+  body: JSON.stringfy(obj),
+}).then(res => res.json()).then(res => {
+  console.log(res);
+}).catch(êrror => {
+
+})
+
+PUT:
+fetch(`url/${id}`, {
+  method: 'POST',
+  body: JSON.stringfy(obj),
+}).then(res => res.json()).then(res => {
+  console.log(res);
+}).catch(êrror => {
+  
+})
+
+
+
+*/
+
   const navigate = useNavigate()
   const listCategory = {
     suaRuaMat: '64341dab40c628f4c65323f0',
@@ -19,9 +65,11 @@ export default function ListProduct() {
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState('-1')
   //shop30shine.herokuapp.com/product'
-  let [list, setList] = useState([])
   let [loading, setLoading] = useState(false)
   let [error, setError] = useState('')
+
+  const dispatch = useDispatch()
+  const products = useSelector((state: any) => state.app.products)
 
   const handleSearch = () => {
     interface IParams {
@@ -47,14 +95,15 @@ export default function ListProduct() {
     if (maxPrice) {
       params.maxPrice = maxPrice
     }
-    setLoading(true)
+    setLoading(true);
+
     privateAxios
-      .get('/product',{
-        params 
+      .get('/product', {
+        params
       })
       .then((response) => {
         setLoading(false)
-        setList(response.data.data)
+        dispatch(addListProduct(response.data?.data))
         setError('')
       })
       .catch((error) => {
@@ -62,6 +111,20 @@ export default function ListProduct() {
         setError('Lỗi server')
       })
   }
+
+  //  fetch(`http://shop30shine.herokuapp.com/product?sort=${sort}&keyword=${keyword}&minPrice=${minPrice}&maxPrice=${maxPrice}`, {
+  //     headers: {
+  //       Authorization: `Bearer ${localStorage.getItem('token')}`
+  //     }
+  //   }).then((res => res.json())).then(res => {
+  //     setLoading(false)
+  //     dispatch(addListProduct(res.data))
+  //     setError('')
+  //   }).catch((err) => {
+  //     setLoading(false)
+  //     setError('Lỗi server')
+  //   })
+    
   useEffect(() => {
     handleSearch()
   }, [])
@@ -126,7 +189,7 @@ export default function ListProduct() {
             <option value='1'>Giá từ cao đến thấp</option>
           </select>
         </div>
-        <div  className={styles.button}>
+        <div className={styles.button}>
           <Button type='primary' size='large' onClick={handleSearch}>
             Tìm kiếm
           </Button>
@@ -136,7 +199,7 @@ export default function ListProduct() {
         </div>
       </div>
       <div className={styles.findProducts}>
-        <div>{list.length} sản phẩm được tìm thấy</div>
+        <div>{products.length} sản phẩm được tìm thấy</div>
       </div>
       <div className={styles.listProduct}>
         {loading && (
@@ -145,7 +208,7 @@ export default function ListProduct() {
           </div>
         )}
         {!loading &&
-          list.map((item: any) => {
+          products.map((item: any) => {
             return (
               <div className={styles.itemProduct} key={item.id}>
                 <div className={styles.stickerPercen}>
@@ -155,9 +218,9 @@ export default function ListProduct() {
                   </div>
                   <div></div>
                 </div>
-                <div key={item.id} className={styles.product}  >
+                <div key={item.id} className={styles.product}>
                   <div className={styles.images}>
-                    <img src={item.image} alt='images' onClick={() => navigate(`/detail-product/${item.id}`)}/>
+                    <img src={item.image} alt='images' onClick={() => navigate(`/detail-product/${item.id}`)} />
                   </div>
                   <div>{item.name}</div>
                   <div className={styles.productPrice}>

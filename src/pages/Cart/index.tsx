@@ -1,6 +1,7 @@
 import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper } from './style'
@@ -9,9 +10,8 @@ export default function Cart() {
   let [listCart, setListCart] = useState([])
   const [totalPrice, setTotalPrice] = useState(0)
   const [totalAmount, setTotalAmount] = useState(0)
-  const [listCartId, setListCardId] = useState<any>([])
-  const [checkbox, setCheckbox] = useState('')
-
+  const [listCartId, setListCartId] = useState<any>([])
+  const disPatch = useDispatch()
   const getListCart = () => {
     privateAxios
       .get('/cart')
@@ -30,7 +30,6 @@ export default function Cart() {
         message.error(error.response?.data?.message)
       })
   }
-
   useEffect(() => {
     getListCart()
   }, [])
@@ -61,40 +60,34 @@ export default function Cart() {
         message.error(error.response?.data?.message)
       })
   }
-
-  const handleSelectCart = (cardId: string) => {
-    // if (listCartId.includes(cardId)) {
-    //   const index = listCartId.findIndex((item: any) => item === cardId)
-    //   if (index !== -1) {
-    //     listCartId.splice(index, 1)
-    //     setListCardId([...listCartId])
-    //   }
-    // } else {
-
-    listCartId.push(cardId)
-    setListCardId([...listCartId])
-    let elementCheck = (document.getElementById('checkbox') as any).checked
-    setCheckbox(elementCheck)
-
-    // }
-  }
-
-  const handleOrder = () => {
-    if (listCartId.length === 0) {
-      message.error('Vui lòng chọn ít nhất một sản phẩm')
+  const handleClickItem = (id: string) => {
+    if (listCartId.includes(id) === false) {
+      listCartId.push(id)
+      setListCartId([...listCartId])
     } else {
+      const newArr = listCartId.filter((item: any) => {
+        if (item !== id) {
+          return true
+        }
+      })
+      setListCartId(newArr)
+    }
+  }
+  const handleClickOrder = () => {
+    if (listCartId.length > 0) {
       privateAxios
         .post('/payment/order', {
           listCartId
         })
         .then((res) => {
-          const paymentId = res.data?.paymentId
-          navigate(`/payment/${paymentId}`)
+          // const paymentId = res.data?.paymentId
+          navigate(`/payment/${res.data?.paymentId}`)
+        })
+        .catch((error) => {
+          message.error(error)
         })
     }
   }
-
-  console.log(listCartId)
   return (
     <CartWrapper>
       <div className='itemCart'>
@@ -120,8 +113,8 @@ export default function Cart() {
                         <input
                           type='checkbox'
                           id='checkbox'
-                          value={checkbox}
-                          onClick={() => handleSelectCart(item.id)}
+                          // value={checkbox}
+                          onClick={() => handleClickItem(item.id)}
                         />
                         <img className='imgProduct' src={item.image} alt='image' />
                         <div>{item.productName}</div>
@@ -139,7 +132,7 @@ export default function Cart() {
                       <div className='upDown'>
                         <div className='buttonUpDown'>
                           <div onClick={() => upDateCart(item.id, item.amount - 1)}>-</div>
-                          <div>{item?.amount}</div>
+                          <div>{item.amount}</div>
                           <div onClick={() => upDateCart(item.id, item.amount + 1)}>+</div>
                         </div>
                         <div>{item?.amount * item?.originPrice}</div>
@@ -176,7 +169,7 @@ export default function Cart() {
             <div>Đã bao gồm VAT (nếu có)</div>
           </div>
         </div>
-        <div className='order' onClick={handleOrder}>
+        <div className={`order ${listCartId.length > 0 ? 'colorYelow' : ''}`} onClick={handleClickOrder}>
           <div>TIẾN HÀNH ĐẶT HÀNG</div>
           <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
         </div>

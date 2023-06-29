@@ -221,7 +221,7 @@ export const CartWrapper = styled.div`
       cursor: pointer;
       text-align: center;
       padding: 10px;
-      background:yellow;
+      background:gray;
       & > div:first-child {
         font-family: 'Oswald';
         font-weight: 600;
@@ -235,8 +235,7 @@ export const CartWrapper = styled.div`
     /* .border {
       background-color: yellow;
     } */
-    .borderRed {
-      border: 1px solid red;
+    .colorYelow {
       background-color: rgba(255, 204, 51, 0.913);
     }
   }

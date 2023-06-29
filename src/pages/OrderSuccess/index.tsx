@@ -4,29 +4,28 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
 import { OderSuccessWrapper } from './styled'
 
-const orderStatus = {
-  processing: 'processing',
-  inTransit: 'in_transit',
-  delivered: 'delivered',
-  canceled: 'canceled'
-}
-
-const methodPayment = {
-  offline: 'offline',
-  online: 'online'
-}
-
 export default function OrderSuccess() {
+  const orderStatus = {
+    processing: 'processing',
+    inTransit: 'in_transit',
+    delivered: 'delivered',
+    canceled: 'canceled'
+  }
+
+  const methodPayment = {
+    offline: 'offline',
+    online: 'online'
+  }
+  const navigate = useNavigate()
   const params = useParams()
   const orderId = params.id
   const [orderDetail, setOrderDetail] = useState<any>({})
   useEffect(() => {
-    privateAxios.get(`/order/${orderId}`).then((res) => {
-      console.log(res.data?.data)
+    privateAxios.get(`/order/${orderId}`)
+    .then((res) => {
       setOrderDetail(res.data?.data)
     })
   }, [])
-  const navigate = useNavigate()
   return (
     <OderSuccessWrapper>
       <div className='orderSuccess'>

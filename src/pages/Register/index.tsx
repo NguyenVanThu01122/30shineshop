@@ -165,6 +165,40 @@ export default function Register() {
         telephone: phone,
         date: birthday
       }
+
+      // fetch('url', {
+      //   method: 'POST',
+      //   body: JSON.stringify(data)
+      // })
+      //   .then((res) => res.json())
+      //   .then((res) => {
+      //     alert(res.message)
+      //     setName('')
+      //     setEmail('')
+      //     setPassword('')
+      //     setPhone('')
+      //     setRepeat('')
+      //     setBirthday('')
+      //     setGender('')
+      //     ;(document.getElementById('checkbox') as any).checked = false
+      //     navigate('/login')
+      //   })
+      //   .catch((error) => {
+      //     let objError = error.response?.data
+      //     let stringError = ''
+      //     let emailError = objError.email
+      //     let telephoneError = objError.telephone
+      //     if (emailError) {
+      //       stringError += emailError + ' '
+      //     }
+      //     if (telephoneError) {
+      //       stringError += telephoneError
+      //     }
+      //     {
+      //       message.error(stringError)
+      //     }
+      //   })
+
       privateAxios
         .post('/register', data)
         .then((response) => {

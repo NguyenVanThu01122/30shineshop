@@ -13,6 +13,7 @@ import ListProduct from './pages/ListProduct'
 import Login from './pages/Login'
 import OrderSuccess from './pages/OrderSuccess'
 import Register from './pages/Register'
+import Header from './components/Header'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<ListProduct />} />
+          <Route path='/header' element={<Header/>}></Route>
           <Route path='/detail-product/:id' element={<DetailProduct />} />
           <Route path='/list-product' element={<ListProduct />} />
           <Route path='/blog' element={<Blog />} />

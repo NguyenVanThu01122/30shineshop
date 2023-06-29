@@ -1,35 +1,79 @@
-import { Input } from 'antd'
+import { Button, Checkbox, Form, Input } from 'antd'
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { ButtonWrapper, StyledCard } from './style'
+import { StyledCard } from './style'
 
 const { Search } = Input
-
 export default function Error() {
-  
-
   const [loading, setLoading] = useState(false)
+
   return (
     <StyledCard loading={loading}>
-      
-      <div className='con1'>Con 1</div>
-      <button className={`${loading ? 'button1' : ''}`} onClick={() => setLoading(!loading)}>
-        Thay đổi trạng thái
-      </button>
-      <div style={{ color: loading ? 'red' : 'blue' }}>Loading: {String(loading)} </div>
-      <ButtonWrapper>Button 1</ButtonWrapper>
-      {/* <div className='div1'>
-        <Button onClick={() => setLoading(true)}>Loading</Button>
-      </div>
-      <div className='div2'>
-        <Button onClick={() => setLoading(false)} type='primary' size='small'>
-          Ket thuc loading
-        </Button>
-      </div>
-      <Button onClick={() => message.error('ban da that bai')}>thong bao that bai</Button>
-      <Button onClick={() => message.success('Ban thanh cong')}>Thong bao thanh cong</Button>
-      <Input className='input' size='small' placeholder='vui long nhap mat khau' />
-      <Search placeholder='vui long nhap keyword' enterButton='tim kiem' size='large' loading={loading} /> */}
+      <Form
+        name='basic'
+        labelCol={{
+          span: 8
+        }}
+        wrapperCol={{
+          span: 16
+        }}
+        style={{
+          maxWidth: 600
+        }}
+        initialValues={{
+          remember: true
+        }}
+        // onFinish={onFinish}
+        // onFinishFailed={onFinishFailed}
+        autoComplete='off'
+      >
+        <Form.Item
+          label='Username'
+          name='username'
+          rules={[
+            {
+              required: true,
+              message: 'Please input your username!'
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label='Password'
+          name='password'
+          rules={[
+            {
+              required: true,
+              message: 'Please input your password!'
+            }
+          ]}
+        >
+          <Input.Password />
+        </Form.Item>
+
+        <Form.Item
+          name='remember'
+          valuePropName='checked'
+          wrapperCol={{
+            offset: 8,
+            span: 16
+          }}
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+
+        <Form.Item
+          wrapperCol={{
+            offset: 8,
+            span: 16
+          }}
+        >
+          <Button type='primary' htmlType='submit'>
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </StyledCard>
   )
 }

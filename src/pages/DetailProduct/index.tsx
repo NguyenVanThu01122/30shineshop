@@ -3,7 +3,9 @@ import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { addListProduct, decrease, increase, saveDetailProduct } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './index.module.scss'
 
@@ -13,74 +15,88 @@ function DetailProduct() {
   // Lấy chi tiết sản phẩm: // http://shop30shine.herokuapp.com/product/${params.id}
   // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
   const [loading, setLoading] = useState(false)
-  const [detailProduct, setDetailProduct] = useState<any>({})
+  // const [detailProduct, setDetailProduct] = useState<any>({})
   const [listProduct, setlistlProduct] = useState([])
   const [disabled, setDisabled] = useState(false)
-  const handleDetail = () => {
-    privateAxios
-      .get(`/product/${params.id}`)
-      .then((res) => {
-        setDetailProduct(res.data?.data)
-      })
-      .catch((error) => {
-        // setLoading(false)
-      })
-  }
+  const dispatch = useDispatch()
+  const detailProduct = useSelector((state: any) => state.app.detailProduct)
+  const products = useSelector((state: any) => state.app.products)
   useEffect(() => {
     handleDetail()
-  }, [params.id])
-
-  const handelRelate = () => {
-    privateAxios.get(`/product/relate/${params.id}`).then((res) => {
-      setlistlProduct(res.data?.data)
-      handleDetail()
-      console.log(res.data?.data)
-    })
-  }
-  useEffect(() => {
     handelRelate()
   }, [])
 
-  let [count, setCount] = useState(1)
+  const handleDetail = () => {
+    privateAxios.get(`/product/${params.id}`).then((res) => {
+      dispatch(saveDetailProduct(res.data.data))
+    })
+    // fetch(`http://shop30shine.herokuapp.com/product/${params.id}`, {
+    //   headers: {
+    //     Authorization: `Bearer ${localStorage.getItem('token')}`
+    //   }
+    // })
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     console.log(res);
+    //     dispatch(saveDetailProduct(res.data))
+    //   })
+  }
+  const handelRelate = () => {
+    privateAxios.get(`/product/relate/${params.id}`).then((res) => {
+      dispatch(addListProduct(res.data.data))
+    })
+  }
+  // let [count, setCount] = useState(1)
+  // let decreaseNumber = () => {
+  //   if (count > 1) setCount(count - 1)
+  // }
+  // let increaseNumber = () => {
+  //   setCount(count + 1)
+  // }
 
-  let decreaseNumber = () => {
-    if (count > 1) setCount(count - 1)
+  const count = useSelector((state: any) => state.app.count)
+  if (count > 10) {
+    alert('bạn chỉ được chọn tối đa 10 sản phẩm')
   }
-  let increaseNumber = () => {
-    setCount(count + 1)
-  }
-  let handlOnclickImage = () => {
-    let imgElement = document.getElementById('img')
-    imgElement?.classList.add('border-red')
-  }
+
   const handleAddCart = (id: string, amount: number) => {
-    privateAxios
-      .post('/cart', {
-        id,
-        amount
-      })
-      .then((res) => {
-        message.success(
-          `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
-        )
-      })
-      .catch((error) => {
-        message.error(error.response?.data)
-      })
+    if (amount === 0) {
+      alert('Vui lòng nhập số lượng')
+    }
+    if (amount > 0) {
+      privateAxios
+        .post('/cart', {
+          id,
+          amount
+        })
+        .then((res) => {
+          message.success(
+            `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
+          )
+        })
+        .catch((error) => {
+          message.error(error.response?.data)
+        })
+    }
   }
-
   const handleBuyNow = (id: string, amount: number) => {
-    privateAxios
-      .post('/payment/buy-now', {
-        id,
-        amount
-      })
-      .then((res) => {
-        // api sẽ trả về cho mình paymentId
-        const paymentId = res.data?.paymentId
-        // console.log(res.data)
-        navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
-      })
+    if (amount === 0) {
+      alert('Vui lòng nhập số lượng')
+    }
+    if (amount > 0) {
+      privateAxios
+        .post('/payment/buy-now', {
+          id,
+          amount
+        })
+        .then((res) => {
+          // api sẽ trả về cho mình paymentId
+          console.log(res.data.data)
+          const paymentId = res.data?.paymentId
+          // console.log(res.data)
+          navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
+        })
+    }
   }
   return (
     <div className={styles.pageDetailProduct}>
@@ -171,9 +187,9 @@ function DetailProduct() {
               <div className={styles.quantity}>
                 <div>Số lượng</div>
                 <div className={styles.count}>
-                  <div onClick={decreaseNumber}>-</div>
+                  <div onClick={() => dispatch(decrease())}>-</div>
                   <div>{count}</div>
-                  <div onClick={increaseNumber}>+</div>
+                  <div onClick={() => dispatch(increase())}>+</div>
                 </div>
               </div>
               <div className={styles.orderProducts}>
@@ -195,7 +211,6 @@ function DetailProduct() {
             <div>
               <img
                 id='img'
-                onClick={handlOnclickImage}
                 src='https://static.30shine.com/shop-admin/2022/04/08/30SM98K3-SRM%20Than%20ho%E1%BA%A1t%20t%C3%ADnh%20-%20USP.jpg'
                 alt='image'
               />
@@ -429,7 +444,7 @@ function DetailProduct() {
       <div className={styles.otherProducts}>
         <div>SẢN PHẨM CÙNG LOẠI</div>
         <div className={styles.sameProducts}>
-          {listProduct.map((item: any) => {
+          {products?.map((item: any) => {
             return (
               <div
                 className={styles.informationProduct}
