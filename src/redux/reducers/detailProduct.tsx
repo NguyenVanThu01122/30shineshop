@@ -2,7 +2,6 @@ const initalState = {
   count: 0,
   products: [],
   detailProduct: {}
-  // relateProduct: []
 }
 
 const handleReducer = (state = initalState, action: any) => {
@@ -28,11 +27,6 @@ const handleReducer = (state = initalState, action: any) => {
         ...state,
         products: action.payload
       }
-    // case 'RELATE_PRODUCT':
-    //     return {
-    //       ...state,
-    //       relateProduct: action.payload
-    //     }
     case 'SAVE_DETAIL_PRODUCT':
       return {
         ...state,

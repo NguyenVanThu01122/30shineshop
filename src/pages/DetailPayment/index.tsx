@@ -3,26 +3,25 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { privateAxios } from '../../service/axios'
 import { PaymentWrapper } from './styled'
-// import { PaymentWrapper } from './styled'
 
 export default function DetailPayment() {
   const params = useParams()
   const navigate = useNavigate()
   const paymentId = params?.id
 
-  let [name, setName] = useState('')
-  let [phone, setPhone] = useState('')
-  let [email, setEmail] = useState('')
-  let [address, setAddress] = useState('')
-  let [note, setNote] = useState('')
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [address, setAddress] = useState('')
+  const [note, setNote] = useState('')
 
   const [timeDelivery, setTimeDelivery] = useState(1)
 
-  let [errorNote, setErrorNote] = useState('')
-  let [errorName, setErrorName] = useState('')
-  let [errorPhone, setErrorPhone] = useState('')
-  let [errorAddress, setErrorAddress] = useState('')
-  let [errorEmail, setErrorEmail] = useState('')
+  const [errorNote, setErrorNote] = useState('')
+  const [errorName, setErrorName] = useState('')
+  const [errorPhone, setErrorPhone] = useState('')
+  const [errorAddress, setErrorAddress] = useState('')
+  const [errorEmail, setErrorEmail] = useState('')
 
   const [detailPayment, setDetailPayment] = useState<any>({})
 
@@ -33,8 +32,8 @@ export default function DetailPayment() {
     })
   }, [])
 
-  let handleOnchangeName = (e: any) => {
-    let valueName = e.target.value
+  const handleOnchangeName = (e: any) => {
+    const valueName = e.target.value
     setName(valueName)
     if (!valueName) {
       setErrorName('x Vui lòng nhập tên')
@@ -44,8 +43,8 @@ export default function DetailPayment() {
       setErrorName('')
     }
   }
-  let handleOnchangePhone = (e: any) => {
-    let valuePhone = e.target.value
+  const handleOnchangePhone = (e: any) => {
+    const valuePhone = e.target.value
     setPhone(valuePhone)
     if (!valuePhone) {
       setErrorPhone('x Vui lòng nhập số điện thoại')
@@ -57,8 +56,8 @@ export default function DetailPayment() {
       setErrorPhone('')
     }
   }
-  let handleOnchangeAddress = (e: any) => {
-    let valueAddress = e.target.value
+  const handleOnchangeAddress = (e: any) => {
+    const valueAddress = e.target.value
     setAddress(valueAddress)
     if (!valueAddress) {
       setErrorAddress('x Vui lòng nhập địa chỉ của bạn')
@@ -66,8 +65,8 @@ export default function DetailPayment() {
       setErrorAddress('')
     }
   }
-  let handleOnchangeEmail = (e: any) => {
-    let valueEmail = e.target.value
+  const handleOnchangeEmail = (e: any) => {
+    const valueEmail = e.target.value
     setEmail(valueEmail)
     if (!valueEmail) {
       setErrorEmail('x Vui lòng nhập Email')
@@ -77,8 +76,8 @@ export default function DetailPayment() {
       setErrorEmail('')
     }
   }
-  let handleOnchangeNote = () => {
-    let elementNote = (document.getElementById('texArea') as any).value
+  const handleOnchangeNote = () => {
+    const elementNote = (document.getElementById('texArea') as any).value
     setNote(elementNote)
     if (!elementNote) {
       setErrorNote('x Vui lòng nhập ghi chú')

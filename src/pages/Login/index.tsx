@@ -9,14 +9,14 @@ import { handleDirection } from '../../helper'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function Login() {
-  let navigate = useNavigate()
-  let [email, setEmail] = useState('')
-  let [password, setPassword] = useState('')
-  let [errorEmail, setErrorEmail] = useState('')
-  let [errorPassword, setErrorPassword] = useState('')
-  let [isShowPassword, setIsPassword] = useState(false)
-  let handleOnChangeEmail = (e: any) => {
-    let valueEmail = e.target.value
+  const navigate = useNavigate()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [errorEmail, setErrorEmail] = useState('')
+  const [errorPassword, setErrorPassword] = useState('')
+  const [isShowPassword, setIsPassword] = useState(false)
+  const handleOnChangeEmail = (e: any) => {
+    const valueEmail = e.target.value
     setEmail(valueEmail)
     if (!valueEmail) {
       setErrorEmail('x Vui lòng nhập email')
@@ -27,8 +27,8 @@ export default function Login() {
     }
   }
 
-  let handleOnChangePassword = (e: any) => {
-    let valuePassword = e.target.value
+  const handleOnChangePassword = (e: any) => {
+    const valuePassword = e.target.value
     setPassword(valuePassword)
     if (!valuePassword) {
       setErrorPassword('x Vui lòng nhập mật khẩu')
@@ -37,7 +37,7 @@ export default function Login() {
     }
   }
 
-  let handleOnSubmit = (e: any) => {
+  const handleOnSubmit = (e: any) => {
     e.preventDefault()
     if (!email) {
       setErrorEmail('x Vui lòng nhập email')
@@ -46,20 +46,20 @@ export default function Login() {
       setErrorPassword('x Vui lòng nhập mật khẩu')
     }
     if (email && password && !errorEmail && !errorPassword) {
-      let data = {
+      const data = {
         password: password,
         email: email
       }
       privateAxios
         .post('/login', data)
         .then((response) => {
-          let result = response.data
+          const result = response.data
           localStorage.setItem('token', result?.token)
-          localStorage.setItem('name',result?.user?.name)
+          localStorage.setItem('name', result?.user?.name)
           navigate('/')
         })
         .catch((error: any) => {
-          let objError = error?.response?.data
+          const objError = error?.response?.data
           message.error(objError?.message)
         })
     }
@@ -76,19 +76,7 @@ export default function Login() {
     }
   }
   const handleClickPassword = () => {
-    // if (isShowPassword === true) {
-    //   setIsPassword(false)
-    // } else {
-    //   setIsPassword(true)
-    // }
     setIsPassword(!isShowPassword)
-    // let elementPassword = document.getElementById('password')
-    // let valueTypeElement = elementPassword?.getAttribute('type')
-    // if (valueTypeElement === 'password') {
-    //   elementPassword?.setAttribute('type', 'text')
-    // } else if (valueTypeElement === 'text') {
-    //   elementPassword?.setAttribute('type', 'password')
-    // }
   }
   return (
     <div className={styles.page}>
@@ -142,11 +130,6 @@ export default function Login() {
           <div className={styles.loginButton} onClick={handleOnSubmit}>
             ĐĂNG NHẬP
           </div>
-          {/* {email && password && !errorEmail && !errorPassword ? (
-            <div className={styles.loginButton} onClick={handleOnSubmit}>
-              ĐĂNG NHẬP
-            </div>
-          ) : null} */}
         </div>
       </div>
     </div>

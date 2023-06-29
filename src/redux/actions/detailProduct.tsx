@@ -9,8 +9,8 @@ const decrease = () => {
   }
 }
 
-const addListProduct =(payload:any)=>{
-  return{
+const addListProduct = (payload: any) => {
+  return {
     type: 'ADD_LIST_PRODUCT',
     payload
   }
@@ -22,11 +22,5 @@ const saveDetailProduct = (payload: any) => {
     payload
   }
 }
-// const relateProduct =(payload:any)=>{
-//   return{
-//     type: 'RELATE_PRODUCT',
-//     payload
-//   }
-// }
 
-export { decrease, increase,addListProduct, saveDetailProduct}
+export { addListProduct, decrease, increase, saveDetailProduct }

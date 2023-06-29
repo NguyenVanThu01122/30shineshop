@@ -10,12 +10,9 @@ import { privateAxios } from '../../service/axios'
 import styles from './index.module.scss'
 
 function DetailProduct() {
-  let params = useParams()
+  const params = useParams()
   const navigate = useNavigate()
-  // Lấy chi tiết sản phẩm: // http://shop30shine.herokuapp.com/product/${params.id}
-  // Lấy danh sách sản phẩm liên quan: https://shop30shine.herokuapp.com/product/relate/:id
   const [loading, setLoading] = useState(false)
-  // const [detailProduct, setDetailProduct] = useState<any>({})
   const [listProduct, setlistlProduct] = useState([])
   const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
@@ -30,31 +27,19 @@ function DetailProduct() {
     privateAxios.get(`/product/${params.id}`).then((res) => {
       dispatch(saveDetailProduct(res.data.data))
     })
-    // fetch(`http://shop30shine.herokuapp.com/product/${params.id}`, {
-    //   headers: {
-    //     Authorization: `Bearer ${localStorage.getItem('token')}`
-    //   }
-    // })
-    //   .then((res) => res.json())
-    //   .then((res) => {
-    //     console.log(res);
-    //     dispatch(saveDetailProduct(res.data))
-    //   })
   }
   const handelRelate = () => {
     privateAxios.get(`/product/relate/${params.id}`).then((res) => {
       dispatch(addListProduct(res.data.data))
     })
   }
-  // let [count, setCount] = useState(1)
-  // let decreaseNumber = () => {
-  //   if (count > 1) setCount(count - 1)
-  // }
-  // let increaseNumber = () => {
-  //   setCount(count + 1)
-  // }
-
-  const count = useSelector((state: any) => state.app.count)
+ const [count, setCount] = useState(1)
+ const decreaseNumber = () => {
+    if (count > 1) setCount(count - 1)
+  }
+ const increaseNumber = () => {
+    setCount(count + 1)
+  }
   if (count > 10) {
     alert('bạn chỉ được chọn tối đa 10 sản phẩm')
   }
@@ -93,7 +78,6 @@ function DetailProduct() {
           // api sẽ trả về cho mình paymentId
           console.log(res.data.data)
           const paymentId = res.data?.paymentId
-          // console.log(res.data)
           navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
         })
     }
@@ -187,9 +171,9 @@ function DetailProduct() {
               <div className={styles.quantity}>
                 <div>Số lượng</div>
                 <div className={styles.count}>
-                  <div onClick={() => dispatch(decrease())}>-</div>
+                  <div onClick={() => decreaseNumber()}>-</div>
                   <div>{count}</div>
-                  <div onClick={() => dispatch(increase())}>+</div>
+                  <div onClick={() => increaseNumber()}>+</div>
                 </div>
               </div>
               <div className={styles.orderProducts}>
@@ -199,7 +183,6 @@ function DetailProduct() {
                   </div>
                   <div>THÊM GIỎ HÀNG</div>
                 </div>
-
                 <div className={styles.buyNow} onClick={() => handleBuyNow(detailProduct.id, count)}>
                   <div>MUA NGAY</div>
                   <div>Không ưng đổi ngay trong 30 ngày</div>

@@ -7,50 +7,6 @@ import { addListProduct } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function ListProduct() {
-  /*
-GET LIST: http://shop30shine.herokuapp.com/products
-fetch: 
-GET LIST + GET DETAIL + DELETE
-fetch(url, {
-  params: {
-
-  }
-}).then(res => res.json()).then(json => {
-  console.log(json)
-}).catch(error => {
-
-})
-
-
-const obj = {
-  password: 'abc',
-  email: 122
-}
-
-POST:
-fetch('url, {
-  method: 'POST',
-  body: JSON.stringfy(obj),
-}).then(res => res.json()).then(res => {
-  console.log(res);
-}).catch(êrror => {
-
-})
-
-PUT:
-fetch(`url/${id}`, {
-  method: 'POST',
-  body: JSON.stringfy(obj),
-}).then(res => res.json()).then(res => {
-  console.log(res);
-}).catch(êrror => {
-  
-})
-
-
-
-*/
-
   const navigate = useNavigate()
   const listCategory = {
     suaRuaMat: '64341dab40c628f4c65323f0',
@@ -95,7 +51,7 @@ fetch(`url/${id}`, {
     if (maxPrice) {
       params.maxPrice = maxPrice
     }
-    setLoading(true);
+    setLoading(true)
 
     privateAxios
       .get('/product', {
@@ -111,20 +67,6 @@ fetch(`url/${id}`, {
         setError('Lỗi server')
       })
   }
-
-  //  fetch(`http://shop30shine.herokuapp.com/product?sort=${sort}&keyword=${keyword}&minPrice=${minPrice}&maxPrice=${maxPrice}`, {
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem('token')}`
-  //     }
-  //   }).then((res => res.json())).then(res => {
-  //     setLoading(false)
-  //     dispatch(addListProduct(res.data))
-  //     setError('')
-  //   }).catch((err) => {
-  //     setLoading(false)
-  //     setError('Lỗi server')
-  //   })
-    
   useEffect(() => {
     handleSearch()
   }, [])
@@ -137,35 +79,30 @@ fetch(`url/${id}`, {
             <div onClick={() => setCategory('')} className={`${category === '' ? styles.activeCategory : ''}`}>
               Tất cả
             </div>
-            {/* <input type='radio' name='category' onClick={() => setCategory('')} /> */}
             <div
               onClick={() => setCategory(listCategory.dauGoi)}
               className={`${category === listCategory.dauGoi ? styles.activeCategory : ''}`}
             >
               Dầu gội
             </div>
-            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.dauGoi)} /> */}
             <div
               onClick={() => setCategory(listCategory.suaRuaMat)}
               className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
             >
               Sữa rửa mặt
             </div>
-            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.suaRuaMat)} /> */}
             <div
               onClick={() => setCategory(listCategory.suaTam)}
               className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
             >
               Sữa tắm
             </div>
-            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.suaTam)} /> */}
             <div
               onClick={() => setCategory(listCategory.sapVuotToc)}
               className={`${category === listCategory.sapVuotToc ? styles.activeCategory : ''}`}
             >
               Sắp vuốt tóc
             </div>
-            {/* <input type='radio' name='category' onClick={() => setCategory(listCategory.sapVuotToc)} /> */}
           </div>
         </div>
         <div className={styles.nameProduct}>
@@ -193,9 +130,6 @@ fetch(`url/${id}`, {
           <Button type='primary' size='large' onClick={handleSearch}>
             Tìm kiếm
           </Button>
-          {/* <div className={styles.buttonSearch}>
-          <button onClick={handleSearch}>Tìm kiếm sản phẩm</button>
-        </div> */}
         </div>
       </div>
       <div className={styles.findProducts}>

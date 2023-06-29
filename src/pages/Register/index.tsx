@@ -8,28 +8,28 @@ import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Register() {
-  let navigate = useNavigate()
-  let [name, setName] = useState('')
-  let [password, setPassword] = useState('')
-  let [birthday, setBirthday] = useState('')
-  let [phone, setPhone] = useState('')
-  let [email, setEmail] = useState('')
-  let [gender, setGender] = useState('')
-  let [repeat, setRepeat] = useState('')
+  const navigate = useNavigate()
+  const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [birthday, setBirthday] = useState('')
+  const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
+  const [gender, setGender] = useState('')
+  const [repeat, setRepeat] = useState('')
 
-  let [errorName, setErrorName] = useState('')
-  let [errorPassword, setErrorPassword] = useState('')
-  let [errorBirthday, setErrorBirthday] = useState('')
-  let [errorPhone, setErrorPhone] = useState('')
-  let [errorEmail, setErrorEmail] = useState('')
-  let [errorGender, setErrorGender] = useState('')
-  let [errorRepeat, setErrorRepeat] = useState('')
-  let [errorCheck, setErrorCheck] = useState('')
+  const [errorName, setErrorName] = useState('')
+  const [errorPassword, setErrorPassword] = useState('')
+  const [errorBirthday, setErrorBirthday] = useState('')
+  const [errorPhone, setErrorPhone] = useState('')
+  const [errorEmail, setErrorEmail] = useState('')
+  const [errorGender, setErrorGender] = useState('')
+  const [errorRepeat, setErrorRepeat] = useState('')
+  const [errorCheck, setErrorCheck] = useState('')
 
-  let [isPassword, setIsPassword] = useState(false)
-  let [isRepeatPassword, setIsRepeatPassword] = useState(false)
-  let handleOnchageName = (e: any) => {
-    let name = e.target.value
+  const [isPassword, setIsPassword] = useState(false)
+  const [isRepeatPassword, setIsRepeatPassword] = useState(false)
+  const handleOnchageName = (e: any) => {
+    const name = e.target.value
     setName(name)
     if (!name) {
       setErrorName('x Vui lòng nhập tên')
@@ -39,8 +39,8 @@ export default function Register() {
       setErrorName('')
     }
   }
-  let handleOnchagePassword = (e: any) => {
-    let password = e.target.value
+  const handleOnchagePassword = (e: any) => {
+    const password = e.target.value
     // const arr = ['!', '@', '$', '%', '&', '*']
     setPassword(password)
     if (!password) {
@@ -55,8 +55,8 @@ export default function Register() {
       setErrorPassword('')
     }
   }
-  let handleOnchageBirthday = (e: any) => {
-    let birthday = e.target.value
+  const handleOnchageBirthday = (e: any) => {
+    const birthday = e.target.value
     setBirthday(birthday)
     if (!birthday) {
       setErrorBirthday('x Vui lòng nhập ngày sinh')
@@ -64,8 +64,8 @@ export default function Register() {
       setErrorBirthday('')
     }
   }
-  let handleOnchageEmail = (e: any) => {
-    let email: string = e.target.value
+  const handleOnchageEmail = (e: any) => {
+    const email: string = e.target.value
     setEmail(email)
     if (!email) {
       setErrorEmail('x Vui lòng nhập email')
@@ -75,8 +75,8 @@ export default function Register() {
       setErrorEmail('')
     }
   }
-  let handleOnchagePhone = (e: any) => {
-    let phone = String(e.target.value)
+  const handleOnchagePhone = (e: any) => {
+    const phone = String(e.target.value)
     setPhone(phone)
     if (!phone) {
       setErrorPhone('x Vui lòng nhập số điện thoại')
@@ -88,8 +88,8 @@ export default function Register() {
       setErrorPhone('')
     }
   }
-  let handleOnchageRepeat = (e: any) => {
-    let repeat = e.target.value
+  const handleOnchageRepeat = (e: any) => {
+    const repeat = e.target.value
     setRepeat(repeat)
     if (!repeat) {
       setErrorRepeat('x Vui lòng nhập lại mật khẩu')
@@ -99,8 +99,8 @@ export default function Register() {
       setErrorRepeat('')
     }
   }
-  let handleOnchageGender = (e: any) => {
-    let gender = e.target.value
+  const handleOnchageGender = (e: any) => {
+    const gender = e.target.value
     setGender(gender)
     if (!gender) {
       setErrorGender('x Vui lòng chọn giới tính')
@@ -108,14 +108,14 @@ export default function Register() {
       setErrorGender('')
     }
   }
-  let handleCheckbox = (e: any) => {
-    let checkbox = (document.getElementById('checkbox') as any).checked
+  const handleCheckbox = (e: any) => {
+    const checkbox = (document.getElementById('checkbox') as any).checked
     if (checkbox) {
       setErrorCheck('')
     }
   }
-  let handleSubmit = () => {
-    let checkbox = (document.getElementById('checkbox') as any).checked
+  const handleSubmit = () => {
+    const checkbox = (document.getElementById('checkbox') as any).checked
     if (!checkbox) {
       setErrorCheck('x Vui lòng xác nhận')
     } else {
@@ -157,7 +157,7 @@ export default function Register() {
       !errorPhone &&
       !errorRepeat
     ) {
-      let data = {
+      const data = {
         name: name,
         email: email,
         password: password,
@@ -165,40 +165,6 @@ export default function Register() {
         telephone: phone,
         date: birthday
       }
-
-      // fetch('url', {
-      //   method: 'POST',
-      //   body: JSON.stringify(data)
-      // })
-      //   .then((res) => res.json())
-      //   .then((res) => {
-      //     alert(res.message)
-      //     setName('')
-      //     setEmail('')
-      //     setPassword('')
-      //     setPhone('')
-      //     setRepeat('')
-      //     setBirthday('')
-      //     setGender('')
-      //     ;(document.getElementById('checkbox') as any).checked = false
-      //     navigate('/login')
-      //   })
-      //   .catch((error) => {
-      //     let objError = error.response?.data
-      //     let stringError = ''
-      //     let emailError = objError.email
-      //     let telephoneError = objError.telephone
-      //     if (emailError) {
-      //       stringError += emailError + ' '
-      //     }
-      //     if (telephoneError) {
-      //       stringError += telephoneError
-      //     }
-      //     {
-      //       message.error(stringError)
-      //     }
-      //   })
-
       privateAxios
         .post('/register', data)
         .then((response) => {
@@ -267,23 +233,9 @@ export default function Register() {
   }
   let handleClickPassword = () => {
     setIsPassword(!isPassword)
-    // let elementPassword = document.getElementById('password')
-    // let valuePassword = elementPassword?.getAttribute('type')
-    // if (valuePassword === 'password') {
-    //   elementPassword?.setAttribute('type', 'text')
-    // } else if (valuePassword === 'text') {
-    //   elementPassword?.setAttribute('type', 'password')
-    // }
   }
   let handleClickRepeat = () => {
     setIsRepeatPassword(!isRepeatPassword)
-    // let elementRepeat = document.getElementById('repeat')
-    // let valueRepeat = elementRepeat?.getAttribute('type')
-    // if (valueRepeat === 'password') {
-    //   elementRepeat?.setAttribute('type', 'text')
-    // } else if (valueRepeat === 'text') {
-    //   elementRepeat?.setAttribute('type', 'number')
-    // }
   }
   return (
     <div className={styles.registerWrapper}>
@@ -443,21 +395,7 @@ export default function Register() {
         </div>
         <div className={styles.registerLogin}>
           <div onClick={handleSubmit}>{}ĐĂNG KÝ</div>
-          {/* {name &&
-        phone &&
-        repeat &&
-        password &&
-        birthday &&
-        gender &&
-        !errorBirthday &&
-        !errorEmail &&
-        !errorCheck &&
-        !errorGender &&
-        !errorPhone &&
-        !errorName &&
-        !errorRepeat ? (
-          <div onClick={handleSubmit}>ĐĂNG KÝ</div>
-        ) : null} */}
+
         </div>
       </div>
     </div>
