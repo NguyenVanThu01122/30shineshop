@@ -148,6 +148,4 @@ export default function Header() {
     </div>
   )
 }
-function dispatch(arg0: { type: string; payload: any }) {
-  throw new Error('Function not implemented.')
-}
+
