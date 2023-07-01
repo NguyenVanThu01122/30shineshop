@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout />}>
+        <Route path='/' element={<Layout />}>x  
           <Route index element={<ListProduct />} />
           <Route path='/header' element={<Header/>}></Route>
           <Route path='/detail-product/:id' element={<DetailProduct />} />

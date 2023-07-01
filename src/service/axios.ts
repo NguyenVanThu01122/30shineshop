@@ -1,5 +1,4 @@
 import axios from 'axios'
-
 const privateAxios = axios.create({
   baseURL: 'http://shop30shine.herokuapp.com',
   timeout: 4000,

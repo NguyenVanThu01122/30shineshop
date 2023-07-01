@@ -125,4 +125,9 @@
 }
 /* responsive */
 @media screen and (max-width: 576px) {
+ 
+  .login{
+    width: 80%;
+  }
+
 }
