@@ -124,10 +124,17 @@
   font-style: italic;
 }
 /* responsive */
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 768px) {
  
   .login{
-    width: 80%;
+    width: 90%;
+  }
+  .iconEye{
+    width: 5%;
+  }
+  .icon{
+    width: 2%;
+    /* font-size: 15px; */
   }
 
 }
