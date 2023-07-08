@@ -1,12 +1,19 @@
+import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from 'react-router-dom'
 import styles from './sttyles.module.css'
 export default function Introduce() {
+  const navigate = useNavigate()
   return (
     <div className={styles.pageIntroduce}>
       {/* <div className={styles.introduce}>
         <div>Trang chủ /</div>
         <div>Giới thiệu</div>
       </div> */}
-      <div className={styles.titleIntro}>GIỚI THIỆU</div>
+      <div className={styles.titleIntro}>
+        <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
+        <div>GIỚI THIỆU</div>
+      </div>
       <div className={styles.imgWax}>
         <img src='https://theme.hstatic.net/1000306701/1000727092/14/about03_banner_bkg.jpg?v=333' alt='img' />
       </div>

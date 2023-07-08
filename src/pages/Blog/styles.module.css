@@ -3,6 +3,10 @@
   padding: 15px 100px;
   background-color: rgba(148, 142, 142, 0.226);
 }
+.iconBack{
+  margin-right: 8px;
+  font-size: x-large;
+}
 .headerBlog > div:last-child {
   margin-left: 8px;
 }

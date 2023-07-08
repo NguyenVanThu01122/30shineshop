@@ -1,8 +1,11 @@
-import { useEffect, useState } from 'react'
+import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
 export default function Contact() {
   let token = localStorage.getItem('token')
-
+  const navigate = useNavigate()
   let [name, setName] = useState('')
   let [phone, setPhone] = useState('')
   let [email, setEmail] = useState('')
@@ -79,32 +82,28 @@ export default function Contact() {
   let handleOnBlurName = () => {
     if (!name) {
       setErrorName('Vui lòng nhập tên')
-    }
-    else{
+    } else {
       setErrorName('')
     }
   }
   let handleOnBlurEmail = () => {
     if (!email) {
       setErrorEmail('Vui lòng nhập Email')
-    }
-    else{
+    } else {
       setErrorEmail('')
     }
   }
   let handleOnBlurPhone = () => {
     if (!phone) {
       setErrorPhone('Vui lòng nhập số điện thoại')
-    }
-    else{
+    } else {
       setErrorPhone('')
     }
   }
-  let handleOnBlurContent =()=>{
-    if(!content){
+  let handleOnBlurContent = () => {
+    if (!content) {
       setErrorContent('Vui lòng nhập nội dung')
-    }
-    else{
+    } else {
       setErrorContent('')
     }
   }
@@ -116,7 +115,10 @@ export default function Contact() {
         <div>Liên hệ</div>
       </div> */}
       <div className={styles.contact}>
-        <div>Liên hệ</div>
+        <div>
+          <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
+          Liên hệ
+        </div>
         <div>
           <iframe
             src='https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d7449.628785119932!2d105.845141!3d21.000076!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac71132ea2b5%3A0xab941ece69bef2a7!2zODIgUC4gVHLhuqduIMSQ4bqhaSBOZ2jEqWEsIMSQ4buTbmcgVMOibSwgSGFpIELDoCBUcsawbmcsIEjDoCBO4buZaSwgVmnhu4d0IE5hbQ!5e0!3m2!1svi!2sus!4v1681468318680!5m2!1svi!2sus'
@@ -207,7 +209,12 @@ export default function Contact() {
             <div className={styles.content}>
               <div>Nội dung liên hệ *</div>
               <div id='content' className={`${errorContent ? styles.borderRed : ''}`}>
-                <textarea onBlur={handleOnBlurContent} value={content} onChange={handleOnchageContent} placeholder='Nội dung liên hệ'></textarea>
+                <textarea
+                  onBlur={handleOnBlurContent}
+                  value={content}
+                  onChange={handleOnchageContent}
+                  placeholder='Nội dung liên hệ'
+                ></textarea>
               </div>
               <div className={styles.errorText}>{errorContent}</div>
               <div onClick={handleOnSubmit}>GỬI THÔNG TIN</div>

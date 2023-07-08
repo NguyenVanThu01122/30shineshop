@@ -16,6 +16,9 @@
   font-family: 'Oswald';
   margin: 30px 0px 15px 0px;
 }
+.iconBack{
+  margin-right: 8px;
+}
 .brandParent {
   /* flex-wrap: wrap; các thằng con sẽ xuống dòng khi nó vượt quá chiều dài thằng mẹ */
   /* display: flex; */
@@ -25,14 +28,12 @@
   grid-gap: 15px;
 }
 .brandItem {
-  /* width: 19%; */
   margin-bottom: 15px;
   cursor: pointer;
   box-shadow: 0px 0px 5px gray;
 }
 .brandItem:hover {
   transform: scale(1.1);
-  /* border: 1px solid rgb(60, 60, 237); */
 }
 .brandItem img {
   width: 100%;
@@ -45,12 +46,12 @@
 }
 
 @media screen and (max-width: 768px) {
-  .pageBrand{
-    padding: 0px;
+  .pageBrand {
+    padding: 0px 20px;
   }
   .title > div:last-child {
-    margin: 10px 0px;
-    font-size: large  ;
+    margin: 5px 0px;
+    font-size: large;
   }
   .brandParent {
     grid-template-columns: 1fr 1fr;

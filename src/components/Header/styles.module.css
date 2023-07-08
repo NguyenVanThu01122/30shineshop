@@ -3,10 +3,9 @@
   padding: 10px 0px;
   position: relative;
 }
-.iconHome {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.iconHome { 
+  position: absolute;
+  left: 0px;
   font-size: 30px;
   display: none;
 }
@@ -206,6 +205,10 @@
     padding: 12px 0px;
     font-size: 7px;
     cursor: pointer;
+    text-align: center;
+  }
+  .search {
+    width: 80% !important;
   }
   .loginInput {
     width: 100%;
@@ -249,9 +252,9 @@
   }
   .selectItem {
     padding: 0px;
-    width: 28%;
+    width: 31%;
     top: -15px;
-    left: 276px;
+    left: 230px;
     background-color: rgba(212, 211, 207, 0.913);
   }
   .detailItem {

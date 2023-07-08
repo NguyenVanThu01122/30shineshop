@@ -1,5 +1,8 @@
+import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
@@ -9,7 +12,7 @@ export default function Blog() {
 
   let [list, setList] = useState([])
   let [textError, setTextError] = useState('')
-
+  const navigate = useNavigate()
   useEffect(() => {
     privateAxios
       .get('/blog')
@@ -73,7 +76,14 @@ export default function Blog() {
       <div className={styles.sectionTwo}>
         <div className={styles.productIntroduction}>
           <div className={styles.blog}>
-            <div>BLOGS</div>
+            <div>
+              <FontAwesomeIcon
+                onClick={() => navigate('/list-product')}
+                className={styles.iconBack}
+                icon={faLeftLong}
+              />
+              BLOGS
+            </div>
             <div>
               <span>Sắp xếp theo</span>
               <select className={styles.select}>

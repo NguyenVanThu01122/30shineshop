@@ -8,6 +8,9 @@
 .homeContact > div:first-child {
   margin-right: 15px;
 }
+.iconBack{
+  margin-right: 8px;
+}
 .contact div {
   margin: 25px 0px;
   font-family: 'Oswald';
@@ -128,7 +131,10 @@
 
 @media screen and (max-width: 768px) {
   .pageContact {
-    padding: 0px 15px;
+    padding: 0px 20px;
+  }
+  .contact >div:first-child{
+    margin: 0px ;
   }
   .contactInfo {
     display: block;
