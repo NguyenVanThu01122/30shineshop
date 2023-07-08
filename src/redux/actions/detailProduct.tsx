@@ -9,7 +9,7 @@ const decrease = () => {
   }
 }
 
-const addListProduct = (payload: any) => {
+const addListProduct = (payload: string) => {
   return {
     type: 'ADD_LIST_PRODUCT',
     payload

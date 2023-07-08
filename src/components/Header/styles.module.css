@@ -3,17 +3,50 @@
   padding: 10px 0px;
   position: relative;
 }
-.header > div:first-child {
-  width: 30%;
+.iconHome {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  display: none;
 }
 .img img {
-  width: 150px;
+  width: 30%;
   padding-left: 15px;
   margin-left: 130px;
   cursor: pointer;
 }
 .header > div:last-child {
-  width: 70%;
+  width: 60%;
+}
+.menu {
+  position: relative;
+  width: 40%;
+}
+.listMenu {
+  position: absolute;
+  /* left: -50px;
+  top: -30px; */
+  background-color: rgb(0, 0, 0, 0.932);
+  padding: 10px;
+}
+.listMenu div {
+  width: 100%;
+  font-size: 10px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.listMenu > div:hover {
+  color: rgba(255, 204, 51, 0.913);
+}
+.title {
+  margin-bottom: 30px !important;
+  border-bottom: 1px solid rgb(232, 230, 230);
+}
+.iconClose {
+  font-size: 20px;
+  color: #fff;
+  display: flex;
 }
 .search {
   display: flex;
@@ -41,7 +74,7 @@
 .iconSeach {
   color: rgba(163, 163, 163);
   font-size: 20px;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .loginInput input {
@@ -68,7 +101,7 @@
   background-color: rgba(255, 204, 51, 0.913);
 }
 .login div {
-  margin-left: 20px;
+  margin-left: 15px;
   cursor: pointer;
 }
 .icon {
@@ -81,6 +114,30 @@
   margin-left: 10px;
   background-color: rgba(50, 50, 50, 0.03);
   cursor: pointer;
+}
+.menuItem {
+  position: relative;
+}
+.selectItem {
+  background-color: #fff;
+  border-radius: 5px;
+  position: absolute;
+  top: -25px;
+  left: 1120px;
+  width: 12%;
+  padding: 8px;
+}
+.detailItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.detailItem div {
+  margin-left: 8px;
+}
+.detailItem > div:hover {
+  color: rgba(255, 204, 51, 0.913);
 }
 .option div {
   margin-left: 30px;
@@ -135,4 +192,75 @@
 }
 .optionChild {
   display: flex;
+}
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    justify-content: space-around;
+  }
+  .iconHome {
+    display: block;
+  }
+  .search > div:first-child {
+    width: 40%;
+    padding: 12px 0px;
+    font-size: 7px;
+    cursor: pointer;
+  }
+  .loginInput {
+    width: 100%;
+    padding: 5px;
+    margin-right: 5px !important;
+  }
+  .iconFabars {
+    width: 80%;
+  }
+  .loginInput input {
+    padding: 3px 0px;
+    width: 100%;
+  }
+  .iconSeach {
+    display: none;
+  }
+  .login {
+    padding: 5px;
+    width: 30%;
+  }
+  .login img {
+    width: 10px;
+    margin: 0px;
+  }
+  .login > div {
+    font-size: 10px;
+    margin: 5px;
+    width: 100%;
+  }
+  .img img {
+    display: none;
+  }
+  .icon {
+    width: 30%;
+    height: 40px;
+    padding: 3px;
+    margin-left: 6px;
+  }
+  .option {
+    display: none;
+  }
+  .selectItem {
+    padding: 0px;
+    width: 28%;
+    top: -15px;
+    left: 276px;
+    background-color: rgba(212, 211, 207, 0.913);
+  }
+  .detailItem {
+    margin: 5px;
+  }
+  .detailItem > div {
+    font-size: 10px;
+  }
+  .iconMenu {
+    font-size: 10px;
+  }
 }

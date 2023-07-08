@@ -14,6 +14,7 @@ import Login from './pages/Login'
 import OrderSuccess from './pages/OrderSuccess'
 import Register from './pages/Register'
 import Header from './components/Header'
+import SellingProducts from './pages/SellingProducts'
 
 function App() {
   return (

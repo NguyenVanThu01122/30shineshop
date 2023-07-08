@@ -107,8 +107,7 @@
 }
 .selectionPackage > div:first-child {
   width: 33%;
-  --tw-text-opacity: 1;
-  color: rgba(95, 95, 95, var(--tw-text-opacity));
+  color: rgba(95, 95, 95);
 }
 .selectionPackage div {
   color: aliceblue;
@@ -116,7 +115,7 @@
 .select {
   display: flex;
   justify-content: space-around;
-  width: 33%;
+  width: 40%;
 }
 .select div {
   padding: 8px 15px;
@@ -132,7 +131,6 @@
   position: fixed;
   bottom: 100px;
   right: 0px;
-  transition: all .5s;
 }
 .iconPhone {
   width: 90px;
@@ -163,4 +161,20 @@
   border-radius: 10px;
   background-color: rgba(255, 192, 1, 0.806);
   cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .images{
+    display: block;
+  }
+  .phoneNumber {
+    font-size: 8px;
+    padding: 8px;
+  }
+  .icon{
+    margin-right: 10px;
+  }
+ .select{
+  display: block;
+ }
 }

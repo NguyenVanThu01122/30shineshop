@@ -13,7 +13,12 @@ export default function Footer() {
         setShowIcon(false)
       }
     })
-  }, [])
+
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   return (
     <div className={styles.pageFooter}>
@@ -77,7 +82,7 @@ export default function Footer() {
           <img src='https://shop.30shine.com/images/Phone.png' alt='img' className={styles.iconPhone} />
           <img src='https://shop.30shine.com/images/Message.png' alt='img' className={styles.iconMessenger} />
           <img src='https://shop.30shine.com/images/Zalo.png' alt='img' className={styles.iconZalo} />
-          <BsArrowUp className={styles.iconUp} />
+          <BsArrowUp onClick={handleClick} className={styles.iconUp} />
         </div>
       )}
     </div>

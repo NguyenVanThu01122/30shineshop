@@ -148,8 +148,6 @@
   width: 65%;
 }
 .useWax span {
-  font-family: Be Vietnam, sans-serif;
-  --tw-text-opacity: 1;
   color: rgba(61, 61, 61);
 }
 .useWax > div:first-child:hover {
@@ -158,6 +156,7 @@
 .sectionEnd {
   display: flex;
   justify-content: center;
+  margin-bottom: 30px;
 }
 .sectionEnd div {
   padding: 10px 15px;
@@ -171,4 +170,40 @@
 }
 .sectionEnd > div:nth-child(3) {
   background-color: rgba(255, 204, 51);
+}
+
+@media screen and (max-width: 768px) {
+  .sectionTwo {
+    display: block;
+    padding: 0px;
+  }
+  .productIntroduction {
+    width: 100%;
+    padding: 0px 15px;
+  }
+  .blog {
+    width: 100%;
+  }
+  .blog span {
+    display: none;
+  }
+  .introduceWax img:first-child {
+    margin-right: 10px;
+    width: 50%;
+    height: 350px;
+  }
+  .serviceSelection {
+    display: none;
+  }
+  .Categories {
+    width: 100%;
+    padding: 0px 15px;
+  }
+  .postsImagesWax {
+    width: 100%;
+  }
+
+  .sectionEnd {
+    margin-bottom: 30px;
+  }
 }

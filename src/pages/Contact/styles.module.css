@@ -125,3 +125,18 @@
   color: red;
   font-style: italic;
 }
+
+@media screen and (max-width: 768px) {
+  .pageContact {
+    padding: 0px 15px;
+  }
+  .contactInfo {
+    display: block;
+  }
+  .comments {
+    width: 100%;
+  }
+  .sendComments {
+    width: 100%;
+  }
+}

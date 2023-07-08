@@ -1,7 +1,8 @@
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
@@ -10,14 +11,26 @@ import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Header() {
-  
   const [keyword, setKeyword] = useState('')
   const [isRender, setIsRender] = useState(false)
+  const [isOpenMenu, setIsOpenMenu] = useState(false)
+  const [isAccount, setIsAccount] = useState(false)
   const handleOnMouseEter = () => {
     setIsRender(true)
   }
   const handleOnMouseLeave = () => {
     setIsRender(false)
+  }
+  const openMenu = () => {
+    setIsOpenMenu(!isOpenMenu)
+  }
+  const openAccount = () => {
+    setIsAccount(!isAccount)
+  }
+  const handelLogOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('name')
+    navigate('/login')
   }
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -34,12 +47,29 @@ export default function Header() {
   }
   return (
     <div className={styles.pageHeader}>
+      {isOpenMenu && (
+        <div className={styles.menu}>
+          <div className={styles.listMenu}>
+            <div className={styles.title}>30ShineShop</div>
+            <div onClick={() => navigate('/list-product')}>DANH SÁCH SẢN PHẨM</div>
+            <div onClick={() => navigate('/brand')}>THƯƠNG HIỆU</div>
+            <div onClick={() => navigate('/introduce')}>GIỚI THIỆU</div>
+            <div onClick={() => navigate('/contact')}>LIÊN HỆ</div>
+            <div onClick={() => navigate('/blog')}>TIN TỨC LÀM ĐẸP</div>
+            <div onClick={() => navigate('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+            <FontAwesomeIcon className={styles.iconClose} onClick={openMenu} icon={faXmark} />
+          </div>
+        </div>
+      )}
       <div className={styles.header}>
+        <div onClick={openMenu} className={styles.iconHome}>
+          <FontAwesomeIcon className={styles.iconFabars} icon={faBars} />
+        </div>
         <div className={styles.img}>
           <img src='https://30shine.com/static/media/log-30shine-white.9945e644.jpg' alt='img' />
         </div>
         <div className={styles.search}>
-          <div>Tìm Kiếm</div>
+          <div onClick={handleSearch}>Tìm Kiếm</div>
           <div className={styles.loginInput}>
             <input
               value={keyword}
@@ -50,11 +80,10 @@ export default function Header() {
             />
             <FontAwesomeIcon onClick={handleSearch} className={styles.iconSeach} icon={faMagnifyingGlass} />
           </div>
-          <div className={styles.login}>
+          <div onClick={openAccount} className={styles.login}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
-
             {checkLogin() ? (
-              <div onClick={() => navigate('/account')}>{localStorage.getItem('name')}</div>
+              <div>{localStorage.getItem('name')}</div>
             ) : (
               <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
             )}
@@ -63,7 +92,24 @@ export default function Header() {
           {/* <div className={styles.informationAccount} onClick={()=>handleDirection('/account')}>Thông tin tài khoản</div> */}
         </div>
       </div>
-
+      {isAccount && (
+        <div className={styles.menuItem}>
+          <div className={styles.selectItem}>
+            <div onClick={() => navigate('/account')} className={styles.detailItem}>
+              <BsPerson className={styles.iconMenu}/>
+              <div>Tài khoản của tôi</div>
+            </div>
+            <div className={styles.detailItem}>
+              <BsLayoutTextSidebarReverse className={styles.iconMenu} />
+              <div>Đơn hàng</div>
+            </div>
+            <div onClick={handelLogOut} className={styles.detailItem}>
+              <BsBoxArrowRight className={styles.iconMenu}/>
+              <div>Đắng xuất</div>
+            </div>
+          </div>
+        </div>
+      )}
       <div className={styles.option}>
         {/* <div className={styles.optionChild} onMouseEnter={handleOnMouseEter} onMouseLeave={handleOnMouseLeave}>
           DANH MỤC
@@ -149,4 +195,3 @@ export default function Header() {
     </div>
   )
 }
-

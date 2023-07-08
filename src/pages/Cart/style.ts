@@ -26,11 +26,11 @@ export const CartWrapper = styled.div`
         }
         .checkboxProduct {
           width: 38%;
-          & input[type='checkbox'] {
+          /* & input[type='checkbox'] {
             margin-left: 8px;
             width: 18px;
             height: 18px;
-          }
+          } */
           & span {
             margin-left: 130px;
             font-size: 1.125rem;
@@ -221,7 +221,7 @@ export const CartWrapper = styled.div`
       cursor: pointer;
       text-align: center;
       padding: 10px;
-      background:gray;
+      background: gray;
       & > div:first-child {
         font-family: 'Oswald';
         font-weight: 600;
@@ -237,6 +237,106 @@ export const CartWrapper = styled.div`
     } */
     .colorYelow {
       background-color: rgba(255, 204, 51, 0.913);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    & {
+      padding: 0px;
+      display: block;
+      .itemCart {
+        width: 100%;
+        & >div:first-child{
+          font-size: large;
+        }
+        .itemProduct {
+          .product {
+            .itemTitle {
+              .checkboxProduct {
+                width: 20%;
+                & span {
+                  margin: 0px;
+                  font-size: 16px;
+                }
+              }
+              .titleProduct {
+                width: 80%;
+                & div {
+                  font-size: 16px;
+                  margin-left: 35px;
+                }
+              }
+            }
+            .detailProduct {
+              .informationProduct {
+                & input[type='checkbox'] {
+                  margin-left: 0px;
+                }
+                .imgProduct {
+                  width: 30%;
+                }
+                & > div:nth-child(3) {
+                  /* width: 7%; */
+                  font-size: 10px;
+                }
+                .priceProduct {
+                  & > div:first-child {
+                    font-size: 14px;
+                    margin: 0px;
+                    & span {
+                      font-size: 12px;
+                      margin: 0px;
+                    }
+                  }
+                }
+              }
+              .upDown {
+                & > div:nth-child(2) {
+                  margin-left: 0px !important;
+                }
+                .buttonUpDown {
+                  margin: 0px 10px;
+                  & > div:first-child {
+                    font-size: 14px;
+                    padding: 6px;
+                  }
+                  & > div:nth-child(2) {
+                    font-size: 14px;
+                    padding: 6px;
+                  }
+                  & > div:last-child {
+                    font-size: 14px;
+                    padding: 6px;
+                  }
+                }
+                .iconDelete {
+                  margin-left: 0px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .informationLine {
+      width: 100%;
+      .itemPay {
+        & >div:first-child{
+          font-size: large;
+        }
+      }
+      .order {
+        width: 50%;
+        margin: auto;
+        padding: 5px;
+        border-radius: 6px;
+        & > div:first-child {
+          margin-bottom: 5px;
+          font-size: 16px;
+        }
+        & > div:last-child {
+          font-size: 10px;
+        }
+      }
     }
   }
 `

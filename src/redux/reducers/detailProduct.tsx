@@ -23,7 +23,7 @@ const handleReducer = (state = initalState, action: any) => {
         }
       }
     case 'ADD_LIST_PRODUCT':
-      return {
+      return{
         ...state,
         products: action.payload
       }

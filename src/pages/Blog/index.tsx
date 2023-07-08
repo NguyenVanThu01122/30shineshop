@@ -127,24 +127,6 @@ export default function Blog() {
               </div>
             )
           })} */}
-          <div className={styles.sectionEnd}>
-            <div>
-              <img src='https://shop.30shine.com/icons/first-icon.svg' alt='img' />
-            </div>
-            <div>
-              <img src='https://shop.30shine.com/icons/angle-icon.svg' alt='img' />
-            </div>
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>
-              <img src='https://shop.30shine.com/icons/angle-icon-2.svg' alt='img' />
-            </div>
-            <div>
-              <img src='https://shop.30shine.com/icons/last-icon.svg' alt='img' />
-            </div>
-          </div>
         </div>
         <div className={styles.Categories}>
           <div className={styles.serviceSelection}>
@@ -257,6 +239,24 @@ export default function Blog() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className={styles.sectionEnd}>
+        <div>
+          <img src='https://shop.30shine.com/icons/first-icon.svg' alt='img' />
+        </div>
+        <div>
+          <img src='https://shop.30shine.com/icons/angle-icon.svg' alt='img' />
+        </div>
+        <div>1</div>
+        <div>2</div>
+        <div>3</div>
+        <div>4</div>
+        <div>
+          <img src='https://shop.30shine.com/icons/angle-icon-2.svg' alt='img' />
+        </div>
+        <div>
+          <img src='https://shop.30shine.com/icons/last-icon.svg' alt='img' />
         </div>
       </div>
     </div>

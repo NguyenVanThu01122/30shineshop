@@ -28,11 +28,11 @@ export const PaymentWrapper = styled.div`
           .ant-input {
             height: 50px;
           }
-          .errorText{
+          .errorText {
             color: red;
             margin-top: 10px;
           }
-          .borderRed{
+          .borderRed {
             border: 1px solid red;
           }
         }
@@ -46,7 +46,7 @@ export const PaymentWrapper = styled.div`
           .ant-input {
             height: 50px;
           }
-          .borderRed{
+          .borderRed {
             border: 1px solid red;
           }
           .errorText {
@@ -95,11 +95,11 @@ export const PaymentWrapper = styled.div`
           margin-top: 25px;
           height: 100px;
         }
-        .errorText{
+        .errorText {
           color: red;
           margin-top: 15px;
         }
-        .borderRed{
+        .borderRed {
           border: 1px solid red;
         }
       }
@@ -283,6 +283,49 @@ export const PaymentWrapper = styled.div`
           }
         }
       }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    & {
+      padding: 0px;
+    }
+    & > div:first-child {
+      font-size: 25px;
+    }
+    .pagePayment {
+      display: block;
+      .payment {
+        width: 100%;
+        .itemProduct {
+          padding: 10px;
+
+          .product{
+            display: flex;
+            .detailProdut >div:first-child{
+              font-size: 13px;
+            }
+            .priceNumber{
+              font-size: 13px;
+             }
+             &>div:nth-child(4){
+              margin: 0px 12px;
+             }
+          }
+        }
+      }
+      .informationLine {
+        width: 100%;
+        .order {
+          width: 60%;
+          margin: auto;
+        }
+        .itemOrder > div:last-child {
+          padding: 0px 10px;
+        }
+      }
+    }
+    .errorText {
+      font-size: 10px;
     }
   }
 `

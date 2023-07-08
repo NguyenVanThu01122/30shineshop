@@ -122,3 +122,35 @@
   font-family: Oswald, sans-serif;
   font-size: 14px;
 }
+
+@media screen and (max-width: 768px) {
+  .itroduce30shine {
+    padding: 0px 20px;
+  }
+  .blockHead{
+    margin-top: 50px;
+  }
+  .blockHead div {
+    width: 100%;
+  }
+  .blockTwo {
+    display: block;
+  }
+  .blockTwo > div {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  .myProduct {
+    display: block;
+  }
+  .blockFour {
+    display: block;
+    padding: 0px;
+  }
+  .ourPolicy {
+    display: block;
+  }
+  .commitments{
+    width: 100%;
+  }
+}

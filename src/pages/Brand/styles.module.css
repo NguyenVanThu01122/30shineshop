@@ -43,3 +43,16 @@
   text-align: center;
   font-size: 18px;
 }
+
+@media screen and (max-width: 768px) {
+  .pageBrand{
+    padding: 0px;
+  }
+  .title > div:last-child {
+    margin: 10px 0px;
+    font-size: large  ;
+  }
+  .brandParent {
+    grid-template-columns: 1fr 1fr;
+  }
+}

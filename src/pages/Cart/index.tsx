@@ -1,7 +1,7 @@
 import { message } from 'antd'
 import { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper } from './style'
@@ -158,7 +158,6 @@ export default function Cart() {
               {totalPrice} <span>đ</span>
             </div>
           </div>
-
           <div className='totalMoney'>
             <div className='money'>
               <div>Tổng tiền</div>

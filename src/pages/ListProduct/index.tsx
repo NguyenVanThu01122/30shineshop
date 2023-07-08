@@ -26,7 +26,6 @@ export default function ListProduct() {
 
   const dispatch = useDispatch()
   const products = useSelector((state: any) => state.app.products)
-
   const handleSearch = () => {
     interface IParams {
       sort: string
@@ -52,7 +51,6 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     setLoading(true)
-
     privateAxios
       .get('/product', {
         params

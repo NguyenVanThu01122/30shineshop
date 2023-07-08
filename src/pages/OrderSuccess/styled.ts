@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-
 export const OderSuccessWrapper = styled.div`
   .orderSuccess {
     text-align: center;
@@ -66,7 +65,6 @@ export const OderSuccessWrapper = styled.div`
       border-radius: 5px;
       text-align: center;
       cursor: pointer;
-
     }
     & > div:last-child {
       width: 50%;
@@ -75,10 +73,29 @@ export const OderSuccessWrapper = styled.div`
       background-color: red;
       border-radius: 5px;
       text-align: center;
-      background-color: rgba(255,204,51);
+      background-color: rgba(255, 204, 51);
       cursor: pointer;
-      & span{
+      & span {
         margin-left: 5px;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .informationOrder {
+      width: 100%;
+    }
+    .orderDetail {
+      width: 100%;
+      & > div:first-child {
+        padding: 5px;
+      }
+      & > div:last-child {
+        padding: 10px;
+      }
+      & > div:last-child span {
+        font-size: 10px;
+        margin-left: 0px;
+
       }
     }
   }

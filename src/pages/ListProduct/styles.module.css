@@ -171,7 +171,6 @@
   /* margin: 0px 3px; */
   /* width: 10%; */
   /* width: 5%; */
-
 }
 .stickerPercen > div:last-child {
   position: absolute;
@@ -180,12 +179,10 @@
   border-top: 20px solid #e54d3e;
   top: 100%;
   right: 0%;
-  /* width: 100%; */
 }
 .product {
   padding: 10px;
   border-radius: 6px;
-  /* border: 1px solid black; */
 }
 .product:hover {
   cursor: pointer;
@@ -443,8 +440,6 @@
   .pageProduct {
     padding: 0px 20px;
   }
-  .searchProduc {
-  }
   .category {
     display: flex;
     flex-direction: column;
@@ -464,10 +459,8 @@
     width: 100%;
   }
   .nameProduct {
-    /* display: block; */
     display: flex;
     flex-direction: column;
-    /* justify-content: center; */
     align-items: center;
   }
   .nameProduct span {
@@ -510,11 +503,17 @@
     width: 50%;
   }
   .percent {
-    font-size: 100%;
+    margin-bottom: 10px;
+    font-size: 10px;
   }
-  .percent span{
-    font-size: 100%;
-
-    /* width: 10%;   */
+  .percent span {
+    font-size: 9px;
+  }
+  .stickerPercen > div:last-child {
+    border-left: 20px solid transparent;
+    border-right: 21px solid transparent;
+    border-top: 18px solid #e54d3e;
+    border-radius: 2px;
+    top: 96%;
   }
 }
