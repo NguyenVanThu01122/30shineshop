@@ -3,7 +3,7 @@
   padding: 10px 0px;
   position: relative;
 }
-.iconHome { 
+.iconHome {
   position: absolute;
   left: 0px;
   font-size: 30px;
@@ -18,12 +18,53 @@
 .header > div:last-child {
   width: 60%;
 }
+
 .menu {
-  position: relative;
-  width: 40%;
+  // background-color: yellow;
+  width: 100vw;
+  @media screen and (min-width: 768px){
+    display: none;
+  }
+  // animation-name: diTuTraiSangPhai;
+  // animation-duration: 0.5s;
+  animation-duration: 0.4s;
+  animation-name: diTuTraiQuaPhai;
+  position: fixed;
+  height: 100vh;
+  z-index: 10;
+  .icon{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .content{
+    div{
+      margin-top: 15px;
+    }
+  }
 }
+
+@keyframes diTuTraiQuaPhai {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translate(0);
+  }
+  
+}
+// @keyframes diTuTraiSangPhai {
+//   from {
+//     transform: translateX(-100%);
+//   }
+//   to{
+//     transform: translateX(0);
+//   }
+// }
+
 .listMenu {
-  position: absolute;
+  height: 100%;
+  width: 70%;
   /* left: -50px;
   top: -30px; */
   background-color: rgb(0, 0, 0, 0.932);
@@ -31,8 +72,7 @@
 }
 .listMenu div {
   width: 100%;
-  font-size: 10px;
-  margin-bottom: 20px;
+  font-size: 14px;
   color: #fff;
 }
 .listMenu > div:hover {
@@ -40,7 +80,6 @@
 }
 .title {
   margin-bottom: 30px !important;
-  border-bottom: 1px solid rgb(232, 230, 230);
 }
 .iconClose {
   font-size: 20px;
@@ -103,6 +142,24 @@
   margin-left: 15px;
   cursor: pointer;
 }
+.iconCart{
+  position: relative;
+  .totalCart{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: rgba(255, 204, 51, 0.913);
+    position: absolute;
+    top: 0px;
+    right: 0px;
+  }
+}
+
 .icon {
   color: rgba(0, 0, 0, 0.507);
   width: 52px;

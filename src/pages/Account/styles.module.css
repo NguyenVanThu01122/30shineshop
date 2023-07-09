@@ -1,64 +1,9 @@
-.title {
+.pageAccount {
   display: flex;
-  padding-left: 140px;
-  margin: 15px 0px 30px 0px;
-}
-.title div {
-  font-family: 'Be Vietnam';
-  color: rgba(61, 61, 61);
-}
-.title > div:nth-child(2) {
-  margin: 0px 10px;
-}
-.account {
-  padding: 25px 160px;
-  display: flex;
-  justify-content: space-between;
-  background-color: rgba(238, 238, 238);
-}
-.phone {
-  margin: 4px 0px;
-  font-weight: 660;
-  font-size: 11px;
-  font-family: 'Oswald';
-}
-.phone > div:first-child {
-  margin-bottom: 2px;
-}
-.informationSelection > div:first-child {
-  color: rgba(81, 78, 78, 0.603);
-  font-size: 45px;
-  margin-right: 10px;
-}
-.informationSelection {
-  display: flex;
-  margin-top: 10px;
-  padding-top: 10px;
-}
-.list {
-  display: flex;
-  padding: 10px 10px;
-  margin-left: 6px;
-}
-.logOut {
-  cursor: pointer;
-}
-.list > div:last-child {
-  margin-left: 10px;
-}
-.information > div:last-child {
-  border-top: 1px solid rgb(209, 204, 204);
-}
-.information > div:nth-child(2) {
-  border-radius: 3px;
-  background-color: rgba(232, 232, 232);
-}
-.information {
-  width: 29%;
+  padding: 0px 10%;
 }
 .accountInformation {
-  width: 69%;
-  margin-top: 15px;
+  width: 70%;
 }
 .accountInformation > div:first-child {
   padding: 40px 0px 20px 0px;
@@ -148,5 +93,4 @@
     width: 50%;
     margin: auto;
   }
-  
 }

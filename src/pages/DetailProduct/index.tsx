@@ -5,7 +5,7 @@ import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addListProduct, decrease, increase, saveDetailProduct } from '../../redux/actions/detailProduct'
+import { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './index.module.scss'
 
@@ -44,6 +44,13 @@ function DetailProduct() {
     alert('bạn chỉ được chọn tối đa 10 sản phẩm')
   }
 
+  const getLengthOfCart = () => {
+    privateAxios.get('/cart').then((res) => {
+      const length = res.data.listCart.length
+      dispatch(saveTotalCart(length))
+    })
+  }
+
   const handleAddCart = (id: string, amount: number) => {
     if (amount === 0) {
       alert('Vui lòng nhập số lượng')
@@ -58,6 +65,7 @@ function DetailProduct() {
           message.success(
             `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
           )
+          getLengthOfCart();
         })
         .catch((error) => {
           message.error(error.response?.data)

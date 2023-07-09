@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
+import { saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper } from './style'
 export default function Cart() {
@@ -34,6 +35,13 @@ export default function Cart() {
     getListCart()
   }, [])
 
+  const getLengthOfCart = () => {
+    privateAxios.get('/cart').then((res) => {
+      const length = res.data.listCart.length
+      disPatch(saveTotalCart(length))
+    })
+  }
+
   const upDateCart = (cart: string, amount: number) => {
     if (amount > 0) {
       privateAxios
@@ -55,6 +63,7 @@ export default function Cart() {
       .then((res) => {
         message.success(res.data?.message)
         getListCart()
+        getLengthOfCart()
       })
       .catch((error) => {
         message.error(error.response?.data?.message)

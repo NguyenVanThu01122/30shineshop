@@ -1,6 +1,5 @@
 .pageFooter {
-  --tw-bg-opacity: 1;
-  background-color: rgba(0, 0, 0, var(--tw-bg-opacity));
+  background-color: rgba(0, 0, 0);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -131,6 +130,9 @@
   position: fixed;
   bottom: 100px;
   right: 0px;
+  /* animation-name: tuTraiQuaPhai;
+  animation-duration: 0.5s; */
+  
 }
 .iconPhone {
   width: 90px;
@@ -164,17 +166,17 @@
 }
 
 @media screen and (max-width: 768px) {
-  .images{
+  .images {
     display: block;
   }
   .phoneNumber {
     font-size: 8px;
     padding: 8px;
   }
-  .icon{
+  .icon {
     margin-right: 10px;
   }
- .select{
-  display: block;
- }
+  .select {
+    display: block;
+  }
 }

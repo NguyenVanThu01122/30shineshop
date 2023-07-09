@@ -1,10 +1,11 @@
 const initalState = {
   count: 0,
   products: [],
-  detailProduct: {}
+  detailProduct: {},
+  totalCart: 0
 }
 
-const handleReducer = (state = initalState, action: any) => {
+const handleReducer = (state = initalState, action: { type: string; payload: any }) => {
   switch (action.type) {
     case 'INCREASE':
       return {
@@ -23,7 +24,7 @@ const handleReducer = (state = initalState, action: any) => {
         }
       }
     case 'ADD_LIST_PRODUCT':
-      return{
+      return {
         ...state,
         products: action.payload
       }
@@ -32,8 +33,13 @@ const handleReducer = (state = initalState, action: any) => {
         ...state,
         detailProduct: action.payload
       }
+    case 'SAVE_TOTAL_CART':
+      return {
+        ...state,
+        totalCart: action.payload
+      }
     default:
       return state
   }
 }
-export default handleReducer;
+export default handleReducer

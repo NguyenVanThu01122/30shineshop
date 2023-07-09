@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Header from './components/Header'
 import Account from './pages/Account'
 import Blog from './pages/Blog'
 import Brand from './pages/Brand'
@@ -9,20 +10,20 @@ import DetailProduct from './pages/DetailProduct'
 import Error from './pages/Error'
 import Introduce from './pages/Introduce'
 import Layout from './pages/Layout'
+import ListAddress from './pages/ListAddress'
 import ListProduct from './pages/ListProduct'
 import Login from './pages/Login'
 import OrderSuccess from './pages/OrderSuccess'
 import Register from './pages/Register'
-import Header from './components/Header'
-import SellingProducts from './pages/SellingProducts'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Layout />}>x  
+        <Route path='/' element={<Layout />}>
           <Route index element={<ListProduct />} />
-          <Route path='/header' element={<Header/>}></Route>
+          <Route path='/list-address' element={<ListAddress />}/>
+          <Route path='/header' element={<Header />}></Route>
           <Route path='/detail-product/:id' element={<DetailProduct />} />
           <Route path='/list-product' element={<ListProduct />} />
           <Route path='/blog' element={<Blog />} />

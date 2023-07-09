@@ -22,5 +22,10 @@ const saveDetailProduct = (payload: any) => {
     payload
   }
 }
-
-export { addListProduct, decrease, increase, saveDetailProduct }
+const saveTotalCart = (payload: number) => {
+  return {
+    type: 'SAVE_TOTAL_CART',
+    payload
+  }
+}
+export { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart }

@@ -1,0 +1,67 @@
+.account {
+  width: 30%;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(238, 238, 238);
+}
+.phone {
+  margin: 4px 0px;
+  font-weight: 660;
+  font-size: 11px;
+  font-family: 'Oswald';
+}
+.phone > div:first-child {
+  margin-bottom: 2px;
+}
+.informationSelection > div:first-child {
+  color: rgba(81, 78, 78, 0.603);
+  font-size: 45px;
+  margin-right: 10px;
+}
+.informationSelection {
+  display: flex;
+  margin-top: 10px;
+  padding-top: 10px;
+}
+.list {
+  display: flex;
+  padding: 10px 10px;
+  margin-left: 6px;
+  cursor: pointer;
+}
+.logOut {
+  cursor: pointer;
+}
+.list > div:last-child {
+  margin-left: 10px;
+}
+.information > div:last-child {
+  border-top: 1px solid rgb(209, 204, 204);
+}
+.information > div:nth-child(2) {
+  border-radius: 3px;
+  background-color: rgba(232, 232, 232);
+}
+@media screen and (max-width: 768px) {
+  .account {
+    padding: 0px;
+    display: block;
+  }
+  .information {
+    display: none;
+  }
+  .accountInformation {
+    width: 100%;
+  }
+  .loginInput input {
+    width: 100%;
+  }
+  .accountInformation > div:first-child {
+    padding: 0px;
+  }
+  .login > div:last-child {
+    width: 50%;
+    margin: auto;
+  }
+  
+}

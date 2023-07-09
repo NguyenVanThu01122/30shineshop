@@ -1,20 +1,23 @@
 import { faBars, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin, handleDirection } from '../../helper'
-import { addListProduct } from '../../redux/actions/detailProduct'
+import { addListProduct, saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
-import styles from './styles.module.css'
+import styles from './styles.module.scss'
 
 export default function Header() {
   const [keyword, setKeyword] = useState('')
   const [isRender, setIsRender] = useState(false)
   const [isOpenMenu, setIsOpenMenu] = useState(false)
   const [isAccount, setIsAccount] = useState(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const totalCart = useSelector((state: any) => state.app.totalCart)
   const handleOnMouseEter = () => {
     setIsRender(true)
   }
@@ -22,7 +25,7 @@ export default function Header() {
     setIsRender(false)
   }
   const openMenu = () => {
-    setIsOpenMenu(!isOpenMenu)
+    setIsOpenMenu(true)
   }
   const openAccount = () => {
     setIsAccount(!isAccount)
@@ -32,8 +35,7 @@ export default function Header() {
     localStorage.removeItem('name')
     navigate('/login')
   }
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+
   const handleSearch = () => {
     privateAxios
       .get('/product', {
@@ -45,19 +47,45 @@ export default function Header() {
         dispatch(addListProduct(res.data?.data))
       })
   }
+  const handleRedirect = (url: string) => {
+    navigate(url)
+    setIsOpenMenu(false)
+  }
+
+  const closeMenu = () => {
+    setIsOpenMenu(false)
+  }
+
+  // const handleStop = (e: any) => {
+  //   e.stopPropagation();
+  // }
+  const handleStop = (e: any) => {
+    e.stopPropagation()
+  }
+
+  useEffect(() => {
+    privateAxios.get('/cart').then((res) => {
+      const length = res.data.listCart.length
+      dispatch(saveTotalCart(length))
+    })
+  }, [])
   return (
     <div className={styles.pageHeader}>
       {isOpenMenu && (
-        <div className={styles.menu}>
-          <div className={styles.listMenu}>
-            <div className={styles.title}>30ShineShop</div>
-            <div onClick={() => navigate('/list-product')}>DANH SÁCH SẢN PHẨM</div>
-            <div onClick={() => navigate('/brand')}>THƯƠNG HIỆU</div>
-            <div onClick={() => navigate('/introduce')}>GIỚI THIỆU</div>
-            <div onClick={() => navigate('/contact')}>LIÊN HỆ</div>
-            <div onClick={() => navigate('/blog')}>TIN TỨC LÀM ĐẸP</div>
-            <div onClick={() => navigate('/account')}>QUẢN LÝ TÀI KHOẢN</div>
-            <FontAwesomeIcon className={styles.iconClose} onClick={openMenu} icon={faXmark} />
+        <div className={styles.menu} onClick={closeMenu}>
+          <div className={styles.listMenu} onClick={handleStop}>
+            <div className={styles.icon}>
+              <div>30ShineShop</div>
+              <FontAwesomeIcon className={styles.iconClose} onClick={closeMenu} icon={faXmark} />
+            </div>
+            <div className={styles.content}>
+              <div onClick={() => handleRedirect('/list-product')}>DANH SÁCH SẢN PHẨM</div>
+              <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
+              <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
+              <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
+              <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
+              <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+            </div>
           </div>
         </div>
       )}
@@ -88,7 +116,10 @@ export default function Header() {
               <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
             )}
           </div>
-          <AiOutlineShoppingCart className={styles.icon} onClick={() => navigate('/cart')} />
+          <div className={styles.iconCart}>
+            <AiOutlineShoppingCart className={styles.icon} onClick={() => navigate('/cart')} />
+            {totalCart > 0 && <div className={styles.totalCart}>{totalCart}</div>}
+          </div>
           {/* <div className={styles.informationAccount} onClick={()=>handleDirection('/account')}>Thông tin tài khoản</div> */}
         </div>
       </div>
@@ -96,7 +127,7 @@ export default function Header() {
         <div className={styles.menuItem}>
           <div className={styles.selectItem}>
             <div onClick={() => navigate('/account')} className={styles.detailItem}>
-              <BsPerson className={styles.iconMenu}/>
+              <BsPerson className={styles.iconMenu} />
               <div>Tài khoản của tôi</div>
             </div>
             <div className={styles.detailItem}>
@@ -104,7 +135,7 @@ export default function Header() {
               <div>Đơn hàng</div>
             </div>
             <div onClick={handelLogOut} className={styles.detailItem}>
-              <BsBoxArrowRight className={styles.iconMenu}/>
+              <BsBoxArrowRight className={styles.iconMenu} />
               <div>Đắng xuất</div>
             </div>
           </div>
