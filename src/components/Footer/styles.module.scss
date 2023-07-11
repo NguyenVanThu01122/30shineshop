@@ -123,17 +123,72 @@
   color: rgba(250, 189, 5, 0.788);
   cursor: pointer;
 }
-.fontIcons {
+
+.listIcon {
   display: flex;
   flex-direction: column;
   align-items: center;
   position: fixed;
   bottom: 100px;
   right: 0px;
-  /* animation-name: tuTraiQuaPhai;
-  animation-duration: 0.5s; */
+  // transform: translateX(100%);
+  transform: translatex(100%);
+}
+
+// .hoatHinhXuatHien{
+//   animation-name: tuPhaiQuaTrai;
+//   animation-duration: 0.2s;
+//   animation-fill-mode: forwards; // giữ lại trạng thái hoạt hình kết thúc
+// }
+.hoatHinhXuatHien{
+  animation-name: tuPhaiQuaTrai;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes tuPhaiQuaTrai {
+  from{
+    transform: translatex(100%);
+  }
+  to{
+    transform: translate(0);
+  }
   
 }
+// @keyframes tuPhaiQuaTrai {
+//   from {
+//     transform: translateX(100%);
+//   }
+//   to {
+//     transform: translate(0);
+//   }
+// }
+.hoatHinhBienMat{
+  animation-name: tuTraiQuaPhai;
+  animation-duration: 0.5s;
+}
+@keyframes tuTraiQuaPhai{
+  from{
+    transform: translatex(0);
+  }
+  to{
+    transform: translatex(100%);
+  }
+
+}
+// .hoatHinhBienMat{
+//   animation-name: tuTraiQuaPhai;
+//   animation-duration: 0.2s;
+// }
+
+// @keyframes tuTraiQuaPhai {
+//   from {
+//     transform: translateX(0);
+//   }
+//   to {
+//     transform: translate(100%);
+//   }
+// }
+
 .iconPhone {
   width: 90px;
   height: 90px;

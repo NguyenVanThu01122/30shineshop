@@ -1,8 +1,8 @@
 const initalState = {
   count: 0,
   products: [],
-  detailProduct: {},
-  totalCart: 0
+  totalCart: 0,
+  user: {}
 }
 
 const handleReducer = (state = initalState, action: { type: string; payload: any }) => {
@@ -37,6 +37,11 @@ const handleReducer = (state = initalState, action: { type: string; payload: any
       return {
         ...state,
         totalCart: action.payload
+      }
+    case 'UPDATE_ACCOUNT':
+      return {
+        ...state,
+        user: action.payload
       }
     default:
       return state

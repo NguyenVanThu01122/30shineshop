@@ -1,12 +1,12 @@
-import { faBars, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faAngleRight, faBars, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { checkLogin, handleDirection } from '../../helper'
-import { addListProduct, saveTotalCart } from '../../redux/actions/detailProduct'
+import { checkLogin } from '../../helper'
+import { addListProduct, saveTotalCart, updateAccount } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.scss'
 
@@ -18,6 +18,18 @@ export default function Header() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const totalCart = useSelector((state: any) => state.app.totalCart)
+
+  const user = useSelector((state: any) => state.app.user)
+
+  useEffect(() => {
+    privateAxios
+      .get('/user')
+      .then((res) => {
+        dispatch(updateAccount(res.data?.user))
+      })
+      .catch((error) => {})
+  }, [])
+
   const handleOnMouseEter = () => {
     setIsRender(true)
   }
@@ -35,7 +47,10 @@ export default function Header() {
     localStorage.removeItem('name')
     navigate('/login')
   }
-
+  const handleAccount = () => {
+    navigate('/account')
+    setIsAccount(false)
+  }
   const handleSearch = () => {
     privateAxios
       .get('/product', {
@@ -56,9 +71,6 @@ export default function Header() {
     setIsOpenMenu(false)
   }
 
-  // const handleStop = (e: any) => {
-  //   e.stopPropagation();
-  // }
   const handleStop = (e: any) => {
     e.stopPropagation()
   }
@@ -79,12 +91,30 @@ export default function Header() {
               <FontAwesomeIcon className={styles.iconClose} onClick={closeMenu} icon={faXmark} />
             </div>
             <div className={styles.content}>
-              <div onClick={() => handleRedirect('/list-product')}>DANH SÁCH SẢN PHẨM</div>
-              <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
-              <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
-              <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
-              <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
-              <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/list-product')}>DANH SÁCH SẢN PHẨM</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
+              <div className={styles.iconFaAngleRight}>
+                <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+                <FontAwesomeIcon icon={faAngleRight} />
+              </div>
             </div>
           </div>
         </div>
@@ -110,11 +140,7 @@ export default function Header() {
           </div>
           <div onClick={openAccount} className={styles.login}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
-            {checkLogin() ? (
-              <div>{localStorage.getItem('name')}</div>
-            ) : (
-              <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
-            )}
+            {checkLogin() ? <div>{user?.name}</div> : <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>}
           </div>
           <div className={styles.iconCart}>
             <AiOutlineShoppingCart className={styles.icon} onClick={() => navigate('/cart')} />
@@ -126,7 +152,7 @@ export default function Header() {
       {isAccount && (
         <div className={styles.menuItem}>
           <div className={styles.selectItem}>
-            <div onClick={() => navigate('/account')} className={styles.detailItem}>
+            <div onClick={handleAccount} className={styles.detailItem}>
               <BsPerson className={styles.iconMenu} />
               <div>Tài khoản của tôi</div>
             </div>
@@ -136,27 +162,18 @@ export default function Header() {
             </div>
             <div onClick={handelLogOut} className={styles.detailItem}>
               <BsBoxArrowRight className={styles.iconMenu} />
-              <div>Đắng xuất</div>
+              <div>Đăng xuất</div>
             </div>
           </div>
         </div>
       )}
       <div className={styles.option}>
-        {/* <div className={styles.optionChild} onMouseEnter={handleOnMouseEter} onMouseLeave={handleOnMouseLeave}>
-          DANH MỤC
-          <span onMouseEnter={handleOnMouseEter} onMouseLeave={handleOnMouseLeave}>
-            <AiOutlineCaretDown />
-          </span>
-        </div>
-        <div>SIÊU COMBO SIÊU HỜI</div>
-        <div onClick={() => handleDirection('/selling-Products')}>SẢN PHẨM BÁN CHẠY</div>
-        <div onClick={() => handleDirection('/New-Product')}>SẢN PHẨM MỚI</div> */}
-        <div onClick={() => handleDirection('/')}>DANH SÁCH SẢN PHẨM</div>
-        <div onClick={() => handleDirection('brand')}>THƯƠNG HIỆU</div>
-        <div onClick={() => handleDirection('/introduce')}>GIỚI THIỆU</div>
-        <div onClick={() => handleDirection('/contact')}>LIÊN HỆ</div>
-        <div onClick={() => handleDirection('/blog')}>TIN TỨC LÀM ĐẸP</div>
-        <div onClick={() => handleDirection('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+        <div onClick={() => handleRedirect('/')}>DANH SÁCH SẢN PHẨM</div>
+        <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
+        <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
+        <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
+        <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
+        <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
       </div>
       {isRender && (
         <div className={styles.productItem} onMouseEnter={handleOnMouseEter} onMouseLeave={handleOnMouseLeave}>

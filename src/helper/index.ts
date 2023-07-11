@@ -1,6 +1,3 @@
-const handleDirection = (url: string) => {
-  window.location.assign(url)
-}
 
 const checkLogin = (): boolean => {
   if (localStorage.getItem('token')) {
@@ -10,4 +7,4 @@ const checkLogin = (): boolean => {
   }
 }
 
-export { handleDirection, checkLogin }
+export { checkLogin }

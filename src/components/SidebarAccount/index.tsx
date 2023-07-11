@@ -1,7 +1,8 @@
-import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
+import { BsBoxArrowRight, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
-import styles from './styles.module.scss'
 import { checkLogin } from '../../helper'
+import styles from './styles.module.scss'
+import { useSelector } from 'react-redux'
 
 function SidebarAccount() {
   const navigate = useNavigate()
@@ -10,6 +11,8 @@ function SidebarAccount() {
     localStorage.removeItem('name')
     navigate('/login')
   }
+
+  const user = useSelector((state:any)=>state.app.user)
   return (
     <div className={styles.account}>
       <div className={styles.information}>
@@ -18,8 +21,8 @@ function SidebarAccount() {
             <BsPersonCircle />
           </div>
           <div className={styles.phone}>
-            <div>0967559846</div>
-            <div>Chưa có hạng thành viên</div>
+            <div>{user?.name}</div>
+            <div>{user?.telephone}</div>
           </div>
         </div>
         <div className={styles.list}>
@@ -30,10 +33,10 @@ function SidebarAccount() {
           <BsPinMap />
           <div>Địa chỉ nhận hàng</div>
         </div>
-        <div className={styles.list}>
+        {/* <div className={styles.list}>
           <BsLayoutTextSidebarReverse />
           <div>Đơn hàng</div>
-        </div>
+        </div> */}
         <div className={styles.list}>
           <BsBoxArrowRight />
           {checkLogin() && (

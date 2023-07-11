@@ -13,6 +13,8 @@ import Layout from './pages/Layout'
 import ListAddress from './pages/ListAddress'
 import ListProduct from './pages/ListProduct'
 import Login from './pages/Login'
+import NewLogin from './pages/NewLogin'
+import NewRegister from './pages/NewRegister'
 import OrderSuccess from './pages/OrderSuccess'
 import Register from './pages/Register'
 
@@ -22,7 +24,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Layout />}>
           <Route index element={<ListProduct />} />
-          <Route path='/list-address' element={<ListAddress />}/>
+          <Route path='/list-address' element={<ListAddress />} />
           <Route path='/header' element={<Header />}></Route>
           <Route path='/detail-product/:id' element={<DetailProduct />} />
           <Route path='/list-product' element={<ListProduct />} />
@@ -36,6 +38,8 @@ function App() {
           <Route path='/order-success/:id' element={<OrderSuccess />} />
           {/* <Route path='/selling-Products' element={<SellingProducts />} /> */}
         </Route>
+        <Route path='/new-register' element={<NewRegister />} />
+        <Route path='/new-login' element={<NewLogin />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         {/* <Route path='/redux-demo' element={<ReduxDemo />} /> */}

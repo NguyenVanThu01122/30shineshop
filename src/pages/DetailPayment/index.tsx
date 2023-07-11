@@ -2,7 +2,7 @@ import { Input } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { privateAxios } from '../../service/axios'
-import { PaymentWrapper } from './styled'
+import { PaymentWrapper } from './styles'
 
 export default function DetailPayment() {
   const params = useParams()

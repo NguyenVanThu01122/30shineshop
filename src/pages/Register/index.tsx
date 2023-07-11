@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { handleDirection } from '../../helper'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
@@ -241,7 +240,7 @@ export default function Register() {
     <div className={styles.registerWrapper}>
       <div className={styles.pageRegister}>
         <div className={styles.register}>
-          <div onClick={() => handleDirection('/login')}>ĐĂNG NHẬP</div>
+          <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
           <div>ĐĂNG KÝ</div>
         </div>
         <div className={styles.information}>

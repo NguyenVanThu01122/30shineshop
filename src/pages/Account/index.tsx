@@ -1,9 +1,11 @@
+import { Button, message } from 'antd'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import SidebarAccount from '../../components/SidebarAccount'
+import { updateAccount } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
-import { message } from 'antd'
 
 export default function Account() {
   let navigate = useNavigate()
@@ -15,6 +17,9 @@ export default function Account() {
   let [errorEmail, setErrorEmail] = useState('')
   let [errorBirthday, setErrorBirthday] = useState('')
   let [errorPhone, setErrorPhone] = useState('')
+  const dispatch = useDispatch()
+
+  const user = useSelector((state: any) => state.app.user)
   let handleOnChangeName = (e: any) => {
     let name = e.target.value
     setName(name)
@@ -46,7 +51,6 @@ export default function Account() {
   }
   let handleOnchageBirthday = (e: any) => {
     let birthday = e.target.value
-    console.log(birthday)
     setBirthday(birthday)
     if (!birthday) {
       setErrorBirthday('Vui lòng nhập ngày sinh')
@@ -74,15 +78,10 @@ export default function Account() {
         })
         .then((res) => {
           message.success(res.data.message)
+          dispatch(updateAccount({ ...user, name, date: birthday, telephone: phone }))
         })
     }
   }
-  let handleLogOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('name')
-    navigate('/login')
-  }
-
   useEffect(() => {
     privateAxios.get('/user').then((res) => {
       const user = res.data?.user
@@ -156,7 +155,9 @@ export default function Account() {
             </div>
           </div>
           <div className={styles.errorText}>{errorBirthday}</div>
-          <div onClick={handleSubmit}>Cập nhật</div>
+          <Button type='primary' size='large' style={{ marginTop: '15px' }} onClick={handleSubmit}>
+            Cập nhật
+          </Button>
         </div>
       </div>
     </div>

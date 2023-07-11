@@ -1,23 +1,26 @@
 import { StarOutlined } from '@ant-design/icons'
-import { message } from 'antd'
+import { Button, Modal, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart } from '../../redux/actions/detailProduct'
+import { addListProduct, saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
-import styles from './index.module.scss'
+import styles from './styles.module.scss'
 
 function DetailProduct() {
   const params = useParams()
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
-  const [listProduct, setlistlProduct] = useState([])
-  const [disabled, setDisabled] = useState(false)
+  // const [loading, setLoading] = useState(false)
+  // const [listProduct, setlistlProduct] = useState([])
+  // const [disabled, setDisabled] = useState(false)
   const dispatch = useDispatch()
-  const detailProduct = useSelector((state: any) => state.app.detailProduct)
-  const products = useSelector((state: any) => state.app.products)
+
+  const [detailProduct, setDetailProduct] = useState<any>({})
+  const relatedProducts = useSelector((state: any) => state.app.products)
+  const totalCart = useSelector((state: any) => state.app.totalCart)
+  const [image, setImage] = useState('')
   useEffect(() => {
     handleDetail()
     handelRelate()
@@ -25,7 +28,7 @@ function DetailProduct() {
 
   const handleDetail = () => {
     privateAxios.get(`/product/${params.id}`).then((res) => {
-      dispatch(saveDetailProduct(res.data.data))
+      setDetailProduct(res.data?.data)
     })
   }
   const handelRelate = () => {
@@ -33,17 +36,24 @@ function DetailProduct() {
       dispatch(addListProduct(res.data.data))
     })
   }
- const [count, setCount] = useState(1)
- const decreaseNumber = () => {
+  // const handleImage = () => {
+  //   privateAxios.get(`/product/${params.id}`).then((res) => {
+  //     setDetailProduct(res.data?.data)
+  //     const img = res.data?.data?.images
+  //     console.log(img)
+  //     setImage(img)
+  //   })
+  // }
+  const [count, setCount] = useState(1)
+  const decreaseNumber = () => {
     if (count > 1) setCount(count - 1)
   }
- const increaseNumber = () => {
+  const increaseNumber = () => {
     setCount(count + 1)
   }
   if (count > 10) {
     alert('bạn chỉ được chọn tối đa 10 sản phẩm')
   }
-
   const getLengthOfCart = () => {
     privateAxios.get('/cart').then((res) => {
       const length = res.data.listCart.length
@@ -62,10 +72,11 @@ function DetailProduct() {
           amount
         })
         .then((res) => {
-          message.success(
-            `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
-          )
-          getLengthOfCart();
+          // message.success(
+          //   `Bạn đã thêm thành công loại sản phẩm này vào giỏ hàng. Bây giờ giỏ hàng của bạn đang có ${res.data?.totalCart} loại sản phẩm`
+          // )
+          getLengthOfCart()
+          setIsModalOpen(true)
         })
         .catch((error) => {
           message.error(error.response?.data)
@@ -84,22 +95,37 @@ function DetailProduct() {
         })
         .then((res) => {
           // api sẽ trả về cho mình paymentId
-          console.log(res.data.data)
+          // console.log(res.data.data)
           const paymentId = res.data?.paymentId
           navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
         })
     }
   }
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+
   return (
     <div className={styles.pageDetailProduct}>
-      {/* <Button disabled={disabled} loading={loading} onClick={() => handleAddCart(detailProduct.id, count)}>
-        Thêm giỏ hàng
-      </Button> */}
       <div className={styles.detailProduct}>
         <div className={styles.headerProduct}>
           <div className={styles.product}>
             <div className={styles.imgProduct}>
-              <img src={detailProduct?.images ? detailProduct?.images[0] : ''} alt='' />
+              {/* {image ? ( */}
+                {/* <img src={detailProduct?.images ? detailProduct?.images[1] : ''} alt='' /> */}
+              {/* ) : ( */}
+                <img src={detailProduct?.images ? detailProduct?.images[0] : ''} alt='' />
+              {/* )} */}
             </div>
             <div className={styles.detailnformation}>
               <div>{detailProduct?.name}</div>
@@ -201,14 +227,16 @@ function DetailProduct() {
           <div className={styles.imgProduct}>
             <div>
               <img
+                // onClick={() => handleImage()}
                 id='img'
-                src='https://static.30shine.com/shop-admin/2022/04/08/30SM98K3-SRM%20Than%20ho%E1%BA%A1t%20t%C3%ADnh%20-%20USP.jpg'
+                src={detailProduct?.images ? detailProduct?.images[0] : ''}
                 alt='image'
               />
             </div>
             <div>
               <img
-                src='https://static.30shine.com/shop-admin/2021/09/29/30SC491Q-Than%203%20%C4%90%E1%BA%B7c%20t%E1%BA%A3.jpg'
+                // onClick={() => handleImage()}
+                src={detailProduct?.images ? detailProduct?.images[1] : ''}
                 alt='image'
               />
             </div>
@@ -435,7 +463,7 @@ function DetailProduct() {
       <div className={styles.otherProducts}>
         <div>SẢN PHẨM CÙNG LOẠI</div>
         <div className={styles.sameProducts}>
-          {products?.map((item: any) => {
+          {relatedProducts?.map((item: any) => {
             return (
               <div
                 className={styles.informationProduct}
@@ -680,6 +708,58 @@ function DetailProduct() {
           </div>
         </div>
       </div>
+      {isModalOpen && (
+        <Modal
+          className={styles.modal}
+          centered
+          width={400}
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          footer={false}
+        >
+          <div className={styles.modalCart}>
+            <div className={styles.cart}>
+              <div>GIỎ HÀNG</div>
+              <div>Thêm giỏ hàng thành công</div>
+            </div>
+            <div className={styles.detailCart}>
+              <img src={detailProduct?.images[0]} alt='' />
+              <div className={styles.priceProductCart}>
+                <div>{detailProduct.name}</div>
+                <div className={styles.price}>
+                  <div className={styles.priceSale}>
+                    <div>
+                      {detailProduct.salePrice}
+                      <span>đ</span>
+                    </div>
+                    <div>
+                      {detailProduct.originPrice} <span>đ</span>
+                    </div>
+                  </div>
+                  <div>x{count}</div>
+                </div>
+              </div>
+            </div>
+            <div className={styles.numberProduct}>Giỏ hàng của bạn đang có: {totalCart} sản phẩm</div>
+            <div className={styles.totalMoney}>
+              <div>TỔNG TIỀN: </div>
+              <div>
+                {detailProduct.salePrice * count}
+                <span>đ</span>
+              </div>
+            </div>
+            <div className={styles.buyNow}>
+              <Button type='primary' size='large' onClick={() => navigate('/cart')}>
+                XEM GIỎ HÀNG
+              </Button>
+              <Button size='large' onClick={() => handleBuyNow(detailProduct.id, count)}>
+                MUA NGAY
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   )
 }

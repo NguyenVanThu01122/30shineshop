@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BsArrowUp, BsTelephoneMinusFill } from 'react-icons/bs'
-import styles from './styles.module.css'
+import styles from './styles.module.scss'
 export default function Footer() {
   const [showIcon, setShowIcon] = useState(false)
 
@@ -13,8 +13,7 @@ export default function Footer() {
         setShowIcon(false)
       }
     })
-
-  }, []);
+  }, [])
 
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -77,14 +76,13 @@ export default function Footer() {
           <div>Shine Member</div>
         </div>
       </div>
-      {showIcon && (
-        <div className={styles.fontIcons} id='fontIcon'>
-          <img src='https://shop.30shine.com/images/Phone.png' alt='img' className={styles.iconPhone} />
-          <img src='https://shop.30shine.com/images/Message.png' alt='img' className={styles.iconMessenger} />
-          <img src='https://shop.30shine.com/images/Zalo.png' alt='img' className={styles.iconZalo} />
-          <BsArrowUp onClick={handleClick} className={styles.iconUp} />
-        </div>
-      )}
+
+      <div className={`${styles.listIcon} ${showIcon ? styles.hoatHinhXuatHien: styles.hoatHinhBienMat}`}>
+        <img src='https://shop.30shine.com/images/Phone.png' alt='img' className={styles.iconPhone} />
+        <img src='https://shop.30shine.com/images/Message.png' alt='img' className={styles.iconMessenger} />
+        <img src='https://shop.30shine.com/images/Zalo.png' alt='img' className={styles.iconZalo} />
+        <BsArrowUp onClick={handleClick} className={styles.iconUp} />
+      </div>
     </div>
   )
 }

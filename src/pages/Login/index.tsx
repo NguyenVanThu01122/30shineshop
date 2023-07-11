@@ -5,7 +5,6 @@ import { useState } from 'react'
 
 import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { handleDirection } from '../../helper'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 export default function Login() {
@@ -83,7 +82,7 @@ export default function Login() {
       <div className={styles.login}>
         <div className={styles.section}>
           <div>ĐĂNG NHẬP</div>
-          <div onClick={() => handleDirection('/register')} className={styles.register}>
+          <div onClick={() => navigate('/register')} className={styles.register}>
             ĐĂNG KÝ
           </div>
         </div>

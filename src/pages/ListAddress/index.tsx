@@ -8,13 +8,16 @@ function ListAddress() {
   const [listAddress, setListAddress] = useState([])
   const [openModal, setOpenModal] = useState(false)
 
+  const [edit, setEdit] = useState<any>(null)
+
   const [form] = Form.useForm()
 
   const handleClose = () => {
     setOpenModal(false)
     form.resetFields()
+    setEdit(null) // set edit về null
   }
-  const handleOpen = () => {
+  const handleOpenCreate = () => {
     setOpenModal(true)
   }
   const getListAddress = () => {
@@ -33,23 +36,50 @@ function ListAddress() {
   }
 
   const handleFinish = (values: any) => {
-    privateAxios
-      .post('/address', {
-        name: values.name,
-        email: values.email,
-        address: values.address,
-        telephone: values.telephone
-      })
-      .then((res) => {
-        message.success(res.data.message)
-        handleClose()
-        getListAddress()
-        form.resetFields() // xoa cac gia tri cua form
-      })
+    if (edit) {
+      privateAxios
+        .put(`/address/${edit.id}`, {
+          name: values.name,
+          telephone: values.telephone,
+          email: values.email,
+          address: values.address
+        })
+        .then((res) => {
+          message.success(res.data?.message)
+          setOpenModal(false)
+          form.resetFields()
+          getListAddress()
+          setEdit(null)
+        })
+    } else {
+      privateAxios
+        .post('/address', {
+          name: values.name,
+          email: values.email,
+          address: values.address,
+          telephone: values.telephone
+        })
+        .then((res) => {
+          message.success(res.data.message)
+          handleClose()
+          getListAddress()
+          form.resetFields() // xoa cac gia tri cua form
+        })
+    }
   }
 
   const handleSubmit = () => {
     form.submit()
+  }
+  const handleEdit = (item: any) => {
+    setOpenModal(true)
+    setEdit(item)
+    form.setFieldsValue({
+      name: item?.name,
+      telephone: item?.telephone,
+      address: item?.address,
+      email: item?.email
+    })
   }
   return (
     <Wrapper>
@@ -57,7 +87,7 @@ function ListAddress() {
       <div className='pageAddress'>
         <div className='titleAddress'>
           <div>Địa chỉ nhận hàng</div>
-          <Button className='button' onClick={handleOpen}>
+          <Button className='button' onClick={handleOpenCreate}>
             <span className='icon-plus'>+</span>
             Thêm địa chỉ mới
           </Button>
@@ -82,31 +112,20 @@ function ListAddress() {
             </div>
             <div className='action'>
               <Button onClick={() => handleDelete(item.id)}>Xóa</Button>
-              <Button>Sửa</Button>
+              <Button onClick={() => handleEdit(item)}>Sửa</Button>
             </div>
           </div>
         ))}
         {listAddress.length === 0 && <div>Bạn chưa có địa chỉ nào!</div>}
       </div>
 
-      {/* <Modal
-        centered={true}
-        width={800}
-        open={isModalOpen}
-        onCancel={handleCancel}
-        footer={null}
-        closable={false}
-      >
-       
-      </Modal> */}
-
       <MyModal open={openModal} footer={null} closable={false} width={500} centered={true} onCancel={handleClose}>
-        <h2 className='title'>THÊM ĐỊA CHỈ MỚI</h2>
+        <h2 className='title'>{edit ? 'SỬA ĐỊA CHỈ' : 'THÊM ĐỊA CHỈ MỚI'}</h2>
         <Form
           onFinish={handleFinish}
           layout='vertical'
-          // form={form}
           form={form}
+          // requiredMark={false} // bỏ dấu sao đỏ
           // labelCol={{ span: 6 }}
           // wrapperCol={{ span: 18 }}
         >
@@ -166,16 +185,26 @@ function ListAddress() {
           >
             <Input />
           </Form.Item>
-          {/* <Button className='buttonSubmit' htmlType='submit'>
-            Tạo địa chỉ
-          </Button> */}
           <div className='group-button'>
-            <Button className='buttonSubmit' onClick={handleSubmit}>
-              Tạo địa chỉ
-            </Button>
-            <Button className='buttonSubmit' onClick={handleClose}>
-              Hủy
-            </Button>
+            {edit ? (
+              <>
+                <Button className='buttonSubmit' htmlType='submit'>
+                  Sửa
+                </Button>
+                <Button className='buttonSubmit' onClick={handleClose}>
+                  Hủy
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button className='buttonSubmit' onClick={handleSubmit}>
+                  Tạo địa chỉ
+                </Button>
+                <Button className='buttonSubmit' onClick={handleClose}>
+                  Hủy
+                </Button>
+              </>
+            )}
           </div>
         </Form>
       </MyModal>
