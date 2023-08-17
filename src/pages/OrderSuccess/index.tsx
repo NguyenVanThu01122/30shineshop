@@ -21,9 +21,12 @@ export default function OrderSuccess() {
   const orderId = params.id
   const [orderDetail, setOrderDetail] = useState<any>({})
   useEffect(() => {
-    privateAxios.get(`/order/${orderId}`)
-    .then((res) => {
+    privateAxios.get(`/order/${orderId}`).then((res) => {
       setOrderDetail(res.data?.data)
+    })
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
   }, [])
   return (
@@ -75,7 +78,7 @@ export default function OrderSuccess() {
       </div>
       <div className='orderDetail'>
         <div>Chi tiết đơn hàng</div>
-        <div onClick={() => navigate('/list-Product')}>
+        <div onClick={() => navigate('/')}>
           Tiếp tục mua sắm{' '}
           <span>
             <ArrowRightOutlined />

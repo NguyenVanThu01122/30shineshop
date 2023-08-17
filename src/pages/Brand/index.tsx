@@ -19,15 +19,19 @@ export default function Brand() {
         setError('Lỗi server')
       })
   }, [])
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+  }, [])
   return (
     <div className={styles.pageBrand}>
+      <div className={styles.loginBrand}>
+        <div onClick={() => navigate('/')}>Trang chủ </div>
+        <div>/ Thương hiệu</div>
+      </div>
       <div className={styles.title}>
-        {/* <div className={styles.loginBrand}>
-          <div>Trang chủ /</div>
-          <div>Thương hiệu</div>
-        </div> */}
-        {/* <FontAwesomeIcon icon={faArrowLeftLong} /> */}
         <div className={styles.brand}>
           <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
           THƯƠNG HIỆU

@@ -8,6 +8,7 @@ import Contact from './pages/Contact'
 import DetailPayment from './pages/DetailPayment'
 import DetailProduct from './pages/DetailProduct'
 import Error from './pages/Error'
+import Home from './pages/Home'
 import Introduce from './pages/Introduce'
 import Layout from './pages/Layout'
 import ListAddress from './pages/ListAddress'
@@ -23,7 +24,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Layout />}>
-          <Route index element={<ListProduct />} />
+          <Route path='/' element={<Home />} />
           <Route path='/list-address' element={<ListAddress />} />
           <Route path='/header' element={<Header />}></Route>
           <Route path='/detail-product/:id' element={<DetailProduct />} />

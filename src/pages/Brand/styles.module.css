@@ -1,28 +1,34 @@
-.pageBrand {
-  padding: 0px 140px;
-  margin-bottom: 30px;
-}
+
 .loginBrand {
   display: flex;
-  margin-top: 20px;
+  background-color: rgb(232, 232, 232);
+  padding: 10px 140px
 }
 .loginBrand div {
-  font-family: 'Be Vietnam Pro';
-  color: rgba(61, 61, 61);
+  color: rgba(28, 28, 28, 0.731);
+  cursor: pointer;
+}
+.loginBrand > div:last-child{
+  margin-left: 10px;
+}
+.title{
+  padding: 10px 140px;
+
 }
 .title > div:last-child {
   font-weight: 600;
   font-size: 1.75rem;
   font-family: 'Oswald';
-  margin: 30px 0px 15px 0px;
 }
-.iconBack{
+.iconBack {
+  display: none;
   margin-right: 8px;
 }
 .brandParent {
   /* flex-wrap: wrap; các thằng con sẽ xuống dòng khi nó vượt quá chiều dài thằng mẹ */
   /* display: flex; */
   /* flex-wrap: wrap; */
+  padding: 10px 140px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 15px;

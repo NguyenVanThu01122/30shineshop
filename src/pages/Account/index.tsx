@@ -1,5 +1,5 @@
-import { Button, message } from 'antd'
-import { useEffect, useState } from 'react'
+import { Button, Form, Input, message } from 'antd'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import SidebarAccount from '../../components/SidebarAccount'
@@ -8,157 +8,104 @@ import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Account() {
-  let navigate = useNavigate()
-  let [name, setName] = useState('')
-  let [email, setEmail] = useState('')
-  let [birthday, setBirthday] = useState<any>('')
-  let [phone, setPhone] = useState('')
-  let [errorName, setErrorName] = useState('')
-  let [errorEmail, setErrorEmail] = useState('')
-  let [errorBirthday, setErrorBirthday] = useState('')
-  let [errorPhone, setErrorPhone] = useState('')
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-
   const user = useSelector((state: any) => state.app.user)
-  let handleOnChangeName = (e: any) => {
-    let name = e.target.value
-    setName(name)
-    if (!name) {
-      setErrorName('Vui lòng nhập tên')
-    } else if (name.length < 6 || name.length > 15) {
-      setErrorName('Vui lòng nhập độ dài từ 6 đến 15 kí tự')
-    } else {
-      setErrorName('')
-    }
-  }
-  let handleOnchangePhone = (e: any) => {
-    let phone = e.target.value
-    setPhone(phone)
-    if (!phone) {
-      setErrorPhone('Vui lòng nhập số điện thoại')
-    } else {
-      setErrorPhone('')
-    }
-  }
-  let handleOnchageEmail = (e: any) => {
-    let email = e.target.value
-    setEmail(email)
-    if (!email) {
-      setErrorEmail('Vui lòng nhập email')
-    } else {
-      setErrorEmail('')
-    }
-  }
-  let handleOnchageBirthday = (e: any) => {
-    let birthday = e.target.value
-    setBirthday(birthday)
-    if (!birthday) {
-      setErrorBirthday('Vui lòng nhập ngày sinh')
-    } else {
-      setErrorBirthday('')
-    }
-  }
+  const [form] = Form.useForm()
 
-  let handleSubmit = () => {
-    if (!name) {
-      setErrorName('Vui lòng nhập tên')
-    }
-    if (!phone) {
-      setErrorPhone('Vui lòng nhập số điện thoại')
-    }
-    if (!name) {
-      setErrorBirthday('Vui lòng nhập ngày sinh')
-    }
-    if (name && phone && birthday && !errorName && !errorPhone && !errorBirthday) {
-      privateAxios
-        .put('/user', {
-          name,
-          date: birthday,
-          telephone: phone
-        })
-        .then((res) => {
-          message.success(res.data.message)
-          dispatch(updateAccount({ ...user, name, date: birthday, telephone: phone }))
-        })
-    }
-  }
   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
     privateAxios.get('/user').then((res) => {
-      const user = res.data?.user
-      setName(user.name)
-      setPhone(user.telephone)
-      setEmail(user.email)
-      setBirthday(user.date.substring(0, 10))
+      form.setFieldsValue({
+        name: user?.name,
+        telephone: user?.telephone,
+        date: user?.date?.substring(0, 10),
+        email: user?.email
+      })
     })
   }, [])
+
+  const onFinish = (values: any) => {
+    privateAxios
+      .put('/user', {
+        name: values.name,
+        date: values.date,
+        telephone: values.telephone
+      })
+      .then((res) => {
+        message.success(res.data.message)
+        dispatch(updateAccount({ ...user, name: values.name, date: values.date, telephone: values.telephone }))
+      })
+      .catch((error) => {
+        message.error(error.response?.data?.message)
+      })
+  }
 
   return (
     <div className={styles.pageAccount}>
       <SidebarAccount />
       <div className={styles.accountInformation}>
         <div>Thông tin tài khoản</div>
-        <div className={styles.login}>
-          <div className={styles.loginInput}>
-            <div>Họ tên</div>
-            <div className={styles.input}>
-              <input
-                id='name'
-                className={`${errorName ? styles.borderRed : ''}`}
-                type='text'
-                placeholder='Họ tên'
-                value={name}
-                onChange={handleOnChangeName}
-              />
-            </div>
-          </div>
-          <div className={styles.errorText}>{errorName}</div>
-          <div className={styles.loginInput}>
-            <div>Số điện thoại</div>
-            <div className={styles.input}>
-              <input
-                type='text'
-                value={phone}
-                placeholder='Nhập số điện thoại'
-                className={`${errorPhone ? styles.borderRed : ''}`}
-                onChange={handleOnchangePhone}
-              />
-            </div>
-          </div>
-          <div className={styles.errorText}>{errorPhone}</div>
-          <div className={styles.loginInput}>
-            <div>Email</div>
-            <div className={styles.input}>
-              <input
-                className={`${errorEmail ? styles.borderRed : ''}`}
-                id='email'
-                type='email'
-                name='email'
-                placeholder='Email'
-                value={email}
-                onChange={handleOnchageEmail}
-                disabled={true}
-              />
-            </div>
-          </div>
-          <div className={styles.errorText}>{errorEmail}</div>
-          <div className={styles.loginInput}>
-            <div>Ngày sinh</div>
-            <div className={styles.input}>
-              <input
-                className={`${errorBirthday ? styles.borderRed : ''}`}
-                id='birthday'
-                type='date'
-                name='birthday'
-                value={birthday}
-                onChange={handleOnchageBirthday}
-              />
-            </div>
-          </div>
-          <div className={styles.errorText}>{errorBirthday}</div>
-          <Button type='primary' size='large' style={{ marginTop: '15px' }} onClick={handleSubmit}>
+        <Form form={form} layout='vertical' onFinish={onFinish} className={styles.login}>
+          <Form.Item
+            label='Họ tên'
+            name='name'
+            rules={[{ required: true, message: 'Vui lòng nhập họ tên !' }]}
+            className={styles.formLogin}
+          >
+            <Input placeholder='Họ tên' size='large' />
+          </Form.Item>
+          <Form.Item
+            name='telephone'
+            rules={[
+              { required: true, message: 'Vui lòng nhập số điện thoại !' },
+              () => ({
+                validator(_, value: any) {
+                  if (value[0] !== '0' && value !== '') {
+                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng ! '))
+                  } else if ((value.length > 10 || value.length < 10) && value !== '') {
+                    return Promise.reject(new Error('Vui lòng nhập đúng 10 chữ số ! '))
+                  } else {
+                    return Promise.resolve()
+                  }
+                }
+              })
+            ]}
+            label='Số điện thoại'
+            className={styles.formLogin}
+          >
+            <Input placeholder='Nhập số điện thoại' size='large' type='number' />
+          </Form.Item>
+          <Form.Item
+            name='email'
+            label='Email'
+            rules={[
+              { required: true, message: 'Vui lòng nhập Email !' },
+              {
+                type: 'email',
+                message: 'Vui lòng nhập đúng định dạng !'
+              }
+            ]}
+            className={styles.formLogin}
+          >
+            <Input placeholder='Vui lòng nhập Email !' size='large' />
+          </Form.Item>
+
+          <Form.Item
+            name='date'
+            rules={[{ required: true, message: 'Vui lòng nhập ngày sinh !' }]}
+            label='Ngày sinh'
+            className={styles.formLogin}
+          >
+            <Input type='date' size='large' />
+          </Form.Item>
+          <Button htmlType='submit' type='primary' size='large' style={{ marginTop: '15px' }}>
             Cập nhật
           </Button>
-        </div>
+        </Form>
       </div>
     </div>
   )

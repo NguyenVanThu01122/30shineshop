@@ -1,98 +1,134 @@
-import { Button, Form, Input, message } from 'antd'
+import { Button, Form, Input, Modal, message } from 'antd'
 import { useEffect, useState } from 'react'
 import SidebarAccount from '../../components/SidebarAccount'
 import { privateAxios } from '../../service/axios'
 import { MyModal, Wrapper } from './styles'
 
 function ListAddress() {
-  const [listAddress, setListAddress] = useState([])
+  const [listAddress, setListAddress] = useState<any>([])
   const [openModal, setOpenModal] = useState(false)
-
+  const [isOpenModalDelete, setIsOpenModalDelete] = useState(false)
   const [edit, setEdit] = useState<any>(null)
-
   const [form] = Form.useForm()
+  const [idDeleteAddress, setIdDeleteAddress] = useState('')
 
-  const handleClose = () => {
-    setOpenModal(false)
-    form.resetFields()
-    setEdit(null) // set edit về null
-  }
-  const handleOpenCreate = () => {
-    setOpenModal(true)
-  }
+  // hàm lấy thông tin address
   const getListAddress = () => {
     privateAxios.get('/address').then((res) => {
-      setListAddress(res.data.data)
-    })
-  }
-  useEffect(() => {
-    getListAddress()
-  }, [])
-  const handleDelete = (id: string) => {
-    privateAxios.delete(`/address/${id}`).then((res) => {
-      message.success(res.data.message)
-      getListAddress()
+      setListAddress(res.data?.data)
     })
   }
 
+  // hàm xử lý render theo điều kiện, nếu có edit thì xử lý logic gọi api sửa address,ngược lại gọi api tạo mới address
   const handleFinish = (values: any) => {
     if (edit) {
+      // xư lý call api sửa địa chỉ
       privateAxios
-        .put(`/address/${edit.id}`, {
-          name: values.name,
-          telephone: values.telephone,
-          email: values.email,
-          address: values.address
+        .put(`/address/${edit?.id}`, {
+          name: values?.name,
+          email: values?.email,
+          telephone: values?.telephone,
+          address: values?.address
         })
         .then((res) => {
           message.success(res.data?.message)
-          setOpenModal(false)
-          form.resetFields()
+          handleModalCancel()
           getListAddress()
-          setEdit(null)
+        })
+        .catch((error) => {
+          message.error(error.response?.data?.message)
         })
     } else {
+      // sử lý api tạo mới địa chỉ
       privateAxios
         .post('/address', {
-          name: values.name,
-          email: values.email,
-          address: values.address,
-          telephone: values.telephone
+          name: values?.name,
+          email: values?.email,
+          telephone: values?.telephone,
+          address: values?.address
         })
         .then((res) => {
-          message.success(res.data.message)
-          handleClose()
-          getListAddress()
-          form.resetFields() // xoa cac gia tri cua form
+          message.success(res.data?.message)
+          handleModalCancel()
+          form.resetFields() // xóa các giá trị của form
+          getListAddress() // tạo mới xong gọi lại hàm lấy địa  chỉ để cập nhập lại thông tin
+        })
+        .catch((error) => {
+          message.error(error.response?.data?.message)
         })
     }
   }
 
-  const handleSubmit = () => {
-    form.submit()
-  }
+  // hàm edit address
   const handleEdit = (item: any) => {
     setOpenModal(true)
-    setEdit(item)
+    setEdit(item) // lưu item vào trong state edit
+    // method này xử lý đặt lại giá trị cho các trường trong form
     form.setFieldsValue({
       name: item?.name,
+      email: item?.email,
       telephone: item?.telephone,
-      address: item?.address,
-      email: item?.email
+      address: item?.address
     })
   }
+
+  // hàm này dùng để gửi form lên server
+  const handleSubmitForm = () => {
+    form.submit()
+  }
+
+  // hàm xóa địa chỉ
+  const handelModalDeleteAddress = () => {
+    privateAxios
+      .delete(`/address/${idDeleteAddress}`)
+      .then((res) => {
+        message.success(res.data?.message)
+        getListAddress()
+        setIsOpenModalDelete(false)
+      })
+      .catch((error) => {
+        message.error(error.response?.data?.message)
+      })
+  }
+
+  // hàm mở modal xóa địa chỉ
+  const showModalDeleteAddress = (id: string) => {
+    setIsOpenModalDelete(true)
+    setIdDeleteAddress(id) //lưu id của listCart vào trong state idDeleteAddress, nhằm mục đích lấy đc id listCart để xóa sản phẩm
+  }
+
+  // hàm mở modal để tạo thêm địa chỉ mới
+  const handleOpenCreateAddress = () => {
+    setOpenModal(true)
+  }
+  // hàm hủy bỏ modal địa chỉ
+  const handleModalCancelAddress = () => {
+    setIsOpenModalDelete(false)
+  }
+  // hàm hủy bỏ modal
+  const handleModalCancel = () => {
+    setOpenModal(false)
+    form.resetFields() // hủy bỏ modal thì reset form về rỗng
+    setEdit(null)
+  }
+
+  useEffect(() => {
+    getListAddress() // gọi lại hàm 1 lần duy nhất sau khi component render thành công đầu tiên, và sẽ k được gọi lại các lần tiếp theo
+    //tránh tình trạng gọi hàm quá nhiều lần k cần thiết.
+  }, [])
+
   return (
     <Wrapper>
       <SidebarAccount />
       <div className='pageAddress'>
         <div className='titleAddress'>
           <div>Địa chỉ nhận hàng</div>
-          <Button className='button' onClick={handleOpenCreate}>
+          <Button className='button' onClick={handleOpenCreateAddress}>
             <span className='icon-plus'>+</span>
             Thêm địa chỉ mới
           </Button>
         </div>
-        {listAddress.map((item: any) => (
+        {listAddress?.map((item: any) => (
           <div className='parent-address' key={item.id}>
             <div className='address'>
               <div>Họ tên</div>
@@ -111,16 +147,20 @@ function ListAddress() {
               <div>{item.address}</div>
             </div>
             <div className='action'>
-              <Button onClick={() => handleDelete(item.id)}>Xóa</Button>
-              <Button onClick={() => handleEdit(item)}>Sửa</Button>
+              <Button size='middle' type='primary' className='buttonEdit' onClick={() => handleEdit(item)}>
+                Sửa
+              </Button>
+              <Button size='middle' className='buttonDelete' onClick={() => showModalDeleteAddress(item?.id)}>
+                xóa
+              </Button>
             </div>
           </div>
         ))}
-        {listAddress.length === 0 && <div>Bạn chưa có địa chỉ nào!</div>}
+        {listAddress?.length === 0 && <div>Bạn chưa có địa chỉ nào!</div>}
       </div>
 
-      <MyModal open={openModal} footer={null} closable={false} width={500} centered={true} onCancel={handleClose}>
-        <h2 className='title'>{edit ? 'SỬA ĐỊA CHỈ' : 'THÊM ĐỊA CHỈ MỚI'}</h2>
+      <MyModal open={openModal} footer={null} closable={false} width={500} centered={true} onCancel={handleModalCancel}>
+        <h2 className='title'>{edit ? 'Sửa địa chỉ' : 'Thêm địa chỉ'}</h2>
         <Form
           onFinish={handleFinish}
           layout='vertical'
@@ -147,7 +187,7 @@ function ListAddress() {
               }
             ]}
           >
-            <Input />
+            <Input size='large' />
           </Form.Item>
           <Form.Item
             label='Số điện thoại'
@@ -156,10 +196,24 @@ function ListAddress() {
               {
                 required: true,
                 message: 'Vui lòng nhập số điện thoại'
-              }
+              },
+
+              () => ({
+                validator(_, value) {
+                  if (value[0] !== '0' && value !== '') {
+                    // tìm số 0 và khác rỗng thì mới in ra lỗi
+                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+                  } else if ((value.length < 10 || value.length > 10) && value !== '') {
+                    // nếu lớn hơn 10 hoặc nhỏ hơn 10 và phải khác rỗng mới in ra lỗi
+                    return Promise.reject(new Error('Vui lòng nhập đúng 10 chữ số !'))
+                  } else {
+                    return Promise.resolve()
+                  }
+                }
+              })
             ]}
           >
-            <Input />
+            <Input size='large' type='number' />
           </Form.Item>
           <Form.Item
             label='Email'
@@ -168,10 +222,19 @@ function ListAddress() {
               {
                 required: true,
                 message: 'Vui lòng nhập email'
-              }
+              },
+              () => ({
+                validator(_, value: string) {
+                  if (value.includes('@')) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+                  }
+                }
+              })
             ]}
           >
-            <Input />
+            <Input size='large' />
           </Form.Item>
           <Form.Item
             label='Địa chỉ'
@@ -183,7 +246,7 @@ function ListAddress() {
               }
             ]}
           >
-            <Input />
+            <Input size='large' />
           </Form.Item>
           <div className='group-button'>
             {edit ? (
@@ -191,16 +254,16 @@ function ListAddress() {
                 <Button className='buttonSubmit' htmlType='submit'>
                   Sửa
                 </Button>
-                <Button className='buttonSubmit' onClick={handleClose}>
+                <Button className='buttonSubmit' onClick={handleModalCancel}>
                   Hủy
                 </Button>
               </>
             ) : (
               <>
-                <Button className='buttonSubmit' onClick={handleSubmit}>
+                <Button className='buttonSubmit' onClick={handleSubmitForm}>
                   Tạo địa chỉ
                 </Button>
-                <Button className='buttonSubmit' onClick={handleClose}>
+                <Button className='buttonSubmit' onClick={handleModalCancel}>
                   Hủy
                 </Button>
               </>
@@ -208,6 +271,12 @@ function ListAddress() {
           </div>
         </Form>
       </MyModal>
+      <Modal
+        open={isOpenModalDelete}
+        onCancel={handleModalCancelAddress}
+        onOk={handelModalDeleteAddress}
+        title='Bạn có chắc chắn muốn xóa địa chỉ này không ?'
+      ></Modal>
     </Wrapper>
   )
 }

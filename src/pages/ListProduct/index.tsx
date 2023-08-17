@@ -1,5 +1,5 @@
 import { StarOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
+import { Pagination } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -20,12 +20,14 @@ export default function ListProduct() {
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState('-1')
-  //shop30shine.herokuapp.com/product'
+  const [page, setPage] = useState(1)
+  const [total, setTotal] = useState(0)
   let [loading, setLoading] = useState(false)
-  let [error, setError] = useState('')
+  const [error, setError] = useState('')
 
   const dispatch = useDispatch()
   const products = useSelector((state: any) => state.app.products)
+
   const handleSearch = () => {
     interface IParams {
       sort: string
@@ -33,11 +35,14 @@ export default function ListProduct() {
       category?: string
       maxPrice?: string
       minPrice?: string
+      page: number
+      limit: number
     }
     const params: IParams = {
-      sort
+      sort,
+      page,
+      limit: 8
     }
-
     if (keyword) {
       params.keyword = keyword
     }
@@ -56,25 +61,47 @@ export default function ListProduct() {
         params
       })
       .then((response) => {
-        setLoading(false)
+        setTotal(response.data?.totalProducts)
         dispatch(addListProduct(response.data?.data))
         setError('')
+        setLoading(false)
       })
       .catch((error) => {
         setLoading(false)
-        setError('Lỗi server')
+        setError('lỗi server')
       })
   }
+  const handleChangePage = (page: number) => {
+    setPage(page)
+  }
+  const handleChangeKeyword = (e: any) => {
+    const valueInputSearch = e.target.value
+    setKeyword(valueInputSearch)
+    setPage(1)
+  }
   useEffect(() => {
+    // Sẽ được chạy sau lần render thành công đầu tiên, và được chạy lại mối khi giá trị của page thay đổi
     handleSearch()
-  }, [])
+  }, [page, keyword, category, maxPrice, minPrice, sort])
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+  }, [products])
+
   return (
     <div className={styles.pageProduct}>
+      <div className={styles.titlePage}>
+        <div onClick={() => navigate('/')}>Tran chủ</div>
+        <span>/ Danh sách sản phẩm</span>
+      </div>
       <div className={styles.searchProduct}>
         <div className={styles.category}>
-          <div>Danh mục</div>
+          <div className={styles.contentCategory}>Danh mục</div>
           <div className={styles.detailCategory}>
-            <div onClick={() => setCategory('')} className={`${category === '' ? styles.activeCategory : ''}`}>
+            <div onClick={() => setCategory('')} className={category === '' ? styles.activeCategory : ''}>
               Tất cả
             </div>
             <div
@@ -83,12 +110,9 @@ export default function ListProduct() {
             >
               Dầu gội
             </div>
-            <div
-              onClick={() => setCategory(listCategory.suaRuaMat)}
-              className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
-            >
-              Sữa rửa mặt
-            </div>
+            <div onClick={() => setCategory(listCategory.suaRuaMat)}
+            className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
+            >Sữa rửa mặt</div>
             <div
               onClick={() => setCategory(listCategory.suaTam)}
               className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
@@ -105,7 +129,7 @@ export default function ListProduct() {
         </div>
         <div className={styles.nameProduct}>
           <span>Tên sản phẩm</span>
-          <input type='text' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+          <input type='text' value={keyword} onChange={handleChangeKeyword} />
         </div>
         <div className={styles.numberPrice}>
           <div>Khoảng giá</div>
@@ -124,11 +148,11 @@ export default function ListProduct() {
             <option value='1'>Giá từ cao đến thấp</option>
           </select>
         </div>
-        <div className={styles.button}>
-          <Button type='primary' size='large' onClick={handleSearch}>
+        {/* <div className={styles.button}>
+          <Button type='primary' size='large' onClick={handleClickButtonSearch}>
             Tìm kiếm
           </Button>
-        </div>
+        </div> */}
       </div>
       <div className={styles.findProducts}>
         <div>{products.length} sản phẩm được tìm thấy</div>
@@ -140,7 +164,7 @@ export default function ListProduct() {
           </div>
         )}
         {!loading &&
-          products.map((item: any) => {
+          products?.map((item: any) => {
             return (
               <div className={styles.itemProduct} key={item.id}>
                 <div className={styles.stickerPercen}>
@@ -225,9 +249,17 @@ export default function ListProduct() {
               </div>
             )
           })}
-
         {error}
       </div>
+      {products?.length > 0 && (
+        <Pagination
+          current={page}
+          total={total}
+          pageSize={8}
+          onChange={handleChangePage}
+          className={styles.item_Pagination}
+        />
+      )}
     </div>
   )
 }

@@ -16,81 +16,21 @@
   padding: 18px;
   background-color: white;
 }
-.loginInput {
-  display: flex;
-  align-items: center;
+.formLogin {
+  width: 70%;
 }
-.loginInput input {
-  width: 50%;
-  padding: 15px;
-  border-radius: 5px;
-  outline: none;
-  border: 1px solid rgb(223, 218, 218);
-  background-color: rgba(238, 238, 238);
+.formLogin input {
+  padding: 10px;
 }
-.input {
-  width: 80%;
-}
-.login > div:nth-child(6) {
-  margin: 10px 0px;
-}
-.login > div:last-child {
-  margin-top: 6px;
-}
-.borderRed {
-  border: 1px solid red !important;
-}
-.loginInput div {
-  font-family: 'Be Vietnam';
-  color: rgba(61, 61, 61);
-}
-.loginInput > div:last-child {
-  font-weight: 550;
-  color: rgba(79, 77, 77, 0.916);
-}
-.loginInput > div:first-child {
-  width: 20%;
-}
-.login > div:nth-child(2) {
-  margin: 20px 0px;
-}
-.login > div:nth-child(4) {
-  margin: 20px 0px;
-}
-.login > div:last-child {
-  font-weight: 650;
-  font-size: 17px;
-  width: 15%;
-  padding: 12px;
-  margin-left: 160px;
-  text-align: center;
-  border-radius: 5px;
-  background-color: rgb(244, 190, 28);
-}
-.errorText {
-  color: red;
-  padding-left: 160px;
-  font-style: italic;
-}
+
 @media screen and (max-width: 768px) {
-  .account {
-    padding: 0px;
-    display: block;
-  }
-  .information {
-    display: none;
-  }
   .accountInformation {
     width: 100%;
   }
-  .loginInput input {
-    width: 100%;
-  }
+.formLogin {
+  width: 100%;
+}
   .accountInformation > div:first-child {
-    padding: 0px;
-  }
-  .login > div:last-child {
-    width: 50%;
-    margin: auto;
+     padding: 0px;
   }
 }

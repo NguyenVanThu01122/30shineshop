@@ -131,64 +131,35 @@
   position: fixed;
   bottom: 100px;
   right: 0px;
-  // transform: translateX(100%);
   transform: translatex(100%);
 }
-
-// .hoatHinhXuatHien{
-//   animation-name: tuPhaiQuaTrai;
-//   animation-duration: 0.2s;
-//   animation-fill-mode: forwards; // giữ lại trạng thái hoạt hình kết thúc
-// }
 .hoatHinhXuatHien{
   animation-name: tuPhaiQuaTrai;
   animation-duration: 0.5s;
-  animation-fill-mode: forwards;
+  animation-fill-mode: forwards; // giữ lại trạng thái hoạt hình kết thúc
 }
 @keyframes tuPhaiQuaTrai {
   from{
-    transform: translatex(100%);
+    transform: translateX(100%);
   }
   to{
-    transform: translate(0);
+    transform: translateX(0);
   }
   
 }
-// @keyframes tuPhaiQuaTrai {
-//   from {
-//     transform: translateX(100%);
-//   }
-//   to {
-//     transform: translate(0);
-//   }
-// }
 .hoatHinhBienMat{
   animation-name: tuTraiQuaPhai;
   animation-duration: 0.5s;
 }
 @keyframes tuTraiQuaPhai{
   from{
-    transform: translatex(0);
+    transform: translateX(0);
   }
   to{
-    transform: translatex(100%);
+    transform: translateX(100%);
   }
 
 }
-// .hoatHinhBienMat{
-//   animation-name: tuTraiQuaPhai;
-//   animation-duration: 0.2s;
-// }
-
-// @keyframes tuTraiQuaPhai {
-//   from {
-//     transform: translateX(0);
-//   }
-//   to {
-//     transform: translate(100%);
-//   }
-// }
-
 .iconPhone {
   width: 90px;
   height: 90px;
@@ -221,6 +192,9 @@
 }
 
 @media screen and (max-width: 768px) {
+  .pageFooter{
+    display: none;
+  }
   .images {
     display: block;
   }

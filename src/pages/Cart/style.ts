@@ -15,37 +15,63 @@ export const CartWrapper = styled.div`
     }
     .itemProduct {
       .product {
-        padding-top: 15px;
         margin-bottom: 20px;
         border-top: 1px solid rgb(220, 217, 217);
         border-left: 1px solid rgb(222, 218, 218);
         border-right: 1px solid rgb(222, 218, 218);
         .itemTitle {
-          display: flex;
-          margin-bottom: 20px;
-        }
-        .checkboxProduct {
-          width: 38%;
-          /* & input[type='checkbox'] {
-            margin-left: 8px;
-            width: 18px;
-            height: 18px;
-          } */
-          & span {
-            margin-left: 130px;
-            font-size: 1.125rem;
-            font-weight: 500;
-            font-family: 'Be Vietnam Pro';
-          }
-        }
-        .titleProduct {
-          width: 60%;
-          display: flex;
-          justify-content: space-around;
-          & div {
-            font-size: 1.125rem;
-            font-weight: 500;
-            font-family: 'Be Vietnam Pro';
+          background-color: rgba(232, 232, 232);
+          .detailTitle {
+            display: flex;
+            & > input {
+              margin-left: 10px;
+              width: 20px;
+            }
+            .checkboxProduct {
+              width: 100%;
+              .titleProduct {
+                display: flex;
+                justify-content: space-around;
+                padding: 10px 0px;
+                & > div {
+                  font-size: 1.325rem;
+                  font-family: 'Oswald';
+                }
+                & > div:first-child {
+                  width: 20%;
+                }
+              }
+              .cartProduct {
+                padding: 10px 0px;
+                justify-content: flex-end;
+                display: flex;
+                align-items: center;
+                & > div:first-child {
+                  font-size: 1.125rem;
+                  & span {
+                    margin-left: 5px;
+                    color: gray;
+                    font-size: 15px;
+                  }
+                }
+
+                .deleteProduct {
+                  display: flex;
+                  align-items: center;
+                  padding: 5px;
+                  cursor: pointer;
+                  border-radius: 6px;
+                  margin-left: 45%;
+                  margin-right: 1%;
+                  &:hover {
+                    background-color: red;
+                  }
+                  .iconDelete {
+                    font-size: 20px;
+                  }
+                }
+              }
+            }
           }
         }
         .detailProduct {
@@ -72,11 +98,12 @@ export const CartWrapper = styled.div`
               font-family: 'Be Vietnam Pro';
             }
             .priceProduct {
+              width: 30%;
               & > div:first-child {
                 font-size: 1.125rem;
                 font-family: 'Oswald';
                 font-weight: 500;
-                margin-left: 15px;
+                margin-left: 35px;
               }
               .priceSale {
                 display: flex;
@@ -108,15 +135,17 @@ export const CartWrapper = styled.div`
             }
           }
           .upDown {
-            width: 45%;
+            width: 43%;
             display: flex;
             align-items: center;
             justify-content: center;
             .buttonUpDown {
+              width: 45%;
               display: flex;
               margin-left: 25px;
               border: 1px solid rgb(202, 202, 202);
               border-radius: 8px;
+
               & > div:nth-child(2) {
                 display: flex;
                 align-items: center;
@@ -126,17 +155,18 @@ export const CartWrapper = styled.div`
                 border-right: 1px solid rgb(202, 202, 202);
               }
               & > div:first-child {
-                padding: 0px 15px;
+                margin: auto;
                 font-size: 30px;
                 cursor: pointer;
               }
               & > div:last-child {
-                padding: 0px 15px;
+                margin: auto;
                 font-size: 30px;
                 cursor: pointer;
               }
             }
             & > div:nth-child(2) {
+              width: 30%;
               color: rgba(229, 77, 62);
               font-size: 1.25rem;
               font-weight: 600;
@@ -144,7 +174,7 @@ export const CartWrapper = styled.div`
               margin-left: 70px;
             }
             .iconDelete {
-              font-size: 25px;
+              font-size: 30px;
               margin-left: 30px;
               cursor: pointer;
             }
@@ -181,6 +211,15 @@ export const CartWrapper = styled.div`
             margin-left: 8px;
             font-weight: 400;
             font-size: 0.875rem;
+          }
+          .amountOrder {
+            display: flex;
+            & > div:last-child {
+              margin-left: 15px;
+              & span {
+                font-size: 13px;
+              }
+            }
           }
         }
         .number {
@@ -245,38 +284,42 @@ export const CartWrapper = styled.div`
       display: block;
       .itemCart {
         width: 100%;
-        & >div:first-child{
+        & > div:first-child {
           font-size: large;
         }
         .itemProduct {
           .product {
             .itemTitle {
+              margin-bottom: 10px;
+              padding: 0px 10px;
               .checkboxProduct {
                 width: 20%;
                 & span {
                   margin: 0px;
-                  font-size: 16px;
+                  font-size: 12px;
                 }
               }
               .titleProduct {
                 width: 80%;
                 & div {
-                  font-size: 16px;
+                  font-size: 12px;
                   margin-left: 35px;
                 }
               }
             }
             .detailProduct {
+              padding-left: 5px;
+              padding-right: 5px;
               .informationProduct {
                 & input[type='checkbox'] {
                   margin-left: 0px;
                 }
                 .imgProduct {
-                  width: 30%;
+                  width: 20%;
                 }
                 & > div:nth-child(3) {
-                  /* width: 7%; */
-                  font-size: 10px;
+                  font-size: 8px;
+                  width: 40%;
                 }
                 .priceProduct {
                   & > div:first-child {
@@ -294,13 +337,13 @@ export const CartWrapper = styled.div`
                   margin-left: 0px !important;
                 }
                 .buttonUpDown {
-                  margin: 0px 10px;
+                  margin: 0px 8px;
                   & > div:first-child {
                     font-size: 14px;
                     padding: 6px;
                   }
                   & > div:nth-child(2) {
-                    font-size: 14px;
+                    font-size: 12px;
                     padding: 6px;
                   }
                   & > div:last-child {
@@ -308,7 +351,11 @@ export const CartWrapper = styled.div`
                     padding: 6px;
                   }
                 }
+                & > div:nth-child(2) {
+                  font-size: 12px;
+                }
                 .iconDelete {
+                  font-size: 20px;
                   margin-left: 0px;
                 }
               }
@@ -320,7 +367,7 @@ export const CartWrapper = styled.div`
     .informationLine {
       width: 100%;
       .itemPay {
-        & >div:first-child{
+        & > div:first-child {
           font-size: large;
         }
       }
@@ -339,4 +386,10 @@ export const CartWrapper = styled.div`
       }
     }
   }
+`
+export const DeleteProductAll = styled.div`
+  color: red;
+  font-weight: 600;
+  font-family: 'Oswald';
+  font-size: 20px;
 `

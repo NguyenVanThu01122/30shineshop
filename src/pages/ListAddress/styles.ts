@@ -13,6 +13,8 @@ export const Wrapper = styled.div`
       margin-bottom: 10px;
       & > div:first-child {
         font-weight: 600;
+        font-size: 20px;
+        padding: 10px;
       }
       .button {
         background-color: yellow;
@@ -23,13 +25,13 @@ export const Wrapper = styled.div`
       }
     }
     .parent-address {
-      border-bottom: 1px solid gray;
-      margin-bottom: 25px;
-      padding-bottom: 10px;
+      /* border-bottom: 1px solid rgb(209, 209, 209); */
     }
     .address {
       display: flex;
       margin-top: 5px;
+      border-bottom: 1px solid rgb(209, 209, 209);
+      padding: 10px;
       div {
         width: 50%;
       }
@@ -37,7 +39,15 @@ export const Wrapper = styled.div`
     .action {
       display: flex;
       justify-content: flex-end;
-      gap: 10px;
+      padding: 10px;
+      gap: 15px;
+      .buttonDelete {
+        background-color: yellow;
+      }
+      .buttonDelete:hover{
+        color: white;
+        background-color: red;
+      }
     }
   }
 `

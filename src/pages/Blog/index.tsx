@@ -24,7 +24,12 @@ export default function Blog() {
         setTextError('Lỗi server')
       })
   }, [])
-
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+  }, [])
   // const data = [
   //   {
   //     id: 1,
@@ -69,10 +74,10 @@ export default function Blog() {
   // ]
   return (
     <div className={styles.pageBlog}>
-      {/* <div className={styles.headerBlog}>
-        <div>Trang chủ /</div>
-        <div>Blog</div>
-      </div> */}
+      <div className={styles.headerBlog}>
+        <div onClick={()=>navigate('/')}>Trang chủ</div>
+        <div>/ Blog</div>
+      </div>
       <div className={styles.sectionTwo}>
         <div className={styles.productIntroduction}>
           <div className={styles.blog}>

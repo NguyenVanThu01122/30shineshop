@@ -1,15 +1,22 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
-import styles from './sttyles.module.css'
+import styles from './styles.module.css'
+import { useEffect } from 'react'
 export default function Introduce() {
   const navigate = useNavigate()
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+  }, [])
   return (
     <div className={styles.pageIntroduce}>
-      {/* <div className={styles.introduce}>
-        <div>Trang chủ /</div>
-        <div>Giới thiệu</div>
-      </div> */}
+      <div className={styles.introduce}>
+        <div onClick={()=>navigate('/')}>Trang chủ</div>
+        <div>/ Giới thiệu</div>
+      </div>
       <div className={styles.titleIntro}>
         <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
         <div>GIỚI THIỆU</div>

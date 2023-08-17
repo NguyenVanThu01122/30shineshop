@@ -1,6 +1,6 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
 export default function Contact() {
@@ -79,41 +79,47 @@ export default function Contact() {
       setContent('')
     }
   }
-  let handleOnBlurName = () => {
-    if (!name) {
-      setErrorName('Vui lòng nhập tên')
-    } else {
-      setErrorName('')
-    }
-  }
-  let handleOnBlurEmail = () => {
-    if (!email) {
-      setErrorEmail('Vui lòng nhập Email')
-    } else {
-      setErrorEmail('')
-    }
-  }
-  let handleOnBlurPhone = () => {
-    if (!phone) {
-      setErrorPhone('Vui lòng nhập số điện thoại')
-    } else {
-      setErrorPhone('')
-    }
-  }
-  let handleOnBlurContent = () => {
-    if (!content) {
-      setErrorContent('Vui lòng nhập nội dung')
-    } else {
-      setErrorContent('')
-    }
-  }
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+  }, [])
+  // let handleOnBlurName = () => {
+  //   if (!name) {
+  //     setErrorName('Vui lòng nhập tên')
+  //   } else {
+  //     setErrorName('')
+  //   }
+  // }
+  // let handleOnBlurEmail = () => {
+  //   if (!email) {
+  //     setErrorEmail('Vui lòng nhập Email')
+  //   } else {
+  //     setErrorEmail('')
+  //   }
+  // }
+  // let handleOnBlurPhone = () => {
+  //   if (!phone) {
+  //     setErrorPhone('Vui lòng nhập số điện thoại')
+  //   } else {
+  //     setErrorPhone('')
+  //   }
+  // }
+  // let handleOnBlurContent = () => {
+  //   if (!content) {
+  //     setErrorContent('Vui lòng nhập nội dung')
+  //   } else {
+  //     setErrorContent('')
+  //   }
+  // }
 
   return (
     <div className={styles.pageContact}>
-      {/* <div className={styles.homeContact}>
-        <div>Trang chủ /</div>
+      <div className={styles.homeContact}>
+        <div onClick={() => navigate('/')}>Trang chủ /</div>
         <div>Liên hệ</div>
-      </div> */}
+      </div>
       <div className={styles.contact}>
         <div>
           <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
@@ -167,7 +173,7 @@ export default function Contact() {
               <div>Họ và tên *</div>
               <div id='name' className={`${errorName ? styles.borderRed : ''}`}>
                 <input
-                  onBlur={handleOnBlurName}
+                  // onBlur={handleOnBlurName}
                   value={name}
                   type='text'
                   placeholder='Nhập họ và tên của bạn'
@@ -181,7 +187,7 @@ export default function Contact() {
                 <div>Số điện thoại *</div>
                 <div id='phone' className={`${errorPhone ? styles.borderRed : ''}`}>
                   <input
-                    onBlur={handleOnBlurPhone}
+                    // onBlur={handleOnBlurPhone}
                     value={phone}
                     type='text'
                     placeholder='Nhập số điện thoại của bạn '
@@ -194,7 +200,7 @@ export default function Contact() {
                 <div>Email</div>
                 <div id='email' className={`${errorEmail ? styles.borderRed : ''}`}>
                   <input
-                    onBlur={handleOnBlurEmail}
+                    // onBlur={handleOnBlurEmail}
                     onChange={handleOnchagEmail}
                     value={email}
                     type='text'
@@ -210,7 +216,7 @@ export default function Contact() {
               <div>Nội dung liên hệ *</div>
               <div id='content' className={`${errorContent ? styles.borderRed : ''}`}>
                 <textarea
-                  onBlur={handleOnBlurContent}
+                  // onBlur={handleOnBlurContent}
                   value={content}
                   onChange={handleOnchageContent}
                   placeholder='Nội dung liên hệ'

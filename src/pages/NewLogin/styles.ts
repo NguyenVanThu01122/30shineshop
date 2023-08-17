@@ -1,4 +1,4 @@
-import { Form } from 'antd'
+import { Form, Modal } from 'antd'
 import styled from 'styled-components'
 
 export const WrapperLogin = styled.div`
@@ -27,10 +27,21 @@ export const StyledFormLogin = styled(Form)`
       background-color: rgba(255, 204, 51, 0.913);
     }
   }
+  .itemInput {
+    padding: 10px;
+  }
+  .forgotPassword {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+  }
   .newLogin {
     display: flex;
     flex-direction: column;
     align-items: center;
+    /* .checkbox {
+      margin-bottom: 20px;
+    } */
   }
 
   @media screen and (max-width: 768px) {
@@ -42,6 +53,19 @@ export const StyledFormLogin = styled(Form)`
       .register {
         font-size: 14px;
       }
+    }
+  }
+`
+export const StyledModalForgetPassword = styled(Modal)`
+  .itemButton {
+    display: flex;
+    justify-content: space-between;
+    .cancelButton {
+      background-color: yellow;
+    }
+    .cancelButton:hover {
+      background-color: red;
+      color: white;
     }
   }
 `

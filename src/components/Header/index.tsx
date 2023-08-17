@@ -1,5 +1,6 @@
 import { faAngleRight, faBars, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Modal } from 'antd'
 import { useEffect, useState } from 'react'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
@@ -13,22 +14,28 @@ import styles from './styles.module.scss'
 export default function Header() {
   const [keyword, setKeyword] = useState('')
   const [isRender, setIsRender] = useState(false)
-  const [isOpenMenu, setIsOpenMenu] = useState(false)
+  const [showMenu, setShowMenu] = useState(-1)
   const [isAccount, setIsAccount] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const totalCart = useSelector((state: any) => state.app.totalCart)
-
   const user = useSelector((state: any) => state.app.user)
-
-  useEffect(() => {
-    privateAxios
-      .get('/user')
-      .then((res) => {
-        dispatch(updateAccount(res.data?.user))
-      })
-      .catch((error) => {})
-  }, [])
+  const [isModel, setIsModel] = useState(false)
+  const handleShowModel = () => {
+    setIsModel(true)
+  }
+  const handelLogOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('refreshToken')
+    navigate('/new-login')
+  }
+  const handleOk = () => {
+    setIsModel(false)
+    handelLogOut()
+  }
+  const handleCencel = () => {
+    setIsModel(false)
+  }
 
   const handleOnMouseEter = () => {
     setIsRender(true)
@@ -37,15 +44,16 @@ export default function Header() {
     setIsRender(false)
   }
   const openMenu = () => {
-    setIsOpenMenu(true)
+    setShowMenu(1)
+  }
+  const closeMenu = () => {
+    setShowMenu(0)
   }
   const openAccount = () => {
     setIsAccount(!isAccount)
   }
-  const handelLogOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('name')
-    navigate('/login')
+  const handleOrder = () => {
+    alert('Tính năng này đăng phát triển')
   }
   const handleAccount = () => {
     navigate('/account')
@@ -64,16 +72,21 @@ export default function Header() {
   }
   const handleRedirect = (url: string) => {
     navigate(url)
-    setIsOpenMenu(false)
+    setShowMenu(0)
+    setIsAccount(false)
   }
-
-  const closeMenu = () => {
-    setIsOpenMenu(false)
-  }
-
   const handleStop = (e: any) => {
-    e.stopPropagation()
+    e.stopPropagation() // ngăn chặn sự kiện click (closeMenu) cho thằng con
   }
+
+  useEffect(() => {
+    privateAxios
+      .get('/user')
+      .then((res) => {
+        dispatch(updateAccount(res.data?.user))
+      })
+      .catch((error) => {})
+  }, [])
 
   useEffect(() => {
     privateAxios.get('/cart').then((res) => {
@@ -83,42 +96,48 @@ export default function Header() {
   }, [])
   return (
     <div className={styles.pageHeader}>
-      {isOpenMenu && (
-        <div className={styles.menu} onClick={closeMenu}>
-          <div className={styles.listMenu} onClick={handleStop}>
-            <div className={styles.icon}>
-              <div>30ShineShop</div>
-              <FontAwesomeIcon className={styles.iconClose} onClick={closeMenu} icon={faXmark} />
+      {/* {showMenu && ( */}
+      <div
+        className={`${styles.menu} ${
+          showMenu === 1 ? styles.hoatHinhXuatHien : showMenu === 0 ? styles.hoatHinhBienMat : ''
+        } `}
+        onClick={closeMenu}
+      >
+        <div className={styles.listMenu} onClick={handleStop}>
+          <div className={styles.icon}>
+            <div>30ShineShop</div>
+            <FontAwesomeIcon className={`${styles.iconClose}`} onClick={closeMenu} icon={faXmark} />
+          </div>
+          <div className={styles.content}>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/list-product')}>DANH SÁCH SẢN PHẨM</div>
+              <FontAwesomeIcon icon={faAngleRight} />
             </div>
-            <div className={styles.content}>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/list-product')}>DANH SÁCH SẢN PHẨM</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
-              <div className={styles.iconFaAngleRight}>
-                <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
-                <FontAwesomeIcon icon={faAngleRight} />
-              </div>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
+              <FontAwesomeIcon icon={faAngleRight} />
+            </div>
+            <div className={styles.iconFaAngleRight}>
+              <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+              <FontAwesomeIcon icon={faAngleRight} />
             </div>
           </div>
         </div>
-      )}
+      </div>
+      {/* )}  */}
+
       <div className={styles.header}>
         <div onClick={openMenu} className={styles.iconHome}>
           <FontAwesomeIcon className={styles.iconFabars} icon={faBars} />
@@ -156,19 +175,26 @@ export default function Header() {
               <BsPerson className={styles.iconMenu} />
               <div>Tài khoản của tôi</div>
             </div>
-            <div className={styles.detailItem}>
+            <div onClick={handleOrder} className={styles.detailItem}>
               <BsLayoutTextSidebarReverse className={styles.iconMenu} />
               <div>Đơn hàng</div>
             </div>
-            <div onClick={handelLogOut} className={styles.detailItem}>
+            <div onClick={handleShowModel} className={styles.detailItem}>
               <BsBoxArrowRight className={styles.iconMenu} />
               <div>Đăng xuất</div>
             </div>
+            <Modal
+              title='Bạn có chắc chắn muốn đăng xuất không ?'
+              onOk={handleOk}
+              onCancel={handleCencel}
+              open={isModel}
+            ></Modal>
           </div>
         </div>
       )}
       <div className={styles.option}>
-        <div onClick={() => handleRedirect('/')}>DANH SÁCH SẢN PHẨM</div>
+        <div onClick={() => handleRedirect('/')}>HOME</div>
+        <div onClick={() => handleRedirect('/list-Product')}>DANH SÁCH SẢN PHẨM</div>
         <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
         <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
         <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>

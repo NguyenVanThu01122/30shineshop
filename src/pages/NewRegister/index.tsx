@@ -1,82 +1,51 @@
-import { Button, Checkbox, DatePicker, Form, Input, Select } from 'antd'
+import { Button, Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { privateAxios } from '../../service/axios'
 import { StyledRegisterForm, Wrapper } from './styles'
 function NewRegister() {
   const { Option } = Select
   const [form] = Form.useForm()
   const navigate = useNavigate()
+
   const onFinish = (values: any) => {
-    console.log('Received values of form: ', values)
-  }
-  const formItemLayout = {
-    labelCol: {
-      xs: { span: 24 },
-      sm: { span: 8 }
-    },
-    wrapperCol: {
-      xs: { span: 24 },
-      sm: { span: 16 }
+    const data = {
+      name: values.nickname,
+      telephone: values.phone,
+      email: values.email,
+      password: values.password,
+      gender: values.gender,
+      date: values.date
     }
+    privateAxios
+      .post('/register', data)
+      .then((res) => {
+        message.success(res.data?.message)
+        navigate('/new-login')
+      })
+      .catch((error) => {
+        const objError = error.response?.data
+        let stringError = ''
+        const errorEmail = objError.email
+        const errorPhone = objError.telephone
+        if (errorEmail) {
+          stringError += errorEmail
+        }
+        if (errorPhone) {
+          stringError += errorPhone
+        }
+
+        message.error(stringError)
+      })
   }
 
-  const tailFormItemLayout = {
-    wrapperCol: {
-      xs: {
-        span: 24,
-        offset: 0
-      },
-      sm: {
-        span: 16,
-        offset: 8
-      }
-    }
-  }
-
-  const prefixSelector = (
-    <Form.Item name='prefix' noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value='86'>+86</Option>
-        <Option value='87'>+87</Option>
-      </Select>
-    </Form.Item>
-  ) // xử lý số điện thoại
-  // const residences = [
-  //   {
-  //     value: 'zhejiang',
-  //     label: 'Zhejiang',
-  //     children: [
-  //       {
-  //         value: 'hangzhou',
-  //         label: 'Hangzhou',
-  //         children: [
-  //           {
-  //             value: 'xihu',
-  //             label: 'West Lake'
-  //           }
-  //         ]
-  //       }
-  //     ]
-  //   }
-  // ]
-  // const ItemLayout = {
-  //   labelCol: {
-  //     span: 6
-  //   },
-  //   wrapperCol: {
-  //     span: 12,
-  //     offset: 6 // Dịch chuyển wrapperCol để căn giữa
-  //   }
-  // }
   return (
     <Wrapper>
-      {/* <div className='wrapper'>dkfdkd</div> */}
       <StyledRegisterForm
         form={form}
         name='register'
         onFinish={onFinish}
-        layout='horizontal'
-        initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
-        // style={{ maxWidth: 600}}
+        layout='vertical'
+        // initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
         size='large'
         scrollToFirstError
       >
@@ -87,33 +56,44 @@ function NewRegister() {
           <Button className='register'>ĐĂNG KÝ</Button>
         </div>
         <Form.Item
+          className='form'
           name='nickname'
           label='Họ tên'
           tooltip='Bạn muốn người khác gọi mình là gì?'
-          rules={[{ required: true, message: 'Vui lòng nhập tên !', whitespace: true }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          style={{ marginTop: 20 }}
-          name='email'
-          label='E-mail'
           rules={[
             {
-              type: 'email',
-              message: 'Vui lòng nhập đúng định dạng'
-            },
-            {
               required: true,
-              message: 'Vui lòng nhập Email !'
+              message: 'Vui lòng nhập tên !'
             }
           ]}
         >
           <Input />
         </Form.Item>
+        <Form.Item
+          className='form'
+          name='email'
+          label='E-mail'
+          rules={[
+            {
+              required: true,
+              message: 'Vui lòng nhập email !'
+            },
+            () => ({
+              validator(_, value: string) {
+                if (value.includes('@') === false && value !== '') {
+                  return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+                } else {
+                  return Promise.resolve()
+                }
+              }
+            })
+          ]}
+        >
+          <Input type='email' />
+        </Form.Item>
 
         <Form.Item
-          style={{ marginTop: 20 }}
+          className='form'
           name='password'
           label='Password'
           rules={[
@@ -128,22 +108,24 @@ function NewRegister() {
         </Form.Item>
 
         <Form.Item
-          style={{ marginTop: 20 }}
+          className='form'
           name='confirm'
           label='Xác thực lại mật khẩu'
           dependencies={['password']}
-          hasFeedback
+          hasFeedback // icon thành công
           rules={[
             {
               required: true,
               message: 'Vui lòng xác nhận mật khẩu của bạn !'
             },
             ({ getFieldValue }) => ({
-              validator(_, value) {
+              validator(_, value: any) {
                 if (!value || getFieldValue('password') === value) {
+                  // nếu value k tồn tại(chưa nhập) hoặc getFieldValue('password') === value)
                   return Promise.resolve()
+                } else {
+                  return Promise.reject(new Error('Mật khẩu không khớp !'))
                 }
-                return Promise.reject(new Error('Mật khẩu mới mà bạn đã nhập không khớp !'))
               }
             })
           ]}
@@ -151,16 +133,32 @@ function NewRegister() {
           <Input.Password />
         </Form.Item>
         <Form.Item
-          style={{ marginTop: 20 }}
+          className='form'
           name='phone'
           label='Số điện thoại'
-          rules={[{ required: true, message: 'Vui lòng nhập sôs điện thoại !' }]}
+          rules={[
+            {
+              required: true,
+              message: 'Vui lòng nhập số điện thoại'
+            },
+            () => ({
+              validator(_, value) {
+                if (value[0] !== '0' && value !== '') {
+                  return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+                } else if ((value.length > 10 || value.length < 10) && value !== '') {
+                  return Promise.reject(new Error('Vui lòng nhập đầy đủ 10 chữ số !'))
+                } else {
+                  return Promise.resolve()
+                }
+              }
+            })
+          ]}
         >
-          <Input addonBefore={prefixSelector} style={{ width: '100%' }} />
+          <Input type='number' />
         </Form.Item>
 
         <Form.Item
-          style={{ marginTop: 20 }}
+          className='form'
           name='gender'
           label='Giới tính'
           rules={[{ required: true, message: 'Vui lòng chọn giới tính !' }]}
@@ -172,7 +170,7 @@ function NewRegister() {
           </Select>
         </Form.Item>
         <Form.Item
-          style={{ marginTop: 20 }}
+          className='form'
           label='Ngày sinh'
           name='date'
           rules={[
@@ -185,7 +183,7 @@ function NewRegister() {
           <DatePicker />
         </Form.Item>
         <Form.Item
-          style={{ marginTop: 20, width: 400 }}
+          className='form'
           name='agreement'
           valuePropName='checked'
           rules={[
@@ -193,15 +191,16 @@ function NewRegister() {
               validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
             }
           ]}
-          // {...tailFormItemLayout}
         >
-          <Checkbox className='checkbox'>Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.</Checkbox>
+          <Checkbox className='checkbox'>
+            Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
+          </Checkbox>
         </Form.Item>
-        <Form.Item className='newRegisters' {...tailFormItemLayout} style={{ marginTop: 20 }}>
+        <div className='newRegister'>
           <Button type='primary' size='large' htmlType='submit'>
             ĐĂNG KÝ
           </Button>
-        </Form.Item>
+        </div>
       </StyledRegisterForm>
     </Wrapper>
   )

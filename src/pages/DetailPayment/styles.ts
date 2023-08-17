@@ -24,34 +24,19 @@ export const PaymentWrapper = styled.div`
           font-weight: 600;
         }
         .itemInput {
-          margin-bottom: 20px;
+          margin-bottom: 25px;
           .ant-input {
-            height: 50px;
-          }
-          .errorText {
-            color: red;
-            margin-top: 10px;
-          }
-          .borderRed {
-            border: 1px solid red;
+            height: 55px;
           }
         }
         .groupInput {
           display: flex;
-          margin-bottom: 20px;
           gap: 15px;
           & > div {
             width: 50%;
           }
           .ant-input {
-            height: 50px;
-          }
-          .borderRed {
-            border: 1px solid red;
-          }
-          .errorText {
-            color: red;
-            margin-top: 10px;
+            height: 55px;
           }
         }
       }
@@ -257,6 +242,8 @@ export const PaymentWrapper = styled.div`
       }
       .itemOrder {
         .order {
+          width: 100%;
+          height: 100%;
           padding: 8px 0px;
           border-radius: 5px;
           text-align: center;
@@ -324,8 +311,6 @@ export const PaymentWrapper = styled.div`
         }
       }
     }
-    .errorText {
-      font-size: 10px;
-    }
+    
   }
 `
