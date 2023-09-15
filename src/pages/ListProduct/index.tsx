@@ -6,15 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { addListProduct } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
-export default function ListProduct() {
-  const navigate = useNavigate()
-  const listCategory = {
-    suaRuaMat: '64341dab40c628f4c65323f0',
-    dauGoi: '64341dab40c628f4c65323f2',
-    suaTam: '64341dab40c628f4c65323f3',
-    sapVuotToc: '64341dab40c628f4c65323f1'
-  }
 
+export default function ListProduct() {
   const [keyword, setKeyword] = useState('')
   const [category, setCategory] = useState('')
   const [minPrice, setMinPrice] = useState('')
@@ -24,6 +17,14 @@ export default function ListProduct() {
   const [total, setTotal] = useState(0)
   let [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+
+  const navigate = useNavigate()
+  const listCategory = {
+    suaRuaMat: '64341dab40c628f4c65323f0',
+    dauGoi: '64341dab40c628f4c65323f2',
+    suaTam: '64341dab40c628f4c65323f3',
+    sapVuotToc: '64341dab40c628f4c65323f1'
+  }
 
   const dispatch = useDispatch()
   const products = useSelector((state: any) => state.app.products)
@@ -41,7 +42,7 @@ export default function ListProduct() {
     const params: IParams = {
       sort,
       page,
-      limit: 8
+      limit: 12
     }
     if (keyword) {
       params.keyword = keyword
@@ -110,9 +111,12 @@ export default function ListProduct() {
             >
               Dầu gội
             </div>
-            <div onClick={() => setCategory(listCategory.suaRuaMat)}
-            className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
-            >Sữa rửa mặt</div>
+            <div
+              onClick={() => setCategory(listCategory.suaRuaMat)}
+              className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
+            >
+              Sữa rửa mặt
+            </div>
             <div
               onClick={() => setCategory(listCategory.suaTam)}
               className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
@@ -174,9 +178,9 @@ export default function ListProduct() {
                   </div>
                   <div></div>
                 </div>
-                <div key={item.id} className={styles.product}>
+                <div key={item.id} className={styles.product} onClick={() => navigate(`/detail-product/${item.id}`)}>
                   <div className={styles.images}>
-                    <img src={item.image} alt='images' onClick={() => navigate(`/detail-product/${item.id}`)} />
+                    <img src={item.image} alt='images' />
                   </div>
                   <div>{item.name}</div>
                   <div className={styles.productPrice}>
@@ -255,7 +259,7 @@ export default function ListProduct() {
         <Pagination
           current={page}
           total={total}
-          pageSize={8}
+          pageSize={12}
           onChange={handleChangePage}
           className={styles.item_Pagination}
         />

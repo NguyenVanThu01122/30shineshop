@@ -18,6 +18,9 @@ import NewLogin from './pages/NewLogin'
 import NewRegister from './pages/NewRegister'
 import OrderSuccess from './pages/OrderSuccess'
 import Register from './pages/Register'
+import Order from './pages/ListOrder'
+import DetailOrder from './pages/DetailOrder'
+import ListOrder from './pages/ListOrder'
 
 function App() {
   return (
@@ -37,6 +40,8 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/payment/:id' element={<DetailPayment />} />
           <Route path='/order-success/:id' element={<OrderSuccess />} />
+          <Route path='/list-order' element={<ListOrder/>}/>
+          <Route path='/detail-order/:id' element={<DetailOrder/>}/>
           {/* <Route path='/selling-Products' element={<SellingProducts />} /> */}
         </Route>
         <Route path='/new-register' element={<NewRegister />} />

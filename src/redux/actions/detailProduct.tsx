@@ -34,4 +34,10 @@ const updateAccount = (payload: any) => {
     payload
   }
 }
-export { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart, updateAccount }
+const addListOrder = (payload:any)=>{
+  return{
+    type: 'ADD_LIST_ORDER',
+    payload
+  }
+}
+export { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart, updateAccount,addListOrder }

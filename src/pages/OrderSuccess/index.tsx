@@ -3,23 +3,23 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
 import { OderSuccessWrapper } from './styled'
+const orderStatus = {
+  processing: 'processing',
+  inTransit: 'in_transit',
+  delivered: 'delivered',
+  canceled: 'canceled'
+}
 
+const methodPayment = {
+  offline: 'offline',
+  online: 'online'
+}
 export default function OrderSuccess() {
-  const orderStatus = {
-    processing: 'processing',
-    inTransit: 'in_transit',
-    delivered: 'delivered',
-    canceled: 'canceled'
-  }
-
-  const methodPayment = {
-    offline: 'offline',
-    online: 'online'
-  }
   const navigate = useNavigate()
   const params = useParams()
   const orderId = params.id
   const [orderDetail, setOrderDetail] = useState<any>({})
+
   useEffect(() => {
     privateAxios.get(`/order/${orderId}`).then((res) => {
       setOrderDetail(res.data?.data)
@@ -77,7 +77,7 @@ export default function OrderSuccess() {
         </div>
       </div>
       <div className='orderDetail'>
-        <div>Chi tiết đơn hàng</div>
+        <div onClick={() => navigate(`/detail-order/${orderDetail?.orderId}`)}>Chi tiết đơn hàng</div>
         <div onClick={() => navigate('/')}>
           Tiếp tục mua sắm{' '}
           <span>

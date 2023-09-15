@@ -1,11 +1,16 @@
-import { Button, Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
+import { Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
 import { StyledRegisterForm, Wrapper } from './styles'
+
 function NewRegister() {
+  const [focusInput, setFocusInput] = useState('')
+
   const { Option } = Select
   const [form] = Form.useForm()
   const navigate = useNavigate()
+  const pathName = window.location.pathname
 
   const onFinish = (values: any) => {
     const data = {
@@ -38,6 +43,30 @@ function NewRegister() {
       })
   }
 
+  const handleSubmit = () => {
+    form.submit()
+  }
+
+  const handleInputBorderViolet = (border: any) => {
+    switch (border) {
+      case 'name':
+        return setFocusInput('name')
+      case 'email':
+        return setFocusInput('email')
+      case 'password':
+        return setFocusInput('password')
+      case 'repeatPassword':
+        return setFocusInput('repeatPassword')
+      case 'phone':
+        return setFocusInput('phone')
+      case 'gender':
+        return setFocusInput('gender')
+      case 'birthday':
+        return setFocusInput('birthday')
+      default:
+        return ''
+    }
+  }
   return (
     <Wrapper>
       <StyledRegisterForm
@@ -45,15 +74,14 @@ function NewRegister() {
         name='register'
         onFinish={onFinish}
         layout='vertical'
-        // initialValues={{ residence: ['zhejiang', 'hangzhou', 'xihu'], prefix: '86' }}
         size='large'
-        scrollToFirstError
+        scrollToFirstError // tự động cuộn đến lỗi đầu tiên trong quá trình xử lý lỗi form
       >
-        <div className='button'>
-          <Button onClick={() => navigate('/new-login')} type='primary' className='login'>
+        <div className='select-item'>
+          <div onClick={() => navigate('/new-login')} className='login'>
             ĐĂNG NHẬP
-          </Button>
-          <Button className='register'>ĐĂNG KÝ</Button>
+          </div>
+          <div className={`register ${pathName === '/new-register' && 'border-bottom'}`}>ĐĂNG KÝ</div>
         </div>
         <Form.Item
           className='form'
@@ -67,7 +95,12 @@ function NewRegister() {
             }
           ]}
         >
-          <Input />
+          <Input
+            className={`custom-input ${focusInput === 'name' && 'border-violet'}`}
+            onClick={() => setFocusInput('name')}
+            onBlur={() => setFocusInput('')}
+            placeholder='Vui lòng nhập tên !'
+          />
         </Form.Item>
         <Form.Item
           className='form'
@@ -89,7 +122,12 @@ function NewRegister() {
             })
           ]}
         >
-          <Input type='email' />
+          <Input
+            className={`custom-input ${focusInput === 'email' && 'border-violet'}`}
+            placeholder='Vui lòng nhập Email !'
+            onClick={() => setFocusInput('email')}
+            onBlur={() => setFocusInput('')}
+          />
         </Form.Item>
 
         <Form.Item
@@ -104,7 +142,12 @@ function NewRegister() {
           ]}
           hasFeedback // icon thành công
         >
-          <Input.Password />
+          <Input.Password
+            className={`custom-input ${focusInput === 'password' && 'border-violet'}`}
+            onClick={() => setFocusInput('password')}
+            onBlur={() => setFocusInput('')}
+            placeholder='vui lòng nhập mật khẩu !'
+          />
         </Form.Item>
 
         <Form.Item
@@ -130,7 +173,12 @@ function NewRegister() {
             })
           ]}
         >
-          <Input.Password />
+          <Input.Password
+            className={`custom-input ${focusInput === 'repeatPassword' && 'border-violet'}`}
+            placeholder='Vui lòng xác thực mật khẩu !'
+            onClick={() => setFocusInput('repeatPassword')}
+            onBlur={() => setFocusInput('')}
+          />
         </Form.Item>
         <Form.Item
           className='form'
@@ -154,7 +202,13 @@ function NewRegister() {
             })
           ]}
         >
-          <Input type='number' />
+          <Input
+            className={`custom-input ${focusInput === 'phone' && 'border-violet'}`}
+            onClick={() => setFocusInput('phone')}
+            onBlur={() => setFocusInput('')}
+            placeholder='Vui lòng nhập số điện thoại !'
+            type='number'
+          />
         </Form.Item>
 
         <Form.Item
@@ -163,7 +217,12 @@ function NewRegister() {
           label='Giới tính'
           rules={[{ required: true, message: 'Vui lòng chọn giới tính !' }]}
         >
-          <Select placeholder='Vui lòng chọn giới tính'>
+          <Select
+            className={`select-gender ${focusInput === 'gender' && 'border-violet'}`}
+            onClick={() => setFocusInput('gender')}
+            onBlur={() => setFocusInput('')}
+            placeholder='Vui lòng chọn giới tính'
+          >
             <Option value='male'>Nam giới</Option>
             <Option value='female'>Nữ giới</Option>
             <Option value='other'>Khác</Option>
@@ -180,7 +239,12 @@ function NewRegister() {
             }
           ]}
         >
-          <DatePicker />
+          <DatePicker
+            className={`custom-input ${focusInput === 'birthday' && 'border-violet'}`}
+            onClick={() => setFocusInput('birthday')}
+            onBlur={() => setFocusInput('')}
+            placeholder='Vui lòng chọn ngày sinh !'
+          />
         </Form.Item>
         <Form.Item
           className='form'
@@ -196,10 +260,8 @@ function NewRegister() {
             Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
           </Checkbox>
         </Form.Item>
-        <div className='newRegister'>
-          <Button type='primary' size='large' htmlType='submit'>
-            ĐĂNG KÝ
-          </Button>
+        <div className='item-submit' onClick={handleSubmit}>
+          ĐĂNG KÝ
         </div>
       </StyledRegisterForm>
     </Wrapper>

@@ -19,6 +19,7 @@ function DetailProduct() {
   const [dotPosition, setDotPosition] = useState<DotPosition>('top') // chuyển slick-dots(dấu chấm bóng mượt) lên top
   const [numberStar, setNumberStar] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [form] = Form.useForm()
 
   const params = useParams()
   const navigate = useNavigate()
@@ -26,7 +27,6 @@ function DetailProduct() {
   const relatedProducts = useSelector((state: any) => state.app.products) // lấy sản phẩm liên quan trong stor
   const totalCart = useSelector((state: any) => state.app.totalCart) // lấy số lượng sản phẩm trong stor
   const imagesRef = useRef(null)
-  const [form] = Form.useForm()
 
   // hàm lấy chi tiết sản phẩm
   const handleDetail = () => {
@@ -37,10 +37,12 @@ function DetailProduct() {
   }
   // hàm lấy sản phẩm cùng loại
   const handelRelate = () => {
-    privateAxios.get(`/product/relate/${params.id}`).then((res) => {
-      dispatch(addListProduct(res.data?.data))
-    }).catch(error=>{
-    })
+    privateAxios
+      .get(`/product/relate/${params.id}`)
+      .then((res) => {
+        dispatch(addListProduct(res.data?.data))
+      })
+      .catch((error) => {})
   }
   // hàm lấy số lượng giỏ hàng hiện ở modal giỏ hàng
   const getLengthOfCart = () => {
@@ -132,18 +134,14 @@ function DetailProduct() {
         handleGetlistEvaluete()
         handleDetail()
       })
-      .catch((error) => {})
-    // const data = { comment: body.comment, product: params.id, numberStar }
-    // privateAxios
-    //   .post('/evaluate', data)
-    //   .then((res) => {
-    //     message.success(res.data?.message)
-    //     form.resetFields()
-    //     setNumberStar(0)
-    //     handleGetlistEvaluete()
-    //     handleDetail()
-    //   })
-    //   .catch((error) => {})
+      .catch((error) => {
+        message.error(error.response?.data?.message)
+      })
+  }
+  // hàm gửi yêu cầu đánh giá sp
+  const handleSubmit = () => {
+    form.submit()
+    setIsOpenFeedback(false)
   }
   useEffect(() => {
     // mỗi lần render lại thì cho scroll to top(kéo lên đầu trang)
@@ -151,9 +149,9 @@ function DetailProduct() {
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
-    handleDetail() // gọi lại 1 lần duy nhất sau lần render thành công đầu tiên
-    handelRelate() // gọi lại 1 lần duy nhất sau lần render thành công đầu tiên
-    handleGetlistEvaluete() // gọi lại 1 lần duy nhất sau lần render thành công đầu tiên
+    handleDetail()
+    handelRelate()
+    handleGetlistEvaluete()
   }, [])
 
   return (
@@ -450,7 +448,7 @@ function DetailProduct() {
                           />
                         </Form.Item>
                         <div className={styles.itemForm}>
-                          <Button size='large' type='primary' htmlType='submit'>
+                          <Button size='large' type='primary' onClick={handleSubmit}>
                             Gửi đánh giá
                           </Button>
                         </div>
@@ -631,109 +629,7 @@ function DetailProduct() {
           </div>
         </div>
       </div>
-      {/* <div>SẢN PHẨM ĐÃ XEM</div>
-      <div className={styles.sameProducts}>
-        <div className={styles.informationProduct}>
-          <div>
-            <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
-          </div>
-          <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
-          <div className={styles.priceProduct}>
-            <div>
-              690.000<span>đ</span>
-            </div>
-            <div>
-              828.000<span>đ</span>
-            </div>
-          </div>
-          <div>
-            <img
-              src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-              alt=''
-            />
-          </div>
-        </div>
-        <div className={styles.informationProduct}>
-          <div>
-            <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
-          </div>
-          <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
-          <div className={styles.priceProduct}>
-            <div>
-              690.000<span>đ</span>
-            </div>
-            <div>
-              828.000<span>đ</span>
-            </div>
-          </div>
-          <div>
-            <img
-              src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-              alt=''
-            />
-          </div>
-        </div>
-        <div className={styles.informationProduct}>
-          <div>
-            <img src='https://static.30shine.com/shop-admin/2023/03/06/30SXU6JL-COMBO%208.jpg' alt='icon' />
-          </div>
-          <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
-          <div className={styles.priceProduct}>
-            <div>
-              690.000<span>đ</span>
-            </div>
-            <div>
-              828.000<span>đ</span>
-            </div>
-          </div>
-          <div>
-            <img
-              src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-              alt=''
-            />
-          </div>
-        </div>
-        <div className={styles.informationProduct}>
-          <div>
-            <img src='https://static.30shine.com/shop-admin/2023/02/22/30SY84DK-Gel%20%20Drforskin.jpeg' alt='icon' />
-          </div>
-          <div>Combo hồi xuân trẻ</div>
-          <div className={styles.priceProduct}>
-            <div>
-              690.000<span>đ</span>
-            </div>
-            <div>
-              828.000<span>đ</span>
-            </div>
-          </div>
-          <div>
-            <img
-              src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-              alt=''
-            />
-          </div>
-        </div>
-        <div className={styles.informationProduct}>
-          <div>
-            <img src='https://static.30shine.com/shop-admin/2023/02/22/30SY84DK-Gel%20%20Drforskin.jpeg' alt='icon' />
-          </div>
-          <div>Combo Gel rửa mặt da dầu mụn và Gel ngăn..</div>
-          <div className={styles.priceProduct}>
-            <div>
-              690.000<span>đ</span>
-            </div>
-            <div>
-              828.000<span>đ</span>
-            </div>
-          </div>
-          <div>
-            <img
-              src='https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTv8DrfzVopdJxTYIsJptveHtNrlRN62yKeV_OpyBKZxGoCeAAG'
-              alt=''
-            />
-          </div>
-        </div>
-      </div> */}
+      
       {isModalOpen && (
         <Modal className={styles.modal} centered width={400} open={isModalOpen} onCancel={handleCancel} footer={false}>
           <div className={styles.modalCart}>

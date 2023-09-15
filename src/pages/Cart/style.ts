@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+
 export const CartWrapper = styled.div`
   padding: 0px 135px;
   margin-top: 40px;
@@ -31,14 +32,15 @@ export const CartWrapper = styled.div`
               width: 100%;
               .titleProduct {
                 display: flex;
-                justify-content: space-around;
-                padding: 10px 0px;
+                justify-content: space-between;
+                padding: 10px;
                 & > div {
                   font-size: 1.325rem;
                   font-family: 'Oswald';
                 }
                 & > div:first-child {
-                  width: 20%;
+                  width: 35%;
+                  text-align: center;
                 }
               }
               .cartProduct {
@@ -58,7 +60,7 @@ export const CartWrapper = styled.div`
                 .deleteProduct {
                   display: flex;
                   align-items: center;
-                  padding: 5px;
+                  padding: 10px !important;
                   cursor: pointer;
                   border-radius: 6px;
                   margin-left: 45%;
@@ -159,6 +161,7 @@ export const CartWrapper = styled.div`
                 font-size: 30px;
                 cursor: pointer;
               }
+
               & > div:last-child {
                 margin: auto;
                 font-size: 30px;
@@ -166,14 +169,20 @@ export const CartWrapper = styled.div`
               }
             }
             & > div:nth-child(2) {
-              width: 30%;
+              width: 50%;
               color: rgba(229, 77, 62);
               font-size: 1.25rem;
               font-weight: 600;
               font-family: 'Oswald';
               margin-left: 70px;
+              & span {
+                margin-left: 5px;
+                font-family: 'Oswald';
+                text-decoration: underline;
+              }
             }
             .iconDelete {
+              width: 15%;
               font-size: 30px;
               margin-left: 30px;
               cursor: pointer;

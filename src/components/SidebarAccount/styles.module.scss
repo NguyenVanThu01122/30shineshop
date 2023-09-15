@@ -1,7 +1,5 @@
 .account {
-  width: 30%;
-  display: flex;
-  justify-content: space-between;
+  padding: 10px;
   background-color: rgba(238, 238, 238);
 }
 .phone {
@@ -23,11 +21,15 @@
   margin-top: 10px;
   padding-top: 10px;
 }
-.list {
-  display: flex;
-  padding: 10px 10px;
-  margin-left: 6px;
-  cursor: pointer;
+  .list {
+    display: flex;
+    padding: 10px 30px;
+    margin-left: 6px;
+    cursor: pointer;
+  }
+.border{
+  // border-radius: 3px;
+  background-color: rgb(225, 224, 224);
 }
 .logOut {
   cursor: pointer;
@@ -38,10 +40,7 @@
 .information > div:last-child {
   border-top: 1px solid rgb(209, 204, 204);
 }
-.information > div:nth-child(2) {
-  border-radius: 3px;
-  background-color: rgba(232, 232, 232);
-}
+
 @media screen and (max-width: 768px) {
   .account {
     padding: 0px;

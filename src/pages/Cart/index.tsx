@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router'
 import { saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper, DeleteProductAll } from './style'
+
 export default function Cart() {
   const navigate = useNavigate()
   let [listCart, setListCart] = useState<any>([])
@@ -34,7 +35,6 @@ export default function Cart() {
   const getLengthOfCart = () => {
     privateAxios.get('/cart').then((res) => {
       const length = res.data?.listCart?.length
-      // console.log(length)
       disPatch(saveTotalCart(length))
     })
   }
@@ -200,6 +200,7 @@ export default function Cart() {
   useEffect(() => {
     getListCart()
   }, [])
+
   return (
     <CartWrapper>
       <div className='itemCart'>
@@ -216,6 +217,7 @@ export default function Cart() {
                       <div>Đơn giá</div>
                       <div>Số lượng</div>
                       <div>Tạm tính</div>
+                      <div>Xóa</div>
                     </div>
                   ) : (
                     <div className='cartProduct'>
@@ -224,7 +226,7 @@ export default function Cart() {
                       </div>
                       <Button type='primary' onClick={showModalDeleteAll} className='deleteProduct'>
                         <AiOutlineDelete className='iconDelete'>/</AiOutlineDelete>
-                        <div>Xóa</div>
+                        <div>Xóa tất cả</div>
                       </Button>
                     </div>
                   )}
@@ -261,7 +263,7 @@ export default function Cart() {
                           <div>{item.amount}</div>
                           <div onClick={() => upDateCart(item.id, item.amount + 1)}>+</div>
                         </div>
-                        <div>{item?.amount * item?.originPrice}</div>
+                        <div>{item?.amount * item?.originPrice}<span>đ</span></div>
                         <AiOutlineDelete
                           onClick={() => handleOpenModalOneDelete(item.id)}
                           className='iconDelete'

@@ -1,20 +1,23 @@
 import { Modal } from 'antd'
 import { useState } from 'react'
-import { BsBoxArrowRight, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
+import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin } from '../../helper'
 import styles from './styles.module.scss'
 
 function SidebarAccount() {
+  const [isModal, setIsModel] = useState(false)
   const navigate = useNavigate()
+  const user = useSelector((state: any) => state.app.user)
+  const pathname = window.location.pathname // lấy param
 
+  // hàm xử lý đăng xuất
   const handleLogOut = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('name')
     navigate('/new-login')
   }
-  const [isModal, setIsModel] = useState(false)
   const handleShowModel = () => {
     setIsModel(true)
   }
@@ -25,7 +28,7 @@ function SidebarAccount() {
   const handleCancel = () => {
     setIsModel(false)
   }
-  const user = useSelector((state: any) => state.app.user)
+
   return (
     <div className={styles.account}>
       <div className={styles.information}>
@@ -38,18 +41,24 @@ function SidebarAccount() {
             <div>{user?.telephone}</div>
           </div>
         </div>
-        <div className={styles.list} onClick={() => navigate('/account')}>
+        <div
+          className={`${styles.list} ${pathname === '/account' && styles.border}`}
+          onClick={() => navigate('/account')}
+        >
           <BsPerson />
           <div>Thông tin tài khoản</div>
         </div>
-        <div className={styles.list} onClick={() => navigate('/list-address')}>
+        <div
+          className={`${styles.list} ${pathname === '/list-address' && styles.border}`}
+          onClick={() => navigate('/list-address')}
+        >
           <BsPinMap />
           <div>Địa chỉ nhận hàng</div>
         </div>
-        {/* <div className={styles.list}>
+        <div className={`${styles.list} ${pathname === '/list-order' && styles.border}`} onClick={() => navigate('/list-order')}>
           <BsLayoutTextSidebarReverse />
           <div>Đơn hàng</div>
-        </div> */}
+        </div>
         <div className={styles.list}>
           <BsBoxArrowRight />
           {checkLogin() && (
@@ -62,7 +71,8 @@ function SidebarAccount() {
             open={isModal}
             onOk={handleOk}
             onCancel={handleCancel}
-            width={300}
+            width={400}
+            centered
           ></Modal>
         </div>
       </div>

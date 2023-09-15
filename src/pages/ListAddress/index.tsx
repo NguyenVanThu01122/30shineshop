@@ -113,8 +113,7 @@ function ListAddress() {
   }
 
   useEffect(() => {
-    getListAddress() // gọi lại hàm 1 lần duy nhất sau khi component render thành công đầu tiên, và sẽ k được gọi lại các lần tiếp theo
-    //tránh tình trạng gọi hàm quá nhiều lần k cần thiết.
+    getListAddress()
   }, [])
 
   return (
@@ -159,12 +158,13 @@ function ListAddress() {
         {listAddress?.length === 0 && <div>Bạn chưa có địa chỉ nào!</div>}
       </div>
 
-      <MyModal open={openModal} footer={null} closable={false} width={500} centered={true} onCancel={handleModalCancel}>
+      <MyModal open={openModal} footer={null} width={500} centered={true} onCancel={handleModalCancel}>
         <h2 className='title'>{edit ? 'Sửa địa chỉ' : 'Thêm địa chỉ'}</h2>
         <Form
           onFinish={handleFinish}
           layout='vertical'
           form={form}
+
           // requiredMark={false} // bỏ dấu sao đỏ
           // labelCol={{ span: 6 }}
           // wrapperCol={{ span: 18 }}
@@ -271,6 +271,7 @@ function ListAddress() {
           </div>
         </Form>
       </MyModal>
+
       <Modal
         open={isOpenModalDelete}
         onCancel={handleModalCancelAddress}

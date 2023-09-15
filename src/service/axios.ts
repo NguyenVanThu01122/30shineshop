@@ -9,14 +9,13 @@ const privateAxios = axios.create({
 privateAxios.interceptors.request.use(
   (config) => {
     // lam cai gi do truoc khi gui api len backend
-    // eslint-disable-next-line no-param-reassign
     config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
 
     // {
     //   baseURL: 'http://localhost:3030', // cổng 3030 là cổng chạy local của backend
     //   timeout: 4000,
     //   headers: {
-    //     Authorization: 'Bearer abc'
+    //     Authorization: `Bearer ${localStorage.getItem('token')}`
     //   }
     // }
 
@@ -34,19 +33,22 @@ privateAxios.interceptors.response.use(
     return response
   },
   (error) => {
+    //khối if này sẽ dc thực thi khi token hết hạn
     if (error.response.status === 401) {
+      // check token nếu hết hạn thì gọi api và kèm refreshToken đc lưu trong ứng dụng, để lấy token và refreshToken mới
       axios
         .post('http://localhost:3030/generate-token', {
-          refreshToken: localStorage.getItem('refreshToken')
+          refreshToken: localStorage.getItem('refreshToken') //gửi kèm body, giá trị refreshToken dc lưu trên ứng dụng, để lấy token va refreshToken mới từ backend
         })
         .then((res) => {
           // luu token moi va resfreshToken moi
           localStorage.setItem('token', res.data?.token)
           localStorage.setItem('refreshToken', res.data?.refreshToken)
-          window.location.reload();
+          window.location.reload() // load lại trang nhận dữ liệu
         })
         .catch((error) => {
           if (error.response.status === 401) {
+            // xóa token và refreshToken và bắt người dùng đăng nhập lại
             localStorage.removeItem('token')
             localStorage.removeItem('refreshToken')
             window.location.assign('/login')

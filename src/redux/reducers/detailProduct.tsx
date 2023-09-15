@@ -2,7 +2,8 @@ const initalState = {
   count: 0,
   products: [],
   totalCart: 0,
-  user: {}
+  user: {},
+  listOrder: []
 }
 
 const handleReducer = (state = initalState, action: { type: string; payload: any }) => {
@@ -42,6 +43,11 @@ const handleReducer = (state = initalState, action: { type: string; payload: any
       return {
         ...state,
         user: action.payload
+      }
+    case 'ADD_LIST_ORDER':
+      return {
+        ...state,
+        listOrder: action.payload
       }
     default:
       return state

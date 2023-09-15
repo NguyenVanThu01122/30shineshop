@@ -6,6 +6,9 @@ import { StyledFormLogin, StyledModalForgetPassword, WrapperLogin } from './styl
 function NewLogin() {
   const navigate = useNavigate()
   const [isOpenModal, setIsOpenModal] = useState(false)
+  const [focusInput, setFocusInput] = useState('')
+  const pathName = window.location.pathname
+
   const [form] = Form.useForm()
 
   const showOpenModalForgetPassword = () => {
@@ -15,6 +18,7 @@ function NewLogin() {
     setIsOpenModal(false)
     form.resetFields()
   }
+
   const onFinish = (values: any) => {
     const data = { email: values.email, password: values.password }
     privateAxios
@@ -30,6 +34,7 @@ function NewLogin() {
         message.error(objError?.message)
       })
   }
+  // hàm xử lý chức năng quên mật khẩu
   const handleFofgetPassword = (valuesPassword: any) => {
     const body = {
       password: valuesPassword.password,
@@ -42,31 +47,23 @@ function NewLogin() {
         handleCancel()
       })
       .catch((error) => {
-        console.log(error)
         const messageEror = error.response?.data
         message.error(messageEror?.message)
         handleCancel()
       })
   }
+  const handleSubmit = () => {
+    form.submit()
+  }
+
   return (
     <WrapperLogin>
-      <StyledFormLogin
-        // name='basic'
-        // labelCol={{ span: 8 }}
-        // wrapperCol={{ span: 16 }}
-        // initialValues={{ remember: true }}
-        // onFinishFailed={onFinishFailed}
-        size='large'
-        layout='vertical'
-        onFinish={onFinish}
-      >
-        <div className='button'>
-          <Button type='primary' size='large' className='login'>
-            ĐĂNG NHẬP
-          </Button>
-          <Button onClick={() => navigate('/new-register')} size='large' className='register'>
+      <StyledFormLogin size='large' form={form} layout='vertical' onFinish={onFinish}>
+        <div className='select-item'>
+          <div className={`login ${pathName === '/new-login' && 'border-bottom'}`}>ĐĂNG NHẬP</div>
+          <div onClick={() => navigate('/new-register')} className='register'>
             ĐĂNG KÝ
-          </Button>
+          </div>
         </div>
         <Form.Item
           label='Email'
@@ -82,16 +79,22 @@ function NewLogin() {
                 }
               }
             })
-            // {
-            //   type: 'email',
-            //   message: 'Vui lòng nhập đúng định dạng'
-            // }
           ]}
         >
-          <Input className='itemInput' placeholder='Vui lòng nhập Email !'></Input>
+          <Input
+            className={`itemInput ${focusInput === 'email' && 'border-violet'}`}
+            placeholder='Vui lòng nhập Email !'
+            onClick={() => setFocusInput('email')}
+            onBlur={() => setFocusInput('')}
+          />
         </Form.Item>
         <Form.Item label='Password' name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu !' }]}>
-          <Input.Password className='itemInput' placeholder='Vui lòng nhập mật khẩu !'></Input.Password>
+          <Input.Password
+            className={`itemInput ${focusInput === 'password' && 'border-violet'}`}
+            onClick={() => setFocusInput('password')}
+            onBlur={() => setFocusInput('')}
+            placeholder='Vui lòng nhập mật khẩu !'
+          />
         </Form.Item>
         <div className='forgotPassword' onClick={showOpenModalForgetPassword}>
           Quên mật khẩu?
@@ -106,13 +109,14 @@ function NewLogin() {
               }
             ]}
           >
-            <Checkbox className='checkbox'>Remember me</Checkbox>
+            <Checkbox className='checkbox'>Remember me !</Checkbox>
           </Form.Item>
-          <Button type='primary' htmlType='submit'>
+          <div className='submit' onClick={handleSubmit}>
             ĐĂNG NHẬP
-          </Button>
+          </div>
         </div>
       </StyledFormLogin>
+
       <StyledModalForgetPassword open={isOpenModal} onCancel={handleCancel} width={500} footer={false}>
         <Form form={form} onFinish={handleFofgetPassword} size='large' layout='vertical'>
           <Form.Item
@@ -143,7 +147,7 @@ function NewLogin() {
             name='password'
             rules={[{ required: true, message: 'Vui lòng nhập mật khẩu !' }]}
           >
-            <Input.Password placeholder='Vui lòng nhập mật khẩu'></Input.Password>
+            <Input.Password placeholder='Vui lòng nhập mật khẩu' />
           </Form.Item>
           <Form.Item
             label='Xác nhận mật khẩu mới'
@@ -174,7 +178,7 @@ function NewLogin() {
               // })
             ]}
           >
-            <Input.Password placeholder='Vui lòng nhập mật khẩu'></Input.Password>
+            <Input.Password placeholder='Vui lòng nhập mật khẩu' />
           </Form.Item>
           <div className='itemButton'>
             <Button htmlType='submit' className='updateButton' type='primary'>
