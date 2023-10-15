@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const privateAxios = axios.create({
-  baseURL: 'http://localhost:3030', // cổng 3030 là cổng chạy local của backend
+  baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 4000
 })
 
@@ -26,7 +26,7 @@ privateAxios.interceptors.request.use(
 
 // Buoc 2: Gui api len backend
 
-// Buoc 3: Duoc chay sau khi nhan du lieu thanh cong tu backend
+// Buoc 3: Duoc chay sau khi nhan du lieu tu backend
 privateAxios.interceptors.response.use(
   (response) => {
     // lam cai gi do voi du lieu nhan duoc
@@ -37,7 +37,7 @@ privateAxios.interceptors.response.use(
     if (error.response.status === 401) {
       // check token nếu hết hạn thì gọi api và kèm refreshToken đc lưu trong ứng dụng, để lấy token và refreshToken mới
       axios
-        .post('http://localhost:3030/generate-token', {
+        .post(`${process.env.REACT_APP_BASE_URL}/generate-token`, {
           refreshToken: localStorage.getItem('refreshToken') //gửi kèm body, giá trị refreshToken dc lưu trên ứng dụng, để lấy token va refreshToken mới từ backend
         })
         .then((res) => {
@@ -47,17 +47,17 @@ privateAxios.interceptors.response.use(
           window.location.reload() // load lại trang nhận dữ liệu
         })
         .catch((error) => {
-          if (error.response.status === 401) {
-            // xóa token và refreshToken và bắt người dùng đăng nhập lại
-            localStorage.removeItem('token')
-            localStorage.removeItem('refreshToken')
-            window.location.assign('/login')
-          }
+          // if (error.response.status === 401) {
+          // xóa token và refreshToken và bắt người dùng đăng nhập lại
+          localStorage.removeItem('token')
+          localStorage.removeItem('refreshToken')
+          window.location.assign('/login')
+          // }
           // console.log(error.response)
         })
     }
 
-    Promise.reject(error)
+    return Promise.reject(error)
   }
 )
 

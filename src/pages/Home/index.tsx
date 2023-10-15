@@ -121,12 +121,14 @@ const imagesBlog = [
   }
 ]
 function Home() {
+  
   const imagesRef = useRef(null)
   const seachRef = useRef(null)
   const brandRef = useRef(null)
   const blogsRef = useRef(null)
   const navigate = useNavigate()
   const [tab, setTab] = useState('1')
+  const [dotPosition, setDotPosition] = useState<DotPosition>('top')
 
   const handlePrev = () => {
     ;(imagesRef.current as any).prev()
@@ -152,7 +154,6 @@ function Home() {
   const handleNextBlogs = () => {
     ;(blogsRef.current as any).next()
   }
-  const [dotPosition, setDotPosition] = useState<DotPosition>('top')
 
   const handleTabChange = (key: string) => {
     setTab(key)

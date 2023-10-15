@@ -2,7 +2,7 @@ import { Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { privateAxios } from '../../service/axios'
-import { StyledRegisterForm, Wrapper } from './styles'
+import { StyledRegisterForm, WrapperRegister } from './styles'
 
 function NewRegister() {
   const [focusInput, setFocusInput] = useState('')
@@ -47,28 +47,8 @@ function NewRegister() {
     form.submit()
   }
 
-  const handleInputBorderViolet = (border: any) => {
-    switch (border) {
-      case 'name':
-        return setFocusInput('name')
-      case 'email':
-        return setFocusInput('email')
-      case 'password':
-        return setFocusInput('password')
-      case 'repeatPassword':
-        return setFocusInput('repeatPassword')
-      case 'phone':
-        return setFocusInput('phone')
-      case 'gender':
-        return setFocusInput('gender')
-      case 'birthday':
-        return setFocusInput('birthday')
-      default:
-        return ''
-    }
-  }
   return (
-    <Wrapper>
+    <WrapperRegister>
       <StyledRegisterForm
         form={form}
         name='register'
@@ -81,7 +61,13 @@ function NewRegister() {
           <div onClick={() => navigate('/new-login')} className='login'>
             ĐĂNG NHẬP
           </div>
-          <div className={`register ${pathName === '/new-register' && 'border-bottom'}`}>ĐĂNG KÝ</div>
+          <div className={`register ${pathName === '/new-register' && 'register-animation-border'}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            ĐĂNG KÝ
+          </div>
         </div>
         <Form.Item
           className='form'
@@ -154,7 +140,7 @@ function NewRegister() {
           className='form'
           name='confirm'
           label='Xác thực lại mật khẩu'
-          dependencies={['password']}
+          // dependencies={['password']} // Xác định phụ thuộc vào trường "password"
           hasFeedback // icon thành công
           rules={[
             {
@@ -260,11 +246,15 @@ function NewRegister() {
             Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
           </Checkbox>
         </Form.Item>
-        <div className='item-submit' onClick={handleSubmit}>
+        <div className='submit-register' onClick={handleSubmit}>
           ĐĂNG KÝ
         </div>
+        <div className='brand-name'>
+          <span>30Shine</span>
+          <span>Shop</span>
+        </div>
       </StyledRegisterForm>
-    </Wrapper>
+    </WrapperRegister>
   )
 }
 
