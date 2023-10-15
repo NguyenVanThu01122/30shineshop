@@ -99,7 +99,7 @@ function NewRegister() {
             },
             () => ({
               validator(_, value: string) {
-                if (value.includes('@') === false && value !== '') {
+                if (value?.includes('@') === false && value !== '') {
                   return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
                 } else {
                   return Promise.resolve()
@@ -126,7 +126,7 @@ function NewRegister() {
               message: 'Vui lòng nhập mật khẩu!'
             }
           ]}
-          hasFeedback // icon thành công
+          // hasFeedback // icon thành công
         >
           <Input.Password
             className={`custom-input ${focusInput === 'password' && 'border-violet'}`}
@@ -141,7 +141,7 @@ function NewRegister() {
           name='confirm'
           label='Xác thực lại mật khẩu'
           // dependencies={['password']} // Xác định phụ thuộc vào trường "password"
-          hasFeedback // icon thành công
+          // hasFeedback // icon thành công
           rules={[
             {
               required: true,
@@ -177,10 +177,14 @@ function NewRegister() {
             },
             () => ({
               validator(_, value) {
-                if (value[0] !== '0' && value !== '') {
-                  return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
-                } else if ((value.length > 10 || value.length < 10) && value !== '') {
-                  return Promise.reject(new Error('Vui lòng nhập đầy đủ 10 chữ số !'))
+                if (value) {
+                  if (value[0] !== '0') {
+                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+                  } else if ((value.length > 10 || value.length < 10) && value !== '') {
+                    return Promise.reject(new Error('Vui lòng nhập đầy đủ 10 chữ số !'))
+                  } else {
+                    return Promise.resolve()
+                  }
                 } else {
                   return Promise.resolve()
                 }

@@ -74,10 +74,14 @@ function NewLogin() {
           label='Email'
           name='email'
           rules={[
-            { required: true, message: 'Vui lòng nhập Email !' },
+            { required: true, message: 'Vui lòng nhập email !' },
             () => ({
               validator(_, value: string) {
-                if (value.includes('@') || value === '') {
+                if (!value) {
+                  return Promise.resolve()
+                }
+
+                if (value?.includes('@')) {
                   return Promise.resolve()
                 } else {
                   return Promise.reject(new Error('Vui lòng nhập đúng định dạng'))
@@ -88,7 +92,7 @@ function NewLogin() {
         >
           <Input
             className={`custom-input ${focusInput === 'email' && 'border-violet'}`}
-            placeholder='Vui lòng nhập Email !'
+            placeholder='Vui lòng nhập email !'
             onClick={() => setFocusInput('email')}
             onBlur={() => setFocusInput('')}
           />
@@ -105,11 +109,11 @@ function NewLogin() {
           <Form.Item
             name='remember'
             valuePropName='checked'
-            rules={[
-              {
-                validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
-              }
-            ]}
+            // rules={[
+            //   {
+            //     validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
+            //   }
+            // ]}
           >
             <Checkbox className='checkbox'>Remember me !</Checkbox>
           </Form.Item>
@@ -135,13 +139,16 @@ function NewLogin() {
             label='Email'
             name='email'
             rules={[
-              { required: true, message: 'Vui lòng nhập Email !' },
+              { required: true, message: 'Vui lòng nhập email !' },
               () => ({
                 validator(_, value: string) {
-                  if (value.includes('@') || value === '') {
+                  if (!value) {
+                    return Promise.resolve()
+                  }
+                  if (value?.includes('@') || value === '') {
                     return Promise.resolve()
                   } else {
-                    return Promise.reject(new Error('Vui lòng nhập đúng định dạn'))
+                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
                   }
                 }
               })
