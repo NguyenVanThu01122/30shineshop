@@ -158,12 +158,14 @@ function Home() {
   const handleTabChange = (key: string) => {
     setTab(key)
   }
+  
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
   }, [])
+  
   return (
     <Wrapper>
       <div className='item_Carousel'>

@@ -8,6 +8,7 @@ export default function Brand() {
   let [list, setList] = useState([])
   let [error, setError] = useState('')
   const navigate = useNavigate()
+
   useEffect(() => {
     privateAxios
       .get('/brand')
@@ -19,12 +20,14 @@ export default function Brand() {
         setError('Lỗi server')
       })
   }, [])
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
-  }, [])
+
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+  //   })
+  // }, [])
+
   return (
     <div className={styles.pageBrand}>
       <div className={styles.loginBrand}>

@@ -31,6 +31,7 @@ export default function Cart() {
         message.error(error.response?.data?.message)
       })
   }
+  
   // hàm lấy số lượng sản phẩm đã chọn
   const getLengthOfCart = () => {
     privateAxios.get('/cart').then((res) => {
@@ -89,7 +90,7 @@ export default function Cart() {
   // hàm mở modal của chức năng xóa tất cả sản phẩm
   const showModalDeleteAll = () => {
     if (listCartId == 0) {
-      alert('Bạn không có sản phẩm nào để xóa !')
+      message.error('Bạn không có sản phẩm nào để xóa !')
     } else {
       setIsOpenModalDeleteAll(true)
     }
@@ -263,7 +264,10 @@ export default function Cart() {
                           <div>{item.amount}</div>
                           <div onClick={() => upDateCart(item.id, item.amount + 1)}>+</div>
                         </div>
-                        <div>{item?.amount * item?.originPrice}<span>đ</span></div>
+                        <div>
+                          {item?.amount * item?.originPrice}
+                          <span>đ</span>
+                        </div>
                         <AiOutlineDelete
                           onClick={() => handleOpenModalOneDelete(item.id)}
                           className='iconDelete'

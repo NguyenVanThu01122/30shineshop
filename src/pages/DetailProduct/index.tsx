@@ -16,7 +16,7 @@ function DetailProduct() {
   const [imageSelect, setImageSelect] = useState('')
   const [isOpenFeedback, setIsOpenFeedback] = useState(false)
   const [count, setCount] = useState(1)
-  const [dotPosition, setDotPosition] = useState<DotPosition>('top') // chuyển slick-dots(dấu chấm bóng mượt) lên top
+  // const [dotPosition, setDotPosition] = useState<DotPosition>('top') // chuyển slick-dots(dấu chấm bóng mượt) lên top
   const [numberStar, setNumberStar] = useState(0)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [form] = Form.useForm()
@@ -24,8 +24,8 @@ function DetailProduct() {
   const params = useParams()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const relatedProducts = useSelector((state: any) => state.app.products) // lấy sản phẩm liên quan trong stor
-  const totalCart = useSelector((state: any) => state.app.totalCart) // lấy số lượng sản phẩm trong stor
+  const relatedProducts = useSelector((state: any) => state.app.products) // lấy sản phẩm liên quan trong store
+  const totalCart = useSelector((state: any) => state.app.totalCart) // lấy số lượng sản phẩm trong store
   const imagesRef = useRef(null)
 
   // hàm lấy chi tiết sản phẩm
@@ -35,6 +35,7 @@ function DetailProduct() {
       setImageSelect(res.data?.data?.images[0])
     })
   }
+
   // hàm lấy sản phẩm cùng loại
   const handelRelate = () => {
     privateAxios
@@ -44,6 +45,7 @@ function DetailProduct() {
       })
       .catch((error) => {})
   }
+
   // hàm lấy số lượng giỏ hàng hiện ở modal giỏ hàng
   const getLengthOfCart = () => {
     privateAxios.get('/cart').then((res) => {
@@ -71,6 +73,7 @@ function DetailProduct() {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
+
   //hàm mua sảm phẩm
   const handleBuyNow = (id: string, amount: number) => {
     privateAxios
@@ -110,6 +113,7 @@ function DetailProduct() {
   const handleSelectImage = (item: string) => {
     setImageSelect(item)
   }
+
   // hàm lấy danh sách đánh giá sản phẩm
   const handleGetlistEvaluete = () => {
     privateAxios
@@ -138,6 +142,7 @@ function DetailProduct() {
         message.error(error.response?.data?.message)
       })
   }
+  
   // hàm gửi yêu cầu đánh giá sp
   const handleSubmit = () => {
     form.submit()
@@ -261,7 +266,6 @@ function DetailProduct() {
           </div>
           <div className={styles.imgProduct}>
             {detailProduct?.images?.map((item: string) => {
-              // dùng map render ra image
               return (
                 <div onClick={() => handleSelectImage(item)}>
                   <img src={item} alt='' className={`${imageSelect === item ? styles.active : ''}`} />
@@ -535,14 +539,14 @@ function DetailProduct() {
       <div className={styles.otherProducts}>
         <div>SẢN PHẨM CÙNG LOẠI</div>
         <div className={styles.similarProducts}>
-          <Carousel
+          {/* <Carousel
             dotPosition={dotPosition}
             autoplay={true}
             dots={true}
             slidesToShow={4}
             ref={imagesRef}
             className={styles.itemCarousel}
-          >
+          > */}
             {relatedProducts.map((item: any) => {
               return (
                 <div
@@ -620,13 +624,13 @@ function DetailProduct() {
                 </div>
               )
             })}
-          </Carousel>
-          <div onClick={handleImagePrev} className={styles.otherPrev}>
+          {/* </Carousel> */}
+          {/* <div onClick={handleImagePrev} className={styles.otherPrev}>
             {'<'}
           </div>
           <div onClick={handleImageNext} className={styles.otherNext}>
             {'>'}
-          </div>
+          </div> */}
         </div>
       </div>
       
@@ -681,9 +685,4 @@ export default DetailProduct
 {
   // /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div>
 }
-function useREf(arg0: null): [any, any] {
-  throw new Error('Function not implemented.')
-}
-function setTab(key: string) {
-  throw new Error('Function not implemented.')
-}
+

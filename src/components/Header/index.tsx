@@ -7,6 +7,7 @@ import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-ico
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { checkLogin } from '../../helper'
+import logo30shine from '../../images/Logo_30shine.svg'
 import { addListProduct, saveTotalCart, updateAccount } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.scss'
@@ -15,11 +16,12 @@ export default function Header() {
   const [keyword, setKeyword] = useState('')
   const [showMenu, setShowMenu] = useState(-1)
   const [isAccount, setIsAccount] = useState(false)
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+
   const totalCart = useSelector((state: any) => state.app.totalCart)
   const user = useSelector((state: any) => state.app.user)
   const [isModal, setIsModal] = useState(false)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   // hàm xử lý chức năng đăng xuất
   const handelLogOut = () => {
@@ -39,12 +41,6 @@ export default function Header() {
     setIsModal(false)
   }
 
-  // const handleOnMouseEter = () => {
-  //   setIsRender(true)
-  // }
-  // const handleOnMouseLeave = () => {
-  //   setIsRender(false)
-  // }
   const openMenu = () => {
     setShowMenu(1)
   }
@@ -73,6 +69,7 @@ export default function Header() {
     navigate(url)
     setShowMenu(0)
     setIsAccount(false)
+    // window.location.reload()
   }
   const handleStop = (e: any) => {
     e.stopPropagation() // ngăn chặn sự kiện click (closeMenu) cho thằng con
@@ -95,7 +92,7 @@ export default function Header() {
   }, [])
 
   return (
-    <div className={styles.pageHeader}>
+    <div className={styles.sectionHeader}>
       <div
         className={`${styles.menu} ${
           showMenu === 1 ? styles.hoatHinhXuatHien : showMenu === 0 ? styles.hoatHinhBienMat : ''
@@ -135,16 +132,18 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <div className={styles.header}>
+      <div className={styles.itemHeader}>
         <div onClick={openMenu} className={styles.iconHome}>
           <FontAwesomeIcon className={styles.iconFabars} icon={faBars} />
         </div>
         <div className={styles.img}>
-          <img src='https://30shine.com/static/media/log-30shine-white.9945e644.jpg' alt='img' />
+          <img src={logo30shine} alt='img' />
         </div>
-        <div className={styles.search}>
-          <div onClick={handleSearch}>Tìm Kiếm</div>
-          <div className={styles.loginInput}>
+        <div className={styles.selectItem}>
+          <div onClick={handleSearch} className={styles.searchBar}>
+            Tìm Kiếm
+          </div>
+          <div className={styles.inputSearch}>
             <input
               value={keyword}
               onChange={(e: any) => setKeyword(e.target.value)}
@@ -154,9 +153,25 @@ export default function Header() {
             />
             <FontAwesomeIcon onClick={handleSearch} className={styles.iconSeach} icon={faMagnifyingGlass} />
           </div>
-          <div onClick={openAccount} className={styles.login}>
+          <div onClick={openAccount} className={styles.itemAccount}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
-            {checkLogin() ? <div>{user?.name}</div> : <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>}
+            {checkLogin() ? <div className={styles.nameAccount}>{user?.name}</div> : <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>}
+            {isAccount && (
+              <div className={styles.boxMenu}>
+                <div onClick={() => handleRedirect('/account')} className={styles.detailItem}>
+                  <BsPerson className={styles.iconMenu} />
+                  <div>Tài khoản của tôi</div>
+                </div>
+                <div onClick={() => handleRedirect('/list-order')} className={styles.detailItem}>
+                  <BsLayoutTextSidebarReverse className={styles.iconMenu} />
+                  <div>Đơn hàng</div>
+                </div>
+                <div onClick={handleShowModalLogOut} className={styles.detailItem}>
+                  <BsBoxArrowRight className={styles.iconMenu} />
+                  <div>Đăng xuất</div>
+                </div>
+              </div>
+            )}
           </div>
           <div className={styles.iconCart}>
             <AiOutlineShoppingCart className={styles.icon} onClick={() => handleRedirect('/cart')} />
@@ -165,35 +180,8 @@ export default function Header() {
         </div>
       </div>
 
-      {isAccount && (
-        <div className={styles.menuItem}>
-          <div className={styles.selectItem}>
-            <div onClick={() => handleRedirect('/account')} className={styles.detailItem}>
-              <BsPerson className={styles.iconMenu} />
-              <div>Tài khoản của tôi</div>
-            </div>
-            <div onClick={() => handleRedirect('/list-order')} className={styles.detailItem}>
-              <BsLayoutTextSidebarReverse className={styles.iconMenu} />
-              <div>Đơn hàng</div>
-            </div>
-            <div onClick={handleShowModalLogOut} className={styles.detailItem}>
-              <BsBoxArrowRight className={styles.iconMenu} />
-              <div>Đăng xuất</div>
-            </div>
-            <Modal
-              title='Bạn có chắc chắn muốn đăng xuất không ?'
-              onOk={handleOk}
-              onCancel={handleCencelModalLogOut}
-              open={isModal}
-            ></Modal>
-          </div>
-        </div>
-      )}
-      <div className={styles.option}>
+      <div className={styles.containerItem}>
         <div onClick={() => handleRedirect('/')}>TRANG CHỦ</div>
-        {/* <div onMouseEnter={handleOnMouseEter} onMouseLeave={handleOnMouseLeave}>
-          DANH MỤC
-        </div> */}
         <div onClick={() => handleRedirect('/list-Product')}>DANH SÁCH SẢN PHẨM</div>
         <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
         <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
@@ -201,71 +189,12 @@ export default function Header() {
         <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
         <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
       </div>
-      {/* {isRender && (
-        <div className={styles.productItem}>
-          <div className={styles.selectionItem}>
-            <div>TẠO KIỂU TÓC</div>
-            <div className={styles.item}>
-              <div>Sắp vuốt tóc</div>
-              <div>Gôm giữ nếp</div>
-              <div>Tạo màu tóc</div>
-              <div>Pre Styling</div>
-              <div>Sấy tóc</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>CHĂM SÓC DA MẶT</div>
-            <div className={styles.item}>
-              <div>Sữa rửa mặt</div>
-              <div>Dưỡng da</div>
-              <div>Tẩy da chết</div>
-              <div>Toner</div>
-              <div>Kem chống nắng</div>
-              <div>Mặt nạ</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>CHĂM SÓC TÓC</div>
-            <div className={styles.item}>
-              <div>Gầu gội</div>
-              <div>Dầu xả</div>
-              <div>Dưỡng tóc</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>CHĂM SÓC CƠ THỂ</div>
-            <div className={styles.item}>
-              <div>Sữa tắm</div>
-              <div>Khử mùi cơ thể</div>
-              <div>Tẩy da chết</div>
-              <div>Nước hoa</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>CHĂM SÓC CÁ NHÂN</div>
-            <div className={styles.item}>
-              <div>Chăm sóc răng miệng</div>
-              <div>Cạo râu</div>
-              <div>Dung dịch vệ sinh</div>
-              <div>Bao cao su</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>THỰC PHẨM CHỨC NĂNG</div>
-            <div className={styles.item}>
-              <div>Làm đẹp</div>
-              <div>Sức khỏe</div>
-            </div>
-          </div>
-          <div className={styles.selectionItem}>
-            <div>THỜI TRANG</div>
-            <div className={styles.item}>
-              <div>Quần lót nam</div>
-              <div>Tất nam</div>
-            </div>
-          </div>
-        </div>
-      )} */}
+      <Modal
+        title='Bạn có chắc chắn muốn đăng xuất không ?'
+        onOk={handleOk}
+        onCancel={handleCencelModalLogOut}
+        open={isModal}
+      ></Modal>
     </div>
   )
 }

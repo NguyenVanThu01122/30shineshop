@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
+import { message } from 'antd'
 export default function Contact() {
   let token = localStorage.getItem('token')
   const navigate = useNavigate()
@@ -39,6 +40,7 @@ export default function Contact() {
       setErrorPhone('')
     }
   }
+  
   let handleOnchagEmail = (e: any) => {
     const email = e.target.value
     setEmail(email)
@@ -48,6 +50,7 @@ export default function Contact() {
       setErrorEmail('')
     }
   }
+  
   let handleOnchageContent = (e: any) => {
     const content = e.target.value
     setContent(content)
@@ -57,6 +60,7 @@ export default function Contact() {
       setErrorContent('')
     }
   }
+
   let handleOnSubmit = () => {
     if (!name) {
       setErrorName('vui lòng nhập tên')
@@ -73,46 +77,20 @@ export default function Contact() {
     }
 
     if (name && !errorName && phone && !errorPhone && content && !errorContent) {
-      alert('bạn đã cập nhật thông tin thành công')
+      message.success('bạn đã cập nhật thông tin thành công')
       setName('')
       setPhone('')
       setContent('')
     }
   }
+  
   useEffect(() => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
   }, [])
-  // let handleOnBlurName = () => {
-  //   if (!name) {
-  //     setErrorName('Vui lòng nhập tên')
-  //   } else {
-  //     setErrorName('')
-  //   }
-  // }
-  // let handleOnBlurEmail = () => {
-  //   if (!email) {
-  //     setErrorEmail('Vui lòng nhập Email')
-  //   } else {
-  //     setErrorEmail('')
-  //   }
-  // }
-  // let handleOnBlurPhone = () => {
-  //   if (!phone) {
-  //     setErrorPhone('Vui lòng nhập số điện thoại')
-  //   } else {
-  //     setErrorPhone('')
-  //   }
-  // }
-  // let handleOnBlurContent = () => {
-  //   if (!content) {
-  //     setErrorContent('Vui lòng nhập nội dung')
-  //   } else {
-  //     setErrorContent('')
-  //   }
-  // }
+ 
 
   return (
     <div className={styles.pageContact}>

@@ -1,35 +1,36 @@
 import { StarOutlined } from '@ant-design/icons'
-import { Pagination } from 'antd'
+import { Button, Input, Pagination } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { addListProduct } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
-
 export default function ListProduct() {
   const [keyword, setKeyword] = useState('')
   const [category, setCategory] = useState('')
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
-  const [sort, setSort] = useState('-1')
+  const [sort, setSort] = useState<any>('-1')
   const [page, setPage] = useState(1)
+  const [limit, setLimit] = useState(12)
   const [total, setTotal] = useState(0)
-  let [loading, setLoading] = useState(false)
+  let [isLoading, setisLoading] = useState(false)
   const [error, setError] = useState('')
+  const [isCategory, setIsCategory] = useState(false)
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const products = useSelector((state: any) => state.app.products)
+
   const listCategory = {
-    suaRuaMat: '64341dab40c628f4c65323f0',
+    suaRuaMat: '64357b7a431573bb82a5f028',
     dauGoi: '64341dab40c628f4c65323f2',
     suaTam: '64341dab40c628f4c65323f3',
     sapVuotToc: '64341dab40c628f4c65323f1'
   }
 
-  const dispatch = useDispatch()
-  const products = useSelector((state: any) => state.app.products)
-
-  const handleSearch = () => {
+  const handleGetListProduct = () => {
     interface IParams {
       sort: string
       keyword?: string
@@ -56,7 +57,8 @@ export default function ListProduct() {
     if (maxPrice) {
       params.maxPrice = maxPrice
     }
-    setLoading(true)
+
+    setisLoading(true)
     privateAxios
       .get('/product', {
         params
@@ -65,24 +67,29 @@ export default function ListProduct() {
         setTotal(response.data?.totalProducts)
         dispatch(addListProduct(response.data?.data))
         setError('')
-        setLoading(false)
+        setisLoading(false)
+        setIsCategory(false)
       })
       .catch((error) => {
-        setLoading(false)
+        setisLoading(false)
         setError('lỗi server')
       })
   }
+
   const handleChangePage = (page: number) => {
     setPage(page)
+    window.location.reload()
   }
+
   const handleChangeKeyword = (e: any) => {
     const valueInputSearch = e.target.value
     setKeyword(valueInputSearch)
     setPage(1)
   }
+
   useEffect(() => {
     // Sẽ được chạy sau lần render thành công đầu tiên, và được chạy lại mối khi giá trị của page thay đổi
-    handleSearch()
+    handleGetListProduct()
   }, [page, keyword, category, maxPrice, minPrice, sort])
 
   useEffect(() => {
@@ -90,7 +97,7 @@ export default function ListProduct() {
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
-  }, [products])
+  }, [])
 
   return (
     <div className={styles.pageProduct}>
@@ -98,76 +105,83 @@ export default function ListProduct() {
         <div onClick={() => navigate('/')}>Tran chủ</div>
         <span>/ Danh sách sản phẩm</span>
       </div>
-      <div className={styles.searchProduct}>
-        <div className={styles.category}>
-          <div className={styles.contentCategory}>Danh mục</div>
-          <div className={styles.detailCategory}>
-            <div onClick={() => setCategory('')} className={category === '' ? styles.activeCategory : ''}>
-              Tất cả
-            </div>
-            <div
-              onClick={() => setCategory(listCategory.dauGoi)}
-              className={`${category === listCategory.dauGoi ? styles.activeCategory : ''}`}
-            >
-              Dầu gội
-            </div>
-            <div
-              onClick={() => setCategory(listCategory.suaRuaMat)}
-              className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
-            >
-              Sữa rửa mặt
-            </div>
-            <div
-              onClick={() => setCategory(listCategory.suaTam)}
-              className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
-            >
-              Sữa tắm
-            </div>
-            <div
-              onClick={() => setCategory(listCategory.sapVuotToc)}
-              className={`${category === listCategory.sapVuotToc ? styles.activeCategory : ''}`}
-            >
-              Sắp vuốt tóc
-            </div>
-          </div>
-        </div>
-        <div className={styles.nameProduct}>
-          <span>Tên sản phẩm</span>
-          <input type='text' value={keyword} onChange={handleChangeKeyword} />
-        </div>
-        <div className={styles.numberPrice}>
-          <div>Khoảng giá</div>
-          <div className={styles.priceRange}>
-            <span>Giá thấp nhất</span>
-            <input type='number' value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
-            <span>Giá cao nhất</span>
-            <input type='number' value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
-          </div>
-        </div>
-        <div className={styles.selectPrice}>
-          <span>Sắp xếp theo</span>
-          <select value={sort} onChange={(e) => setSort(e.target.value)}>
-            <option value='-1'>Giá mặc định</option>
-            <option value='0'>Giá từ thấp đến cao</option>
-            <option value='1'>Giá từ cao đến thấp</option>
-          </select>
-        </div>
-        {/* <div className={styles.button}>
-          <Button type='primary' size='large' onClick={handleClickButtonSearch}>
-            Tìm kiếm
+      <div className={styles.optionItem}>
+        <div className={styles.itemCategory}>
+          <Button onClick={() => setIsCategory(!isCategory)} className={styles.btnCategory}>
+            Danh Mục
           </Button>
-        </div> */}
+          {isCategory && (
+            <div className={styles.selectCategory}>
+              <div onClick={() => setCategory('')} className={category === '' ? styles.activeCategory : ''}>
+                Tất cả
+              </div>
+              <div
+                onClick={() => setCategory(listCategory.dauGoi)}
+                // className={`${category === listCategory.dauGoi ? styles.activeCategory : ''}`}
+              >
+                Dầu gội
+              </div>
+              <div
+                onClick={() => setCategory(listCategory.suaRuaMat)}
+                // className={`${category === listCategory.suaRuaMat ? styles.activeCategory : ''}`}
+              >
+                Sữa rửa mặt
+              </div>
+              <div
+                onClick={() => setCategory(listCategory.suaTam)}
+                // className={`${category === listCategory.suaTam ? styles.activeCategory : ''}`}
+              >
+                Sữa tắm
+              </div>
+              <div
+                onClick={() => setCategory(listCategory.sapVuotToc)}
+                // className={`${category === listCategory.sapVuotToc ? styles.activeCategory : ''}`}
+              >
+                Sắp vuốt tóc
+              </div>
+            </div>
+          )}
+        </div>
+        <Input
+          className={styles.customInput}
+          placeholder='nhập tên sản phẩm'
+          type='text'
+          value={keyword}
+          onChange={handleChangeKeyword}
+        />
+        <Input
+          className={styles.customInput}
+          placeholder='Giá thấp nhất'
+          type='number'
+          value={minPrice}
+          onChange={(e) => setMinPrice(e.target.value)}
+        />
+        <Input
+          className={styles.customInput}
+          placeholder='Giá cao nhất'
+          type='number'
+          value={maxPrice}
+          onChange={(e) => setMaxPrice(e.target.value)}
+        />
+        <select
+          className={styles.customSelect}
+          placeholder='Sắp xếp theo'
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+        >
+          <option value='-1'>Mặc định</option>
+          <option value='0'>Từ thấp đến cao</option>
+          <option value='1'>Từ cao đến thấp</option>
+        </select>
       </div>
-      <div className={styles.findProducts}>
-        <div>{products.length} sản phẩm được tìm thấy</div>
-      </div>
+      <div className={styles.findProducts}>{!isLoading && <div>{products.length} sản phẩm được tìm thấy</div>}</div>
       <div className={styles.listProduct}>
-        {loading && (
+        {isLoading && (
           <div className={styles.loading}>
             <img src='https://i.stack.imgur.com/hzk6C.gif' alt='loading' />
           </div>
         )}
-        {!loading &&
+        {!isLoading &&
           products?.map((item: any) => {
             return (
               <div className={styles.itemProduct} key={item.id}>
@@ -253,13 +267,14 @@ export default function ListProduct() {
               </div>
             )
           })}
-        {error}
+        <div className={styles.textError}>{error}</div>
       </div>
+
       {products?.length > 0 && (
         <Pagination
           current={page}
-          total={total}
-          pageSize={12}
+          total={total} //Prop này xác định tổng số mục (hoặc tổng số trang) có sẵn để phân trang.
+          pageSize={limit}
           onChange={handleChangePage}
           className={styles.item_Pagination}
         />

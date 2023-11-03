@@ -34,6 +34,7 @@ function NewLogin() {
         message.error(objError?.message)
       })
   }
+  
   // hàm xử lý chức năng quên mật khẩu
   const handleFofgetPassword = (valuesPassword: any) => {
     const body = {
@@ -55,6 +56,7 @@ function NewLogin() {
   const handleSubmit = () => {
     form.submit()
   }
+
   return (
     <WrapperLogin>
       <StyledFormLogin size='large' form={form} layout='vertical' onFinish={onFinish}>
@@ -152,10 +154,6 @@ function NewLogin() {
                   }
                 }
               })
-              // {
-              //   type: 'email',
-              //   message: 'Vui lòng nhập đúng định dạng'
-              // }
             ]}
           >
             <Input className='custom-input' placeholder='Vui lòng nhập Email !'></Input>

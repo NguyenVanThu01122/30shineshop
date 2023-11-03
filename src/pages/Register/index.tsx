@@ -167,7 +167,7 @@ export default function Register() {
       privateAxios
         .post('/register', data)
         .then((response) => {
-          alert(response.data?.message)
+          message.success(response.data?.message)
           setName('')
           setEmail('')
           setPassword('')

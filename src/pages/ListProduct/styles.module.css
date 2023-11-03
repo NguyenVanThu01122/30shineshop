@@ -1,87 +1,66 @@
-.searchProduct > div {
-  padding: 0px 135px;
-  margin-bottom: 15px;
-}
-.detailCategory {
+.optionItem {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
   display: flex;
+  gap: 30px;
 }
-.detailCategory div {
-  border: 1px solid rgb(188, 185, 185);
-  color: rgb(92, 91, 91);
-  border-radius: 30px;
-  padding: 10px 20px;
-  margin-right: 40px;
-  cursor: pointer;
+.custonPopover {
+  width: 100px;
 }
+.itemCategory {
+  font-size: 18px;
+  position: relative;
+}
+
+.btnCategory {
+  width: 150px;
+  height: 40px;
+  font-weight: bold;
+}
+.selectCategory {
+  width: 150px;
+  z-index: 100;
+  padding: 15px;
+  font-size: 16px;
+  position: absolute;
+  background-color: aliceblue;
+  & div {
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:hover {
+      color: orange;
+    }
+  }
+}
+.activeCategory {
+  color: #e54d3e;
+}
+.customInput {
+  height: 40px;
+  border-radius: 15px;
+  &::placeholder {
+    color: gray;
+    font-size: 17px;
+  }
+}
+.customSelect {
+  padding: 10px;
+  height: 40px;
+  border-radius: 8px;  
+
+}
+
 .titlePage {
   display: flex;
   background-color: rgb(232, 232, 232);
   cursor: pointer;
   padding: 12px 135px;
   color: rgba(28, 28, 28, 0.731);
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 .titlePage span {
   margin-left: 10px;
-}
-.contentCategory {
-  font-family: Oswald;
-  font-weight: 600;
-  font-size: 20px;
-  margin-bottom: 5px;
-}
-.nameProduct {
-  margin-top: 10px;
-}
-.numberPrice {
-  display: flex;
-}
-.nameProduct span {
-  font-family: Oswald;
-  font-size: 20px;
-  font-weight: 600;
-  margin-right: 10px;
-}
-.nameProduct input {
-  width: 300px;
-  padding: 5px;
-  height: 35px;
-  border-radius: 5px;
-  border-color: rgb(184, 182, 182);
-}
-.numberPrice > div:first-child {
-  font-family: Oswald;
-  font-size: 20px;
-  font-weight: 600;
-  margin-bottom: 5px;
-}
-.priceRange {
-  margin-left: 30px;
-}
-.priceRange > span:nth-child(3) {
-  margin-left: 30px;
-}
-.priceRange span {
-  color: rgb(92, 91, 91);
-}
-.priceRange input {
-  padding: 5px;
-  height: 35px;
-  border-radius: 5px;
-  border-color: rgb(184, 182, 182);
-  margin-left: 6px;
-}
-.selectPrice span {
-  font-family: Oswald;
-  font-size: 20px;
-  font-weight: 600;
-  margin-right: 10px;
-}
-.selectPrice select {
-  padding: 5px;
-  height: 35px;
-  border-radius: 5px;
-  cursor: pointer;
 }
 
 .homeProduct {
@@ -219,10 +198,6 @@
   width: 200px;
 }
 
-.activeCategory {
-  outline: 2px solid rgb(93, 187, 224) !important;
-  border: 1px solid transparent !important;
-}
 .product > div:nth-child(2) {
   font-family: 'Be Vietnam Pro';
   font-size: 0.875rem;
@@ -456,6 +431,9 @@
 .ant-pagination {
   display: flex !important;
   justify-content: center !important;
+}
+.textError{
+  color: red;
 }
 /* Responsive */
 @media screen and (max-width: 768px) {

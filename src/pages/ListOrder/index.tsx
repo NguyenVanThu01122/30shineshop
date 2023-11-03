@@ -40,6 +40,7 @@ const arrStatus = [
     text: 'Đã hủy'
   }
 ]
+
 // hàm xử lý trạng thái đơn hàng
 const mapOrderStatus = (status: any) => {
   switch (status) {
@@ -61,8 +62,8 @@ function ListOrder() {
   const [orderStatus, setOrderStatus] = useState('')
   const [listOrder, setListOrder] = useState([])
   const orders = useSelector((state: any) => state.app?.listOrder)
-  console.log(listOrder)
   const dispatch = useDispatch()
+
   // hàm lấy danh sách đơn hàng
   const handleGetlistOrder = () => {
     privateAxios
@@ -74,6 +75,7 @@ function ListOrder() {
         message.error(error.response?.data?.message)
       })
   }
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -133,7 +135,6 @@ function ListOrder() {
                 </div>
               ))}
             </div>
-
             <div className='total-price'>
               <div>Tổng tiền:</div>
               <div>
@@ -142,13 +143,8 @@ function ListOrder() {
               </div>
             </div>
             <div className='select'>
-              <div>
-              {mapOrderStatus(item.status)}
-              </div>
+              <div>{mapOrderStatus(item.status)}</div>
               <div className='group-button'>
-                {/* <Button className='button-add' size='large'>
-                  Mua lần nữa
-                </Button> */}
                 <Button onClick={() => navigate(`/detail-order/${item?._id}`)} size='large'>
                   Chi tiết đơn hàng
                 </Button>

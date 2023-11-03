@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import { BsArrowUp, BsTelephoneMinusFill } from 'react-icons/bs'
 import styles from './styles.module.scss'
+import { message } from 'antd'
 export default function Footer() {
+
   const [showIcon, setShowIcon] = useState(false)
+
   useEffect(() => {
     window.addEventListener('scroll', function (event) {
-      const top = document.documentElement.scrollTop
+      const top = document.documentElement.scrollHeight
       if (top > 500) {
         setShowIcon(true)
       } else {
@@ -14,13 +17,13 @@ export default function Footer() {
     })
   }, [])
 
-  // console.log('showIcon', showIcon)
 
   const handleClick = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
   const handleClickIcon = () => {
-    alert('Tính năng này đăng phát triển')
+    message.success('Tính năng này đăng phát triển')
   }
   return (
     <div className={styles.pageFooter}>

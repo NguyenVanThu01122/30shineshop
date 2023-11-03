@@ -61,6 +61,7 @@ function DetailOrder() {
         message.error(error.response?.data?.message)
       })
   }
+
   useEffect(() => {
     window.scrollTo({
       top: 0,
