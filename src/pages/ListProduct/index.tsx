@@ -78,7 +78,6 @@ export default function ListProduct() {
 
   const handleChangePage = (page: number) => {
     setPage(page)
-    window.location.reload()
   }
 
   const handleChangeKeyword = (e: any) => {
@@ -97,7 +96,7 @@ export default function ListProduct() {
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
-  }, [])
+  }, [page])
 
   return (
     <div className={styles.pageProduct}>
