@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 const privateAxios = axios.create({
-  baseURL: 'http://localhost:3030',
-  // baseURL: process.env.REACT_APP_BASE_URL,
+  // baseURL: 'http://localhost:3030',
+  baseURL: process.env.REACT_APP_BASE_URL,
   timeout: 4000
 })
 
