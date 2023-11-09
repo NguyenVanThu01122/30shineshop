@@ -155,7 +155,7 @@ export default function Cart() {
         })
     }
   }
-  // hook useEffect này sử lý nếu có showTitleProduct thì khối if dc thực thi, ngược lại khối else đc thực thi.
+
   useEffect(() => {
     if (showTitleProduct) {
       const arrId = listCart?.map((item: any) => {
@@ -166,7 +166,8 @@ export default function Cart() {
     } else {
       setListCartId([]) // nếu showTitleProduct là false thì setListCartId là mảng rỗng
     }
-  }, [showTitleProduct]) //và sẽ dc gọi lại mỗi khi giá trị showTitleProduct thay đổi,trong trường hợp này nó chỉ chạy khi showTitleProduct thay đổi.
+  }, [showTitleProduct])
+  
 
   // useEffect này xử lý lấy tổng tiền sản phẩm, và lấy tổng số lượng của từng sản phẩm
   useEffect(() => {
@@ -182,21 +183,8 @@ export default function Cart() {
     }
     setTotalPrice(totalPrice)
     setAmountProducts(amountProducts)
-    // let totalPrice = 0
-    // let amountProduct = 0
-    // listCartId?.forEach((id: string) => {
-    //   listCart?.forEach((cart: any) => {
-    //     if (cart.id === id) {
-    //       totalPrice += cart.totalPrice
-    //       amountProduct += cart.amount
-    //     }
-    //   })
-    // })
-    // // console.log(totalPrice) //0
-    // // console.log(amountProduct) //0
-    // setAmountProducts(amountProduct)
-    // setTotalPrice(totalPrice)
   }, [listCartId, listCart]) // nó sẽ chỉ thay đổi giá trị của totalPrice và amountProdut khi biến phụ thuộc bị thay đổi.
+
 
   useEffect(() => {
     getListCart()

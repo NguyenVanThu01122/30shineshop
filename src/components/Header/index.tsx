@@ -69,7 +69,7 @@ export default function Header() {
     navigate(url)
     setShowMenu(0)
     setIsAccount(false)
-    // window.location.reload()
+    window.location.reload()
   }
   const handleStop = (e: any) => {
     e.stopPropagation() // ngăn chặn sự kiện click (closeMenu) cho thằng con

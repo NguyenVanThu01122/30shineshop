@@ -53,6 +53,7 @@ function DetailProduct() {
       dispatch(saveTotalCart(length))
     })
   }
+
   // hàm thêm sản phẩm vào giỏ hàng
   const handleAddProductCart = (id: string, amount: number) => {
     privateAxios
@@ -69,6 +70,7 @@ function DetailProduct() {
         message.error(error.response?.data?.message)
       })
   }
+
   // hàm cancel modal
   const handleCancel = () => {
     setIsModalOpen(false)
@@ -87,6 +89,7 @@ function DetailProduct() {
         navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
       })
   }
+
   // hàm xử lý Prev cho chức năng Carousel
   const handleImagePrev = () => {
     ;(imagesRef.current as any).prev()
@@ -148,6 +151,7 @@ function DetailProduct() {
     form.submit()
     setIsOpenFeedback(false)
   }
+  
   useEffect(() => {
     // mỗi lần render lại thì cho scroll to top(kéo lên đầu trang)
     window.scrollTo({
