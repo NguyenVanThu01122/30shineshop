@@ -1,0 +1,18 @@
+.selectCategory {
+    width: 150px;
+    z-index: 100;
+    padding: 15px;
+    font-size: 16px;
+    position: absolute;
+    background-color: aliceblue;
+    & div {
+      margin-bottom: 10px;
+      cursor: pointer;
+      &:hover {
+        color: orange;
+      }
+    }
+  }
+  .activeCategory {
+    color: #e54d3e;
+  }

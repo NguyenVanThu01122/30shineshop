@@ -1,7 +1,8 @@
 import { Button, Checkbox, Form, Input, message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { toast } from 'react-toastify'
+import { fogetPassword, login } from '../../service/auth.servie'
 import { StyledFormLogin, StyledModalForgetPassword, WrapperLogin } from './styles'
 function NewLogin() {
   const navigate = useNavigate()
@@ -21,28 +22,27 @@ function NewLogin() {
 
   const onFinish = (values: any) => {
     const data = { email: values.email, password: values.password }
-    privateAxios
-      .post('/login', data)
+    login(data)
       .then((res) => {
         const result = res.data
         localStorage.setItem('token', result?.token) // accessToken
         localStorage.setItem('refreshToken', result?.refreshToken)
         navigate('/')
+        toast.success('Đăng nhập thành công')
       })
       .catch((error) => {
         const objError = error.response?.data
         message.error(objError?.message)
       })
   }
-  
+
   // hàm xử lý chức năng quên mật khẩu
   const handleFofgetPassword = (valuesPassword: any) => {
     const body = {
       password: valuesPassword.password,
       email: valuesPassword.email
     }
-    privateAxios
-      .put('/forget-password', body)
+    fogetPassword(body)
       .then((res) => {
         message.success(res.data?.message)
         handleCancel()

@@ -6,7 +6,8 @@ import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { checkLogin } from '../../helper'
+import { checkLogin } from '../../helper/checkLogin'
+import { useLogOut } from '../../helper/useLogout'
 import logo30shine from '../../images/Logo_30shine.svg'
 import { addListProduct, saveTotalCart, updateAccount } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
@@ -22,22 +23,16 @@ export default function Header() {
   const [isModal, setIsModal] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-
-  // hàm xử lý chức năng đăng xuất
-  const handelLogOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('refreshToken')
-    navigate('/new-login')
-  }
+  const logOut = useLogOut()
 
   const handleOk = () => {
     setIsModal(false)
-    handelLogOut()
+    logOut()
   }
   const handleShowModalLogOut = () => {
     setIsModal(true)
   }
-  const handleCencelModalLogOut = () => {
+  const handleCancelModalLogOut = () => {
     setIsModal(false)
   }
 
@@ -51,7 +46,6 @@ export default function Header() {
     setIsAccount(!isAccount)
   }
 
-  // hàm tìm kiếm sp
   const handleSearch = () => {
     privateAxios
       .get('/product', {
@@ -66,11 +60,16 @@ export default function Header() {
 
   // hàm xử lý chuyển trang
   const handleRedirect = (url: string) => {
-    navigate(url)
     setShowMenu(0)
     setIsAccount(false)
+    // Thực hiện cuộn lên đầu trang trước khi chuyển hướng trang
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    })
+    navigate(url) // chuyển hướng
   }
-  
+
   const handleStop = (e: any) => {
     e.stopPropagation() // ngăn chặn sự kiện click (closeMenu) cho thằng con
   }
@@ -155,7 +154,11 @@ export default function Header() {
           </div>
           <div onClick={openAccount} className={styles.itemAccount}>
             <img src='https://shop.30shine.com/icons/login-30shine.svg' alt='img' />
-            {checkLogin() ? <div className={styles.nameAccount}>{user?.name}</div> : <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>}
+            {checkLogin() ? (
+              <div className={styles.nameAccount}>{user?.name}</div>
+            ) : (
+              <div onClick={() => navigate('/login')}>ĐĂNG NHẬP</div>
+            )}
             {isAccount && (
               <div className={styles.boxMenu}>
                 <div onClick={() => handleRedirect('/account')} className={styles.detailItem}>
@@ -192,7 +195,7 @@ export default function Header() {
       <Modal
         title='Bạn có chắc chắn muốn đăng xuất không ?'
         onOk={handleOk}
-        onCancel={handleCencelModalLogOut}
+        onCancel={handleCancelModalLogOut}
         open={isModal}
       ></Modal>
     </div>

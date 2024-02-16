@@ -1,30 +1,10 @@
 import { useEffect, useState } from 'react'
 import { BsArrowUp, BsTelephoneMinusFill } from 'react-icons/bs'
+import { toast } from 'react-toastify'
 import styles from './styles.module.scss'
-import { message } from 'antd'
+
 export default function Footer() {
 
-  const [showIcon, setShowIcon] = useState(false)
-
-  useEffect(() => {
-    window.addEventListener('scroll', function (event) {
-      const top = document.documentElement.scrollHeight
-      if (top > 500) {
-        setShowIcon(true)
-      } else {
-        setShowIcon(false)
-      }
-    })
-  }, [])
-
-
-  const handleClick = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
-
-  const handleClickIcon = () => {
-    message.success('Tính năng này đăng phát triển')
-  }
   return (
     <div className={styles.pageFooter}>
       <div className={styles.footer}>
@@ -81,28 +61,6 @@ export default function Footer() {
           <div>Dịch vụ</div>
           <div>Shine Member</div>
         </div>
-      </div>
-
-      <div className={`${styles.listIcon} ${showIcon === true && styles.hoatHinhXuatHien}`}>
-        <img
-          src='https://shop.30shine.com/images/Phone.png'
-          alt='img'
-          onClick={handleClickIcon}
-          className={styles.iconPhone}
-        />
-        <img
-          src='https://shop.30shine.com/images/Message.png'
-          alt='img'
-          onClick={handleClickIcon}
-          className={styles.iconMessenger}
-        />
-        <img
-          src='https://shop.30shine.com/images/Zalo.png'
-          alt='img'
-          onClick={handleClickIcon}
-          className={styles.iconZalo}
-        />
-        <BsArrowUp onClick={handleClick} className={styles.iconUp} />
       </div>
     </div>
   )

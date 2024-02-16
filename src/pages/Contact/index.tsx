@@ -84,14 +84,6 @@ export default function Contact() {
     }
   }
   
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
-  }, [])
- 
-
   return (
     <div className={styles.pageContact}>
       <div className={styles.homeContact}>

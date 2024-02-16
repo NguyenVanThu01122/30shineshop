@@ -1,166 +1,82 @@
 import { StarOutlined } from '@ant-design/icons'
-import { Button, Carousel, Form, Input, Modal, Rate, message } from 'antd'
-import { DotPosition } from 'antd/es/carousel'
-import { useEffect, useRef, useState } from 'react'
+import { message } from 'antd'
+import { useCallback, useEffect, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate, useParams } from 'react-router-dom'
-import { addListProduct, saveTotalCart } from '../../redux/actions/detailProduct'
-import { privateAxios } from '../../service/axios'
+import { useParams } from 'react-router-dom'
+import { ModalCart } from '../../components/Ui/modalCart'
+import { useBuyNow } from '../../helper/useBuyNow'
+import { saveTotalCart } from '../../redux/actions/detailProduct'
+import { getCartProduct } from '../../service/cart'
+import { addProductCart, getDetailProduct } from '../../service/detailProduct'
+import { CustomerFeedback } from './componets/CustomerFeedback'
+import { RelateProducts } from './componets/RelateProducts'
 import styles from './styles.module.scss'
 
 function DetailProduct() {
-  const [listFeedback, setListFeedback] = useState<any>([])
   const [detailProduct, setDetailProduct] = useState<any>({})
   const [imageSelect, setImageSelect] = useState('')
-  const [isOpenFeedback, setIsOpenFeedback] = useState(false)
   const [count, setCount] = useState(1)
-  // const [dotPosition, setDotPosition] = useState<DotPosition>('top') // chuyển slick-dots(dấu chấm bóng mượt) lên top
-  const [numberStar, setNumberStar] = useState(0)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [form] = Form.useForm()
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const params = useParams()
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const relatedProducts = useSelector((state: any) => state.app.products) // lấy sản phẩm liên quan trong store
   const totalCart = useSelector((state: any) => state.app.totalCart) // lấy số lượng sản phẩm trong store
-  const imagesRef = useRef(null)
+  const [handleBuyNow] = useBuyNow()
 
   // hàm lấy chi tiết sản phẩm
-  const handleDetail = () => {
-    privateAxios.get(`/product/${params.id}`).then((res) => {
+  const handleGetDetail = useCallback(() => {
+    getDetailProduct(params?.id).then((res) => {
       setDetailProduct(res.data?.data)
       setImageSelect(res.data?.data?.images[0])
     })
-  }
-
-  // hàm lấy sản phẩm cùng loại
-  const handelRelate = () => {
-    privateAxios
-      .get(`/product/relate/${params.id}`)
-      .then((res) => {
-        dispatch(addListProduct(res.data?.data))
-      })
-      .catch((error) => {})
-  }
+  }, [params?.id])
 
   // hàm lấy số lượng giỏ hàng hiện ở modal giỏ hàng
-  const getLengthOfCart = () => {
-    privateAxios.get('/cart').then((res) => {
+  const getLengthOfCart = useCallback(() => {
+    getCartProduct().then((res) => {
       const length = res.data?.listCart.length
       dispatch(saveTotalCart(length))
     })
-  }
+  }, [])
 
   // hàm thêm sản phẩm vào giỏ hàng
-  const handleAddProductCart = (id: string, amount: number) => {
-    privateAxios
-      .post('/cart', {
-        id,
-        amount
-      })
+  const handleAddProductCart = useCallback((id: string, amount: number) => {
+    addProductCart(id, amount)
       .then((res) => {
-        setIsModalOpen(true) // mở modal
+        setIsModalOpen(true)
         getLengthOfCart() // gọi lại hàm lấy số lượng sản phẩm này để hiện số lượng sp ở icon giỏ hàng,
         // vì khi bấm vào nút thêm giỏ hàng thì state totalCart được lưu trên stor sẽ dc cập nhật lại số lượng//
       })
       .catch((error) => {
         message.error(error.response?.data?.message)
       })
-  }
+  }, [])
 
-  // hàm cancel modal
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
-
-  //hàm mua sảm phẩm
-  const handleBuyNow = (id: string, amount: number) => {
-    privateAxios
-      .post('/payment/buy-now', {
-        id,
-        amount
-      })
-      .then((res) => {
-        // api sẽ trả về cho mình paymentId
-        const paymentId = res.data?.paymentId
-        navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
-      })
-  }
-
-  // hàm xử lý Prev cho chức năng Carousel
-  const handleImagePrev = () => {
-    ;(imagesRef.current as any).prev()
-  }
-  // hàm xử lý next cho chức năng Carousel
-  const handleImageNext = () => {
-    ;(imagesRef.current as any).next()
-  }
-  // hàm mở feedback
-  const openFeedback = () => {
-    setIsOpenFeedback(!isOpenFeedback)
-  }
   // hàm giảm số lượng sản phẩm
-  const decreaseNumber = () => {
+  const decreaseNumber = useCallback(() => {
     if (count > 1) {
       setCount(count - 1)
     }
-  }
+  }, [count])
+
   // hàm tăng số lượng sản
-  const increaseNumber = () => {
+  const increaseNumber = useCallback(() => {
     setCount(count + 1)
-  }
+  }, [count])
+
   // hàm chọn ảnh sản phẩm
-  const handleSelectImage = (item: string) => {
+  const handleSelectImage = useCallback((item: string) => {
     setImageSelect(item)
-  }
+  }, [])
 
-  // hàm lấy danh sách đánh giá sản phẩm
-  const handleGetlistEvaluete = () => {
-    privateAxios
-      .get(`/evaluate/${params?.id}`)
-      .then((res) => {
-        setListFeedback(res.data?.data)
-      })
-      .catch((error) => {
-        message.error(error.response?.data?.message)
-      })
-  }
-
-  // hàm tạo đánh giá sản phẩm
-  const sendPostEvaluate = (body: any) => {
-    const data = { comment: body.comment, product: params.id, numberStar }
-    privateAxios
-      .post('/evaluate', data)
-      .then((res) => {
-        message.success(res.data?.message)
-        form.resetFields()
-        setNumberStar(0)
-        handleGetlistEvaluete()
-        handleDetail()
-      })
-      .catch((error) => {
-        message.error(error.response?.data?.message)
-      })
-  }
-  
-  // hàm gửi yêu cầu đánh giá sp
-  const handleSubmit = () => {
-    form.submit()
-    setIsOpenFeedback(false)
-  }
-  
   useEffect(() => {
-    // mỗi lần render lại thì cho scroll to top(kéo lên đầu trang)
     window.scrollTo({
       top: 0,
       behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
     })
-    handleDetail()
-    handelRelate()
-    handleGetlistEvaluete()
+    handleGetDetail()
   }, [])
 
   return (
@@ -290,196 +206,8 @@ function DetailProduct() {
                 <BiChevronDown className={styles.iconDown} />
               </div>
             </div>
-            <div className={styles.CustomerFeedback}>
-              <div>Phản hồi khách hàng</div>
-              <div className={styles.feedback}>
-                <div className={styles.animationFeedback}>
-                  <div className={styles.noFeedback}>
-                    <div>{detailProduct?.star}</div>
-                    <div>
-                      {detailProduct?.star === 5 && (
-                        <div>
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                        </div>
-                      )}
-                      {detailProduct?.star === 4 && (
-                        <div>
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                        </div>
-                      )}
-                      {detailProduct?.star === 3 && (
-                        <div>
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                        </div>
-                      )}
-                      {detailProduct?.star === 2 && (
-                        <div>
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                        </div>
-                      )}
-                      {detailProduct?.star === 1 && (
-                        <div>
-                          <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                        </div>
-                      )}
-                      {detailProduct?.star === 0 && (
-                        <div>
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                          <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                        </div>
-                      )}
-                    </div>
-                    <div>{detailProduct?.totalEvaluate} phản hồi</div>
-                  </div>
-                  <div className={styles.starOder}>
-                    <div className={styles.reviewStar}>
-                      <div className={styles.star}>
-                        <div>5</div>
-                        <div>
-                          <img
-                            className={styles.iconStarYellow}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                            alt=''
-                          />
-                        </div>
-                        <div className={styles.Crossbar}></div>
-                        <div>{detailProduct?.listStar?.fiveStar}</div>
-                      </div>
-                      <div className={styles.star}>
-                        <div>4</div>
-                        <div>
-                          <img
-                            className={styles.iconStarYellow}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                            alt=''
-                          />
-                        </div>
-                        <div className={styles.Crossbar}></div>
-                        <div>{detailProduct?.listStar?.fourStar}</div>
-                      </div>
-                      <div className={styles.star}>
-                        <div>3</div>
-                        <div>
-                          <img
-                            className={styles.iconStarYellow}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                            alt=''
-                          />
-                        </div>
-                        <div className={styles.Crossbar}></div>
-                        <div>{detailProduct?.listStar?.threeStar}</div>
-                      </div>
-                      <div className={styles.star}>
-                        <div>2</div>
-                        <div>
-                          <img
-                            className={styles.iconStarYellow}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                            alt=''
-                          />
-                        </div>
-                        <div className={styles.Crossbar}></div>
-                        <div>{detailProduct?.listStar?.twoStar}</div>
-                      </div>
-                      <div className={styles.star}>
-                        <div>1</div>
-                        <div>
-                          <img
-                            id={styles.imgStar}
-                            className={styles.iconStarYellow}
-                            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                            alt=''
-                          />
-                        </div>
-                        <div className={styles.Crossbar}></div>
-                        <div>{detailProduct?.listStar?.oneStar}</div>
-                      </div>
-                    </div>
-                    {!isOpenFeedback ? (
-                      <div className={styles.review} onClick={openFeedback}>
-                        VIẾT ĐÁNH GIÁ
-                      </div>
-                    ) : (
-                      <div className={styles.closeFeedback} onClick={openFeedback}>
-                        ĐÓNG
-                      </div>
-                    )}
-                  </div>
-                </div>
-                {isOpenFeedback && (
-                  <div className={styles.itemFeedback}>
-                    <div className={styles.feedbackStar}>
-                      <div>Chọn đánh giá của bạn</div>
-                      <span>
-                        <Rate value={numberStar} onChange={setNumberStar} />
-                      </span>
-                    </div>
-                    <div className={styles.clickItem}>
-                      <Form onFinish={sendPostEvaluate} form={form}>
-                        <Form.Item
-                          name='comment'
-                          rules={[
-                            {
-                              required: true,
-                              message: 'Vui lòng nhập đánh giá !'
-                            }
-                          ]}
-                          className={styles.formItemText}
-                        >
-                          <Input.TextArea
-                            className={styles.textArea}
-                            placeholder='Nhập đánh giá về sản phẩm...'
-                            size='large'
-                          />
-                        </Form.Item>
-                        <div className={styles.itemForm}>
-                          <Button size='large' type='primary' onClick={handleSubmit}>
-                            Gửi đánh giá
-                          </Button>
-                        </div>
-                      </Form>
-                    </div>
-                  </div>
-                )}
-                <div className={styles.itemDetailFeedback}>
-                  {listFeedback.map((item: any) => {
-                    return (
-                      <div className={styles.detailFeedback} key={item.id}>
-                        <div>{item.user}</div>
-                        <div className={styles.timeFeedback}>
-                          <Rate value={item.star} disabled={true} />
-                          <div>{item.time}</div>
-                        </div>
-                        <div>{item.comment}</div>
-                      </div>
-                    )
-                  })}
-                </div>
-              </div>
-            </div>
+
+            <CustomerFeedback detailProduct={detailProduct} handleDetail={handleGetDetail} />
           </div>
         </div>
         <div className={styles.endProduct}>
@@ -540,153 +268,17 @@ function DetailProduct() {
           </div>
         </div>
       </div>
-      <div className={styles.otherProducts}>
-        <div>SẢN PHẨM CÙNG LOẠI</div>
-        <div className={styles.similarProducts}>
-          {/* <Carousel
-            dotPosition={dotPosition}
-            autoplay={true}
-            dots={true}
-            slidesToShow={4}
-            ref={imagesRef}
-            className={styles.itemCarousel}
-          > */}
-            {relatedProducts.map((item: any) => {
-              return (
-                <div
-                  className={styles.informationProduct}
-                  onClick={() => window.location.assign(`/detail-product/${item.id}`)}
-                >
-                  <img className={styles.otherImage} src={item.image} alt='icon' />
-                  <div>{item.name}</div>
-                  <div className={styles.priceProduct}>
-                    <div>
-                      {item.originPrice}
-                      <span>đ</span>
-                    </div>
-                    <div>
-                      {item.salePrice}
-                      <span>đ</span>
-                    </div>
-                  </div>
-                  <div>
-                    {item.star === 5 && (
-                      <div>
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                      </div>
-                    )}
-                    {item.star === 4 && (
-                      <div>
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                      </div>
-                    )}
-                    {item.star === 3 && (
-                      <div>
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                      </div>
-                    )}
-                    {item.star === 2 && (
-                      <div>
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                      </div>
-                    )}
-                    {item.star === 1 && (
-                      <div>
-                        <StarOutlined style={{ color: 'yellow' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                      </div>
-                    )}
-                    {item.star === 0 && (
-                      <div>
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                        <StarOutlined style={{ color: 'gray' }} />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )
-            })}
-          {/* </Carousel> */}
-          {/* <div onClick={handleImagePrev} className={styles.otherPrev}>
-            {'<'}
-          </div>
-          <div onClick={handleImageNext} className={styles.otherNext}>
-            {'>'}
-          </div> */}
-        </div>
-      </div>
-      
+      <RelateProducts />
       {isModalOpen && (
-        <Modal className={styles.modal} centered width={400} open={isModalOpen} onCancel={handleCancel} footer={false}>
-          <div className={styles.modalCart}>
-            <div className={styles.cart}>
-              <div>GIỎ HÀNG</div>
-              <div>Thêm giỏ hàng thành công</div>
-            </div>
-            <div className={styles.detailCart}>
-              <img src={detailProduct?.images[0]} alt='' />
-              <div className={styles.priceProductCart}>
-                <div>{detailProduct.name}</div>
-                <div className={styles.price}>
-                  <div className={styles.priceSale}>
-                    <div>
-                      {detailProduct.salePrice}
-                      <span>đ</span>
-                    </div>
-                    <div>
-                      {detailProduct.originPrice} <span>đ</span>
-                    </div>
-                  </div>
-                  <div>x{count}</div>
-                </div>
-              </div>
-            </div>
-            <div className={styles.numberProduct}>Giỏ hàng của bạn đang có: {totalCart} sản phẩm</div>
-            <div className={styles.totalMoney}>
-              <div>TỔNG TIỀN: </div>
-              <div>
-                {detailProduct.salePrice * count}
-                <span>đ</span>
-              </div>
-            </div>
-            <div className={styles.buyNow}>
-              <Button type='primary' size='large' onClick={() => navigate('/cart')}>
-                XEM GIỎ HÀNG
-              </Button>
-              <Button size='large' onClick={() => handleBuyNow(detailProduct.id, count)}>
-                MUA NGAY
-              </Button>
-            </div>
-          </div>
-        </Modal>
+        <ModalCart
+          detailProduct={detailProduct}
+          count={count}
+          totalCart={totalCart}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
       )}
     </div>
   )
 }
 export default DetailProduct
-{
-  // /* <div>Giảm {100 - (detailProduct.salePrice / detailProduct.originPrice) * 100} %</div>
-}
-

@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 export const Wrapper = styled.div`
   .item_Carousel {
+    position: relative;
     & img {
       width: 100%;
     }
@@ -19,7 +20,7 @@ export const Wrapper = styled.div`
       z-index: 1000;
       top: 50%;
       right: 20px;
-      /* transform: translateY(-50%); */
+      transform: translateY(-50%);
       &:hover {
         background-color: #ffcc33;
         color: white;
@@ -40,7 +41,7 @@ export const Wrapper = styled.div`
       z-index: 1000;
       top: 50%;
       left: 20px;
-      /* transform: translateY(-50%); */
+      transform: translateY(-50%);
       &:hover {
         background-color: #ffcc33;
         color: white;
@@ -120,7 +121,6 @@ export const Wrapper = styled.div`
       height: 40px;
       background-color: rgb(239, 232, 232);
       color: blue;
-
       font-size: 20px;
       border-radius: 50%;
       display: flex;

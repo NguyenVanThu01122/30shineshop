@@ -1,23 +1,21 @@
 import { Button, Form, Input, message } from 'antd'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import SidebarAccount from '../../components/SidebarAccount'
 import { updateAccount } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Account() {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector((state: any) => state.app.user)
   const [form] = Form.useForm()
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
+    // })
     privateAxios.get('/user').then((res) => {
       form.setFieldsValue({
         name: user?.name,

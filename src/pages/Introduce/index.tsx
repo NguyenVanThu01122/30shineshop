@@ -4,13 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
 import { useEffect } from 'react'
 export default function Introduce() {
-  const navigate = useNavigate()
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
-  }, [])
+  const navigate = useNavigate()  
   return (
     <div className={styles.pageIntroduce}>
       <div className={styles.introduce}>

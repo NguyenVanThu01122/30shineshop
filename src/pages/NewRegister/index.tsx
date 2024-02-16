@@ -1,7 +1,7 @@
 import { Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { register } from '../../service/auth.servie'
 import { StyledRegisterForm, WrapperRegister } from './styles'
 
 function NewRegister() {
@@ -21,8 +21,7 @@ function NewRegister() {
       gender: values.gender,
       date: values.date
     }
-    privateAxios
-      .post('/register', data)
+    register(data)
       .then((res) => {
         message.success(res.data?.message)
         navigate('/new-login')

@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { checkLogin } from '../../helper'
+import { checkLogin } from '../../helper/checkLogin'
+import { useLogOut } from '../../helper/useLogout'
 import styles from './styles.module.scss'
 
 function SidebarAccount() {
@@ -11,19 +12,14 @@ function SidebarAccount() {
   const navigate = useNavigate()
   const user = useSelector((state: any) => state.app.user)
   const pathname = window.location.pathname // lấy param
+  const logOut = useLogOut()
 
-  // hàm xử lý đăng xuất
-  const handleLogOut = () => {
-    localStorage.removeItem('token')
-    localStorage.removeItem('name')
-    navigate('/new-login')
-  }
   const handleShowModel = () => {
     setIsModel(true)
   }
   const handleOk = () => {
+    logOut()
     setIsModel(false)
-    handleLogOut()
   }
   const handleCancel = () => {
     setIsModel(false)
@@ -55,7 +51,10 @@ function SidebarAccount() {
           <BsPinMap />
           <div>Địa chỉ nhận hàng</div>
         </div>
-        <div className={`${styles.list} ${pathname === '/list-order' && styles.border}`} onClick={() => navigate('/list-order')}>
+        <div
+          className={`${styles.list} ${pathname === '/list-order' && styles.border}`}
+          onClick={() => navigate('/list-order')}
+        >
           <BsLayoutTextSidebarReverse />
           <div>Đơn hàng</div>
         </div>

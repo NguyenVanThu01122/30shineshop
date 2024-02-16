@@ -1,0 +1,162 @@
+.CustomerFeedback{
+    &>div:first-child{
+      width: 20%; 
+      border: 1px solid  rgba(209,209,209);
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding: 10px 0px 10px 20px;
+      font-size: 1.125rem;
+      font-weight: 600;
+      font-family: 'Oswald';
+    }
+    .feedback{
+      border: 1px solid  rgba(209,209,209);
+      .animationFeedback{
+        display: flex;
+        justify-content: space-between;
+        padding: 30px;
+        text-align: center;
+      }
+      .noFeedback{
+        width: 25%;
+        &>div:first-child{
+          color: rgba(255,204,51);
+          font-size: 3.5rem;
+          font-family: Oswald;
+        }
+        &>div:last-child{
+        color: rgba(95,95,95);
+        font-family: 'Be Vietnam';
+        margin-top: 10px;
+        font-weight: 700;
+        font-size: 18px;
+        }
+        .FontAwesomeIcon{
+          .iconStar{
+            margin: 0px 10px;
+          }
+        }
+        
+      }
+      .starOder{
+        width: 75%;
+        display: flex;
+        align-items: center;
+        .review{
+          cursor: pointer;
+          border: 1px solid rgba(255,204,51);
+          border-radius: 5px;
+          margin-left: 100px;
+          width: 45%;
+          padding: 12px ;
+          color: rgba(255,204,51);
+        }
+        .closeFeedback{
+          cursor: pointer;
+          border: 1px solid red;
+          border-radius: 5px;
+          margin-left: 100px;
+          width: 45%;
+          padding: 12px ;
+          color: red;
+        }
+      }
+      .reviewStar{
+        width: 35%; 
+        .star{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          &>div:first-child{
+            color: rgba(95,95,95);
+            font-size: .875rem;
+            margin-right: 5px;
+          }
+          &>div:last-child{
+            color: rgba(95,95,95);
+            font-size: .875rem;
+          }
+          .iconStarYellow{
+            width: 13px;
+          }
+          .iconCrossbar{
+            width: 65%;
+            font-size: 30px;
+          }
+          .Crossbar{
+            width: 70%;
+            margin: 0px 5px;
+            height: 5px;
+            border: 1px solid rgba(209,209,209);
+            background-color: rgba(209,209,209);
+          }
+          #imgStar{
+            margin-left: 4px;
+          }
+        }
+
+      }
+      .itemFeedback{
+        padding: 0px 20px;
+        .feedbackStar{
+          display: flex;
+          align-items: center;
+          margin-bottom:  30px;
+          &>div:first-child{
+            color: gray;
+            margin-right: 40px;
+          }
+          .selectStar{
+            font-size: 28px;
+            cursor: pointer;
+          }
+          .errorStar{
+            font-size: 15px;
+            font-style: italic;
+            color: red;
+            margin-left: 6px;
+          }
+        }
+        .formItemText{
+          .textArea{
+            padding: 20px;
+          }
+        }
+        .itemForm{
+          display: flex;
+          justify-content: space-between;
+        }
+        .clickItem{
+          margin: 10px 0px;
+        }
+      }
+      // .itemDetailFeedback{
+      //   height: 300px;
+      //   overflow-y: auto ;
+        .detailFeedback{ 
+          padding: 10px;
+          margin: 20px;
+          border-top: 1px solid rgb(202, 201, 201);
+          & >div:first-child{
+            font-weight: 600;
+            font-size: 20px;
+          }
+          .timeFeedback{
+            display: flex;
+            margin: 10px 0px;
+            & >div:last-child{
+              margin-left: 20px;
+              font-size: 13px;
+              color: gray;
+            }
+          }
+          & >div:last-child{
+            color: rgb(79, 79, 79);
+            
+          }
+        }
+      // }
+     
+    }
+  }

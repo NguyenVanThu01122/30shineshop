@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router'
+import iconGifDuck from '../../images/img-duck.jpg'
 import { saveTotalCart } from '../../redux/actions/detailProduct'
 import { privateAxios } from '../../service/axios'
 import { CartWrapper, DeleteProductAll } from './style'
@@ -31,7 +32,7 @@ export default function Cart() {
         message.error(error.response?.data?.message)
       })
   }
-  
+
   // hàm lấy số lượng sản phẩm đã chọn
   const getLengthOfCart = () => {
     privateAxios.get('/cart').then((res) => {
@@ -167,7 +168,6 @@ export default function Cart() {
       setListCartId([]) // nếu showTitleProduct là false thì setListCartId là mảng rỗng
     }
   }, [showTitleProduct])
-  
 
   // useEffect này xử lý lấy tổng tiền sản phẩm, và lấy tổng số lượng của từng sản phẩm
   useEffect(() => {
@@ -184,7 +184,6 @@ export default function Cart() {
     setTotalPrice(totalPrice)
     setAmountProducts(amountProducts)
   }, [listCartId, listCart]) // nó sẽ chỉ thay đổi giá trị của totalPrice và amountProdut khi biến phụ thuộc bị thay đổi.
-
 
   useEffect(() => {
     getListCart()
@@ -222,49 +221,54 @@ export default function Cart() {
                 </div>
               </div>
             </div>
-            {listCart.length > 0
-              ? listCart.map((item: any) => {
-                  return (
-                    <div className='detailProduct' key={item.id}>
-                      <div className='informationProduct'>
-                        <input
-                          type='checkbox'
-                          id='checkbox2'
-                          checked={listCartId?.includes(item.id)} // kiểm tra sự tồn tại item.id nếu có thì trả về true, tức là checked là true và dc chọn.
-                          onClick={() => handleClickItemCheckbox(item.id)}
-                        />
-                        <img className='imgProduct' src={item.image} alt='image' />
-                        <div>{item.productName}</div>
-                        <div className='priceProduct'>
-                          <div>
-                            {item.originPrice}
-                            <span>₫</span>
-                          </div>
-                          {/* <div className='priceSale'>
+            {listCart.length > 0 ? (
+              listCart.map((item: any) => {
+                return (
+                  <div className='detailProduct' key={item.id}>
+                    <div className='informationProduct'>
+                      <input
+                        type='checkbox'
+                        id='checkbox2'
+                        checked={listCartId?.includes(item.id)} // kiểm tra sự tồn tại item.id nếu có thì trả về true, tức là checked là true và dc chọn.
+                        onClick={() => handleClickItemCheckbox(item.id)}
+                      />
+                      <img className='imgProduct' src={item.image} alt='image' />
+                      <div>{item.productName}</div>
+                      <div className='priceProduct'>
+                        <div>
+                          {item.originPrice}
+                          <span>₫</span>
+                        </div>
+                        {/* <div className='priceSale'>
                         <div>299.000 đ</div>
                         <div>14%</div>
                       </div> */}
-                        </div>
-                      </div>
-                      <div className='upDown'>
-                        <div className='buttonUpDown'>
-                          <div onClick={() => upDateCart(item.id, item.amount - 1)}>-</div>
-                          <div>{item.amount}</div>
-                          <div onClick={() => upDateCart(item.id, item.amount + 1)}>+</div>
-                        </div>
-                        <div>
-                          {item?.amount * item?.originPrice}
-                          <span>đ</span>
-                        </div>
-                        <AiOutlineDelete
-                          onClick={() => handleOpenModalOneDelete(item.id)}
-                          className='iconDelete'
-                        ></AiOutlineDelete>
                       </div>
                     </div>
-                  )
-                })
-              : ''}
+                    <div className='upDown'>
+                      <div className='buttonUpDown'>
+                        <div onClick={() => upDateCart(item.id, item.amount - 1)}>-</div>
+                        <div>{item.amount}</div>
+                        <div onClick={() => upDateCart(item.id, item.amount + 1)}>+</div>
+                      </div>
+                      <div>
+                        {item?.amount * item?.originPrice}
+                        <span>đ</span>
+                      </div>
+                      <AiOutlineDelete
+                        onClick={() => handleOpenModalOneDelete(item.id)}
+                        className='iconDelete'
+                      ></AiOutlineDelete>
+                    </div>
+                  </div>
+                )
+              })
+            ) : (
+              <div className='notificationSection'>
+                <div>Không có sản phẩm nào !</div>
+                <img className='iconGifDuck' src={iconGifDuck} alt='' />
+              </div>
+            )}
           </div>
         </div>
       </div>

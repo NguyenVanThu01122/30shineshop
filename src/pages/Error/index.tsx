@@ -1,11 +1,9 @@
 import { Wrapper } from './style'
 
 const Erorr = () => {
- 
   return (
     <Wrapper>
-      <div className='demo1'>inline-block</div>
-      <div className='demo2'>inline-block</div>
+      <img src='https://ai-art-generator-lyart.vercel.app/static/media/icon-gif1.9b5632186cfeee0b21d3.gif' alt='' />
     </Wrapper>
   )
 }

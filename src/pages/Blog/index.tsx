@@ -7,9 +7,6 @@ import { privateAxios } from '../../service/axios'
 import styles from './styles.module.css'
 
 export default function Blog() {
-  // https://shop30shine.herokuapp.com/blog
-  // https://shop30shine.herokuapp.com/brand // api thương hiệu dây nhé
-
   let [list, setList] = useState([])
   let [textError, setTextError] = useState('')
   const navigate = useNavigate()
@@ -23,12 +20,6 @@ export default function Blog() {
       .catch((error) => {
         setTextError('Lỗi server')
       })
-  }, [])
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
   }, [])
   // const data = [
   //   {
@@ -75,7 +66,7 @@ export default function Blog() {
   return (
     <div className={styles.pageBlog}>
       <div className={styles.headerBlog}>
-        <div onClick={()=>navigate('/')}>Trang chủ</div>
+        <div onClick={() => navigate('/')}>Trang chủ</div>
         <div>/ Blog</div>
       </div>
       <div className={styles.sectionTwo}>

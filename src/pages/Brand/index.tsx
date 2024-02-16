@@ -21,13 +21,6 @@ export default function Brand() {
       })
   }, [])
 
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-  //   })
-  // }, [])
-
   return (
     <div className={styles.pageBrand}>
       <div className={styles.loginBrand}>

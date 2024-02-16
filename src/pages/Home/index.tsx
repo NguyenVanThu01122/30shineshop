@@ -120,12 +120,14 @@ const imagesBlog = [
       'Sữa rửa mặt là sản phẩm chăm sóc da không thể thiếu trong quy trình làm đẹp của cả nam và nữ. Tuy nhiên việc sử dụng sữa rửa mặt đúng cách lại là điều mà không phải ai cũng biết'
   }
 ]
+
 function Home() {
   const imagesRef = useRef(null)
   const seachRef = useRef(null)
   const brandRef = useRef(null)
   const blogsRef = useRef(null)
   const navigate = useNavigate()
+
   const [tab, setTab] = useState('1')
   const [dotPosition, setDotPosition] = useState<DotPosition>('top')
 
@@ -157,14 +159,7 @@ function Home() {
   const handleTabChange = (key: string) => {
     setTab(key)
   }
-
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
-  }, [])
-
+  
   return (
     <Wrapper>
       <div className='item_Carousel'>

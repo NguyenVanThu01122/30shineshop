@@ -47,8 +47,7 @@
 .customSelect {
   padding: 10px;
   height: 40px;
-  border-radius: 8px;  
-
+  border-radius: 8px;
 }
 
 .titlePage {
@@ -75,6 +74,7 @@
 }
 .pageProduct {
   margin-bottom: 50px;
+ 
 }
 .newProduct {
   display: flex;
@@ -119,116 +119,6 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0px 135px;
-}
-.item_Pagination {
-  border-radius: 6px;
-  display: flex;
-  margin: auto;
-  width: 10%;
-  font-size: large;
-}
-.itemProduct {
-  padding: 12px;
-  width: 25%;
-  margin-bottom: 30px;
-  position: relative;
-}
-.stickerPercen {
-  padding: 5px;
-  position: absolute;
-  right: 10px;
-  top: -5px;
-  width: 22%;
-  height: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #e54d3e;
-  border-top: 15px solid #e54d3e;
-}
-.stickerPercen > div:first-child {
-  position: absolute;
-  border-bottom: 12px solid rgba(229, 77, 62, 0.75);
-  border-left: 12px solid transparent;
-  top: -64%;
-  right: 100%;
-}
-.percent {
-  /* width: 100%;
-  position: absolute;
-  right: -5%;
-  top: -2%; */
-  /* font-size: 1; */
-  /* width: 15%; */
-  /* width: 50%; */
-  color: rgb(249, 249, 249);
-}
-.stickerPercen span {
-  /* font-size: 100%; */
-  /* margin: 0px 3px; */
-  /* width: 10%; */
-  /* width: 5%; */
-}
-.stickerPercen > div:last-child {
-  position: absolute;
-  border-left: 34px solid transparent;
-  border-right: 36px solid transparent;
-  border-top: 20px solid #e54d3e;
-  top: 100%;
-  right: 0%;
-}
-.product {
-  padding: 10px;
-  border-radius: 6px;
-}
-.product:hover {
-  cursor: pointer;
-  box-shadow: inset 0 0 20px rgba(14, 14, 14, 0.3);
-}
-.images img {
-  width: 100%;
-}
-
-.loading {
-  width: 100%;
-  text-align: center;
-}
-
-.loading img {
-  width: 200px;
-}
-
-.product > div:nth-child(2) {
-  font-family: 'Be Vietnam Pro';
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  margin-bottom: 10px;
-}
-.productPrice {
-  display: flex;
-}
-.productPrice > div:first-child {
-  font-size: 1.2rem;
-  line-height: 1.75rem;
-  color: rgba(229, 77, 62);
-  margin-right: 8px;
-  font-family: Oswald, sans-serif;
-}
-.productPrice > div:last-child {
-  font-size: 0.87rem;
-  line-height: 1.25rem;
-  text-decoration: line-through;
-  color: rgb(163, 163, 163);
-}
-.productPrice span {
-  margin-left: 5px;
-  text-decoration: underline;
-  font-family: Oswald;
-}
-.iconStar img {
-  width: 80px;
-  height: 18px;
-  margin-top: 5px;
 }
 .redirect {
   width: 30%;
@@ -432,7 +322,7 @@
   display: flex !important;
   justify-content: center !important;
 }
-.textError{
+.textError {
   color: red;
 }
 /* Responsive */
@@ -514,7 +404,4 @@
     border-radius: 2px;
     top: 96%;
   }
-  /* .searchProduct{
-    display: none;
-  } */
 }
