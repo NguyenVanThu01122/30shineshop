@@ -1,7 +1,7 @@
-import { StarOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Rate, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { StarProduct } from '../../../../components/StarProduct'
 import { TypeEvaluate, getlistEvaluete, sendEvaluate } from '../../../../service/detailProduct'
 import styles from './styles.module.scss'
 export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
@@ -14,14 +14,23 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   const [form] = Form.useForm()
   const params = useParams()
 
-  const handleRateChange = (value: any) => {
-    setNumberStar(value)
-    if (value === 0) {
-      setErrorStar('Vui lòng chọn ít nhất 1 sao.')
-    } else {
-      setErrorStar('')
+  const dataStar = [
+    {
+      numberStar: 5
+    },
+    {
+      numberStar: 4
+    },
+    {
+      numberStar: 3
+    },
+    {
+      numberStar: 2
+    },
+    {
+      numberStar: 1
     }
-  }
+  ]
 
   // hàm lấy danh sách đánh giá sản phẩm
   const handleGetlistEvaluete = () => {
@@ -66,6 +75,28 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
     setComment('')
   }
 
+  const handleRateChange = (value: any) => {
+    setNumberStar(value)
+    if (value === 0) {
+      setErrorStar('Vui lòng chọn ít nhất 1 sao.')
+    } else {
+      setErrorStar('')
+    }
+  }
+
+  // hàm tính toán số lượng đánh giá
+  const calculateStar = (star: number, listStar: any) => {
+    return star === 5
+      ? listStar?.fiveStar
+      : star === 4
+      ? listStar?.fourStar
+      : star === 3
+      ? listStar?.threeStar
+      : star === 2
+      ? listStar?.twoStar
+      : listStar?.oneStar
+  }
+
   // hàm gửi yêu cầu đánh giá sp
   const handleSubmit = () => {
     form.submit()
@@ -83,137 +114,41 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
           <div className={styles.noFeedback}>
             <div>{detailProduct?.star}</div>
             <div>
-              {detailProduct?.star === 5 && (
-                <div>
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                </div>
-              )}
-              {detailProduct?.star === 4 && (
-                <div>
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                </div>
-              )}
-              {detailProduct?.star === 3 && (
-                <div>
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                </div>
-              )}
-              {detailProduct?.star === 2 && (
-                <div>
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                </div>
-              )}
-              {detailProduct?.star === 1 && (
-                <div>
-                  <StarOutlined style={{ color: 'yellow', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                </div>
-              )}
-              {detailProduct?.star === 0 && (
-                <div>
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                  <StarOutlined style={{ color: 'gray', fontSize: '16px' }} />
-                </div>
-              )}
+              <div>
+                <StarProduct numberYellow={detailProduct?.star} numberGray={5 - detailProduct?.star} />
+              </div>
             </div>
             <div>{detailProduct?.totalEvaluate} phản hồi</div>
           </div>
           <div className={styles.starOder}>
-            <div className={styles.reviewStar}>
-              <div className={styles.star}>
-                <div>5</div>
-                <div>
-                  <img
-                    className={styles.iconStarYellow}
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                    alt=''
-                  />
+            {dataStar.map((item: any) => {
+              return (
+                <div className={styles.reviewStar}>
+                  <div className={styles.star}>
+                    <div>{item?.numberStar}</div>
+                    <div>
+                      <img
+                        className={styles.iconStarYellow}
+                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
+                        alt=''
+                      />
+                    </div>
+                    <div className={styles.Crossbar}></div>
+                    <div>{calculateStar(item?.numberStar, detailProduct?.listStar)}</div>
+                  </div>
                 </div>
-                <div className={styles.Crossbar}></div>
-                <div>{detailProduct?.listStar?.fiveStar} </div>
-              </div>
-              <div className={styles.star}>
-                <div>4</div>
-                <div>
-                  <img
-                    className={styles.iconStarYellow}
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.Crossbar}></div>
-                <div>{detailProduct?.listStar?.fourStar}</div>
-              </div>
-              <div className={styles.star}>
-                <div>3</div>
-                <div>
-                  <img
-                    className={styles.iconStarYellow}
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.Crossbar}></div>
-                <div>{detailProduct?.listStar?.threeStar}</div>
-              </div>
-              <div className={styles.star}>
-                <div>2</div>
-                <div>
-                  <img
-                    className={styles.iconStarYellow}
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.Crossbar}></div>
-                <div>{detailProduct?.listStar?.twoStar}</div>
-              </div>
-              <div className={styles.star}>
-                <div>1</div>
-                <div>
-                  <img
-                    id={styles.imgStar}
-                    className={styles.iconStarYellow}
-                    src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                    alt=''
-                  />
-                </div>
-                <div className={styles.Crossbar}></div>
-                <div>{detailProduct?.listStar?.oneStar}</div>
-              </div>
-            </div>
-            {!isOpenFeedback ? (
-              <div className={styles.review} onClick={openFeedback}>
-                VIẾT ĐÁNH GIÁ
-              </div>
-            ) : (
-              <div className={styles.closeFeedback} onClick={closeFeedback}>
-                ĐÓNG
-              </div>
-            )}
+              )
+            })}
           </div>
+          {!isOpenFeedback ? (
+            <div className={styles.review} onClick={openFeedback}>
+              VIẾT ĐÁNH GIÁ
+            </div>
+          ) : (
+            <div className={styles.closeFeedback} onClick={closeFeedback}>
+              ĐÓNG
+            </div>
+          )}
         </div>
         {isOpenFeedback && (
           <div className={styles.itemFeedback}>

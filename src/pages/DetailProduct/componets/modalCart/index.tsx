@@ -1,6 +1,6 @@
 import { Button, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { useBuyNow } from '../../../helper/useBuyNow'
+import { useBuyNow } from '../../../../helper/useBuyNow'
 import styles from './styles.module.scss'
 export const ModalCart = ({
   detailProduct,

@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { addListProduct } from '../../redux/actions/detailProduct'
-import { privateAxios } from '../../service/axios'
+import { addListProduct } from '../../../../redux/actions/detailProduct'
+import { privateAxios } from '../../../../service/axios'
 import styles from './styles.module.scss'
 
 export default function Category({

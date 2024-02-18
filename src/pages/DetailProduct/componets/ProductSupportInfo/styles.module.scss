@@ -1,0 +1,46 @@
+.itemSupportProduct {
+  width: 20%;
+  .support {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 15px;
+    color: rgb(49, 49, 49);
+    border: 1px solid rgb(231, 228, 228);
+    padding: 15px 12px;
+    & > div:last-child {
+      margin-left: 6px;
+    }
+  }
+  .oder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    padding: 10px 0px;
+    border: 1px solid rgba(209, 209, 209);
+    border-radius: 8px;
+    cursor: pointer;
+    & > img {
+      width: 18%;
+    }
+    .hotlineOder {
+      margin-left: 15px;
+      & > div:first-child {
+        margin-bottom: 3px;
+        font-size: 0.875rem;
+      }
+      & > div:last-child {
+        color: rgba(229, 77, 62);
+        font-family: Oswald;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .endProduct {
+      display: none;
+    }
+  }
+}
