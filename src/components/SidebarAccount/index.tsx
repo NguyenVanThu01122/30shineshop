@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { checkLogin } from '../../helper/checkLogin'
-import { useLogOut } from '../../helper/useLogout'
+import { checkLogin } from '../../helpers/checkLogin'
+import { useLogOut } from '../../helpers/useLogOut'
 import styles from './styles.module.scss'
 
 function SidebarAccount() {

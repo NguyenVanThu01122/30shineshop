@@ -9,7 +9,7 @@ export const PaginationUi = ({
   current: number
   total: number
   pageSize: number
-  onChange: any
+  onChange: (e: any) => void
 }) => {
   return (
     <div>

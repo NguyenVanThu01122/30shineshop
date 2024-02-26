@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const WrapperOrder = styled.div`
   display: flex;
   justify-content: center;
-  margin: 40px 0px;
+  margin: 35px 0px;
 `
 export const ItemOrder = styled.div`
   flex: 0.7;
@@ -11,6 +11,7 @@ export const ItemOrder = styled.div`
   padding: 20px;
   height: 80vh;
   overflow-y: auto;
+  position: relative;
   ::-webkit-scrollbar {
     width: 5px; /* Độ rộng của thanh cuộn */
     margin-right: 10px !important; /* Khoảng cách margin bên phải */
@@ -30,22 +31,32 @@ export const ItemOrder = styled.div`
     background-color: #d4d4d4; /* Màu nền khi hover lên thanh cuộn */
   }
   .my-order {
-    font-size: 20px;
+    color: red;
+    padding: 8px 0px;
+    font-size: 25px;
     font-family: 'Oswald';
     font-weight: 600;
-    margin-bottom: 20px;
+    /* position: sticky;
+    top: -25px;
+    z-index: 100; */
+    background-color: rgb(238, 238, 238);
   }
   .select-item {
     display: flex;
     justify-content: space-around;
     background-color: white;
     border-radius: 5px;
+    position: sticky;
+    top: -25px;
+    z-index: 100;
     .active-status {
       color: orange;
       font-weight: 600;
       border-bottom: 2px solid orange;
     }
     & div {
+      font-size: 18px;
+      font-weight: 600;
       padding: 15px 0px;
       cursor: pointer;
     }
@@ -139,6 +150,16 @@ export const ItemDetailOrder = styled.div`
     .group-button {
       display: flex;
       gap: 8px;
+      .btn-detail-order {
+        background-color: #1677ff;
+        height: 38px;
+        color: white !important;
+        font-weight: 600;
+        border: none;
+        &:hover {
+          filter: brightness(0.7);
+        }
+      }
       .button-add {
         background-color: orange;
       }

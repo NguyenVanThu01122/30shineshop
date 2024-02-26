@@ -1,7 +1,13 @@
-import { Button, Form, Input, Rate, message } from 'antd'
+import { Form, Rate } from 'antd'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { StarProduct } from '../../../../components/StarProduct'
+import { ButtonGeneral } from '../../../../components/Ui/button'
+import { TextArealInput } from '../../../../components/Ui/textAreaInput'
+import { MESSAGE_PICK_STAR, PLACEHOLDER } from '../../../../helpers/contanst'
+import { scrollToTop } from '../../../../helpers/scrollToTop'
+import { validateComment } from '../../../../helpers/validationRules'
 import { TypeEvaluate, getlistEvaluete, sendEvaluate } from '../../../../service/detailProduct'
 import styles from './styles.module.scss'
 export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
@@ -9,7 +15,6 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   const [numberStar, setNumberStar] = useState(0)
   const [errorStar, setErrorStar] = useState<any>('')
   const [isOpenFeedback, setIsOpenFeedback] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [comment, setComment] = useState('')
   const [form] = Form.useForm()
   const params = useParams()
@@ -39,7 +44,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
         setListFeedback(res.data?.data)
       })
       .catch((error) => {
-        message.error(error.response?.data?.message)
+        toast.error(error.response?.data?.message)
       })
   }
 
@@ -49,22 +54,18 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
     if (!errorStar && numberStar && comment) {
       sendEvaluate(data)
         .then((res) => {
-          message.success(res.data?.message)
-          form.resetFields()
-          setNumberStar(0)
+          toast.success(res.data?.message)
+          closeFeedback()
           handleGetlistEvaluete()
           handleDetail()
+          scrollToTop()
         })
         .catch((error) => {
-          message.error(error.response?.data?.message)
+          toast.error(error.response?.data?.message)
         })
     } else {
-      setErrorStar('Vui lòng chọn ít nhất 1 sao.')
+      setErrorStar(MESSAGE_PICK_STAR.MESSAGE)
     }
-  }
-
-  const openFeedback = () => {
-    setIsOpenFeedback(true)
   }
 
   const closeFeedback = () => {
@@ -78,7 +79,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   const handleRateChange = (value: any) => {
     setNumberStar(value)
     if (value === 0) {
-      setErrorStar('Vui lòng chọn ít nhất 1 sao.')
+      setErrorStar(MESSAGE_PICK_STAR.MESSAGE)
     } else {
       setErrorStar('')
     }
@@ -97,10 +98,10 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
       : listStar?.oneStar
   }
 
+  const openFeedback = () => setIsOpenFeedback(true)
+
   // hàm gửi yêu cầu đánh giá sp
-  const handleSubmit = () => {
-    form.submit()
-  }
+  const handleSubmit = () => form.submit()
 
   useEffect(() => {
     handleGetlistEvaluete()
@@ -140,6 +141,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
               )
             })}
           </div>
+
           {!isOpenFeedback ? (
             <div className={styles.review} onClick={openFeedback}>
               VIẾT ĐÁNH GIÁ
@@ -150,6 +152,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
             </div>
           )}
         </div>
+
         {isOpenFeedback && (
           <div className={styles.itemFeedback}>
             <div className={styles.feedbackStar}>
@@ -161,37 +164,30 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
             </div>
             <div className={styles.clickItem}>
               <Form onFinish={sendPostEvaluate} form={form}>
-                <Form.Item
-                  name='comment'
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Vui lòng nhập đánh giá !'
-                    }
-                  ]}
-                  className={styles.formItemText}
-                >
-                  <Input.TextArea
+                <Form.Item name='comment' rules={validateComment} className={styles.formItemText}>
+                  <TextArealInput
                     onChange={(e) => setComment(e.target.value)}
                     className={styles.textArea}
-                    placeholder='Nhập đánh giá về sản phẩm...'
+                    placeholder={PLACEHOLDER.ENTER_PRODUCT_REVIEW}
                     size='large'
                   />
                 </Form.Item>
                 <div className={styles.itemForm}>
-                  <Button
+                  <ButtonGeneral
                     disabled={(!comment && errorStar) || (!numberStar && !comment)}
                     size='large'
                     type='primary'
                     onClick={handleSubmit}
+                    className={styles.btnSubmit}
                   >
                     Gửi đánh giá
-                  </Button>
+                  </ButtonGeneral>
                 </div>
               </Form>
             </div>
           </div>
         )}
+
         <div className={styles.itemDetailFeedback}>
           {listFeedback.map((item: any) => {
             return (

@@ -1,19 +1,18 @@
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../service/axios'
+import { buyNowProduct } from '../service/detailProduct'
+import { toast } from 'react-toastify'
+import { ERROR_MESSAGES } from './contanst'
 
 export const useBuyNow = () => {
   const navigate = useNavigate()
   const handleBuyNow = (id: string, amount: number) => {
-    privateAxios
-      .post('/payment/buy-now', {
-        id,
-        amount
-      })
+    buyNowProduct(id, amount)
       .then((res) => {
-        // api sẽ trả về cho mình paymentId
         const paymentId = res.data?.paymentId
+        // api sẽ trả về cho mình paymentId
         navigate(`/payment/${paymentId}`) // Điều hướng đến trang chi tiết payment có paymentId nhận được từ backend
       })
+      .catch((error) => toast.error(ERROR_MESSAGES.SERVER_ERROR))
   }
   return [handleBuyNow]
 }

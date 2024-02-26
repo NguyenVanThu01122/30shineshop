@@ -123,6 +123,14 @@
       .itemForm {
         display: flex;
         justify-content: space-between;
+        .btnSubmit {
+          background-color: #1677ff;
+          color: white !important;
+          height: 40px;
+          &:hover{
+            filter:brightness(0.7)
+          }
+        }
       }
       .clickItem {
         margin: 10px 0px;

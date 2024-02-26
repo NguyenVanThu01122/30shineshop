@@ -3,18 +3,43 @@ import styled from 'styled-components'
 export const WrapperDetailOrder = styled.div`
   display: flex;
   justify-content: center;
-  margin: 20px 0px;
+  margin: 35px 0px;
+  margin-bottom: 0px;
 `
-export const ItemDetaiOrder = styled.div`
+export const ItemDetailOrder = styled.div`
   background-color: rgb(238, 238, 238);
   flex: 0.7;
-  padding: 15px;
+  padding: 20px;
+  height: 80vh;
+  overflow-y: auto;
+  position: relative;
+  ::-webkit-scrollbar {
+    width: 5px; /* Độ rộng của thanh cuộn */
+    margin-right: 10px !important; /* Khoảng cách margin bên phải */
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: orange; /* Màu nền của nút cuộn (thumb) */
+    border-radius: 10px; /* Bo góc của nút cuộn */
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Màu nền khi hover lên nút cuộn */
+  }
+  ::-webkit-scrollbar-track {
+    background-color: rgb(0, 0, 0, 0.1); /* Màu nền của thanh cuộn */
+  }
+  ::-webkit-scrollbar-track:hover {
+    background-color: #d4d4d4; /* Màu nền khi hover lên thanh cuộn */
+  }
   .order {
-    font-size: 22px;
+    font-size: 25px;
     font-family: 'Oswald';
     font-weight: 600;
-    padding: 0px 20px;
-    margin: 20px 0px;
+    position: sticky;
+    top: -25px;
+    z-index: 100;
+    padding: 6px 0px;
+    color: red;
+    background-color: rgb(238, 238, 238);
   }
   .order-detail {
     padding: 20px;
@@ -58,14 +83,13 @@ export const ItemDetaiOrder = styled.div`
         .img-product {
           width: 12%;
         }
-        .name-product{
-          width:70%;
-          &>div{
+        .name-product {
+          width: 70%;
+          & > div {
             margin-bottom: 6px;
             font-size: 15px;
           }
         }
-        
       }
       .price {
         font-family: 'Oswald';
@@ -120,14 +144,22 @@ export const ItemDetaiOrder = styled.div`
         }
       }
     }
-    .payment-method {
+    .itemInfo-order {
       display: flex;
-      justify-content: flex-end;
-      gap: 30px;
-      padding: 15px 0px;
+      justify-content: space-between;
+      align-items: center;
       border-top: 1px solid rgb(200, 200, 200);
       border-bottom: 1px solid rgb(200, 200, 200);
+      .payment-method {
+        display: flex;
+        justify-content: flex-end;
+        gap: 30px;
+        padding: 15px 0px;
+      }
+      .status-order {
+      }
     }
+
     .item-buy {
       display: flex;
       justify-content: space-between;
@@ -136,10 +168,48 @@ export const ItemDetaiOrder = styled.div`
       & > div:first-child {
         color: orange;
       }
-      & > button {
+      .btnHome {
+        height: 40px;
         background-color: orange;
         font-weight: 600;
+        border: none;
+        font-size: 15px;
+
+        &:hover {
+          color: red;
+          filter: brightness(0.8);
+        }
+      }
+      .btnListOrder {
+        height: 40px;
+        background-color: #1677ff;
+        font-weight: 600;
+        border: none;
+        color: wheat;
+        font-size: 15px;
+        &:hover {
+          color: red;
+          filter: brightness(0.8);
+        }
       }
     }
+  }
+`
+export const ItemNotAvailable = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 140px;
+  gap: 10px;
+  & > div {
+    font-size: 18px;
+    color: red;
+    font-style: italic;
+  }
+  .iconGifDuck {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
   }
 `

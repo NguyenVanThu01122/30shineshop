@@ -22,7 +22,7 @@ export const OderSuccessWrapper = styled.div`
   .informationOrder {
     width: 46%;
     margin: auto;
-    border: 1px solid rgba(209, 209, 209);
+    border: 1px solid rgba(209, 209, 709);
     border-radius: 5px;
     padding: 20px;
     & > div:first-child {
@@ -34,14 +34,16 @@ export const OderSuccessWrapper = styled.div`
       display: flex;
       margin-top: 15px;
       & > div:first-child {
-        width: 40%;
+        width: 60%;
         font-weight: 550;
+        border-bottom: 1px solid rgba(225, 225, 225);
       }
       & > div:last-child {
-        width: 60%;
+        width: 50%;
         font-weight: 550;
         font-family: 'Oswald';
         font-size: 18px;
+        border-bottom: 1px solid rgba(225, 225, 225);
       }
       .personalInformation > div {
         font-weight: 550;
@@ -65,6 +67,11 @@ export const OderSuccessWrapper = styled.div`
       border-radius: 5px;
       text-align: center;
       cursor: pointer;
+      &:hover {
+        filter: brightness(0.7);
+        outline: 1px solid red;
+        color: red;
+      }
     }
     & > div:last-child {
       width: 50%;
@@ -77,6 +84,10 @@ export const OderSuccessWrapper = styled.div`
       cursor: pointer;
       & span {
         margin-left: 5px;
+      }
+      &:hover {
+        outline: 1px solid red;
+        color: red;
       }
     }
   }
@@ -95,7 +106,6 @@ export const OderSuccessWrapper = styled.div`
       & > div:last-child span {
         font-size: 10px;
         margin-left: 0px;
-
       }
     }
   }

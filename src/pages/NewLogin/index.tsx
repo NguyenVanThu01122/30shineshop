@@ -32,7 +32,7 @@ function NewLogin() {
       })
       .catch((error) => {
         const objError = error.response?.data
-        message.error(objError?.message)
+        toast.error(objError?.message)
       })
   }
 

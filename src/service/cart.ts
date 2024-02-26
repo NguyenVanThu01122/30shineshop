@@ -10,7 +10,7 @@ export const updateCart = (idCart: string, amount: number) => {
   })
 }
 
-export const deleteCart = (idDeleteOne: string) => {
+export const deleteCartOne = (idDeleteOne: string) => {
   return privateAxios.delete(`/cart/${idDeleteOne}`)
 }
 
@@ -20,7 +20,7 @@ export const deleteCartAll = (listCartId: any) => {
   })
 }
 
-export const order = (listCartId: { id: string }) => {
+export const orderCart = (listCartId: { id: string }) => {
   return privateAxios.post('/payment/order', {
     listCartId // danh sách các id trong giỏ hàng đc gửi lên
   })

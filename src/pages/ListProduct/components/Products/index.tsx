@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { StarProduct } from '../../../../components/StarProduct'
 import styles from './styles.module.scss'
 
@@ -9,31 +10,31 @@ export default function Products() {
 
   return products?.map((item: any) => {
     return (
-      <div className={styles.itemProduct} key={item.id}>
+      <div className={styles.itemProduct} key={item?.id}>
         <div className={styles.stickerPercen}>
           <div></div>
           <div className={styles.percent}>
-            <span>-</span> {Math.floor(100 - (item.salePrice / item.originPrice) * 100)}%
+            <span>-</span> {Math.floor(100 - (item?.salePrice / item?.originPrice) * 100)}%
           </div>
           <div></div>
         </div>
-        <div key={item.id} className={styles.product} onClick={() => navigate(`/detail-product/${item.id}`)}>
+        <div key={item?.id} className={styles.product} onClick={() => navigate(`/detail-product/${item?.id}`)}>
           <div className={styles.images}>
-            <img src={item.image} alt='images' />
+            <img src={item?.image} alt='images' />
           </div>
-          <div>{item.name}</div>
+          <div>{item?.name}</div>
           <div className={styles.productPrice}>
             <div>
-              {item.salePrice}
+              <CurrencyFormat amount={item?.salePrice} />
               <span>đ</span>
             </div>
             <div>
-              {item.originPrice}
+              <CurrencyFormat amount={item?.originPrice} />
               <span>đ</span>
             </div>
           </div>
           <div className={styles.iconStar}>
-            <StarProduct numberYellow={item.star} numberGray={5 - item.star} />
+            <StarProduct numberYellow={item?.star} numberGray={5 - item?.star} />
           </div>
         </div>
       </div>

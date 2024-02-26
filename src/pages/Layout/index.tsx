@@ -5,8 +5,8 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
+import { checkLogin } from '../../helpers/checkLogin'
 import { ItemHeader, MainItem, Wrapper } from './styles'
-import { checkLogin } from '../../helper/checkLogin'
 
 function Layout() {
   const [showIcon, setShowIcon] = useState(false)

@@ -27,3 +27,9 @@ export const getProductRelate = (id: any) => {
   return privateAxios.get(`/product/relate/${id}`)
 }
 
+export const buyNowProduct = (id: string, amount: number) => {
+  return privateAxios.post('/payment/buy-now', {
+    id,
+    amount
+  })
+}

@@ -1,100 +1,64 @@
-import { Button, message } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { CurrencyFormat } from '../../components/CurrencyFormat'
 import SidebarAccount from '../../components/SidebarAccount'
+import { ButtonGeneral } from '../../components/Ui/button'
+import { Loading } from '../../components/Ui/loading'
+import { OrderStatusUtils } from '../../helpers/orderUtils'
+import { scrollToTop } from '../../helpers/scrollToTop'
+import iconGifDuck from '../../images/img-duck.jpg'
 import { addListOrder } from '../../redux/actions/detailProduct'
-import { privateAxios } from '../../service/axios'
+import { getListOrder } from '../../service/listOrder'
+import { ItemNotAvailable } from '../DetailOrder/styles'
 import { ItemDetailOrder, ItemOrder, WrapperOrder } from './styles'
 
-// xử lý title trạng thái đơn hàng
-const arrStatus = [
-  {
-    id: 1,
-    status: '',
-    text: 'Tất cả'
-  },
-  {
-    id: 2,
-    status: 'processing',
-    text: 'Đang xử lý'
-  },
-  {
-    id: 3,
-    status: 'confirmed',
-    text: 'Đã xác nhận'
-  },
-  {
-    id: 4,
-    status: 'in_transit',
-    text: 'Đang giao hàng'
-  },
-  {
-    id: 5,
-    status: 'delivered',
-    text: 'Đã giao hàng'
-  },
-  {
-    id: 6,
-    status: 'canceled',
-    text: 'Đã hủy'
-  }
-]
-
-// hàm xử lý trạng thái đơn hàng
-const mapOrderStatus = (status: any) => {
-  switch (status) {
-    case 'processing':
-      return 'Đang xử lý'
-    case 'confirmed':
-      return 'Đã xác nhận'
-    case 'in_transit':
-      return 'Đang giao hàng'
-    case 'delivered':
-      return 'Đã giao hàng'
-    default:
-      return 'Đã hủy'
-  }
-}
-
 function ListOrder() {
-  const navigate = useNavigate()
   const [orderStatus, setOrderStatus] = useState('')
   const [listOrder, setListOrder] = useState([])
   const orders = useSelector((state: any) => state.app?.listOrder)
+  const { orderStatusCommon, arrStatusOrder, colorStatus, messageStatusOrder, updateOrderStatusMessage } =
+    OrderStatusUtils()
+
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
 
   // hàm lấy danh sách đơn hàng
   const handleGetlistOrder = () => {
-    privateAxios
-      .get('/order/list-order')
+    setIsLoading(true)
+    getListOrder()
       .then((res) => {
         dispatch(addListOrder(res.data?.data))
+        setIsLoading(false)
       })
       .catch((error) => {
-        message.error(error.response?.data?.message)
+        toast.error(error.response?.data?.message)
+        setIsLoading(false)
       })
   }
 
   useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
-    handleGetlistOrder()
-  }, [])
-
-  useEffect(() => {
-    // dùng filter lọc trạng thái đơn hàng
-    const arr = orders.filter((item: any) => {
+    // dùng filter lọc trạng thái đơn hàng theo trạng thái đã chọn
+    const arrStatus = orders.filter((item: any) => {
       if (orderStatus === '') {
         return true
+        // Nếu orderStatus là rỗng (không có trạng thái nào được chọn),
+        //trả về true cho mọi phần tử trong danh sách đơn hàng, do đó danh sách đơn hàng không bị lọc và được hiển thị đầy đủ.
       } else {
         return item.status === orderStatus
+        //Nếu orderStatus có giá trị, chỉ trả về các phần tử có trạng thái giống với orderStatus
       }
     })
-    setListOrder(arr) //  save mảng arr vào state listOrder
-  }, [orderStatus, orders]) // mỗi khi biến phụ thuộc thay đổi mảng arr sẽ được gọi lại
+    setListOrder(arrStatus) //  save mảng arr vào state listOrder
+  }, [orderStatus, orders])
+
+  useEffect(() => {
+    scrollToTop()
+    handleGetlistOrder()
+    updateOrderStatusMessage(orderStatus) // gọi hàm cập nhật lời nhắn trạng thái order
+  }, [orderStatus])
 
   return (
     <WrapperOrder>
@@ -102,21 +66,20 @@ function ListOrder() {
       <ItemOrder>
         <div className='my-order'>Đơn hàng của tôi</div>
         <div className='select-item'>
-          {arrStatus.map((item: any) => (
+          {arrStatusOrder.map((item: any) => (
             <div
               key={item.id}
               className={`${orderStatus === item.status && 'active-status'}`}
               onClick={() => setOrderStatus(item.status)}
             >
-              {item.text}
+              {item.title}
             </div>
           ))}
         </div>
         {/* <Input className='custom-input' size='large' placeholder='Tìm id đơn hàng hoặc tên sản phẩm '></Input> */}
-        {listOrder.length === 0 && <div className='no-order'>Không có đơn hàng !</div>}
         {listOrder?.map((item: any) => (
           <ItemDetailOrder>
-            <div className='status'>{mapOrderStatus(item.status)}</div>
+            <div style={{ color: colorStatus(item.status) }}>{orderStatusCommon(item.status)}</div>
             <div className='list-product'>
               {item?.products.map((product: any) => (
                 <div className='information-product'>
@@ -129,7 +92,7 @@ function ListOrder() {
                     </div>
                   </div>
                   <div className='price'>
-                    {product.amount * product.price}
+                    <CurrencyFormat amount={product.amount * product.price} />
                     <span>đ</span>
                   </div>
                 </div>
@@ -138,20 +101,34 @@ function ListOrder() {
             <div className='total-price'>
               <div>Tổng tiền:</div>
               <div>
-                {item?.totalPrice}
+                <CurrencyFormat amount={item?.totalPrice} />
                 <span>đ</span>
               </div>
             </div>
             <div className='select'>
-              <div>{mapOrderStatus(item.status)}</div>
+              <div style={{ color: colorStatus(item.status) }}>{orderStatusCommon(item.status)}</div>
               <div className='group-button'>
-                <Button onClick={() => navigate(`/detail-order/${item?._id}`)} size='large'>
+                <ButtonGeneral
+                  onClick={() => navigate(`/detail-order/${item?._id}`)}
+                  size='large'
+                  className='btn-detail-order'
+                >
                   Chi tiết đơn hàng
-                </Button>
+                </ButtonGeneral>
               </div>
             </div>
           </ItemDetailOrder>
         ))}
+
+        {/* item Loading */}
+        {isLoading && <Loading />}
+
+        {!isLoading && !listOrder.length && (
+          <ItemNotAvailable>
+            <div>{messageStatusOrder}</div>
+            <img className='iconGifDuck' src={iconGifDuck} alt='' />
+          </ItemNotAvailable>
+        )}
       </ItemOrder>
     </WrapperOrder>
   )

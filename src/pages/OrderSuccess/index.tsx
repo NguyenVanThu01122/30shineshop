@@ -1,34 +1,27 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { OrderStatusUtils } from '../../helpers/orderUtils'
+import { scrollToTop } from '../../helpers/scrollToTop'
+import { getOrderSuccess } from '../../service/orderSuccess'
 import { OderSuccessWrapper } from './styled'
-const orderStatus = {
-  processing: 'processing',
-  inTransit: 'in_transit',
-  delivered: 'delivered',
-  canceled: 'canceled'
-}
 
-const methodPayment = {
-  offline: 'offline',
-  online: 'online'
-}
 export default function OrderSuccess() {
   const navigate = useNavigate()
   const params = useParams()
-  const orderId = params.id
   const [orderDetail, setOrderDetail] = useState<any>({})
-
+  const { orderStatusCommon } = OrderStatusUtils()
+  const methodPayment = {
+    offline: 'offline',
+    online: 'online'
+  }
   useEffect(() => {
-    privateAxios.get(`/order/${orderId}`).then((res) => {
+    getOrderSuccess(params?.id).then((res) => {
       setOrderDetail(res.data?.data)
     })
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth' // Sử dụng 'smooth' để có hiệu ứng cuộn mượt
-    })
+    scrollToTop()
   }, [])
+
   return (
     <OderSuccessWrapper>
       <div className='orderSuccess'>
@@ -47,15 +40,7 @@ export default function OrderSuccess() {
         </div>
         <div className='informationPayment'>
           <div>Trạng thái thanh toán</div>
-          <div>
-            {orderDetail?.orderStatus === orderStatus.processing
-              ? 'Chờ thanh toán'
-              : orderDetail?.orderStatus === orderStatus.inTransit
-              ? 'Đang vận chuyển'
-              : orderDetail?.orderStatus === orderStatus.delivered
-              ? 'Đã giao hàng'
-              : 'Đã bị hủy'}
-          </div>
+          <div>{orderStatusCommon(orderDetail?.orderStatus)}</div>
         </div>
         <div className='informationPayment'>
           <div>Phương thức thanh toán</div>

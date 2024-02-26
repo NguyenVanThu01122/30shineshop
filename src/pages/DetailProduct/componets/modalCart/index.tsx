@@ -1,30 +1,27 @@
-import { Button, Modal } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { useBuyNow } from '../../../../helper/useBuyNow'
+import { DetailProductProps } from '../..'
+import { CurrencyFormat } from '../../../../components/CurrencyFormat'
+import { ButtonGeneral } from '../../../../components/Ui/button'
+import { CommonModal } from '../../../../components/Ui/commonModal'
+import { useBuyNow } from '../../../../helpers/useBuyNow'
 import styles from './styles.module.scss'
-export const ModalCart = ({
-  detailProduct,
-  count,
-  totalCart,
-  isModalOpen,
-  setIsModalOpen
-}: {
-  detailProduct: any
+interface modalCartProps {
+  detailProduct: DetailProductProps
   count: number
   totalCart: number
   isModalOpen: boolean
   setIsModalOpen: any
-}) => {
+}
+export const ModalCart = ({ detailProduct, count, totalCart, isModalOpen, setIsModalOpen }: modalCartProps) => {
   const navigate = useNavigate()
   const [handleBuyNow] = useBuyNow()
-
   const handleCancel = () => {
     setIsModalOpen(false)
   }
 
   return (
-    <Modal className={styles.modal} centered width={400} open={isModalOpen} onCancel={handleCancel} footer={false}>
-      <div className={styles.modalCart}>
+    <CommonModal className={styles.modal} width={400} isModalOpen={isModalOpen} onCancel={handleCancel} footer={false}>
+      <div className={styles.ItemModalCart}>
         <div className={styles.cart}>
           <div>GIỎ HÀNG</div>
           <div>Thêm giỏ hàng thành công</div>
@@ -32,15 +29,16 @@ export const ModalCart = ({
         <div className={styles.detailCart}>
           <img src={detailProduct?.images[0]} alt='' />
           <div className={styles.priceProductCart}>
-            <div>{detailProduct.name}</div>
+            <div>{detailProduct?.name}</div>
             <div className={styles.price}>
               <div className={styles.priceSale}>
                 <div>
-                  {detailProduct.salePrice}
+                  <CurrencyFormat amount={detailProduct?.salePrice} />
                   <span>đ</span>
                 </div>
                 <div>
-                  {detailProduct.originPrice} <span>đ</span>
+                  <CurrencyFormat amount={detailProduct?.originPrice} />
+                  <span>đ</span>
                 </div>
               </div>
               <div>x{count}</div>
@@ -51,19 +49,19 @@ export const ModalCart = ({
         <div className={styles.totalMoney}>
           <div>TỔNG TIỀN: </div>
           <div>
-            {detailProduct.salePrice * count}
+            <CurrencyFormat amount={(detailProduct?.salePrice || 0) * count} />
             <span>đ</span>
           </div>
         </div>
         <div className={styles.buyNow}>
-          <Button type='primary' size='large' onClick={() => navigate('/cart')}>
+          <ButtonGeneral className={styles.btnByNow} type='primary' size='large' onClick={() => navigate('/cart')}>
             XEM GIỎ HÀNG
-          </Button>
-          <Button size='large' onClick={() => handleBuyNow(detailProduct.id, count)}>
+          </ButtonGeneral>
+          <ButtonGeneral size='large' onClick={() => handleBuyNow(detailProduct?.id || '', count)}>
             MUA NGAY
-          </Button>
+          </ButtonGeneral>
         </div>
       </div>
-    </Modal>
+    </CommonModal>
   )
 }

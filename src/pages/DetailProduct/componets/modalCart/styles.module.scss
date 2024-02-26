@@ -1,110 +1,119 @@
-.modal{
-    padding: 0px;
-    position: fixed;
-    top: 85px !important;
-    right: 200px;
-    .cart {
-      text-align: center;
-      &>div:first-child{
-        font-weight: 600;
-        font-size: x-large;
-        font-family: Oswald;
-      }
-      &>div:last-child {
-        color: rgb(7, 215, 7);
-        margin-bottom: 20px;
-      }
+.modal {
+  padding: 0px;
+  position: fixed;
+  top: 60px !important;
+  right: 18px;
+  .cart {
+    text-align: center;
+    & > div:first-child {
+      font-weight: 600;
+      font-size: x-large;
+      font-family: Oswald;
     }
-    .detailCart {
-      display: flex;
-      align-items: center;
-  
-      & img {
-        width: 20%;
-      }
-      .priceProductCart{
-        width: 70%;
-        margin-left: 40px;
-        .price{
+    & > div:last-child {
+      color: rgb(7, 215, 7);
+      margin-bottom: 20px;
+    }
+  }
+  .detailCart {
+    display: flex;
+    align-items: center;
+
+    & img {
+      width: 20%;
+    }
+    .priceProductCart {
+      width: 70%;
+      margin-left: 40px;
+      .price {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 6px;
+        & > div:last-child {
+          font-size: 20px;
+        }
+        .priceSale {
           display: flex;
-          justify-content: space-between;
-          margin-top: 6px;
-          &>div:last-child{
-            font-size: 20px;
-          }
-          .priceSale{
+          gap: 15px;
+          align-items: center;
+          & > div:first-child {
             display: flex;
-            align-items: center;
-            &>div:first-child{
-              margin-right: 10px;
-              font-family: Oswald;
-              font-size: 18px;
-              font-weight: 600;
-              & span{
+            gap: 5px;
+            font-family: Oswald;
+            font-size: 18px;
+            font-weight: 600;
+            & span {
               font-family: Oswald;
               text-decoration: underline;
-  
-              }
-            }
-            &>div:last-child{
-              font-family: Oswald;
-              text-decoration: line-through;
-              font-size: 15px;
-              color: gray;
-  
-              & span{
-                font-family: Oswald;
-                text-decoration: underline;
-                }
-  
             }
           }
-          
-        }
-        
-      }
-      
-    }
-    .numberProduct{
-      margin: 15px 0px;
-    }
-    .totalMoney{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top: 1px solid rgb(172, 172, 172);
-      margin-top: 15px;
-      &>div:first-child{
-        font-size: 18px;
-        font-weight: 600;
-        padding-top: 10px;
-      }
-      &>div:last-child{
-        color: red;
-        font-family: Oswald;   
-        font-size: 20px;
-        & span{
-          text-decoration: underline;
-          font-family: Oswald;
+          & > div:last-child {
+            display: flex;
+            gap: 5px;
+            font-family: Oswald;
+            text-decoration: line-through;
+            font-size: 15px;
+            color: gray;
+
+            & span {
+              font-family: Oswald;
+              text-decoration: underline;
+            }
+          }
         }
       }
     }
-    .buyNow{
-      display: flex;
-      justify-content: space-between;
-      margin-top: 10px;
-      //  & > Button:first-child{
-      //   border: 1px solid black;
-      //   border-radius: 6px;
-      //   padding: 10px;
-      //   font-weight: 600;
-      //   color: gray;
-  
-      // }
-      & > Button:last-child{
-        font-weight: 600;
-        background: #ffcc33;
-      }
-    }
-  
   }
+  .numberProduct {
+    margin: 15px 0px;
+  }
+  .totalMoney {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgb(172, 172, 172);
+    margin-top: 15px;
+    & > div:first-child {
+      font-size: 18px;
+      font-weight: 600;
+      padding-top: 10px;
+    }
+    & > div:last-child {
+      display: flex;
+      gap: 5px;
+      color: red;
+      font-family: Oswald;
+      font-size: 20px;
+      font-weight: 600;
+      & span {
+        text-decoration: underline;
+        font-family: Oswald;
+      }
+    }
+  }
+  .buyNow {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    .btnByNow{
+      height: 35px;
+      border-radius: 6px;
+      font-weight: 600;
+      color: white !important;
+      background-color: #1677ff;
+      &:hover{
+        filter: brightness(0.7);
+      }
+    }
+    & > Button:last-child {
+      height: 35px;
+      font-weight: 600;
+      background: #ffcc33;
+      border: none;
+      &:hover{
+        color: red;
+        filter: brightness(0.7);
+      }
+    }
+  }
+}
