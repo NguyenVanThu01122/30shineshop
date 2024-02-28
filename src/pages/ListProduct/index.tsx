@@ -7,6 +7,7 @@ import { Loading } from '../../components/Ui/loading'
 import { PaginationUi } from '../../components/Ui/pagination'
 import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, SORT, TOTAL } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
+import { useIsLoading } from '../../helpers/useIsLoading'
 import { addListProduct } from '../../redux/actions/detailProduct'
 import { TypeListProduct, listProduct } from '../../service/listProduct'
 import { ProductFilterPanel } from './components/ProductFilterPanel'
@@ -23,7 +24,7 @@ export default function ListProduct() {
   const [limit, setLimit] = useState(LIMIT)
   const [total, setTotal] = useState(TOTAL)
 
-  let [isLoading, setIsLoading] = useState(false)
+  let [isLoading, setIsLoading] = useIsLoading()
   const [isCategory, setIsCategory] = useState(false)
 
   const navigate = useNavigate()

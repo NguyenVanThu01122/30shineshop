@@ -1,10 +1,11 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
+import { ProductType } from '../..'
 import { ButtonGeneral } from '../../../../components/Ui/button'
-import { WrappetTitle } from './styles'
+import { WrapperTitle } from './styles'
 
 interface TitleCartProps {
-  listCart: any[]
+  listCart: ProductType[]
   listCartId: string[]
   setListCartId: Dispatch<SetStateAction<string[]>>
   handleOpenModal: (action: string, id: string) => void
@@ -26,7 +27,7 @@ export const TitleCart = ({
 
   useEffect(() => {
     if (isShowTitleProduct) {
-      const arrId = listCart?.map((item: any) => {
+      const arrId = listCart?.map((item: ProductType) => {
         return item.id
         // gom id listCart vào mảng arrId
       })
@@ -36,7 +37,7 @@ export const TitleCart = ({
     }
   }, [isShowTitleProduct])
   return (
-    <WrappetTitle>
+    <WrapperTitle>
       <div className='detailTitle'>
         <input checked={isShowTitleProduct} onClick={showTitle} type='checkbox' id='checkbox1' />
         <div className='checkboxProduct'>
@@ -61,6 +62,6 @@ export const TitleCart = ({
           )}
         </div>
       </div>
-    </WrappetTitle>
+    </WrapperTitle>
   )
 }

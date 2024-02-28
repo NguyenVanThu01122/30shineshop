@@ -1,9 +1,10 @@
-import { ProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
+import { ProductType } from '../../type'
+import { WrapperProduct } from './styles'
 
 export const Product = ({ detailPayment }: any) => {
   return (
-    <div className='itemProduct'>
+    <WrapperProduct>
       <div>Sản Phẩm</div>
       {detailPayment?.products?.map((product: ProductType) => (
         <div className='product' key={product?.id}>
@@ -22,6 +23,6 @@ export const Product = ({ detailPayment }: any) => {
           </div>
         </div>
       ))}
-    </div>
+    </WrapperProduct>
   )
 }

@@ -1,10 +1,12 @@
 import { useEffect } from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { toast } from 'react-toastify'
+import { ProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { InputGeneral } from '../../../../components/Ui/input'
 import { updateCart } from '../../../../service/cart'
+import { DetailProductCart } from './styles'
 
 export const ListProductCart = ({
   getListCart,
@@ -14,18 +16,18 @@ export const ListProductCart = ({
   handleOpenModal
 }: {
   getListCart: () => void
-  listCart: any
+  listCart: ProductType[] | any
   listCartId: string[]
-  setListCartId: any
+  setListCartId: (string: string[]) => void
   handleOpenModal: (type: string, id: string) => void
 }) => {
   // hàm click vào item checkbox
   const handleClickItemCheckbox = (id: string) => {
-    if (listCartId.includes(id) === false) {
+    if (!listCartId.includes(id)) {
       listCartId.push(id)
       setListCartId([...listCartId]) // cập nhật lại listCartId, dùng toán tư trải rộng để tạo ra 1 bản sao của mảng hiện tại.
     } else {
-      const newArr = listCartId.filter((item: any) => {
+      const newArr = listCartId.filter((item: string) => {
         if (item !== id) {
           //Cách này được sử dụng để xóa một giá trị cụ thể khỏi mảng.
           return true
@@ -51,9 +53,9 @@ export const ListProductCart = ({
     getListCart()
   }, [])
 
-  return listCart.map((item: any) => {
+  return listCart?.map((item: ProductType) => {
     return (
-      <div className='detailProduct' key={item.id}>
+      <DetailProductCart key={item.id}>
         <div className='informationProduct'>
           <InputGeneral
             type='checkbox'
@@ -97,7 +99,7 @@ export const ListProductCart = ({
             className='iconDelete'
           ></AiOutlineDelete>
         </div>
-      </div>
+      </DetailProductCart>
     )
   })
 }

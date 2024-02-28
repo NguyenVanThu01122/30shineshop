@@ -8,10 +8,10 @@ export type TypeLogin = {
 export type TypeRegister = {
   name: string
   telephone: number
-  email: any
-  password: any
-  gender: string
-  date: number
+  email: string
+  password: string | number
+  gender: 'male' | 'female' | 'other'
+  date: string | number
 }
 
 export const login = (body: TypeLogin) => {
@@ -22,6 +22,6 @@ export const register = (body: TypeRegister) => {
   return privateAxios.post('/register', body)
 }
 
-export const fogetPassword = (body: { email: string; password: number }) => {
+export const forgetPassword = (body: { email: string; password: number }) => {
   return privateAxios.put('/forget-password', body)
 }

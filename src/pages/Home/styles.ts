@@ -87,7 +87,7 @@ export const Wrapper = styled.div`
       }
     }
   }
-  .seach_Products {
+  .search_Products {
     position: relative;
     padding: 0px 140px;
     margin-top: 40px;

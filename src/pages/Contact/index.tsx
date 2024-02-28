@@ -1,11 +1,11 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import styles from './styles.module.css'
-import { message } from 'antd'
+
 export default function Contact() {
-  let token = localStorage.getItem('token')
   const navigate = useNavigate()
   let [name, setName] = useState('')
   let [phone, setPhone] = useState('')
@@ -40,7 +40,7 @@ export default function Contact() {
       setErrorPhone('')
     }
   }
-  
+
   let handleOnchagEmail = (e: any) => {
     const email = e.target.value
     setEmail(email)
@@ -50,7 +50,7 @@ export default function Contact() {
       setErrorEmail('')
     }
   }
-  
+
   let handleOnchageContent = (e: any) => {
     const content = e.target.value
     setContent(content)
@@ -77,13 +77,13 @@ export default function Contact() {
     }
 
     if (name && !errorName && phone && !errorPhone && content && !errorContent) {
-      message.success('bạn đã cập nhật thông tin thành công')
+      toast.success('bạn đã cập nhật thông tin thành công')
       setName('')
       setPhone('')
       setContent('')
     }
   }
-  
+
   return (
     <div className={styles.pageContact}>
       <div className={styles.homeContact}>
@@ -142,13 +142,7 @@ export default function Contact() {
             <div className={styles.loginName}>
               <div>Họ và tên *</div>
               <div id='name' className={`${errorName ? styles.borderRed : ''}`}>
-                <input
-                  // onBlur={handleOnBlurName}
-                  value={name}
-                  type='text'
-                  placeholder='Nhập họ và tên của bạn'
-                  onChange={handleOnchageName}
-                />
+                <input value={name} type='text' placeholder='Nhập họ và tên của bạn' onChange={handleOnchageName} />
               </div>
               <div className={styles.errorText}>{errorName}</div>
             </div>
@@ -157,7 +151,6 @@ export default function Contact() {
                 <div>Số điện thoại *</div>
                 <div id='phone' className={`${errorPhone ? styles.borderRed : ''}`}>
                   <input
-                    // onBlur={handleOnBlurPhone}
                     value={phone}
                     type='text'
                     placeholder='Nhập số điện thoại của bạn '
@@ -170,7 +163,6 @@ export default function Contact() {
                 <div>Email</div>
                 <div id='email' className={`${errorEmail ? styles.borderRed : ''}`}>
                   <input
-                    // onBlur={handleOnBlurEmail}
                     onChange={handleOnchagEmail}
                     value={email}
                     type='text'
@@ -185,12 +177,7 @@ export default function Contact() {
             <div className={styles.content}>
               <div>Nội dung liên hệ *</div>
               <div id='content' className={`${errorContent ? styles.borderRed : ''}`}>
-                <textarea
-                  // onBlur={handleOnBlurContent}
-                  value={content}
-                  onChange={handleOnchageContent}
-                  placeholder='Nội dung liên hệ'
-                ></textarea>
+                <textarea value={content} onChange={handleOnchageContent} placeholder='Nội dung liên hệ'></textarea>
               </div>
               <div className={styles.errorText}>{errorContent}</div>
               <div onClick={handleOnSubmit}>GỬI THÔNG TIN</div>

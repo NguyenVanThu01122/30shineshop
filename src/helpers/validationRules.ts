@@ -16,8 +16,8 @@ export const validateName = [
 export const validatePhone = [
   {
     required: true,
-    message: 'Vui lòng nhập số điện thoại !',
-    validateTrigger: 'onBlur' // chỉ kiểm tra khi focus rời khỏi trường
+    message: 'Vui lòng nhập số điện thoại !'
+    // validateTrigger: 'onBlur' // chỉ kiểm tra khi focus rời khỏi trường
   },
   () => ({
     validator(_: any, value: string) {
@@ -47,7 +47,7 @@ export const validateEmail = [
     }
   })
 ]
-
+// export const validatePassword = [{ required: true, message: 'Vui lòng nhập mật khẩu !' }]
 export const validateBirthday = [{ required: true, message: 'Vui lòng nhập ngày sinh !' }]
 
 export const validateAddress = [
@@ -65,5 +65,36 @@ export const validateComment = [
   {
     min: 3,
     message: 'Vui lòng nhập từ 3 kí tự trở lên !'
+  }
+]
+
+export const validatePassword = [
+  {
+    required: true,
+    message: 'Vui lòng nhập mật khẩu !'
+  }
+]
+
+export const validateConfirmPassword = [
+  {
+    required: true,
+    message: 'Vui lòng xác nhận mật khẩu của bạn !'
+  },
+  (obj: any) => ({
+    validator(_: any, value: string) {
+      if (!value || obj.getFieldValue('password') === value) {
+        return Promise.resolve()
+      } else {
+        return Promise.reject(new Error('Mật khẩu của bạn không khớp !'))
+      }
+    }
+  })
+]
+
+export const validateGender = [{ required: true, message: 'Vui lòng chọn giới tính !' }]
+
+export const validateCheckBox = [
+  {
+    validator: (_: any, value: any) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
   }
 ]

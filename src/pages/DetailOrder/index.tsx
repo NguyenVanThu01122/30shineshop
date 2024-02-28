@@ -4,21 +4,25 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CurrencyFormat } from '../../components/CurrencyFormat'
+import NoDataMessage from '../../components/NodataMessage'
 import SidebarAccount from '../../components/SidebarAccount'
 import { ButtonGeneral } from '../../components/Ui/button'
 import { Loading } from '../../components/Ui/loading'
+import { NO_DATA_MESSAGE } from '../../helpers/contanst'
 import { OrderStatusUtils } from '../../helpers/orderUtils'
 import { scrollToTop } from '../../helpers/scrollToTop'
-import iconGifDuck from '../../images/img-duck.jpg'
+import { useIsLoading } from '../../helpers/useIsLoading'
 import { getDetailOrder } from '../../service/detailOrder'
-import { ItemDetailOrder, ItemNotAvailable, WrapperDetailOrder } from './styles'
+import { ItemDetailOrder, WrapperDetailOrder } from './styles'
+import { OrderDetailType, ProductType, TimelineDetailItemType } from './type'
 
 function DetailOrder() {
-  const [orderDetail, setOrderDetail] = useState<any>({})
+  const [orderDetail, setOrderDetail] = useState<OrderDetailType>()
   const navigate = useNavigate()
   const params = useParams()
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useIsLoading()
   const { orderStatusCommon, colorStatus } = OrderStatusUtils()
+  const isOrderDetailValid = orderDetail && orderDetail.products && orderDetail.products.length > 0
 
   // hàm lấy chi tiết đơn hàng
   const handleGetDetailOrder = () => {
@@ -45,12 +49,12 @@ function DetailOrder() {
       <ItemDetailOrder>
         <div className='order'>Chi Tiết Đơn Hàng</div>
         <div className='order-detail'>
-          {orderDetail && orderDetail.products && orderDetail.products.length > 0 && (
+          {isOrderDetailValid && (
             <div>
               <div className='delivery-address'>
                 <div>Địa chỉ nhận hàng</div>
                 <div>
-                  {orderDetail?.timelineDetail.map((item: any) => {
+                  {orderDetail?.timelineDetail.map((item: TimelineDetailItemType) => {
                     return <span style={{ color: colorStatus(item.status) }}>{orderStatusCommon(item?.status)}</span>
                   })}
                 </div>
@@ -65,7 +69,7 @@ function DetailOrder() {
                 <Timeline
                   className='custom-timeLine'
                   mode='left' // mode kiểu hiện thị của timeline
-                  items={orderDetail?.timelineDetail?.map((item: any) => {
+                  items={orderDetail?.timelineDetail?.map((item: TimelineDetailItemType) => {
                     const isoString = item.timeUpdate // lấy chuỗi time ISO
                     const formattedDate = moment(isoString).format('HH:mm DD/MM/YYYY') //dùng moment để tạo một đối tượng Moment từ chuỗi thời gian isoString, và dùng method format('HH:mm DD/MM/YYYY') để biến đổi đối tượng Moment này thành một chuỗi mới theo định dạng mà chúng ta mong muốn
                     return {
@@ -80,7 +84,7 @@ function DetailOrder() {
               </div>
 
               {/* item detailOrder */}
-              {orderDetail?.products?.map((item: any) => (
+              {orderDetail?.products?.map((item: ProductType) => (
                 <div className='product-information'>
                   <div className='product'>
                     <img className='img-product' src={item?.image} alt='' />
@@ -123,7 +127,7 @@ function DetailOrder() {
               </div>
               <div className='itemInfo-order'>
                 <div style={{ color: colorStatus(orderDetail?.status) }}>
-                  {orderDetail?.timelineDetail?.map((item: any) => orderStatusCommon(item?.status))}
+                  {orderDetail?.timelineDetail?.map((item: TimelineDetailItemType) => orderStatusCommon(item?.status))}
                 </div>
                 <div className='payment-method'>
                   <div>Phương thức thanh toán</div>
@@ -144,10 +148,7 @@ function DetailOrder() {
           {/* item Loading */}
           {isLoading && <Loading />}
           {!isLoading && (!orderDetail || !orderDetail.products || orderDetail.products.length === 0) && (
-            <ItemNotAvailable>
-              <div>Bạn không có đơn hàng nào !</div>
-              <img className='iconGifDuck' src={iconGifDuck} alt='' />
-            </ItemNotAvailable>
+            <NoDataMessage message={NO_DATA_MESSAGE.NO_ORDER} />
           )}
         </div>
       </ItemDetailOrder>

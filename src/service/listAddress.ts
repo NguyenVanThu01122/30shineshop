@@ -3,7 +3,7 @@ import { privateAxios } from './axios'
 export interface TypeAddress {
   name: string
   telephone: number
-  email: string | number
+  email: string
   address: string
 }
 
@@ -11,7 +11,7 @@ export const getListAddress = () => {
   return privateAxios.get('/address')
 }
 
-export const updateAddress = (id: any, body: TypeAddress) => {
+export const updateAddress = (body: TypeAddress, id: any) => {
   return privateAxios.put(`/address/${id}`, body)
 }
 

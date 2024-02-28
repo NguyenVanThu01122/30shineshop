@@ -1,4 +1,3 @@
-import { Wrapper } from './../../../ListAddress/styles';
 import styled from 'styled-components'
 
 export const WrapperDetail = styled.div`

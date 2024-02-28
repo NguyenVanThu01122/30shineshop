@@ -1,17 +1,23 @@
-import { Form } from 'antd'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { InputGeneral } from '../../../../components/Ui/input'
+import { FormValuesType } from '../../type'
 import { WrapperInformation } from './styles'
 
-export const OrderInformation = ({ detailPayment, onFinish ,form}: any) => {
-  // const [form] = Form.useForm()
-
+export const OrderInformation = ({
+  detailPayment,
+  onFinish,
+  form
+}: {
+  detailPayment: any
+  onFinish: (values: FormValuesType) => void
+  form: any
+}) => {
   // hàm Validate fields
   const validateAndSubmit = () => {
     form
       .validateFields() // sd validateFields của form Kiểm tra tất cả các trường trong form
-      .then((values: any) => {
+      .then((values: FormValuesType) => {
         // Thêm đối số values để truyền vào hàm onFinish
         onFinish(values) // Truyền values và gọi hàm onFinish
       })

@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
 import { applyMiddleware, compose, createStore } from 'redux'
 import App from './App'
 import './index.css'
@@ -11,6 +12,7 @@ const myStore = createStore(rootReducer, composeEnhancers(applyMiddleware()))
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <Provider store={myStore}>
+    <ToastContainer />
     <App />
   </Provider>
 )

@@ -3,66 +3,32 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { toast } from 'react-toastify'
+import { ERROR_MESSAGES } from '../../helpers/contanst'
+import { getBlog } from '../../service/blog'
 import styles from './styles.module.css'
-
+interface ListBlogType {
+  id: number
+  image: string
+  title: string
+  category: string
+  description: string
+  time: string
+}
 export default function Blog() {
-  let [list, setList] = useState([])
-  let [textError, setTextError] = useState('')
+  let [listBlog, setListBlog] = useState([])
   const navigate = useNavigate()
+
   useEffect(() => {
-    privateAxios
-      .get('/blog')
+    getBlog()
       .then((response) => {
-        setList(response.data.data)
-        setTextError('')
+        setListBlog(response.data.data)
       })
       .catch((error) => {
-        setTextError('Lỗi server')
+        toast.error(ERROR_MESSAGES.SERVER_ERROR)
       })
   }, [])
-  // const data = [
-  //   {
-  //     id: 1,
-  //     img: 'https://static.30shine.com/shop-admin/2023/04/12/30S8TFME-reuzel-green-pomade-review.jpg',
-  //     title: 'Review Reuzel Green Pomade: hiệu quả tạo kiểu, giữ nếp có như lời đồn',
-  //     time: '12/04/2023',
-  //     category: 'Tóc đẹp mỗi ngày',
-  //     description: `Là sản phẩm vuốt tóc thương hiệu Reuzel đình đám, Reuzel Green Pomade tên đầy đủ là Reuzel Green Grease
-  //       Medium Hold Pomade nhận được “cơn mưa” lời khen về khả năng biến hóa phù hợp với mọi kiểu tóc. Vậy chất
-  //       lượng thực sự của sản phẩm có “thần thánh” như...`
-  //   },
-  //   {
-  //     id: 2,
-  //     img: 'https://static.30shine.com/shop-admin/2023/04/12/30S8TFME-reuzel-green-pomade-review.jpg',
-  //     title: 'Review Reuzel Green Pomade: hiệu quả tạo kiểu, giữ nếp có như lời đồn',
-  //     time: '12/04/2023',
-  //     category: 'Tóc đẹp mỗi ngày',
-  //     description: `Là sản phẩm vuốt tóc thương hiệu Reuzel đình đám, Reuzel Green Pomade tên đầy đủ là Reuzel Green Grease
-  //       Medium Hold Pomade nhận được “cơn mưa” lời khen về khả năng biến hóa phù hợp với mọi kiểu tóc. Vậy chất
-  //       lượng thực sự của sản phẩm có “thần thánh” như...`
-  //   },
-  //   {
-  //     id: 3,
-  //     img: 'https://static.30shine.com/shop-admin/2023/04/12/30S8TFME-reuzel-green-pomade-review.jpg',
-  //     title: 'Review Reuzel Green Pomade: hiệu quả tạo kiểu, giữ nếp có như lời đồn',
-  //     time: '12/04/2023',
-  //     category: 'Tóc đẹp mỗi ngày',
-  //     description: `Là sản phẩm vuốt tóc thương hiệu Reuzel đình đám, Reuzel Green Pomade tên đầy đủ là Reuzel Green Grease
-  //       Medium Hold Pomade nhận được “cơn mưa” lời khen về khả năng biến hóa phù hợp với mọi kiểu tóc. Vậy chất
-  //       lượng thực sự của sản phẩm có “thần thánh” như...`
-  //   },
-  //   {
-  //     id: 4,
-  //     img: 'https://static.30shine.com/shop-admin/2023/04/12/30S8TFME-reuzel-green-pomade-review.jpg',
-  //     title: 'Bài viết 4',
-  //     time: '12/04/2023',
-  //     category: 'Sáp vuốt tóc',
-  //     description: `Là sản phẩm vuốt tóc thương hiệu Reuzel đình đám, Reuzel Green Pomade tên đầy đủ là Reuzel Green Grease
-  //       Medium Hold Pomade nhận được “cơn mưa” lời khen về khả năng biến hóa phù hợp với mọi kiểu tóc. Vậy chất
-  //       lượng thực sự của sản phẩm có “thần thánh” như...`
-  //   }
-  // ]
+
   return (
     <div className={styles.pageBlog}>
       <div className={styles.headerBlog}>
@@ -91,49 +57,30 @@ export default function Blog() {
               </select>
             </div>
           </div>
-          {list.map((item: any) => {
-            return (
-              <div className={styles.introduceWax}>
-                <img src={item.image}></img>
-                <div className={styles.productDescription}>
-                  <div>{item.title}</div>
-                  <div className={styles.time}>
-                    <AiOutlineClockCircle />
-                    <span>{item.time}</span>
-                    <img
-                      className={styles.fontIcon}
-                      src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf-fco-XkvbomqXlumafj9t8zdSm_x_AIpUXVSHYlXqmZrKRx-'
-                      alt='img'
-                    />
-                    <span>{item.description}</span>
+
+          {listBlog.length > 0 &&
+            listBlog.map((item: ListBlogType) => {
+              return (
+                <div className={styles.introduceWax}>
+                  <img src={item.image}></img>
+                  <div className={styles.productDescription}>
+                    <div>{item.title}</div>
+                    <div className={styles.time}>
+                      <AiOutlineClockCircle />
+                      <span>{item.time}</span>
+                      <img
+                        className={styles.fontIcon}
+                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf-fco-XkvbomqXlumafj9t8zdSm_x_AIpUXVSHYlXqmZrKRx-'
+                        alt='img'
+                      />
+                      <span>{item.description}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )
-          })}
-          <div>{textError}</div>
-          {/* {data.map((item) => {
-            return (
-              <div className={styles.introduceWax} key={item.id}>
-                <img src={item.img}></img>
-                <div className={styles.productDescription}>
-                  <div>{item.title}</div>
-                  <div className={styles.time}>
-                    <AiOutlineClockCircle />
-                    <span>{item.time}</span>
-                    <img
-                      className={styles.fontIcon}
-                      src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQf-fco-XkvbomqXlumafj9t8zdSm_x_AIpUXVSHYlXqmZrKRx-'
-                      alt='img'
-                    />
-                    <span>{item.category}</span>
-                  </div>
-                  <div>{item.description}</div>
-                </div>
-              </div>
-            )
-          })} */}
+              )
+            })}
         </div>
+
         <div className={styles.Categories}>
           <div className={styles.serviceSelection}>
             <div className={styles.service}>CHUYÊN MỤC</div>

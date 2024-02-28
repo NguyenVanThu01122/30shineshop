@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const WrappetTitle = styled.div`
+export const WrapperTitle = styled.div`
   background-color: rgba(232, 232, 232);
   position: sticky;
   top: 0;

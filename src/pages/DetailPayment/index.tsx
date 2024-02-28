@@ -12,25 +12,12 @@ import { DeliveryTime } from './components/DeliveryTime'
 import { OrderInformation } from './components/OrderInformation'
 import { Product } from './components/Product'
 import { PaymentWrapper } from './styles'
-
-export interface ProductType {
-  amount: number
-  id: string
-  image: string
-  name: string
-  price: number
-}
-export interface DetailPaymentType {
-  deliveryPrice?: number
-  products?: ProductType[]
-  totalOriginPrice?: number
-  totalPrice?: number
-}
+import { DetailPaymentType, FormValuesType } from './type'
 
 export default function DetailPayment() {
   const params = useParams()
-  const navigate = useNavigate()
   const paymentId = params?.id
+  const navigate = useNavigate()
   const [form] = Form.useForm()
 
   const [note, setNote] = useState('')
@@ -42,7 +29,6 @@ export default function DetailPayment() {
   useEffect(() => {
     getDetailPayment(paymentId).then((res) => {
       setDetailPayment(res.data?.data)
-      console.log(res.data.data)
     })
   }, [])
 
@@ -56,7 +42,7 @@ export default function DetailPayment() {
     }
   }
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: FormValuesType) => {
     const body = {
       paymentId: paymentId,
       address: {
@@ -78,27 +64,15 @@ export default function DetailPayment() {
       .catch((error) => toast.error(ERROR_MESSAGES.SERVER_ERROR))
   }
 
-  // // hàm Validate fields
-  // const validateAndSubmit = () => {
-  //   form
-  //     .validateFields() // sd validateFields của form Kiểm tra tất cả các trường trong form
-  //     .then((values) => {
-  //       // Thêm đối số values để truyền vào hàm onFinish
-  //       onFinish(values) // Truyền values và gọi hàm onFinish
-  //     })
-  //     .catch(() => {
-  //       // Nếu có lỗi scroll đến phần lỗi đầu tiên
-  //       const firstErrorField = document.querySelector('.ant-form-item-has-error')
-  //       if (firstErrorField) {
-  //         firstErrorField.scrollIntoView({ behavior: 'smooth' })
-  //       }
-  //     })
-  // }
-
   return (
     <PaymentWrapper>
       <div>THANH TOÁN</div>
-      <Form onFinish={onFinish} scrollToFirstError form={form} className='pagePayment'>
+      <Form
+        onFinish={onFinish}
+        scrollToFirstError //tự động cuộn đến lỗi đầu tiên trong quá trình xử lý lỗi form
+        form={form}
+        className='pagePayment'
+      >
         <div className='payment'>
           <div className='deliveryInformation'>
             <div>Thông Tin Nhận Hàng</div>

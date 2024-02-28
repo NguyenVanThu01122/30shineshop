@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const WrapperMessage = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 140px;
+  margin-top: 150px;
   gap: 10px;
   & > div {
     font-size: 18px;

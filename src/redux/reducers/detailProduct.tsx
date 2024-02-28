@@ -1,4 +1,29 @@
-const initalState = {
+interface Product {
+  // Định nghĩa các thuộc tính của một sản phẩm ở đây
+}
+
+interface User {
+  // Định nghĩa các thuộc tính của một người dùng ở đây
+}
+
+interface Order {
+  // Định nghĩa các thuộc tính của một đơn hàng ở đây
+}
+
+interface InitialStateType {
+  count: number
+  products: Product[]
+  totalCart: number
+  user: User
+  listOrder: Order[]
+}
+
+interface ActionType {
+  type: string
+  payload: any
+}
+
+const initialState: InitialStateType = {
   count: 0,
   products: [],
   totalCart: 0,
@@ -6,7 +31,7 @@ const initalState = {
   listOrder: []
 }
 
-const handleReducer = (state = initalState, action: { type: string; payload: any }) => {
+const handleReducer = (state: InitialStateType = initialState, action: ActionType) => {
   switch (action.type) {
     case 'INCREASE':
       return {

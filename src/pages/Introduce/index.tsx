@@ -2,7 +2,6 @@ import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import styles from './styles.module.css'
-import { useEffect } from 'react'
 export default function Introduce() {
   const navigate = useNavigate()  
   return (

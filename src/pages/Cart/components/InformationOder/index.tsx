@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { ProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
-import { ERROR_MESSAGES } from '../../../../helpers/contanst'
+import { AMOUNT_PRODUCTS, ERROR_MESSAGES, TOTAL_PRICE } from '../../../../helpers/contanst'
 import { orderCart } from '../../../../service/cart'
 import { WrapperInformation } from './styles'
 
-export const InformationLine = ({ listCartId, listCart }: { listCart: any; listCartId: any }) => {
-  const [totalPrice, setTotalPrice] = useState(0)
-  const [amountProducts, setAmountProducts] = useState(0)
+export const InformationOrder = ({ listCartId, listCart }: { listCart: ProductType[]; listCartId: any }) => {
+  const [totalPrice, setTotalPrice] = useState(TOTAL_PRICE)
+  const [amountProducts, setAmountProducts] = useState(AMOUNT_PRODUCTS)
   const navigate = useNavigate()
-
   // hàm click vào item đặt hàng
   const handleClickOrder = () => {
     if (listCartId.length) {
@@ -28,8 +28,8 @@ export const InformationLine = ({ listCartId, listCart }: { listCart: any; listC
   useEffect(() => {
     let totalPrice = 0
     let amountProducts = 0
-    listCartId.forEach((cartId: any) => {
-      listCart?.forEach((cartItem: any) => {
+    listCartId.forEach((cartId: string) => {
+      listCart?.forEach((cartItem: ProductType) => {
         if (cartItem?.id === cartId) {
           // Cập nhật tổng giá trị và số lượng sản phẩm
           totalPrice += cartItem?.totalPrice

@@ -2,22 +2,34 @@ import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { toast } from 'react-toastify'
+import NoDataMessage from '../../components/NodataMessage'
+import { Loading } from '../../components/Ui/loading'
+import { ERROR_MESSAGES, NO_DATA_MESSAGE } from '../../helpers/contanst'
+import { useIsLoading } from '../../helpers/useIsLoading'
+import { getListBrand } from '../../service/brand'
 import styles from './styles.module.css'
+
+interface ListBrandType {
+  id: number
+  image: string
+  name: string
+}
 export default function Brand() {
-  let [list, setList] = useState([])
-  let [error, setError] = useState('')
+  let [listBrand, setListBrand] = useState([])
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useIsLoading()
 
   useEffect(() => {
-    privateAxios
-      .get('/brand')
+    setIsLoading(true)
+    getListBrand()
       .then((response) => {
-        setList(response.data?.brand)
-        setError('')
+        setListBrand(response.data?.brand)
+        setIsLoading(false)
       })
       .catch((error) => {
-        setError('Lỗi server')
+        setIsLoading(false)
+        toast.error(ERROR_MESSAGES.SERVER_ERROR)
       })
   }, [])
 
@@ -33,18 +45,20 @@ export default function Brand() {
           THƯƠNG HIỆU
         </div>
       </div>
-      <div className={styles.brandParent}>
-        {list.map((item: any) => {
-          return (
-            <div className={styles.brandItem} key={item.id}>
-              <img src={item.image} />
-              <div>{item.name}</div>
-            </div>
-          )
-        })}
-      </div>
-
-      {error}
+      {listBrand.length > 0 && (
+        <div className={styles.brandParent}>
+          {listBrand.map((item: ListBrandType) => {
+            return (
+              <div className={styles.brandItem} key={item.id}>
+                <img src={item.image} />
+                <div>{item.name}</div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+      {isLoading && <Loading />}
+      {!isLoading && !listBrand.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_BRAND} />}
     </div>
   )
 }

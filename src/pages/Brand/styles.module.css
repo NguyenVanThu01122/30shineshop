@@ -1,19 +1,22 @@
+.pageBrand {
+  height: 100%;
+  width: 100vw;
+}
 
 .loginBrand {
   display: flex;
   background-color: rgb(232, 232, 232);
-  padding: 10px 140px
+  padding: 10px 140px;
 }
 .loginBrand div {
   color: rgba(28, 28, 28, 0.731);
   cursor: pointer;
 }
-.loginBrand > div:last-child{
+.loginBrand > div:last-child {
   margin-left: 10px;
 }
-.title{
+.title {
   padding: 10px 140px;
-
 }
 .title > div:last-child {
   font-weight: 600;

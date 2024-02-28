@@ -43,13 +43,13 @@ export const ProductFilterPanel = ({
     )
   }
 
-  // Hàm định dạng tiền tệ
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(value)
-  }
+  // // Hàm định dạng tiền tệ
+  // const formatCurrency = (value: number) => {
+  //   return new Intl.NumberFormat('en-US', {
+  //     style: 'currency',
+  //     currency: 'USD'
+  //   }).format(value)
+  // }
   
   // hàm xử lý changeMinPrice kết hợp debounce (kết hợp library lodash)
   const handleChangeMinPrice = debounce((value: number) => {

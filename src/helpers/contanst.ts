@@ -2,6 +2,8 @@ export const PAGE = 1
 export const LIMIT = 15
 export const TOTAL = 0
 export const SORT = '-1'
+export const TOTAL_PRICE = 0
+export const AMOUNT_PRODUCTS = 0
 
 export const ERROR_MESSAGES = {
   SERVER_ERROR: 'Đã xảy ra lỗi từ máy chủ',
@@ -12,10 +14,19 @@ export const ERROR_MESSAGES = {
   PLEASE_ENTER_COMPLETE_INFORMATION: 'Vui lòng nhập đầy đủ thông tin !'
 }
 
+export const SUCCESS_MESSAGE = {
+  SUCCESS_LOGIN: 'Đăng nhập thành công'
+}
+
+export const TOOLTIP = 'Bạn muốn người khác gọi mình là gì?'
 export const PLACEHOLDER = {
   PLEASE_ENTER_NAME: 'Vui lòng nhập họ tên *',
   PLEASE_ENTER_EMAIL: 'Vui lòng nhập Email *',
-  PLEASE_ENTER_PASSWORD: 'Vui lòng nhập Password *',
+  PLEASE_ENTER_PASSWORD: 'Vui lòng nhập mật khẩu *',
+  PLEASE_CONFIRM_NEW_PASSWORD: 'Vui lòng xác nhận mật khẩu mới *',
+  PLEASE_CONFIRM_PASSWORD: 'Vui lòng xác thực lại mật khẩu *',
+  PLEASE_ENTER_GENDER: 'Vui lòng chọn giới tính',
+
   PLEASE_ENTER_PHONE: 'Vui lòng nhập số điện thoại *',
   PLEASE_ENTER_ADDRESS: 'Vui lòng nhập địa chỉ *',
   PLEASE_ENTER_BIRTHDAY: 'Vui lòng nhập ngày sinh *',
@@ -24,6 +35,18 @@ export const PLACEHOLDER = {
   ENTER_PRODUCT_NAME: 'Nhập tên sản phẩm',
   LOWEST_PRICE: 'Gía thấp nhất',
   HIGHEST_PRICE: 'Gía cao nhất'
+}
+
+export const LABEL = {
+  EMAIL: 'Email',
+  PASSWORD: 'Mật khẩu',
+  PASSWORD_NEW: 'Mật khẩu mới',
+  CONFIRM_NEW_PASSWORD: 'Xác nhận mật khẩu mới',
+  CONFIRM_PASSWORD: 'Xác thực lại mật khẩu',
+  NICK_NAME: 'Họ tên',
+  PHONE: 'Số điện thoại',
+  GENDER: 'Giới tính',
+  BIRTHDAY: 'Ngày sinh'
 }
 
 export const LIST_CATEGORY = {
@@ -36,7 +59,8 @@ export const LIST_CATEGORY = {
 export const NO_DATA_MESSAGE = {
   NO_ORDER: 'Bạn không có đơn hàng nào !',
   NO_ADDRESS: 'Bạn không có địa chỉ nào !',
-  NO_PRODUCT: 'Bạn không có sản phẩm nào !'
+  NO_PRODUCT: 'Bạn không có sản phẩm nào !',
+  NO_BRAND: 'Bạn không có thương hiệu nào !'
 }
 export const STRING = {
   DELETE_PRODUCT: 'Xóa sản phẩm',
@@ -57,4 +81,10 @@ export const optionSelect = [
   { value: '-1', label: 'Mặc định' },
   { value: '0', label: 'Từ thấp đến cao' },
   { value: '1', label: 'Từ cao đến thấp' }
+]
+
+export const optionSelectGender = [
+  { value: 'male', label: 'Nam giới' },
+  { value: 'female', label: 'Nữ giới' },
+  { value: 'other', label: 'Khác' }
 ]

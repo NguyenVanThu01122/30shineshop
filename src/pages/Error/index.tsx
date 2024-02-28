@@ -1,6 +1,6 @@
 import { Wrapper } from './style'
 
-const Erorr = () => {
+const Error = () => {
   return (
     <Wrapper>
       <img src='https://ai-art-generator-lyart.vercel.app/static/media/icon-gif1.9b5632186cfeee0b21d3.gif' alt='' />
@@ -8,4 +8,4 @@ const Erorr = () => {
   )
 }
 
-export default Erorr
+export default Error

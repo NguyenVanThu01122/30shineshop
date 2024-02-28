@@ -4,24 +4,33 @@ import NoDataMessage from '../../components/NodataMessage'
 import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, NO_DATA_MESSAGE, STRING } from '../../helpers/contanst'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
+import { useIsLoading } from '../../helpers/useIsLoading'
 import { getListCartProduct } from '../../service/cart'
-import { InformationLine } from './components/InformationOder'
+import { InformationOrder } from './components/InformationOder'
 import { ListProductCart } from './components/ListProductCart'
 import { ModalCart } from './components/ModalCart'
 import { TitleCart } from './components/TitleCart'
 import { CartWrapper } from './style'
 
-export default function Cart() {
-  let [listCart, setListCart] = useState<any>([])
-  const [listCartId, setListCartId] = useState<any>([])
-  const [isShowTitleProduct, setIsShowTitleProduct] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+export interface ProductType {
+  id: string
+  image: string
+  productName: string
+  originPrice: number
+  amount: number
+  totalPrice: number
+}
 
+export default function Cart() {
+  let [listCart, setListCart] = useState<ProductType[]>([])
+  const [listCartId, setListCartId] = useState<string[]>([])
+  const [isShowTitleProduct, setIsShowTitleProduct] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [idDeleteOne, setIdDeleteOne] = useState('')
   const [modalTitle, setModalTitle] = useState('')
   const [modalContent, setModalContent] = useState('')
   const [getLengthOfCart] = useGetLengthOfCart()
+  const [isLoading, setIsLoading] = useIsLoading()
 
   // hàm lấy danh sách sản phảm giỏ hàng
   const getListCart = () => {
@@ -93,7 +102,7 @@ export default function Cart() {
       </div>
 
       {/* thông tin đơn hàng */}
-      <InformationLine listCartId={listCartId} listCart={listCart} />
+      <InformationOrder listCartId={listCartId} listCart={listCart} />
 
       {/* Modal xoa 1 gio hang */}
       <ModalCart

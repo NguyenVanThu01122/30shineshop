@@ -1,16 +1,33 @@
-import { Checkbox, DatePicker, Form, Input, Select, message } from 'antd'
+import { DatePicker, Form, Input } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { CheckboxGeneral } from '../../components/Ui/checkbox'
+import { FormGeneral } from '../../components/Ui/form'
+import { InputGeneral } from '../../components/Ui/input'
+import { SelectGeneral } from '../../components/Ui/select'
+import { LABEL, PLACEHOLDER, TOOLTIP, optionSelectGender } from '../../helpers/contanst'
+import {
+  validateBirthday,
+  validateCheckBox,
+  validateConfirmPassword,
+  validateEmail,
+  validateGender,
+  validateName,
+  validatePassword,
+  validatePhone
+} from '../../helpers/validationRules'
 import { register } from '../../service/auth.servie'
-import { StyledRegisterForm, WrapperRegister } from './styles'
+import { WrapperRegister } from './styles'
 
 function NewRegister() {
   const [focusInput, setFocusInput] = useState('')
-
-  const { Option } = Select
   const [form] = Form.useForm()
   const navigate = useNavigate()
   const pathName = window.location.pathname
+
+  const handleFocusInput = (fieldName: string) => setFocusInput(fieldName)
+  const handleBlurInput = () => setFocusInput('')
 
   const onFinish = (values: any) => {
     const data = {
@@ -23,32 +40,31 @@ function NewRegister() {
     }
     register(data)
       .then((res) => {
-        message.success(res.data?.message)
+        toast.success(res.data?.message)
         navigate('/new-login')
       })
       .catch((error) => {
-        const objError = error.response?.data
-        let stringError = ''
-        const errorEmail = objError.email
-        const errorPhone = objError.telephone
-        if (errorEmail) {
-          stringError += errorEmail
-        }
-        if (errorPhone) {
-          stringError += errorPhone
-        }
-
-        message.error(stringError)
+        handleRegisterError(error)
       })
   }
 
-  const handleSubmit = () => {
-    form.submit()
+  // hàm xử lý lỗi trả về
+  const handleRegisterError = (error: any) => {
+    const objError = error.response?.data
+    let errorMessage = ''
+    if (objError?.email) {
+      errorMessage += objError.email
+    }
+    if (objError?.telephone) {
+      errorMessage += objError.telephone
+    }
+    return toast.error(errorMessage)
   }
 
   return (
     <WrapperRegister>
-      <StyledRegisterForm
+      <FormGeneral
+        className='register-Form'
         form={form}
         name='register'
         onFinish={onFinish}
@@ -68,195 +84,90 @@ function NewRegister() {
             ĐĂNG KÝ
           </div>
         </div>
-        <Form.Item
-          className='form'
-          name='nickname'
-          label='Họ tên'
-          tooltip='Bạn muốn người khác gọi mình là gì?'
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng nhập tên !'
-            }
-          ]}
-        >
-          <Input
+        <Form.Item className='form' name='nickname' label={LABEL.NICK_NAME} tooltip={TOOLTIP} rules={validateName}>
+          <InputGeneral
             className={`custom-input ${focusInput === 'name' && 'border-violet'}`}
-            onClick={() => setFocusInput('name')}
-            onBlur={() => setFocusInput('')}
-            placeholder='Vui lòng nhập tên !'
+            onClick={() => handleFocusInput('name')}
+            onBlur={handleBlurInput}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_NAME}
           />
         </Form.Item>
-        <Form.Item
-          className='form'
-          name='email'
-          label='E-mail'
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng nhập email !'
-            },
-            () => ({
-              validator(_, value: string) {
-                if (value?.includes('@') === false && value !== '') {
-                  return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
-                } else {
-                  return Promise.resolve()
-                }
-              }
-            })
-          ]}
-        >
-          <Input
+        <Form.Item className='form' name='email' label={LABEL.EMAIL} rules={validateEmail}>
+          <InputGeneral
             className={`custom-input ${focusInput === 'email' && 'border-violet'}`}
-            placeholder='Vui lòng nhập Email !'
-            onClick={() => setFocusInput('email')}
-            onBlur={() => setFocusInput('')}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_EMAIL}
+            onClick={() => handleFocusInput('email')}
+            onBlur={handleBlurInput}
           />
         </Form.Item>
-
         <Form.Item
           className='form'
           name='password'
-          label='Password'
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng nhập mật khẩu!'
-            }
-          ]}
-          // hasFeedback // icon thành công
+          label={LABEL.PASSWORD}
+          rules={validatePassword}
+          hasFeedback // icon thành công
         >
           <Input.Password
             className={`custom-input ${focusInput === 'password' && 'border-violet'}`}
-            onClick={() => setFocusInput('password')}
-            onBlur={() => setFocusInput('')}
-            placeholder='vui lòng nhập mật khẩu !'
+            onClick={() => handleFocusInput('password')}
+            onBlur={handleBlurInput}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_PASSWORD}
           />
         </Form.Item>
-
         <Form.Item
           className='form'
           name='confirm'
-          label='Xác thực lại mật khẩu'
-          // dependencies={['password']} // Xác định phụ thuộc vào trường "password"
-          // hasFeedback // icon thành công
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng xác nhận mật khẩu của bạn !'
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value: any) {
-                if (!value || getFieldValue('password') === value) {
-                  // nếu value k tồn tại(chưa nhập) hoặc getFieldValue('password') === value)
-                  return Promise.resolve()
-                } else {
-                  return Promise.reject(new Error('Mật khẩu không khớp !'))
-                }
-              }
-            })
-          ]}
+          label={LABEL.CONFIRM_PASSWORD}
+          dependencies={['password']} // Xác định phụ thuộc vào trường "password"
+          hasFeedback // icon thành công
+          rules={validateConfirmPassword}
         >
           <Input.Password
             className={`custom-input ${focusInput === 'repeatPassword' && 'border-violet'}`}
-            placeholder='Vui lòng xác thực mật khẩu !'
-            onClick={() => setFocusInput('repeatPassword')}
-            onBlur={() => setFocusInput('')}
+            placeholder={PLACEHOLDER.PLEASE_CONFIRM_PASSWORD}
+            onClick={() => handleFocusInput('repeatPassword')}
+            onBlur={handleBlurInput}
           />
         </Form.Item>
-        <Form.Item
-          className='form'
-          name='phone'
-          label='Số điện thoại'
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng nhập số điện thoại'
-            },
-            () => ({
-              validator(_, value) {
-                if (value) {
-                  if (value[0] !== '0') {
-                    return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
-                  } else if ((value.length > 10 || value.length < 10) && value !== '') {
-                    return Promise.reject(new Error('Vui lòng nhập đầy đủ 10 chữ số !'))
-                  } else {
-                    return Promise.resolve()
-                  }
-                } else {
-                  return Promise.resolve()
-                }
-              }
-            })
-          ]}
-        >
-          <Input
+        <Form.Item className='form' name='phone' label={LABEL.PHONE} rules={validatePhone}>
+          <InputGeneral
             className={`custom-input ${focusInput === 'phone' && 'border-violet'}`}
-            onClick={() => setFocusInput('phone')}
-            onBlur={() => setFocusInput('')}
-            placeholder='Vui lòng nhập số điện thoại !'
+            onClick={() => handleFocusInput('phone')}
+            onBlur={handleBlurInput}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_PHONE}
             type='number'
           />
         </Form.Item>
-
-        <Form.Item
-          className='form'
-          name='gender'
-          label='Giới tính'
-          rules={[{ required: true, message: 'Vui lòng chọn giới tính !' }]}
-        >
-          <Select
+        <Form.Item className='form' name='gender' label={LABEL.GENDER} rules={validateGender}>
+          <SelectGeneral
             className={`select-gender ${focusInput === 'gender' && 'border-violet'}`}
-            onClick={() => setFocusInput('gender')}
-            onBlur={() => setFocusInput('')}
-            placeholder='Vui lòng chọn giới tính'
-          >
-            <Option value='male'>Nam giới</Option>
-            <Option value='female'>Nữ giới</Option>
-            <Option value='other'>Khác</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          className='form'
-          label='Ngày sinh'
-          name='date'
-          rules={[
-            {
-              required: true,
-              message: 'Vui lòng chọn ngày sinh !'
-            }
-          ]}
-        >
-          <DatePicker
-            className={`custom-input ${focusInput === 'birthday' && 'border-violet'}`}
-            onClick={() => setFocusInput('birthday')}
-            onBlur={() => setFocusInput('')}
-            placeholder='Vui lòng chọn ngày sinh !'
+            onClick={() => handleFocusInput('gender')}
+            onBlur={handleBlurInput}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_GENDER}
+            options={optionSelectGender}
           />
         </Form.Item>
-        <Form.Item
-          className='form'
-          name='agreement'
-          valuePropName='checked'
-          rules={[
-            {
-              validator: (_, value) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
-            }
-          ]}
-        >
-          <Checkbox className='checkbox'>
-            Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
-          </Checkbox>
+        <Form.Item className='form' label={LABEL.BIRTHDAY} name='date' rules={validateBirthday}>
+          <DatePicker
+            className={`custom-input ${focusInput === 'birthday' && 'border-violet'}`}
+            onClick={() => handleFocusInput('birthday')}
+            onBlur={handleBlurInput}
+            placeholder={PLACEHOLDER.PLEASE_ENTER_BIRTHDAY}
+          />
         </Form.Item>
-        <div className='submit-register' onClick={handleSubmit}>
+        <Form.Item className='form' name='agreement' valuePropName='checked' rules={validateCheckBox}>
+          <CheckboxGeneral className='checkbox'>
+            Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
+          </CheckboxGeneral>
+        </Form.Item>
+        <div className='submit-register' onClick={() => form.submit()}>
           ĐĂNG KÝ
         </div>
         <div className='brand-name'>
           <span>30Shine</span>
           <span>Shop</span>
         </div>
-      </StyledRegisterForm>
+      </FormGeneral>
     </WrapperRegister>
   )
 }

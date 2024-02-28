@@ -6,10 +6,23 @@ import { scrollToTop } from '../../helpers/scrollToTop'
 import { getOrderSuccess } from '../../service/orderSuccess'
 import { OderSuccessWrapper } from './styled'
 
+interface OrderDetilType {
+  address: {
+    detailAddress: string
+    email: string
+    name: string
+    phone: number
+  }
+  methodPayment: string
+  orderId: string
+  orderStatus: string
+  totalPrice: number
+}
+
 export default function OrderSuccess() {
   const navigate = useNavigate()
   const params = useParams()
-  const [orderDetail, setOrderDetail] = useState<any>({})
+  const [orderDetail, setOrderDetail] = useState<OrderDetilType>()
   const { orderStatusCommon } = OrderStatusUtils()
   const methodPayment = {
     offline: 'offline',
@@ -40,7 +53,7 @@ export default function OrderSuccess() {
         </div>
         <div className='informationPayment'>
           <div>Trạng thái thanh toán</div>
-          <div>{orderStatusCommon(orderDetail?.orderStatus)}</div>
+          <div>{orderStatusCommon(orderDetail?.orderStatus || '')}</div>
         </div>
         <div className='informationPayment'>
           <div>Phương thức thanh toán</div>

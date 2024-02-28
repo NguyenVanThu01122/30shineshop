@@ -45,7 +45,6 @@ function Layout() {
   }
   return (
     <Wrapper>
-      <ToastContainer />
       <ItemHeader>
         <Header />
       </ItemHeader>
