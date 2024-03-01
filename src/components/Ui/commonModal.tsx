@@ -1,38 +1,41 @@
 import { Modal } from 'antd'
+interface CommonModalProps {
+  children?: React.ReactNode
+  modalTitle?: string
+  isModalOpen: boolean
+  onCancel: () => void
+  onOk?: () => void
+  footer?: React.ReactNode
+  width?: number
+  centered?: boolean
+  style?: React.CSSProperties
+  className?: string
+  title?: string
+}
 
 export const CommonModal = ({
   children,
   modalTitle,
   isModalOpen,
-  deleteItem,
+  onOk,
   onCancel,
   footer,
   width,
   centered,
   style,
-  className
-}: {
-  children?: any
-  modalTitle?: string
-  isModalOpen: boolean
-  onCancel: any
-  deleteItem?: any
-  footer?: boolean
-  width?: number | undefined
-  centered?: boolean | undefined
-  style?: any
-  className?: any
-}) => {
+  className,
+}: CommonModalProps) => {
   return (
     <Modal
       width={450}
       title={modalTitle}
       open={isModalOpen}
-      onOk={deleteItem}
+      onOk={onOk}
       onCancel={onCancel}
       footer={footer}
       style={style}
       className={className}
+      centered={centered}
     >
       {children}
     </Modal>

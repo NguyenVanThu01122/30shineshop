@@ -6,7 +6,8 @@ export const Loading = () => {
         height: '500px',
         display: 'flex',
         justifyContent: 'center',
-        alignContent: 'center'
+        alignContent: 'center',
+        marginTop: '50px'
       }}
     >
       <img

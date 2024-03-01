@@ -1,132 +1,14 @@
-.itemProduct {
-  padding: 10px;
-  width: 20%;
-  margin-bottom: 30px;
-  position: relative;
-  .stickerPercen {
-    padding: 5px;
-    position: absolute;
-    right: 10px;
-    top: -6px;
-    width: 22%;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e54d3e;
-    border-top: 12px solid #e54d3e;
+
+.wrapperProducts{
+  .findProducts{
+    margin: 20px 0px;
     & > div:first-child {
-      position: absolute;
-      border-bottom: 12px solid rgba(229, 77, 62, 0.75);
-      border-left: 12px solid transparent;
-      top: -90%;
-      right: 100%;
-    }
-    & > div:last-child {
-      position: absolute;
-      border-left: 22px solid transparent;
-      border-right: 22px solid transparent;
-      border-top: 16px solid #e54d3e;
-      top: 100%;
-      width: 100%;
-    }
-    .percent {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 3px;
-      font-weight: 600;
-      color: rgb(249, 249, 249);
-      z-index: 1000;
-    }
-    & span {
-      font-size: 16px;
-    }
-  }
-  .product {
-    box-shadow: 0 0 4px 1px rgba(247, 244, 244, 0.989);
-    padding: 15px;
-    border-radius: 6px;
-    & > div:nth-child(2) {
-      height: 40px;
-      max-width: 200px;
-      font-family: 'Be Vietnam Pro';
-      font-size: 0.875rem;
-      line-height: 1.25rem;
-      margin-bottom: 10px;
-
-      display: -webkit-box;
-      -webkit-line-clamp: 2;//chỉ định số dòng hiển thị trước khi ẩn đi.
-      -webkit-box-orient: vertical;// thiết lập hướng box là dọc
-      overflow: hidden;//ẩn các phần text bị tràn ra ngoài phần tử.
-      text-overflow: ellipsis;// thêm ba dấu chấm (...) cuối câu khi text bị cắt bớt.
-      white-space: normal;//cho phép text xuống dòng bình thường nếu cần.
-    }
-
-    &:hover {
-      cursor: pointer;
-      box-shadow: 0 0 50px 25px rgba(247, 244, 244, 0.989);
-    }
-    .images img {
-      width: 100%;
-    }
-    .productPrice {
-      display: flex;
-    }
-    .productPrice > div:first-child {
-      font-weight: 600;
-      font-size: 1.3rem;
-      line-height: 1.75rem;
-      color: rgba(229, 77, 62);
-      margin-right: 8px;
-      font-family: Oswald, sans-serif;
-    }
-    .productPrice > div:last-child {
-      font-size: 0.87rem;
-      line-height: 1.25rem;
-      text-decoration: line-through;
-      color: rgb(163, 163, 163);
-    }
-    .productPrice span {
-      margin-left: 5px;
-      text-decoration: underline;
       font-family: Oswald;
-    }
-    .iconStar img {
-      width: 80px;
-      height: 18px;
-      margin-top: 5px;
+      font-size: 1.7rem;
+      font-weight: 600;
+      margin: 10px 0px;
     }
   }
 
-  /* Responsive */
-  @media screen and (max-width: 768px) {
-    .itemProduct {
-      width: 50%;
-      .stickerPercen {
-        & > div:last-child {
-          border-left: 20px solid transparent;
-          border-right: 21px solid transparent;
-          border-top: 18px solid #e54d3e;
-          border-radius: 2px;
-          top: 96%;
-        }
-        .percent {
-          margin-bottom: 10px;
-          font-size: 10px;
-          & span {
-            font-size: 9px;
-          }
-        }
-      }
-      .product {
-        // border: 5px solid red;
-        // display: flex;
-        // flex-direction: column;
-        // .images{
-        //   width: 100%;
-        // }
-      }
-    }
-  }
 }
+

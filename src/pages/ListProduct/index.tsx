@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
+import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
 import { PaginationUi } from '../../components/Ui/pagination'
-import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, SORT, TOTAL } from '../../helpers/contanst'
+import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, PAGE_NAMES, SORT, TOTAL } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
-import { addListProduct } from '../../redux/actions/detailProduct'
+import { addListProduct } from '../../redux/actions/app'
 import { TypeListProduct, listProduct } from '../../service/listProduct'
 import { ProductFilterPanel } from './components/ProductFilterPanel'
 import Products from './components/Products'
-import styles from './styles.module.css'
+import { ListProducts, WrapperListProducts } from './styles'
 
 export default function ListProduct() {
   const [keyword, setKeyword] = useState('')
@@ -27,7 +27,6 @@ export default function ListProduct() {
   let [isLoading, setIsLoading] = useIsLoading()
   const [isCategory, setIsCategory] = useState(false)
 
-  const navigate = useNavigate()
   const dispatch = useDispatch()
   const products = useSelector((state: any) => state.app.products)
 
@@ -52,6 +51,7 @@ export default function ListProduct() {
       params.maxPrice = maxPrice
     }
     listProduct(params)
+    
       .then((response) => {
         setTotal(response.data?.totalProducts)
         dispatch(addListProduct(response.data?.data))
@@ -69,12 +69,8 @@ export default function ListProduct() {
   }, [page, keyword, category, minPrice, maxPrice, sort, limit])
 
   return (
-    <div className={styles.pageProduct}>
-      <div className={styles.titlePage}>
-        <div onClick={() => navigate('/')}>Tran chủ</div>
-        <span>/ Danh sách sản phẩm</span>
-      </div>
-
+    <WrapperListProducts>
+      <PageNavbar page={PAGE_NAMES.LIST_PRODUCTS} />
       <ProductFilterPanel
         isCategory={isCategory}
         setIsCategory={setIsCategory}
@@ -86,8 +82,8 @@ export default function ListProduct() {
         setPage={setPage}
         setKeyword={setKeyword}
       />
-      <div className={styles.findProducts}>{!isLoading && <div>{products.length} sản phẩm được tìm thấy</div>}</div>
-      <div className={styles.listProduct}>{!isLoading && <Products />}</div>
+      {/* <FindProducts>{!isLoading && <div>{products.length} sản phẩm được tìm thấy</div>}</FindProducts> */}
+      <ListProducts>{!isLoading && <Products />}</ListProducts>
 
       {/* item Loading */}
       {isLoading && <Loading />}
@@ -101,6 +97,6 @@ export default function ListProduct() {
           onChange={(page) => setPage(page)}
         />
       )}
-    </div>
+    </WrapperListProducts>
   )
 }

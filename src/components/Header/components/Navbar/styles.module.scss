@@ -1,0 +1,17 @@
+.containerItem{
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    padding: 11px 160px;
+    background-color: rgba(255, 204, 51, 0.913);
+    & div {
+      margin-left: 30px;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 15px;
+     
+    }
+    & :hover {
+      color: #fff !important;
+    }
+  }

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const OrderStatusUtils = () => {
+export const useOrderStatusUtils = () => {
   const [messageStatusOrder, setMessageStatusOrder] = useState('')
 
   // Hàm xử lý trạng thái đơn hàng

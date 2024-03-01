@@ -34,10 +34,40 @@ const updateAccount = (payload: any) => {
     payload
   }
 }
-const addListOrder = (payload:any)=>{
-  return{
+const addListOrder = (payload: any) => {
+  return {
     type: 'ADD_LIST_ORDER',
     payload
   }
 }
-export { addListProduct, decrease, increase, saveDetailProduct, saveTotalCart, updateAccount,addListOrder }
+const saveKeywordSearch = (payload: string) => {
+  return {
+    type: 'SAVE_KEYWORD_SEARCH',
+    payload
+  }
+}
+const saveProductSearch = (payload: any) => {
+  return {
+    type: 'SAVE_PRODUCT_SEARCH',
+    payload
+  }
+}
+const saveIsLoading = (payload: any) => {
+  return {
+    type: 'SAVE_IS_lOADING',
+    payload
+  }
+}
+
+export {
+  addListOrder,
+  addListProduct,
+  decrease,
+  increase,
+  saveDetailProduct,
+  saveKeywordSearch,
+  saveProductSearch,
+  saveTotalCart,
+  updateAccount,
+  saveIsLoading
+}

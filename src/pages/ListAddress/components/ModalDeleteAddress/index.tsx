@@ -31,7 +31,7 @@ export const ModalDeleteAddress = ({
     <CommonModal
       isModalOpen={isOpenModalDelete}
       onCancel={() => setIsOpenModalDelete(false)}
-      deleteItem={handleDeleteAddress}
+      onOk={handleDeleteAddress}
       modalTitle='Bạn có chắc chắn muốn xóa địa chỉ này không ?'
     />
   )

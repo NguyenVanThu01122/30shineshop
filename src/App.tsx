@@ -5,6 +5,7 @@ import Blog from './pages/Blog'
 import Brand from './pages/Brand'
 import Cart from './pages/Cart'
 import Contact from './pages/Contact'
+import DetailOrder from './pages/DetailOrder'
 import DetailPayment from './pages/DetailPayment'
 import DetailProduct from './pages/DetailProduct'
 import Error from './pages/Error'
@@ -12,15 +13,14 @@ import Home from './pages/Home'
 import Introduce from './pages/Introduce'
 import Layout from './pages/Layout'
 import ListAddress from './pages/ListAddress'
+import ListOrder from './pages/ListOrder'
 import ListProduct from './pages/ListProduct'
 import Login from './pages/Login'
 import NewLogin from './pages/NewLogin'
 import NewRegister from './pages/NewRegister'
 import OrderSuccess from './pages/OrderSuccess'
+import ProductSearchResult from './pages/ProductSearchResult'
 import Register from './pages/Register'
-import Order from './pages/ListOrder'
-import DetailOrder from './pages/DetailOrder'
-import ListOrder from './pages/ListOrder'
 
 function App() {
   return (
@@ -40,8 +40,9 @@ function App() {
           <Route path='/cart' element={<Cart />} />
           <Route path='/payment/:id' element={<DetailPayment />} />
           <Route path='/order-success/:id' element={<OrderSuccess />} />
-          <Route path='/list-order' element={<ListOrder/>}/>
-          <Route path='/detail-order/:id' element={<DetailOrder/>}/>
+          <Route path='/list-order' element={<ListOrder />} />
+          <Route path='/detail-order/:id' element={<DetailOrder />} />
+          <Route path='/product-search-result' element={<ProductSearchResult />} />
           {/* <Route path='/selling-Products' element={<SellingProducts />} /> */}
         </Route>
         <Route path='/new-register' element={<NewRegister />} />

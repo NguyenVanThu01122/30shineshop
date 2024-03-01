@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
+import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
-import { ERROR_MESSAGES, NO_DATA_MESSAGE } from '../../helpers/contanst'
+import { ERROR_MESSAGES, NO_DATA_MESSAGE, PAGE_NAMES } from '../../helpers/contanst'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { getListBrand } from '../../service/brand'
 import styles from './styles.module.css'
@@ -35,10 +36,7 @@ export default function Brand() {
 
   return (
     <div className={styles.pageBrand}>
-      <div className={styles.loginBrand}>
-        <div onClick={() => navigate('/')}>Trang chủ </div>
-        <div>/ Thương hiệu</div>
-      </div>
+      <PageNavbar page={PAGE_NAMES.BRAND} />
       <div className={styles.title}>
         <div className={styles.brand}>
           <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />

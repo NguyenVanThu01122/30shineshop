@@ -1,21 +1,34 @@
-interface Product {
-  // Định nghĩa các thuộc tính của một sản phẩm ở đây
+export interface ProductResultType {
+  id?: number
+  name?: string
+  image?: string
+  salePrice?: number
+  originPrice?: number
+  star?: number
+}
+export interface UserType {
+  name?: string
+  phone?: number
+  email?: string
+  birthday?: string
 }
 
-interface User {
-  // Định nghĩa các thuộc tính của một người dùng ở đây
-}
-
-interface Order {
-  // Định nghĩa các thuộc tính của một đơn hàng ở đây
+export interface OrderItemType {
+  _id: string
+  status: string
+  products: ProductResultType[]
+  totalPrice: number
 }
 
 interface InitialStateType {
   count: number
-  products: Product[]
+  products: ProductResultType[]
   totalCart: number
-  user: User
-  listOrder: Order[]
+  user: UserType
+  listOrder: OrderItemType[]
+  keywordSearch: string
+  productSearch: ProductResultType[]
+  isLoading: boolean
 }
 
 interface ActionType {
@@ -28,7 +41,10 @@ const initialState: InitialStateType = {
   products: [],
   totalCart: 0,
   user: {},
-  listOrder: []
+  listOrder: [],
+  productSearch: [],
+  keywordSearch: '',
+  isLoading: false
 }
 
 const handleReducer = (state: InitialStateType = initialState, action: ActionType) => {
@@ -73,6 +89,23 @@ const handleReducer = (state: InitialStateType = initialState, action: ActionTyp
       return {
         ...state,
         listOrder: action.payload
+      }
+
+    case 'SAVE_KEYWORD_SEARCH':
+      return {
+        ...state,
+        keywordSearch: action.payload
+      }
+
+    case 'SAVE_PRODUCT_SEARCH':
+      return {
+        ...state,
+        productSearch: action.payload
+      }
+    case 'SAVE_IS_lOADING':
+      return {
+        ...state,
+        isLoading: action.payload
       }
     default:
       return state

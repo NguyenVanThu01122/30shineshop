@@ -1,66 +1,64 @@
-.account {
-  padding: 10px;
+.wrapperSidebar {
+  width: 250px;
+  padding: 15px;
   background-color: rgba(238, 238, 238);
-}
-.phone {
-  margin: 4px 0px;
-  font-weight: 660;
-  font-size: 11px;
-  font-family: 'Oswald';
-}
-.phone > div:first-child {
-  margin-bottom: 2px;
-}
-.informationSelection > div:first-child {
-  color: rgba(81, 78, 78, 0.603);
-  font-size: 45px;
-  margin-right: 10px;
-}
-.informationSelection {
-  display: flex;
-  margin-top: 10px;
-  padding-top: 10px;
-}
+  .informationSelection {
+    display: flex;
+    margin-top: 10px;
+    padding-top: 10px;
+    & > div:first-child {
+      color: rgba(81, 78, 78, 0.603);
+      font-size: 45px;
+      margin-right: 10px;
+    }
+    .phone {
+      margin: 4px 0px;
+      font-weight: 660;
+      font-size: 14px;
+      font-family: 'Oswald';
+    }
+    .phone > div:first-child {
+      margin-bottom: 2px;
+    }
+  }
   .list {
     display: flex;
-    padding: 10px 30px;
-    margin-left: 6px;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
     cursor: pointer;
+    .logOut {
+      cursor: pointer;
+      & > div:last-child {
+        margin-left: 10px;
+      }
+    }
   }
-.border{
-  // border-radius: 3px;
-  background-color: rgb(225, 224, 224);
-}
-.logOut {
-  cursor: pointer;
-}
-.list > div:last-child {
-  margin-left: 10px;
-}
-.information > div:last-child {
-  border-top: 1px solid rgb(209, 204, 204);
-}
+  .border {
+    color: red;
+    background-color: rgb(225, 224, 224);
+  }
 
-@media screen and (max-width: 768px) {
-  .account {
-    padding: 0px;
-    display: block;
+  @media screen and (max-width: 768px) {
+    .account {
+      padding: 0px;
+      display: block;
+    }
+    .information {
+      display: none;
+    }
+    .accountInformation {
+      width: 100%;
+    }
+    .loginInput input {
+      width: 100%;
+    }
+    .accountInformation > div:first-child {
+      padding: 0px;
+    }
+    .login > div:last-child {
+      width: 50%;
+      margin: auto;
+    }
   }
-  .information {
-    display: none;
-  }
-  .accountInformation {
-    width: 100%;
-  }
-  .loginInput input {
-    width: 100%;
-  }
-  .accountInformation > div:first-child {
-    padding: 0px;
-  }
-  .login > div:last-child {
-    width: 50%;
-    margin: auto;
-  }
-  
 }

@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
-import { BsArrowUp, BsTelephoneMinusFill } from 'react-icons/bs'
-import { toast } from 'react-toastify'
+import { BsTelephoneMinusFill } from 'react-icons/bs'
 import styles from './styles.module.scss'
 
 export default function Footer() {
-
   return (
     <div className={styles.pageFooter}>
       <div className={styles.footer}>

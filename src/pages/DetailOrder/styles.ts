@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const WrapperDetailOrder = styled.div`
+  max-width: 1600px;
   display: flex;
   justify-content: center;
   margin: 35px 0px;
@@ -9,7 +10,7 @@ export const WrapperDetailOrder = styled.div`
 export const ItemDetailOrder = styled.div`
   background-color: rgb(238, 238, 238);
   flex: 0.7;
-  padding: 20px;
+  padding: 20px 0px;
   height: 80vh;
   overflow-y: auto;
   position: relative;

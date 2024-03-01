@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import handleReducer from "./detailProduct";
+import handleReducer from "./app";
 
 export const rootReducer = combineReducers({
   app: handleReducer

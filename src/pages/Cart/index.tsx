@@ -5,6 +5,7 @@ import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, NO_DATA_MESSAGE, STRING } from '../../helpers/contanst'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import image from '../../images/empty cart.svg'
 import { getListCartProduct } from '../../service/cart'
 import { InformationOrder } from './components/InformationOder'
 import { ListProductCart } from './components/ListProductCart'
@@ -96,7 +97,7 @@ export default function Cart() {
 
             {/* item loading */}
             {isLoading && !listCart.length && <Loading />}
-            {!isLoading && !listCart.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_ORDER} />}
+            {!isLoading && !listCart.length && <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_ORDER} />}
           </div>
         </div>
       </div>

@@ -4,10 +4,10 @@ import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import SidebarAccount from '../../components/SidebarAccount'
 import { Loading } from '../../components/Ui/loading'
-import { OrderStatusUtils } from '../../helpers/orderUtils'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
-import { addListOrder } from '../../redux/actions/detailProduct'
+import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
+import { addListOrder } from '../../redux/actions/app'
 import { getListOrder } from '../../service/listOrder'
 import { ComponentDetailOrder } from './components/DetailOrder'
 import { TitleStatusOrder } from './components/TitleStatusOrder'
@@ -18,7 +18,7 @@ function ListOrder() {
   const [listStatusOrder, setListStatusOrder] = useState([])
   const orders = useSelector((state: any) => state.app?.listOrder)
   const { orderStatusCommon, arrStatusOrder, colorStatus, messageStatusOrder, updateOrderStatusMessage } =
-    OrderStatusUtils()
+    useOrderStatusUtils()
 
   const [isLoading, setIsLoading] = useIsLoading()
   const dispatch = useDispatch()

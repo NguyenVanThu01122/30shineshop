@@ -8,7 +8,7 @@ export const validateName = [
     message: 'Vui lòng nhập từ 3 đến 16 ký tự'
   },
   {
-    max: 16,
+    max: 30,
     message: 'Vui lòng nhập từ 3 đến 16 ký tự'
   }
 ]
@@ -98,3 +98,5 @@ export const validateCheckBox = [
     validator: (_: any, value: any) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
   }
 ]
+
+export const validateContent = [{ required: true, message: 'Nội dung liên hệ không được để trống!' }]

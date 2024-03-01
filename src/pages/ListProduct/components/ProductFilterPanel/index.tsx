@@ -43,17 +43,8 @@ export const ProductFilterPanel = ({
     )
   }
 
-  // // Hàm định dạng tiền tệ
-  // const formatCurrency = (value: number) => {
-  //   return new Intl.NumberFormat('en-US', {
-  //     style: 'currency',
-  //     currency: 'USD'
-  //   }).format(value)
-  // }
-  
   // hàm xử lý changeMinPrice kết hợp debounce (kết hợp library lodash)
   const handleChangeMinPrice = debounce((value: number) => {
-    // const formattedNumber = formatCurrency(value)
     setMinPrice(value)
   }, 1000)
 
@@ -73,21 +64,18 @@ export const ProductFilterPanel = ({
         className={styles.customInput}
         placeholder={PLACEHOLDER.ENTER_PRODUCT_NAME}
         type='text'
-        // value={keyword}
         onChange={handleChangeKeyword}
       />
       <InputGeneral
         className={styles.customInput}
         placeholder={PLACEHOLDER.LOWEST_PRICE}
         type='number'
-        // value={minPrice}
         onChange={handleChangeMinPrice}
       />
       <InputGeneral
         className={styles.customInput}
         placeholder={PLACEHOLDER.HIGHEST_PRICE}
         type='number'
-        // value={maxPrice}
         onChange={handleChangeMaxPrice}
       />
       <SelectGeneral

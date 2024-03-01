@@ -1,95 +1,29 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useState } from 'react'
+import { Form } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import PageNavbar from '../../components/PageNavbar'
+import { ButtonGeneral } from '../../components/Ui/button'
+import { FormGeneral } from '../../components/Ui/form'
+import { InputGeneral } from '../../components/Ui/input'
+import { TextArealInput } from '../../components/Ui/textAreaInput'
+import { PAGE_NAMES, PLACEHOLDER } from '../../helpers/contanst'
+import { validateContent, validateEmail, validateName, validatePhone } from '../../helpers/validationRules'
 import styles from './styles.module.css'
 
 export default function Contact() {
   const navigate = useNavigate()
-  let [name, setName] = useState('')
-  let [phone, setPhone] = useState('')
-  let [email, setEmail] = useState('')
-  let [content, setContent] = useState('')
+  const [form] = Form.useForm()
 
-  let [errorName, setErrorName] = useState('')
-  let [errorPhone, setErrorPhone] = useState('')
-  let [errorEmail, setErrorEmail] = useState('')
-  let [errorContent, setErrorContent] = useState('')
-
-  let handleOnchageName = (e: any) => {
-    const name = e.target.value
-    setName(name)
-    if (!name) {
-      setErrorName('Vui lòng nhập tên')
-    } else {
-      setErrorName('')
-    }
-  }
-
-  let handleOnchagePhone = (e: any) => {
-    const phone = e.target.value
-    setPhone(phone)
-    if (!phone) {
-      setErrorPhone('Vui lòng nhập số điện thoại')
-    } else if (phone.length !== 10) {
-      setErrorPhone('Số điện thoại không đúng định dạng')
-    } else if (phone === name) {
-      setErrorPhone('vui lòng không nhập trùng với tên')
-    } else {
-      setErrorPhone('')
-    }
-  }
-
-  let handleOnchagEmail = (e: any) => {
-    const email = e.target.value
-    setEmail(email)
-    if (!email) {
-      setErrorEmail('Vui lòng nhập Email')
-    } else {
-      setErrorEmail('')
-    }
-  }
-
-  let handleOnchageContent = (e: any) => {
-    const content = e.target.value
-    setContent(content)
-    if (!content) {
-      setErrorContent('Vui lòng nhập liên hệ')
-    } else {
-      setErrorContent('')
-    }
-  }
-
-  let handleOnSubmit = () => {
-    if (!name) {
-      setErrorName('vui lòng nhập tên')
-    }
-    if (!email) {
-      setErrorEmail('Vui lòng nhập Email')
-    }
-    if (!phone) {
-      setErrorPhone('vui lòng nhập số điện thoại')
-    }
-
-    if (!content) {
-      setErrorContent('vui lòng nhập liên hệ')
-    }
-
-    if (name && !errorName && phone && !errorPhone && content && !errorContent) {
-      toast.success('bạn đã cập nhật thông tin thành công')
-      setName('')
-      setPhone('')
-      setContent('')
-    }
+  const onFinish = (values: any) => {
+    toast.success('Bạn đã gửi thắc mắc thành công')
+    form.resetFields()
   }
 
   return (
     <div className={styles.pageContact}>
-      <div className={styles.homeContact}>
-        <div onClick={() => navigate('/')}>Trang chủ /</div>
-        <div>Liên hệ</div>
-      </div>
+      <PageNavbar page={PAGE_NAMES.CONTACT} />
       <div className={styles.contact}>
         <div>
           <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
@@ -139,49 +73,27 @@ export default function Contact() {
               Nếu bạn có thắc mắc gì, có thể gửi yêu cầu cho chúng tôi, và chúng tôi sẽ liên lạc lại với bạn sớm nhất có
               thể
             </div>
-            <div className={styles.loginName}>
-              <div>Họ và tên *</div>
-              <div id='name' className={`${errorName ? styles.borderRed : ''}`}>
-                <input value={name} type='text' placeholder='Nhập họ và tên của bạn' onChange={handleOnchageName} />
+            <FormGeneral form={form} onFinish={onFinish}>
+              <Form.Item name='name' rules={validateName}>
+                <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_NAME} />
+              </Form.Item>
+              <div className={styles.groupInput}>
+                <Form.Item style={{ width: '100%' }} name='phone' rules={validatePhone}>
+                  <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_PHONE} />
+                </Form.Item>
+                <Form.Item name='email' style={{ width: '100%' }} rules={validateEmail}>
+                  <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_EMAIL} />
+                </Form.Item>
               </div>
-              <div className={styles.errorText}>{errorName}</div>
-            </div>
-            <div className={styles.loginPhone}>
-              <div className={styles.phone}>
-                <div>Số điện thoại *</div>
-                <div id='phone' className={`${errorPhone ? styles.borderRed : ''}`}>
-                  <input
-                    value={phone}
-                    type='text'
-                    placeholder='Nhập số điện thoại của bạn '
-                    onChange={handleOnchagePhone}
-                  />
-                </div>
-                <div className={styles.errorText}>{errorPhone}</div>
-              </div>
-              <div className={styles.loginEmail}>
-                <div>Email</div>
-                <div id='email' className={`${errorEmail ? styles.borderRed : ''}`}>
-                  <input
-                    onChange={handleOnchagEmail}
-                    value={email}
-                    type='text'
-                    name=''
-                    id=''
-                    placeholder='Nhập địa chỉ Email của bạn'
-                  />
-                </div>
-                <div className={styles.errorText}>{errorEmail}</div>
-              </div>
-            </div>
-            <div className={styles.content}>
-              <div>Nội dung liên hệ *</div>
-              <div id='content' className={`${errorContent ? styles.borderRed : ''}`}>
-                <textarea value={content} onChange={handleOnchageContent} placeholder='Nội dung liên hệ'></textarea>
-              </div>
-              <div className={styles.errorText}>{errorContent}</div>
-              <div onClick={handleOnSubmit}>GỬI THÔNG TIN</div>
-            </div>
+              <Form.Item name='content' rules={validateContent}>
+                <TextArealInput className={styles.inputTextAreal} placeholder={PLACEHOLDER.PLEASE_ENTER_CONTENT} />
+              </Form.Item>
+              <Form.Item>
+                <ButtonGeneral className={styles.btnSubmit} type='primary' htmlType='submit'>
+                  GỬI THÔNG TIN
+                </ButtonGeneral>
+              </Form.Item>
+            </FormGeneral>
           </div>
         </div>
       </div>

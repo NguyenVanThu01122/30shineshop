@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { ERROR_MESSAGES } from '../../helpers/contanst'
+import { ERROR_MESSAGES, PAGE_NAMES } from '../../helpers/contanst'
 import { getBlog } from '../../service/blog'
 import styles from './styles.module.css'
+import PageNavbar from '../../components/PageNavbar'
 interface ListBlogType {
   id: number
   image: string
@@ -31,10 +32,7 @@ export default function Blog() {
 
   return (
     <div className={styles.pageBlog}>
-      <div className={styles.headerBlog}>
-        <div onClick={() => navigate('/')}>Trang chủ</div>
-        <div>/ Blog</div>
-      </div>
+      <PageNavbar page={PAGE_NAMES.BLOG} />
       <div className={styles.sectionTwo}>
         <div className={styles.productIntroduction}>
           <div className={styles.blog}>

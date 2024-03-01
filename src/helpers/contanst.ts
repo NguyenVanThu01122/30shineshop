@@ -18,7 +18,25 @@ export const SUCCESS_MESSAGE = {
   SUCCESS_LOGIN: 'Đăng nhập thành công'
 }
 
+export const LOGOUT_MESSAGE = {
+  LOGOUT_AUTHENTICATION_MESSAGE: 'Bạn có chắc chắn muốn đăng xuất không ?'
+}
+
+export const NOTIFICATION = 'Tính  năng này đang phát triển'
+export const NO_PRODUCT_FOUND_MESSAGE = 'RẤT TIẾC BẠN KHÔNG TÌM THẤY SẢN PHẨM NÀO !'
+
 export const TOOLTIP = 'Bạn muốn người khác gọi mình là gì?'
+export const PAGE_NAMES = {
+  HOME: 'Trang chủ',
+  LIST_PRODUCTS: 'Danh sách sản phẩm',
+  SEARCH_RESULTS: 'Kết quả tìm kiếm',
+  BRAND: 'Thương hiệu',
+  CONTACT: 'Liên hệ',
+  INTRODUCE: 'Giới thiệu',
+  BLOG: 'Tin tức làm đẹp',
+  ACCOUNT_MANAGEMENT: 'Quản lý tài khoản'
+}
+
 export const PLACEHOLDER = {
   PLEASE_ENTER_NAME: 'Vui lòng nhập họ tên *',
   PLEASE_ENTER_EMAIL: 'Vui lòng nhập Email *',
@@ -26,6 +44,7 @@ export const PLACEHOLDER = {
   PLEASE_CONFIRM_NEW_PASSWORD: 'Vui lòng xác nhận mật khẩu mới *',
   PLEASE_CONFIRM_PASSWORD: 'Vui lòng xác thực lại mật khẩu *',
   PLEASE_ENTER_GENDER: 'Vui lòng chọn giới tính',
+  PLEASE_ENTER_CONTENT: 'Nội dung liên hệ *',
 
   PLEASE_ENTER_PHONE: 'Vui lòng nhập số điện thoại *',
   PLEASE_ENTER_ADDRESS: 'Vui lòng nhập địa chỉ *',
@@ -34,7 +53,8 @@ export const PLACEHOLDER = {
   ENTER_PRODUCT_REVIEW: 'Nhập đánh giá về sản phẩm...',
   ENTER_PRODUCT_NAME: 'Nhập tên sản phẩm',
   LOWEST_PRICE: 'Gía thấp nhất',
-  HIGHEST_PRICE: 'Gía cao nhất'
+  HIGHEST_PRICE: 'Gía cao nhất',
+  ENTER_PRODUCT: 'Nhập tên sản phẩm...'
 }
 
 export const LABEL = {

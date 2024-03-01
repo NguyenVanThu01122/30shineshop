@@ -1,8 +1,8 @@
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { OrderStatusUtils } from '../../helpers/orderUtils'
 import { scrollToTop } from '../../helpers/scrollToTop'
+import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
 import { getOrderSuccess } from '../../service/orderSuccess'
 import { OderSuccessWrapper } from './styled'
 
@@ -23,7 +23,7 @@ export default function OrderSuccess() {
   const navigate = useNavigate()
   const params = useParams()
   const [orderDetail, setOrderDetail] = useState<OrderDetilType>()
-  const { orderStatusCommon } = OrderStatusUtils()
+  const { orderStatusCommon } = useOrderStatusUtils()
   const methodPayment = {
     offline: 'offline',
     online: 'online'

@@ -6,7 +6,7 @@ import SidebarAccount from '../../components/SidebarAccount'
 import { ButtonGeneral } from '../../components/Ui/button'
 import { ERROR_MESSAGES, PLACEHOLDER } from '../../helpers/contanst'
 import { validateBirthday, validateEmail, validateName, validatePhone } from '../../helpers/validationRules'
-import { updateAccount } from '../../redux/actions/detailProduct'
+import { updateAccount } from '../../redux/actions/app'
 import { TypeBodyUser, getUser, updateUser } from '../../service/account'
 import styles from './styles.module.css'
 
@@ -71,7 +71,7 @@ export default function Account() {
           <Form.Item name='date' rules={validateBirthday} label='Ngày sinh' className={styles.formLogin}>
             <Input type='date' size='large' />
           </Form.Item>
-          <ButtonGeneral className={styles.btnUpdate} onClick={submitForm} type='primary' size='large' >
+          <ButtonGeneral className={styles.btnUpdate} onClick={submitForm} type='primary' size='large'>
             Cập nhật
           </ButtonGeneral>
         </Form>

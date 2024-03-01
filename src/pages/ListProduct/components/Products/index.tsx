@@ -1,43 +1,16 @@
 import { useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
-import { CurrencyFormat } from '../../../../components/CurrencyFormat'
-import { StarProduct } from '../../../../components/StarProduct'
+import { Products } from '../../../../components/Products'
+import { useIsLoading } from '../../../../helpers/useIsLoading'
 import styles from './styles.module.scss'
 
-export default function Products() {
+export default function ProductsComponent() {
   const products = useSelector((state: any) => state.app.products)
-  const navigate = useNavigate()
+  let [isLoading, setIsLoading] = useIsLoading()
 
-  return products?.map((item: any) => {
-    return (
-      <div className={styles.itemProduct} key={item?.id}>
-        <div className={styles.stickerPercen}>
-          <div></div>
-          <div className={styles.percent}>
-            <span>-</span> {Math.floor(100 - (item?.salePrice / item?.originPrice) * 100)}%
-          </div>
-          <div></div>
-        </div>
-        <div key={item?.id} className={styles.product} onClick={() => navigate(`/detail-product/${item?.id}`)}>
-          <div className={styles.images}>
-            <img src={item?.image} alt='images' />
-          </div>
-          <div>{item?.name}</div>
-          <div className={styles.productPrice}>
-            <div>
-              <CurrencyFormat amount={item?.salePrice} />
-              <span>đ</span>
-            </div>
-            <div>
-              <CurrencyFormat amount={item?.originPrice} />
-              <span>đ</span>
-            </div>
-          </div>
-          <div className={styles.iconStar}>
-            <StarProduct numberYellow={item?.star} numberGray={5 - item?.star} />
-          </div>
-        </div>
-      </div>
-    )
-  })
+  return (
+    <div className={styles.wrapperProducts}>
+      <div className={styles.findProducts}>{!isLoading && <div>{products.length} sản phẩm được tìm thấy</div>}</div>
+      <Products products={products} />
+    </div>
+  )
 }

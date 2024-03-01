@@ -9,9 +9,9 @@ import SidebarAccount from '../../components/SidebarAccount'
 import { ButtonGeneral } from '../../components/Ui/button'
 import { Loading } from '../../components/Ui/loading'
 import { NO_DATA_MESSAGE } from '../../helpers/contanst'
-import { OrderStatusUtils } from '../../helpers/orderUtils'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
 import { getDetailOrder } from '../../service/detailOrder'
 import { ItemDetailOrder, WrapperDetailOrder } from './styles'
 import { OrderDetailType, ProductType, TimelineDetailItemType } from './type'
@@ -21,7 +21,7 @@ function DetailOrder() {
   const navigate = useNavigate()
   const params = useParams()
   const [isLoading, setIsLoading] = useIsLoading()
-  const { orderStatusCommon, colorStatus } = OrderStatusUtils()
+  const { orderStatusCommon, colorStatus } = useOrderStatusUtils()
   const isOrderDetailValid = orderDetail && orderDetail.products && orderDetail.products.length > 0
 
   // hàm lấy chi tiết đơn hàng

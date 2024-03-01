@@ -5,7 +5,7 @@ import { Brands } from './components/Brands'
 import { ServiceSection } from './components/Commitment'
 import { HomeCarousel } from './components/HomeCarousel'
 import ProductRecommendations from './components/ProductRecommendations'
-import { Products } from './components/Products'
+import { ProductsHome } from './components/Products'
 import SearchProducts from './components/SearchProduct'
 import { Wrapper } from './styles'
 
@@ -19,7 +19,7 @@ function Home() {
       <HomeCarousel />
       <ServiceSection />
       <SearchProducts />
-      <Products />
+      <ProductsHome />
       <ProductRecommendations />
       <Brands />
       <Blogs />

@@ -13,6 +13,7 @@ interface TypeInputGeneralProps {
   defaultChecked?: boolean
   onClick?: () => void | undefined
   onBlur?: () => void
+  style?: any
 }
 
 export const InputGeneral = ({
@@ -27,7 +28,8 @@ export const InputGeneral = ({
   onClick,
   className,
   checked,
-  onBlur
+  onBlur,
+  style
 }: TypeInputGeneralProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (onChange) {
@@ -48,6 +50,7 @@ export const InputGeneral = ({
       checked={checked}
       onBlur={onBlur}
       defaultChecked={defaultChecked}
+      style={style}
     ></Input>
   )
 }

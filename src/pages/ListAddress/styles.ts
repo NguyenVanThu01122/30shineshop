@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const WrapperListAddress = styled.div`
+  max-width: 1600px;
   display: flex;
   justify-content: center;
   margin: 35px 0px;
@@ -51,5 +52,3 @@ export const ContentAddress = styled.div`
     }
   }
 `
-
-

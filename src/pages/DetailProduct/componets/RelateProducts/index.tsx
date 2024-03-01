@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { StarProduct } from '../../../../components/StarProduct'
 import { ERROR_MESSAGES } from '../../../../helpers/contanst'
-import { addListProduct } from '../../../../redux/actions/detailProduct'
+import { addListProduct } from '../../../../redux/actions/app'
 import { getProductRelate } from '../../../../service/detailProduct'
 import styles from './styles.module.scss'
 

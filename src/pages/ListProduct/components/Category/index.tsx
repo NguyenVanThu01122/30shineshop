@@ -1,8 +1,6 @@
 import styles from './styles.module.scss'
 interface TypeCategoryProps {
-  listCategory: {
-    [key: string]: string
-  }
+  listCategory: any
   category: string
   setCategory: React.Dispatch<React.SetStateAction<string>>
 }

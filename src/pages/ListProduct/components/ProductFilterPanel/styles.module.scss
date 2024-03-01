@@ -1,27 +1,28 @@
 .optionItem {
-    width: 80%;
-    margin: auto;
-    padding: 20px;
-    display: flex;
-    gap: 30px;
-    .itemCategory {
-        font-size: 18px;
-        position: relative;
-        .btnCategory {
-          width: 150px;
-          height: 40px;
-          font-weight: bold;
-        }
-      }
-      .customInput {
-        height: 40px;
-        border-radius: 15px;
-        &::placeholder {
-          color: gray;
-          font-size: 17px;
-        }
-      }
-      .customSelect {
-        width: 60%;
-      }
+  max-width: 1300px;
+  margin: auto;
+  padding: 0px 20px;
+  display: flex;
+ 
+  gap: 30px;
+  .itemCategory {
+    font-size: 18px;
+    position: relative;
+    .btnCategory {
+      width: 150px;
+      height: 40px;
+      font-weight: bold;
+    }
   }
+  .customInput {
+    height: 40px;
+    border-radius: 15px;
+    &::placeholder {
+      color: gray;
+      font-size: 17px;
+    }
+  }
+  .customSelect {
+    width: 60%;
+  }
+}

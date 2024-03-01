@@ -59,6 +59,7 @@ export const ModalCart = ({
           handleCancelModal()
           setIsShowTitleProduct(false)
           setIsShowTitleProduct(false)
+          getLengthOfCart()
         })
         .catch((error) => {
           toast.error(error.response?.message)
@@ -78,7 +79,7 @@ export const ModalCart = ({
     <CommonModal
       isModalOpen={isModalOpen}
       onCancel={handleCancelModal}
-      deleteItem={handleDeleteProduct}
+      onOk={handleDeleteProduct}
       modalTitle={modalTitle}
     >
       {modalContent}

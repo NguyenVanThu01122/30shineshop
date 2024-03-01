@@ -1,15 +1,14 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
+import PageNavbar from '../../components/PageNavbar'
+import { PAGE_NAMES } from '../../helpers/contanst'
 import styles from './styles.module.css'
 export default function Introduce() {
-  const navigate = useNavigate()  
+  const navigate = useNavigate()
   return (
     <div className={styles.pageIntroduce}>
-      <div className={styles.introduce}>
-        <div onClick={()=>navigate('/')}>Trang chủ</div>
-        <div>/ Giới thiệu</div>
-      </div>
+      <PageNavbar page={PAGE_NAMES.INTRODUCE} />
       <div className={styles.titleIntro}>
         <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
         <div>GIỚI THIỆU</div>

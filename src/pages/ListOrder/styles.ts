@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const WrapperOrder = styled.div`
+  max-width: 1600px;
   display: flex;
   justify-content: center;
   margin: 35px 0px;
@@ -8,7 +9,7 @@ export const WrapperOrder = styled.div`
 export const ItemOrder = styled.div`
   flex: 0.7;
   background-color: rgb(238, 238, 238);
-  padding: 20px;
+  padding: 20px 0px;
   height: 80vh;
   overflow-y: auto;
   position: relative;
@@ -30,7 +31,6 @@ export const ItemOrder = styled.div`
   ::-webkit-scrollbar-track:hover {
     background-color: #d4d4d4; /* Màu nền khi hover lên thanh cuộn */
   }
-
 `
 export const MyOrder = styled.div`
   color: red;
