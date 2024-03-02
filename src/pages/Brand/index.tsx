@@ -1,6 +1,6 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
@@ -8,14 +8,16 @@ import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, NO_DATA_MESSAGE, PAGE_NAMES } from '../../helpers/contanst'
 import { useIsLoading } from '../../helpers/useIsLoading'
-import { getListBrand } from '../../service/brand'
+import { getListBrand } from '../../services/brand'
 import styles from './styles.module.css'
 
-interface ListBrandType {
+export interface ListBrandType {
   id: number
   image: string
   name: string
 }
+const ContainerBrandsLazy = lazy(() => import('./ContainerBrands'))
+
 export default function Brand() {
   let [listBrand, setListBrand] = useState([])
   const navigate = useNavigate()
@@ -43,18 +45,9 @@ export default function Brand() {
           THƯƠNG HIỆU
         </div>
       </div>
-      {listBrand.length > 0 && (
-        <div className={styles.brandParent}>
-          {listBrand.map((item: ListBrandType) => {
-            return (
-              <div className={styles.brandItem} key={item.id}>
-                <img src={item.image} />
-                <div>{item.name}</div>
-              </div>
-            )
-          })}
-        </div>
-      )}
+      <Suspense>
+        <ContainerBrandsLazy listBrand={listBrand} />
+      </Suspense>
       {isLoading && <Loading />}
       {!isLoading && !listBrand.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_BRAND} />}
     </div>

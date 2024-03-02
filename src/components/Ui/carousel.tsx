@@ -11,7 +11,6 @@ interface CarouselGeneralProps {
   dotPosition?: 'top' | 'bottom' | 'left' | 'right'
   style?: CSSProperties // Thêm kiểu CSSProperties cho style prop
 }
-
 export const CarouselGeneral = ({
   children,
   autoplay,

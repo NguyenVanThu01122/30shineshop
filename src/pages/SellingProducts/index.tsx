@@ -5,7 +5,7 @@ export default function SellingProducts() {
       <div className={styles.homeSellingProducts}>
         <div>Trang chủ</div>
         <span>/</span>
-         <div>Sản phẩm bán chạy nhất</div>
+        <div>Sản phẩm bán chạy nhất</div>
       </div>
       <div className={styles.sellingProducts}>
         <div className={styles.listProducts}>
@@ -120,7 +120,6 @@ export default function SellingProducts() {
             </div>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
   )

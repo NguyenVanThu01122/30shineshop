@@ -12,14 +12,14 @@ interface TitleCartProps {
   isShowTitleProduct: boolean
   setIsShowTitleProduct: Dispatch<SetStateAction<boolean>>
 }
-export const TitleCart = ({
+export default function TitleCart({
   handleOpenModal,
   listCartId,
   listCart,
   isShowTitleProduct,
   setIsShowTitleProduct,
   setListCartId
-}: TitleCartProps) => {
+}: TitleCartProps) {
   // hàm mở tiêu đề thông tin sản phẩm
   const showTitle = () => {
     setIsShowTitleProduct(!isShowTitleProduct)
@@ -39,7 +39,13 @@ export const TitleCart = ({
   return (
     <WrapperTitle>
       <div className='detailTitle'>
-        <input checked={isShowTitleProduct} onClick={showTitle} type='checkbox' id='checkbox1' />
+        <input
+          checked={isShowTitleProduct}
+          disabled={!listCart.length}
+          onClick={showTitle}
+          type='checkbox'
+          id='checkbox1'
+        />
         <div className='checkboxProduct'>
           {!isShowTitleProduct ? (
             <div className='titleProduct'>

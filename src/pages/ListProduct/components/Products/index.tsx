@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
-import { Products } from '../../../../components/Products'
 import { useIsLoading } from '../../../../helpers/useIsLoading'
 import styles from './styles.module.scss'
+import Products from '../../../../components/Products'
 
 export default function ProductsComponent() {
   const products = useSelector((state: any) => state.app.products)

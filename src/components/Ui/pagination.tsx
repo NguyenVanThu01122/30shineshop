@@ -1,6 +1,6 @@
 import { Pagination } from 'antd'
 
-export const PaginationUi = ({
+const PaginationUi = ({
   current,
   total,
   pageSize,
@@ -23,3 +23,4 @@ export const PaginationUi = ({
     </div>
   )
 }
+export default PaginationUi

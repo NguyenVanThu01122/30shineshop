@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
-import { getOrderSuccess } from '../../service/orderSuccess'
+import { getOrderSuccess } from '../../services/orderSuccess'
 import { OderSuccessWrapper } from './styled'
 
 interface OrderDetilType {

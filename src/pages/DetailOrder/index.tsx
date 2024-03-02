@@ -12,7 +12,7 @@ import { NO_DATA_MESSAGE } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
-import { getDetailOrder } from '../../service/detailOrder'
+import { getDetailOrder } from '../../services/detailOrder'
 import { ItemDetailOrder, WrapperDetailOrder } from './styles'
 import { OrderDetailType, ProductType, TimelineDetailItemType } from './type'
 

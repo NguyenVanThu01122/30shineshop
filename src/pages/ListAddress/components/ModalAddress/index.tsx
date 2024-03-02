@@ -1,8 +1,8 @@
 import { FormInstance } from 'antd'
 import { toast } from 'react-toastify'
 import { ButtonGeneral } from '../../../../components/Ui/button'
-import { CommonModal } from '../../../../components/Ui/commonModal'
-import { TypeAddress, addAddress, updateAddress } from '../../../../service/listAddress'
+import { CommonModal } from '../../../../components/Ui/modal'
+import { TypeAddress, addAddress, updateAddress } from '../../../../services/listAddress'
 import { FormComponent } from '../FormAddress'
 import { GroupButton, ItemTitle } from './styles'
 

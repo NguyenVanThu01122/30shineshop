@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { DetailProductProps } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
-import { CommonModal } from '../../../../components/Ui/commonModal'
+import { CommonModal } from '../../../../components/Ui/modal'
 import { useBuyNow } from '../../../../helpers/useBuyNow'
 import styles from './styles.module.scss'
 interface modalCartProps {
@@ -12,7 +12,7 @@ interface modalCartProps {
   isModalOpen: boolean
   setIsModalOpen: any
 }
-export const ModalCart = ({ detailProduct, count, totalCart, isModalOpen, setIsModalOpen }: modalCartProps) => {
+export default function ModalCart({ detailProduct, count, totalCart, isModalOpen, setIsModalOpen }: modalCartProps) {
   const navigate = useNavigate()
   const [handleBuyNow] = useBuyNow()
   const handleCancel = () => {

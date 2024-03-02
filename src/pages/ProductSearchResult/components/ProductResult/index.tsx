@@ -1,4 +1,5 @@
-import { Products } from '../../../../components/Products'
+
+import Products from '../../../../components/Products'
 import { ProductResultType } from '../../../../redux/reducers/app'
 import { Title, WrapperResult } from './styles'
 

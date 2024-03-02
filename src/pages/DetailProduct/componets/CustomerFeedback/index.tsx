@@ -8,7 +8,7 @@ import { TextArealInput } from '../../../../components/Ui/textAreaInput'
 import { MESSAGE_PICK_STAR, PLACEHOLDER } from '../../../../helpers/contanst'
 import { scrollToTop } from '../../../../helpers/scrollToTop'
 import { validateComment } from '../../../../helpers/validationRules'
-import { TypeEvaluate, getlistEvaluete, sendEvaluate } from '../../../../service/detailProduct'
+import { TypeEvaluate, getlistEvaluete, sendEvaluate } from '../../../../services/detailProduct'
 import styles from './styles.module.scss'
 export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   const [listFeedback, setListFeedback] = useState<any>([])

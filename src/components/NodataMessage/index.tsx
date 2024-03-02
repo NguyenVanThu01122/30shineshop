@@ -13,8 +13,6 @@ const NoDataMessage = ({ message, image }: { message?: string; image?: string })
       {image ? (
         <BoxNoDataCart>
           <img src={image} alt='' />
-          <div>{message}</div>
-
           <ButtonGeneral className='btn' onClick={() => navigate('/')}>
             Tiếp tục mua sắm
             <span>

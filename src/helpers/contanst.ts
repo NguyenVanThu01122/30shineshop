@@ -80,7 +80,8 @@ export const NO_DATA_MESSAGE = {
   NO_ORDER: 'Bạn không có đơn hàng nào !',
   NO_ADDRESS: 'Bạn không có địa chỉ nào !',
   NO_PRODUCT: 'Bạn không có sản phẩm nào !',
-  NO_BRAND: 'Bạn không có thương hiệu nào !'
+  NO_BRAND: 'Bạn không có thương hiệu nào !',
+  NO_PRODUCT_CART:'Bạn không có sản phẩm nào trong giỏ hàng !'
 }
 export const STRING = {
   DELETE_PRODUCT: 'Xóa sản phẩm',

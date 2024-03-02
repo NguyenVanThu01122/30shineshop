@@ -4,10 +4,10 @@ import { toast } from 'react-toastify'
 import { ProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { AMOUNT_PRODUCTS, ERROR_MESSAGES, TOTAL_PRICE } from '../../../../helpers/contanst'
-import { orderCart } from '../../../../service/cart'
+import { orderCart } from '../../../../services/cart'
 import { WrapperInformation } from './styles'
 
-export const InformationOrder = ({ listCartId, listCart }: { listCart: ProductType[]; listCartId: any }) => {
+export default function InformationOrder({ listCartId, listCart }: { listCart: ProductType[]; listCartId: any }) {
   const [totalPrice, setTotalPrice] = useState(TOTAL_PRICE)
   const [amountProducts, setAmountProducts] = useState(AMOUNT_PRODUCTS)
   const navigate = useNavigate()

@@ -5,10 +5,10 @@ import { ProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { InputGeneral } from '../../../../components/Ui/input'
-import { updateCart } from '../../../../service/cart'
+import { updateCart } from '../../../../services/cart'
 import { DetailProductCart } from './styles'
 
-export const ListProductCart = ({
+export default function ListProductCart({
   getListCart,
   listCart,
   listCartId,
@@ -20,7 +20,7 @@ export const ListProductCart = ({
   listCartId: string[]
   setListCartId: (string: string[]) => void
   handleOpenModal: (type: string, id: string) => void
-}) => {
+}) {
   // hàm click vào item checkbox
   const handleClickItemCheckbox = (id: string) => {
     if (!listCartId.includes(id)) {

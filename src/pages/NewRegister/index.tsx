@@ -17,7 +17,7 @@ import {
   validatePassword,
   validatePhone
 } from '../../helpers/validationRules'
-import { register } from '../../service/auth.servie'
+import { register } from '../../services/auth.servie'
 import { WrapperRegister } from './styles'
 
 function NewRegister() {

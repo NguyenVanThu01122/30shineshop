@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { saveTotalCart } from '../redux/actions/app'
-import { getListCartProduct } from '../service/cart'
+import { getListCartProduct } from '../services/cart'
 import { ERROR_MESSAGES } from './contanst'
 
 export const useGetLengthOfCart = () => {

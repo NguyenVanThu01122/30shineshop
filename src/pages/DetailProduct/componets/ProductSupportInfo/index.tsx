@@ -1,5 +1,5 @@
 import styles from './styles.module.scss'
-export const ProductSupportInfo = () => {
+export default function ProductSupportInfo() {
   return (
     <div className={styles.itemSupportProduct}>
       <div className={styles.support}>

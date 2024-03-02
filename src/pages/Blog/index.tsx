@@ -4,10 +4,10 @@ import { useEffect, useState } from 'react'
 import { AiOutlineClockCircle } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { ERROR_MESSAGES, PAGE_NAMES } from '../../helpers/contanst'
-import { getBlog } from '../../service/blog'
-import styles from './styles.module.css'
 import PageNavbar from '../../components/PageNavbar'
+import { ERROR_MESSAGES, PAGE_NAMES } from '../../helpers/contanst'
+import { getBlog } from '../../services/blog'
+import styles from './styles.module.css'
 interface ListBlogType {
   id: number
   image: string

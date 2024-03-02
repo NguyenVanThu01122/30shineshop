@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import { buyNowProduct } from '../service/detailProduct'
 import { toast } from 'react-toastify'
+import { buyNowProduct } from '../services/detailProduct'
 import { ERROR_MESSAGES } from './contanst'
 
 export const useBuyNow = () => {

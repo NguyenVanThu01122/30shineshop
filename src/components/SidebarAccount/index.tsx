@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { checkLogin } from '../../helpers/checkLogin'
 import { LOGOUT_MESSAGE } from '../../helpers/contanst'
 import { useLogOut } from '../../helpers/useLogOut'
-import { CommonModal } from '../Ui/commonModal'
+import { CommonModal } from '../Ui/modal'
 import styles from './styles.module.scss'
 
 function SidebarAccount() {

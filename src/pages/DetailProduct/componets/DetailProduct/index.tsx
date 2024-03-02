@@ -8,8 +8,8 @@ import { StarProduct } from '../../../../components/StarProduct'
 import { ERROR_MESSAGES } from '../../../../helpers/contanst'
 import { useBuyNow } from '../../../../helpers/useBuyNow'
 import { useGetLengthOfCart } from '../../../../helpers/useGetLengthOfCart'
-import { getListCartProduct } from '../../../../service/cart'
-import { addProductCart } from '../../../../service/detailProduct'
+import { getListCartProduct } from '../../../../services/cart'
+import { addProductCart } from '../../../../services/detailProduct'
 import { CustomerFeedback } from '../CustomerFeedback'
 import { WrapperDetail } from './styles'
 
@@ -23,7 +23,7 @@ interface ComponentDetailProps {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export const ComponentDetailProduct = ({
+export default function ComponentDetailProduct({
   count,
   setCount,
   imageSelect,
@@ -31,7 +31,7 @@ export const ComponentDetailProduct = ({
   detailProduct,
   handleGetDetail,
   setIsModalOpen
-}: ComponentDetailProps) => {
+}: ComponentDetailProps) {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [handleBuyNow] = useBuyNow()
 

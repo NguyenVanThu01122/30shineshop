@@ -11,7 +11,7 @@ export const WrapperMessage = styled.div`
   margin-top: 70px;
   gap: 10px;
   & > div {
-    font-size: 18px;
+    font-size: 20px;
     color: red;
     font-style: italic;
   }
@@ -36,8 +36,8 @@ export const BoxNoDataCart = styled.div`
   .btn {
     font-weight: 600;
     font-size: 18px;
-    margin-top: 25px;
-    height: 45px;
+    margin-top: 30px;
+    height: 40px;
     color: white !important;
     background-color: orange;
     display: flex;

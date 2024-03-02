@@ -10,7 +10,7 @@ import { checkLogin } from '../../../../helpers/checkLogin'
 import { ERROR_MESSAGES, PLACEHOLDER } from '../../../../helpers/contanst'
 import logo30shine from '../../../../images/Logo_30shine.svg'
 import { saveIsLoading, saveKeywordSearch, saveProductSearch } from '../../../../redux/actions/app'
-import { searchProduct } from '../../../../service/header'
+import { searchProduct } from '../../../../services/header'
 import { InputGeneral } from '../../../Ui/input'
 import styles from './styles.module.scss'
 

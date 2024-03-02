@@ -7,7 +7,7 @@ import { FormGeneral } from '../../../../components/Ui/form'
 import { InputGeneral } from '../../../../components/Ui/input'
 import { LABEL, PLACEHOLDER, SUCCESS_MESSAGE } from '../../../../helpers/contanst'
 import { validateEmail, validatePassword } from '../../../../helpers/validationRules'
-import { login } from '../../../../service/auth.servie'
+import { login } from '../../../../services/auth.servie'
 import { StyledFormLogin } from './styles'
 
 interface FormLoginProps {

@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { register } from '../../services/auth.servie'
 import styles from './styles.module.css'
 
 export default function Register() {
@@ -27,7 +27,7 @@ export default function Register() {
 
   const [isPassword, setIsPassword] = useState(false)
   const [isRepeatPassword, setIsRepeatPassword] = useState(false)
-  const handleOnchageName = (e: any) => {
+  const handleOnchangeName = (e: any) => {
     const name = e.target.value
     setName(name)
     if (!name) {
@@ -38,7 +38,7 @@ export default function Register() {
       setErrorName('')
     }
   }
-  const handleOnchagePassword = (e: any) => {
+  const handleOnchangePassword = (e: any) => {
     const password = e.target.value
     // const arr = ['!', '@', '$', '%', '&', '*']
     setPassword(password)
@@ -54,7 +54,7 @@ export default function Register() {
       setErrorPassword('')
     }
   }
-  const handleOnchageBirthday = (e: any) => {
+  const handleOnchangeBirthday = (e: any) => {
     const birthday = e.target.value
     setBirthday(birthday)
     if (!birthday) {
@@ -63,7 +63,7 @@ export default function Register() {
       setErrorBirthday('')
     }
   }
-  const handleOnchageEmail = (e: any) => {
+  const handleOnchangeEmail = (e: any) => {
     const email: string = e.target.value
     setEmail(email)
     if (!email) {
@@ -74,7 +74,7 @@ export default function Register() {
       setErrorEmail('')
     }
   }
-  const handleOnchagePhone = (e: any) => {
+  const handleOnchangePhone = (e: any) => {
     const phone = String(e.target.value)
     setPhone(phone)
     if (!phone) {
@@ -87,7 +87,7 @@ export default function Register() {
       setErrorPhone('')
     }
   }
-  const handleOnchageRepeat = (e: any) => {
+  const handleOnchangeRepeat = (e: any) => {
     const repeat = e.target.value
     setRepeat(repeat)
     if (!repeat) {
@@ -98,7 +98,7 @@ export default function Register() {
       setErrorRepeat('')
     }
   }
-  const handleOnchageGender = (e: any) => {
+  const handleOnchangeGender = (e: any) => {
     const gender = e.target.value
     setGender(gender)
     if (!gender) {
@@ -164,8 +164,7 @@ export default function Register() {
         telephone: phone,
         date: birthday
       }
-      privateAxios
-        .post('/register', data)
+      register(data)
         .then((response) => {
           message.success(response.data?.message)
           setName('')
@@ -257,7 +256,7 @@ export default function Register() {
                   type='text'
                   name='name'
                   placeholder='Họ tên'
-                  onChange={handleOnchageName}
+                  onChange={handleOnchangeName}
                 />
               </div>
               <div className={styles.errorText}>{errorName}</div>
@@ -275,7 +274,7 @@ export default function Register() {
                   type={isPassword ? 'text' : 'password'}
                   name='password'
                   placeholder='Mật khẩu'
-                  onChange={handleOnchagePassword}
+                  onChange={handleOnchangePassword}
                 />
                 <FontAwesomeIcon icon={faEye} onClick={handleClickPassword} />
               </div>
@@ -294,7 +293,7 @@ export default function Register() {
                   type='date'
                   name='birthday'
                   id='birthday'
-                  onChange={handleOnchageBirthday}
+                  onChange={handleOnchangeBirthday}
                 />
               </div>
               <div className={styles.errorText}>{errorBirthday}</div>
@@ -312,7 +311,7 @@ export default function Register() {
                   type='number'
                   name='number'
                   placeholder='Số điện thoại'
-                  onChange={handleOnchagePhone}
+                  onChange={handleOnchangePhone}
                 />
               </div>
               <div className={styles.errorText}>{errorPhone}</div>
@@ -332,7 +331,7 @@ export default function Register() {
                   type='email'
                   name='email'
                   placeholder='Email'
-                  onChange={handleOnchageEmail}
+                  onChange={handleOnchangeEmail}
                 />
               </div>
               <div className={styles.errorText}>{errorEmail}</div>
@@ -351,7 +350,7 @@ export default function Register() {
                   type={isRepeatPassword ? 'text' : 'password'}
                   name='password'
                   placeholder='Xác thực lại mật khẩu'
-                  onChange={handleOnchageRepeat}
+                  onChange={handleOnchangeRepeat}
                 />
                 <FontAwesomeIcon icon={faEye} onClick={handleClickRepeat} />
               </div>
@@ -369,7 +368,7 @@ export default function Register() {
                   value={gender}
                   className={styles.option}
                   id='gender'
-                  onChange={handleOnchageGender}
+                  onChange={handleOnchangeGender}
                 >
                   <option value=''>Vui lòng chọn giới tính</option>
                   <option value='male'>Nam</option>
@@ -394,7 +393,6 @@ export default function Register() {
         </div>
         <div className={styles.registerLogin}>
           <div onClick={handleSubmit}>{}ĐĂNG KÝ</div>
-
         </div>
       </div>
     </div>

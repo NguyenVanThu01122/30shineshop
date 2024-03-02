@@ -1,11 +1,10 @@
 import { faEye, faLock, faUser } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import {RxEyeOpen  } from "react-icons/ri";
 import { useState } from 'react'
 
-import { message } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { privateAxios } from '../../service/axios'
+import { toast } from 'react-toastify'
+import { login } from '../../services/auth.servie'
 import styles from './styles.module.css'
 export default function Login() {
   const navigate = useNavigate()
@@ -14,8 +13,8 @@ export default function Login() {
   const [errorEmail, setErrorEmail] = useState('')
   const [errorPassword, setErrorPassword] = useState('')
   const [isShowPassword, setIsPassword] = useState(false)
-  
-  const   handleOnChangeEmail = (e: any) => {
+
+  const handleOnChangeEmail = (e: any) => {
     const valueEmail = e.target.value
     setEmail(valueEmail)
     if (!valueEmail) {
@@ -50,8 +49,7 @@ export default function Login() {
         password: password,
         email: email
       }
-      privateAxios
-        .post('/login', data)
+      login(data)
         .then((response) => {
           const result = response.data
           localStorage.setItem('token', result?.token)
@@ -60,7 +58,7 @@ export default function Login() {
         })
         .catch((error: any) => {
           const objError = error?.response?.data
-          message.error(objError?.message)
+          toast.error(objError?.message)
         })
     }
   }

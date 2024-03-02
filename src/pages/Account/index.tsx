@@ -7,7 +7,7 @@ import { ButtonGeneral } from '../../components/Ui/button'
 import { ERROR_MESSAGES, PLACEHOLDER } from '../../helpers/contanst'
 import { validateBirthday, validateEmail, validateName, validatePhone } from '../../helpers/validationRules'
 import { updateAccount } from '../../redux/actions/app'
-import { TypeBodyUser, getUser, updateUser } from '../../service/account'
+import { TypeBodyUser, getUser, updateUser } from '../../services/account'
 import styles from './styles.module.css'
 
 export default function Account() {

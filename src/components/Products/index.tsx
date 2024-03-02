@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom'
+import { ProductResultType } from '../../redux/reducers/app'
 import { CurrencyFormat } from '../CurrencyFormat'
 import { StarProduct } from '../StarProduct'
 import styles from './styles.module.scss'
-import { ProductResultType } from '../../redux/reducers/app'
 
-
-export const Products = ({ products }: { products: ProductResultType[] }) => {
+export default function Products({ products }: { products: ProductResultType[] }) {
   const navigate = useNavigate()
   return (
     <div className={styles.containerProduct}>

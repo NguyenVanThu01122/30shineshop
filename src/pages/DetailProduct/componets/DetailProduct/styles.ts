@@ -406,5 +406,58 @@ export const WrapperDetail = styled.div`
         // }
       }
     }
+
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      .product {
+        display: block;
+        .imgProduct {
+          width: 100%;
+        }
+        .detailInformation {
+          width: 100%;
+
+          .orderProducts {
+            .addCart {
+              width: 50%;
+            }
+            .buyNow {
+              width: 50%;
+              & > div:first-child {
+                font-size: 17px;
+                margin-bottom: 4px;
+              }
+              & > div:last-child {
+                font-size: 8px;
+              }
+            }
+          }
+        }
+      }
+      .informationItem {
+        .itemProduct {
+          .instruct div {
+            font-size: 16px !important;
+            padding: 10px 14px !important;
+            margin: auto !important;
+          }
+        }
+        .CustomerFeedback > div:first-child {
+          width: 50%;
+        }
+        .CustomerFeedback {
+          .feedback {
+            .starOder {
+              .reviewStar {
+                margin: 0px 15px;
+              }
+              & > div:last-child {
+                margin-left: 20px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 `

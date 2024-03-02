@@ -18,7 +18,7 @@ interface ProductFilterPanelProps {
   setPage: Dispatch<SetStateAction<number>>
   setKeyword: Dispatch<SetStateAction<string>>
 }
-export const ProductFilterPanel = ({
+export default function ProductFilterPanel({
   isCategory,
   setIsCategory,
   category,
@@ -28,7 +28,7 @@ export const ProductFilterPanel = ({
   setSort,
   setPage,
   setKeyword
-}: ProductFilterPanelProps) => {
+}: ProductFilterPanelProps) {
   const [fnTimeout, setFnTimeout] = useState<any>()
 
   // hàm xử lý changeKeyword kết hợp kĩ thuật debounce (cách 1: logic tự nhiên)

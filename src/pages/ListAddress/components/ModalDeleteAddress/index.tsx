@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
-import { CommonModal } from '../../../../components/Ui/commonModal'
-import { deleteAddress } from '../../../../service/listAddress'
+import { CommonModal } from '../../../../components/Ui/modal'
+import { deleteAddress } from '../../../../services/listAddress'
 
 interface ModalDeleteAddressProps {
   isOpenModalDelete: boolean

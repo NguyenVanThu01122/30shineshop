@@ -1,18 +1,14 @@
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
+import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
-import { ERROR_MESSAGES, NO_DATA_MESSAGE, STRING } from '../../helpers/contanst'
+import { NO_DATA_MESSAGE, STRING } from '../../helpers/contanst'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import image from '../../images/empty cart.svg'
-import { getListCartProduct } from '../../service/cart'
-import { InformationOrder } from './components/InformationOder'
-import { ListProductCart } from './components/ListProductCart'
-import { ModalCart } from './components/ModalCart'
-import { TitleCart } from './components/TitleCart'
-import { CartWrapper } from './style'
-
+import { getListCartProduct } from '../../services/cart'
+import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart } from './style'
 export interface ProductType {
   id: string
   image: string
@@ -21,6 +17,11 @@ export interface ProductType {
   amount: number
   totalPrice: number
 }
+
+const TitleCartLazy = lazy(() => import('./components/TitleCart'))
+const ListProductCartLazy = lazy(() => import('./components/ListProductCart'))
+const InformationOrderLazy = lazy(() => import('./components/InformationOder'))
+const ModalDeleteProductLazy = lazy(() => import('./components/ModalDeleteProduct'))
 
 export default function Cart() {
   let [listCart, setListCart] = useState<ProductType[]>([])
@@ -55,11 +56,6 @@ export default function Cart() {
       setModalTitle(STRING.DELETE_PRODUCT)
       setModalContent(STRING.CONFIRM_DELETE_PRODUCT)
     } else if (action === 'deleteAll') {
-      if (!listCartId.length) {
-        toast.error(ERROR_MESSAGES.NOTIFICATION_ERROR)
-        setIsShowTitleProduct(false)
-        return
-      }
       setIsModalOpen(true)
       setModalTitle(STRING.DELETE_PRODUCT_ALL)
       setModalContent(`Bạn chắc chắn muốn xóa tất cả ${listCartId?.length} sản phẩm khỏi giỏ hàng?`)
@@ -71,56 +67,62 @@ export default function Cart() {
   }, [])
 
   return (
-    <CartWrapper>
-      <div className='itemCart'>
-        <div>GIỎ HÀNG</div>
-        <div className='itemProduct'>
-          <div className='product'>
-            <TitleCart
-              listCart={listCart}
+    <WrapperCart>
+      <PageNavbar page={'Giỏ hàng'} />
+      <ContainerCart>
+        {isLoading && !listCart.length ? (
+          <Loading />
+        ) : !isLoading && !listCart.length ? (
+          <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_PRODUCT_CART} />
+        ) : (
+          /* sử dụng suspense như 1 container chứa các component lazy */
+          <Suspense>
+            <ContentCart>
+              <TitlePage>GIỎ HÀNG</TitlePage>
+              <ItemProduct>
+                <TitleCartLazy
+                  listCart={listCart}
+                  listCartId={listCartId}
+                  setListCartId={setListCartId}
+                  isShowTitleProduct={isShowTitleProduct}
+                  setIsShowTitleProduct={setIsShowTitleProduct}
+                  handleOpenModal={handleOpenModal}
+                />
+
+                {listCart.length > 0 && (
+                  <ListProductCartLazy
+                    listCart={listCart}
+                    listCartId={listCartId}
+                    getListCart={getListCart}
+                    handleOpenModal={handleOpenModal}
+                    setListCartId={setListCartId}
+                  />
+                )}
+              </ItemProduct>
+            </ContentCart>
+
+            {/* thông tin đơn hàng */}
+            <InformationOrderLazy listCartId={listCartId} listCart={listCart} />
+
+            {/* Modal xoa sp gio hang */}
+            <ModalDeleteProductLazy
               listCartId={listCartId}
+              getListCart={getListCart}
+              idDeleteOne={idDeleteOne}
               setListCartId={setListCartId}
-              isShowTitleProduct={isShowTitleProduct}
               setIsShowTitleProduct={setIsShowTitleProduct}
-              handleOpenModal={handleOpenModal}
+              setIsLoading={setIsLoading}
+              getLengthOfCart={getLengthOfCart}
+              isModalOpen={isModalOpen}
+              setIsModalOpen={setIsModalOpen}
+              setModalContent={setModalContent}
+              modalContent={modalContent}
+              modalTitle={modalTitle}
+              setModalTitle={setModalTitle}
             />
-
-            {listCart.length > 0 && (
-              <ListProductCart
-                listCart={listCart}
-                listCartId={listCartId}
-                getListCart={getListCart}
-                handleOpenModal={handleOpenModal}
-                setListCartId={setListCartId}
-              />
-            )}
-
-            {/* item loading */}
-            {isLoading && !listCart.length && <Loading />}
-            {!isLoading && !listCart.length && <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_ORDER} />}
-          </div>
-        </div>
-      </div>
-
-      {/* thông tin đơn hàng */}
-      <InformationOrder listCartId={listCartId} listCart={listCart} />
-
-      {/* Modal xoa 1 gio hang */}
-      <ModalCart
-        listCartId={listCartId}
-        getListCart={getListCart}
-        idDeleteOne={idDeleteOne}
-        setListCartId={setListCartId}
-        setIsShowTitleProduct={setIsShowTitleProduct}
-        setIsLoading={setIsLoading}
-        getLengthOfCart={getLengthOfCart}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        setModalContent={setModalContent}
-        modalContent={modalContent}
-        modalTitle={modalTitle}
-        setModalTitle={setModalTitle}
-      />
-    </CartWrapper>
+          </Suspense>
+        )}
+      </ContainerCart>
+    </WrapperCart>
   )
 }
