@@ -3,9 +3,10 @@ import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
-import { NO_DATA_MESSAGE, STRING } from '../../helpers/contanst'
+import { NO_DATA_MESSAGE, PAGE_NAMES, STRING } from '../../helpers/contanst'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import image from '../../images/empty cart.svg'
 import { getListCartProduct } from '../../services/cart'
 import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart } from './style'
@@ -33,6 +34,7 @@ export default function Cart() {
   const [modalContent, setModalContent] = useState('')
   const [getLengthOfCart] = useGetLengthOfCart()
   const [isLoading, setIsLoading] = useIsLoading()
+  const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
 
   // hàm lấy danh sách sản phảm giỏ hàng
   const getListCart = () => {
@@ -41,6 +43,7 @@ export default function Cart() {
       .then((res) => {
         setListCart(res.data?.listCart)
         setIsLoading(false)
+        setIsShowDataMessage(true)
       })
       .catch((error) => {
         toast.error(error.response?.data?.message)
@@ -68,11 +71,11 @@ export default function Cart() {
 
   return (
     <WrapperCart>
-      <PageNavbar page={'Giỏ hàng'} />
+      <PageNavbar page={PAGE_NAMES.CART} />
       <ContainerCart>
         {isLoading && !listCart.length ? (
           <Loading />
-        ) : !isLoading && !listCart.length ? (
+        ) : !isLoading && !listCart.length && isShowNoDataMessage ? (
           <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_PRODUCT_CART} />
         ) : (
           /* sử dụng suspense như 1 container chứa các component lazy */

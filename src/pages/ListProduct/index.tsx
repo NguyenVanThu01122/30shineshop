@@ -7,6 +7,7 @@ import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, PAGE_NAMES, SORT, TOTAL } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import { addListProduct } from '../../redux/actions/app'
 import { TypeListProduct, listProduct } from '../../services/listProduct'
 import { ListProducts, WrapperListProducts } from './styles'
@@ -99,7 +100,7 @@ export default function ListProduct() {
         </Suspense>
       )}
 
-      {!isLoading && !products?.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_PRODUCT} />}
+      {!isLoading && !products?.length &&  <NoDataMessage message={NO_DATA_MESSAGE.NO_PRODUCT} />}
     </WrapperListProducts>
   )
 }

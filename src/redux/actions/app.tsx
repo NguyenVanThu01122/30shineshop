@@ -1,14 +1,3 @@
-const increase = () => {
-  return {
-    type: 'INCREASE'
-  }
-}
-const decrease = () => {
-  return {
-    type: 'DECREASE'
-  }
-}
-
 const addListProduct = (payload: string) => {
   return {
     type: 'ADD_LIST_PRODUCT',
@@ -62,12 +51,10 @@ const saveIsLoading = (payload: any) => {
 export {
   addListOrder,
   addListProduct,
-  decrease,
-  increase,
   saveDetailProduct,
+  saveIsLoading,
   saveKeywordSearch,
   saveProductSearch,
   saveTotalCart,
-  updateAccount,
-  saveIsLoading
+  updateAccount
 }

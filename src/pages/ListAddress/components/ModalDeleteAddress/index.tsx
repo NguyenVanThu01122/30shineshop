@@ -8,12 +8,12 @@ interface ModalDeleteAddressProps {
   setIsOpenModalDelete: (value: boolean) => void
   idDeleteAddress: string
 }
-export const ModalDeleteAddress = ({
+export default function ModalDeleteAddress({
   isOpenModalDelete,
   idDeleteAddress,
   handleGetListAddress,
   setIsOpenModalDelete
-}: ModalDeleteAddressProps) => {
+}: ModalDeleteAddressProps) {
   // hàm xóa địa chỉ
   const handleDeleteAddress = () => {
     deleteAddress(idDeleteAddress)

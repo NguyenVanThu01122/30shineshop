@@ -14,17 +14,14 @@ function SidebarAccount() {
   const user = useSelector((state: any) => state.app.user)
   const pathname = window.location.pathname
   const logOut = useLogOut()
+  const isLogin = checkLogin()
 
-  const handleShowModel = () => {
-    setIsModel(true)
-  }
   const handleOk = () => {
     logOut()
     setIsModel(false)
   }
-  const handleCancel = () => {
-    setIsModel(false)
-  }
+  const handleShowModel = () => setIsModel(true)
+  const handleCancel = () => setIsModel(false)
 
   return (
     <div className={styles.wrapperSidebar}>
@@ -60,7 +57,7 @@ function SidebarAccount() {
       </div>
       <div className={styles.list}>
         <BsBoxArrowRight />
-        {checkLogin() && (
+        {isLogin && (
           <div className={styles.logOut} onClick={handleShowModel}>
             Đăng xuất
           </div>

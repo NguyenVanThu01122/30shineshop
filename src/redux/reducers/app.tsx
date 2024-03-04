@@ -49,22 +49,6 @@ const initialState: InitialStateType = {
 
 const handleReducer = (state: InitialStateType = initialState, action: ActionType) => {
   switch (action.type) {
-    case 'INCREASE':
-      return {
-        ...state,
-        count: state.count + 1
-      }
-    case 'DECREASE':
-      if (state.count > 0) {
-        return {
-          ...state,
-          count: state.count - 1
-        }
-      } else {
-        return {
-          ...state
-        }
-      }
     case 'ADD_LIST_PRODUCT':
       return {
         ...state,

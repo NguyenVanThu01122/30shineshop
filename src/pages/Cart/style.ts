@@ -1,9 +1,15 @@
 import styled from 'styled-components'
-export const WrapperCart = styled.div``
+export const WrapperCart = styled.div`
+  width: 100%;
+  height: 800px;
+  margin: auto;
+`
 
 export const ContainerCart = styled.div`
-  padding: 0px 135px;
-  margin-top: 40px;
+  max-width: 1280px;
+  padding: 0px 20px;
+  margin: auto;
+  margin-top: 20px;
   margin-bottom: 40px;
   display: flex;
   gap: 20px;

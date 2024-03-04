@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import SidebarAccount from '../../components/SidebarAccount'
-import { Loading } from '../../components/Ui/loading'
+import CustomLoading from '../../components/customLoading'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
 import { addListOrder } from '../../redux/actions/app'
 import { getListOrder } from '../../services/listOrder'
@@ -16,11 +17,13 @@ import { ItemOrder, MyOrder, WrapperOrder } from './styles'
 function ListOrder() {
   const [SaveOrderStatus, setSaveOrderStatus] = useState('')
   const [listStatusOrder, setListStatusOrder] = useState([])
+  const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
+  const [isLoading, setIsLoading] = useIsLoading()
+
   const orders = useSelector((state: any) => state.app?.listOrder)
   const { orderStatusCommon, arrStatusOrder, colorStatus, messageStatusOrder, updateOrderStatusMessage } =
     useOrderStatusUtils()
 
-  const [isLoading, setIsLoading] = useIsLoading()
   const dispatch = useDispatch()
 
   // hàm lấy danh sách đơn hàng
@@ -30,6 +33,7 @@ function ListOrder() {
       .then((res) => {
         dispatch(addListOrder(res.data?.data))
         setIsLoading(false)
+        setIsShowDataMessage(true)
       })
       .catch((error) => {
         toast.error(error.response?.data?.message)
@@ -76,8 +80,8 @@ function ListOrder() {
         />
 
         {/* item Loading */}
-        {isLoading && <Loading />}
-        {!isLoading && !listStatusOrder.length && <NoDataMessage message={messageStatusOrder} />}
+        {isLoading && <CustomLoading />}
+        {!isLoading && !listStatusOrder.length && isShowNoDataMessage && <NoDataMessage message={messageStatusOrder} />}
       </ItemOrder>
     </WrapperOrder>
   )

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ProductType } from '../..'
@@ -11,6 +11,7 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
   const [totalPrice, setTotalPrice] = useState(TOTAL_PRICE)
   const [amountProducts, setAmountProducts] = useState(AMOUNT_PRODUCTS)
   const navigate = useNavigate()
+
   // hàm click vào item đặt hàng
   const handleClickOrder = () => {
     if (listCartId.length) {
@@ -24,19 +25,27 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
         })
     }
   }
-  // useEffect này xử lý tính tổng tiền sản phẩm, và t tổng số lượng của từng sản phẩm
-  useEffect(() => {
-    let totalPrice = 0
-    let amountProducts = 0
-    listCartId.forEach((cartId: string) => {
-      listCart?.forEach((cartItem: ProductType) => {
-        if (cartItem?.id === cartId) {
-          // Cập nhật tổng giá trị và số lượng sản phẩm
-          totalPrice += cartItem?.totalPrice
-          amountProducts += cartItem?.amount
-        }
+
+  // Sử dụng useMemo để lưu kết quả tính toán
+  const calculateTotals = useMemo(() => {
+    // xử lý tính tổng tiền sản phẩm, và tính tổng số lượng của từng sản phẩm
+    return (listCartId: any, listCart: any) => {
+      let totalPrice = 0
+      let amountProducts = 0
+      listCartId.forEach((cartId: string) => {
+        listCart?.forEach((cartItem: ProductType) => {
+          if (cartItem?.id === cartId) {
+            totalPrice += cartItem?.totalPrice || 0
+            amountProducts += cartItem?.amount || 0
+          }
+        })
       })
-    })
+      return { totalPrice, amountProducts }
+    }
+  }, [])
+
+  useEffect(() => {
+    const { totalPrice, amountProducts } = calculateTotals(listCartId, listCart)
     setTotalPrice(totalPrice)
     setAmountProducts(amountProducts)
   }, [listCartId, listCart]) // nó sẽ chỉ thay đổi giá trị của totalPrice và amountProdut khi biến phụ thuộc bị thay đổi.

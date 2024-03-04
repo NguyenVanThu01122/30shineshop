@@ -1,19 +1,12 @@
-import { useEffect, useState } from 'react'
 import { BsTelephoneMinusFill } from 'react-icons/bs'
+import { useDelayComponent } from '../../helpers/useDelayComponent'
 import styles from './styles.module.scss'
 
 export default function Footer() {
-  const [showFooter, setShowFooter] = useState(false)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowFooter(true)
-    }, 2000)
-
-    return () => clearTimeout(timer)
-  }, [])
+  const [showComponent] = useDelayComponent()
   return (
     <div>
-      {showFooter ? (
+      {showComponent ? (
         <div className={styles.pageFooter}>
           <div className={styles.footer}>
             <div className={styles.information}>

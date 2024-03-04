@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 
 export const Wrapper = styled.div`
-  padding: 50px 140px;
+  padding: 50px 20px;
+  max-width: 1300px;
+  margin: auto;
 
   @media screen and (max-width: 768px) {
     .pageDetailProduct {

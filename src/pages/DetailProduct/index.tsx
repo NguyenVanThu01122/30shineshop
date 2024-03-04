@@ -2,13 +2,13 @@ import { Suspense, lazy, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { getDetailProduct } from '../../services/detailProduct'
 import { RelateProducts } from './componets/RelateProducts'
 import { ContentDetail, Wrapper } from './styles'
+import CustomLoading from '../../components/customLoading'
 export interface DetailProductProps {
   name?: string
   star?: number
@@ -55,7 +55,7 @@ export default function DetailProduct() {
   return (
     <Wrapper>
       {isLoading ? (
-        <Loading />
+        <CustomLoading />
       ) : (
         /* sử dụng suspense như 1 container chứa các component lazy */
         <Suspense>

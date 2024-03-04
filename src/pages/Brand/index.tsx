@@ -1,6 +1,6 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Suspense, lazy, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
@@ -8,7 +8,9 @@ import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, NO_DATA_MESSAGE, PAGE_NAMES } from '../../helpers/contanst'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import { getListBrand } from '../../services/brand'
+import ContainerBrands from './ContainerBrands'
 import styles from './styles.module.css'
 
 export interface ListBrandType {
@@ -16,12 +18,12 @@ export interface ListBrandType {
   image: string
   name: string
 }
-const ContainerBrandsLazy = lazy(() => import('./ContainerBrands'))
 
 export default function Brand() {
   let [listBrand, setListBrand] = useState([])
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useIsLoading()
+  const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
 
   useEffect(() => {
     setIsLoading(true)
@@ -29,6 +31,7 @@ export default function Brand() {
       .then((response) => {
         setListBrand(response.data?.brand)
         setIsLoading(false)
+        setIsShowDataMessage(true)
       })
       .catch((error) => {
         setIsLoading(false)
@@ -45,11 +48,9 @@ export default function Brand() {
           THƯƠNG HIỆU
         </div>
       </div>
-      <Suspense>
-        <ContainerBrandsLazy listBrand={listBrand} />
-      </Suspense>
+      <ContainerBrands listBrand={listBrand} />
       {isLoading && <Loading />}
-      {!isLoading && !listBrand.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_BRAND} />}
+      {!isLoading && !listBrand.length && isShowNoDataMessage && <NoDataMessage message={NO_DATA_MESSAGE.NO_BRAND} />}
     </div>
   )
 }

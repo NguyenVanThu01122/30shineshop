@@ -3,7 +3,7 @@ import { toast } from 'react-toastify'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { CommonModal } from '../../../../components/Ui/modal'
 import { TypeAddress, addAddress, updateAddress } from '../../../../services/listAddress'
-import { FormComponent } from '../FormAddress'
+import FormComponent from '../FormAddress'
 import { GroupButton, ItemTitle } from './styles'
 
 interface ModalAddressProps {
@@ -13,16 +13,17 @@ interface ModalAddressProps {
   setIsOpenModal: React.Dispatch<React.SetStateAction<boolean>>
   handleGetListAddress: () => void
   form: FormInstance<any>
+  setIsLoading?: (value: boolean) => void
 }
 
-export const ModalAddress = ({
+export default function ModalAddress({
   edit,
   isOpenModal,
   handleGetListAddress,
   setIsOpenModal,
   setEdit,
   form
-}: ModalAddressProps) => {
+}: ModalAddressProps) {
   // hàm xử lý render theo điều kiện
   const handleFinish = (values: TypeAddress) => {
     if (edit && edit?.id) {

@@ -5,7 +5,6 @@ export const WrapperDetailOrder = styled.div`
   display: flex;
   justify-content: center;
   margin: 35px 0px;
-  margin-bottom: 0px;
 `
 export const ItemDetailOrder = styled.div`
   background-color: rgb(238, 238, 238);

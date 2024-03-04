@@ -1,19 +1,14 @@
 import { Form } from 'antd'
-import { useEffect, useState } from 'react'
+import { Suspense, lazy, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
-import SidebarAccount from '../../components/SidebarAccount'
-import { ButtonGeneral } from '../../components/Ui/button'
-import { Loading } from '../../components/Ui/loading'
+import CustomLoading from '../../components/customLoading'
 import { ERROR_MESSAGES, NO_DATA_MESSAGE } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import { getListAddress } from '../../services/listAddress'
-import { ComponentDetailAddress } from './components/ComponentDetailAddress'
-import { ModalAddress } from './components/ModalAddress'
-import { ModalDeleteAddress } from './components/ModalDeleteAddress'
-import { ContainerAddress, ContentAddress, WrapperListAddress } from './styles'
-
+import { ContainerAddress, WrapperListAddress } from './styles'
 export interface AddressType {
   id: string
   name: string
@@ -21,6 +16,13 @@ export interface AddressType {
   email: string
   address: string
 }
+
+const SidebarAccountLazy = lazy(() => import('../../components/SidebarAccount'))
+const ComponentDetailAddressLazy = lazy(() => import('./components/ComponentDetailAddress'))
+const ModalAddressLazy = lazy(() => import('./components/ModalAddress'))
+const ModalDeleteAddressLazy = lazy(() => import('./components/ModalDeleteAddress'))
+const TitleAddressLazy = lazy(() => import('./components/TitleAddress'))
+
 function ListAddress() {
   const [listAddress, setListAddress] = useState<AddressType[]>([])
   const [isOpenModal, setIsOpenModal] = useState(false)
@@ -28,6 +30,7 @@ function ListAddress() {
   const [edit, setEdit] = useState<any>(null)
   const [form] = Form.useForm()
   const [idDeleteAddress, setIdDeleteAddress] = useState('')
+  const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
   const [isLoading, setIsLoading] = useIsLoading()
 
   // hàm lấy thông tin address
@@ -37,6 +40,7 @@ function ListAddress() {
       .then((res) => {
         setListAddress(res.data?.data)
         setIsLoading(false)
+        setIsShowDataMessage(true)
       })
       .catch((error) => {
         setIsLoading(false)
@@ -51,54 +55,49 @@ function ListAddress() {
 
   return (
     <WrapperListAddress>
-      <SidebarAccount />
-      <ContainerAddress>
-        <ContentAddress>
-          <div className='titleAddress'>
-            <div>Địa chỉ nhận hàng</div>
-            <ButtonGeneral className='button' onClick={() => setIsOpenModal(true)}>
-              <div>
-                <span className='icon-plus'>+</span>
-                Thêm địa chỉ mới
-              </div>
-            </ButtonGeneral>
-          </div>
-
+      <Suspense>
+        <SidebarAccountLazy />
+        <ContainerAddress>
+          <TitleAddressLazy setIsOpenModal={setIsOpenModal} />
           {/* item DetailAddress */}
           {listAddress?.length > 0 && (
-            <ComponentDetailAddress
+            <ComponentDetailAddressLazy
+              form={form}
+              setEdit={setEdit}
+              isLoading={isLoading}
               listAddress={listAddress}
               setIsOpenModalDelete={setIsOpenModalDelete}
               setIdDeleteAddress={setIdDeleteAddress}
               setIsOpenModal={setIsOpenModal}
-              setEdit={setEdit}
-              form={form}
             />
           )}
 
-          {/* item Loading */}
-          {isLoading && <Loading />}
-          {!isLoading && !listAddress?.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_ADDRESS} />}
-        </ContentAddress>
+          {/* item loading */}
+          {isLoading && <CustomLoading />}
+          {!isLoading && !listAddress?.length && isShowNoDataMessage && (
+            <NoDataMessage message={NO_DATA_MESSAGE.NO_ADDRESS} />
+          )}
 
-        {/* item modal add & edit */}
-        <ModalAddress
-          form={form}
-          edit={edit}
-          setEdit={setEdit}
-          isOpenModal={isOpenModal}
-          setIsOpenModal={setIsOpenModal}
-          handleGetListAddress={handleGetListAddress}
-        />
+          {/* item modal add & edit */}
+          <ModalAddressLazy
+            form={form}
+            edit={edit}
+            setEdit={setEdit}
+            setIsLoading={setIsLoading}
+            isOpenModal={isOpenModal}
+            setIsOpenModal={setIsOpenModal}
+            handleGetListAddress={handleGetListAddress}
+          />
 
-        {/* item modal delete*/}
-        <ModalDeleteAddress
-          handleGetListAddress={handleGetListAddress}
-          isOpenModalDelete={isOpenModalDelete}
-          setIsOpenModalDelete={setIsOpenModalDelete}
-          idDeleteAddress={idDeleteAddress}
-        />
-      </ContainerAddress>
+          {/* item modal delete*/}
+          <ModalDeleteAddressLazy
+            handleGetListAddress={handleGetListAddress}
+            isOpenModalDelete={isOpenModalDelete}
+            setIsOpenModalDelete={setIsOpenModalDelete}
+            idDeleteAddress={idDeleteAddress}
+          />
+        </ContainerAddress>
+      </Suspense>
     </WrapperListAddress>
   )
 }

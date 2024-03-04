@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const WrapperImage = styled.div`
+
   .listIcon {
     z-index: 100;
     display: flex;

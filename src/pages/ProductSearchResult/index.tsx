@@ -14,7 +14,7 @@ const ProductSearchResult = () => {
   const products: ProductResultType[] = useSelector((state: any) => state.app.productSearch)
   const keyword: string = useSelector((state: any) => state.app.keywordSearch)
   const [currentPage, setCurrentPage] = useState(1)
-  const ITEMS_PER_PAGE = 8 // Số lượng sản phẩm hiển thị trên mỗi trang
+  const limit = 10 // Số lượng sản phẩm hiển thị trên mỗi trang
   const isLoading = useSelector((state: any) => state.app.isLoading)
 
   useEffect(() => {
@@ -28,18 +28,13 @@ const ProductSearchResult = () => {
         <Loading />
       ) : (
         <ContainerProduct>
-          <ProductResult
-            products={products}
-            currentPage={currentPage}
-            keyword={keyword}
-            ITEMS_PER_PAGE={ITEMS_PER_PAGE}
-          />
+          <ProductResult products={products} currentPage={currentPage} keyword={keyword} limit={limit} />
           {products.length > 0 && (
             <PaginationItem
               products={products}
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
-              ITEMS_PER_PAGE={ITEMS_PER_PAGE}
+              limit={limit}
             />
           )}
         </ContainerProduct>

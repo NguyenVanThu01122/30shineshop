@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import PageNavbar from '../../components/PageNavbar'
 import { ERROR_MESSAGES, PAGE_NAMES } from '../../helpers/contanst'
+import { scrollToTop } from '../../helpers/scrollToTop'
 import { getBlog } from '../../services/blog'
 import styles from './styles.module.css'
 interface ListBlogType {
@@ -21,6 +22,7 @@ export default function Blog() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    scrollToTop()
     getBlog()
       .then((response) => {
         setListBlog(response.data.data)

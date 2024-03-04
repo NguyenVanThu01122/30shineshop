@@ -34,7 +34,8 @@ export const PAGE_NAMES = {
   CONTACT: 'Liên hệ',
   INTRODUCE: 'Giới thiệu',
   BLOG: 'Tin tức làm đẹp',
-  ACCOUNT_MANAGEMENT: 'Quản lý tài khoản'
+  ACCOUNT_MANAGEMENT: 'Quản lý tài khoản',
+  CART: 'Giỏ hàng'
 }
 
 export const PLACEHOLDER = {
@@ -66,7 +67,8 @@ export const LABEL = {
   NICK_NAME: 'Họ tên',
   PHONE: 'Số điện thoại',
   GENDER: 'Giới tính',
-  BIRTHDAY: 'Ngày sinh'
+  BIRTHDAY: 'Ngày sinh',
+  ADDRESS: 'Địa chỉ'
 }
 
 export const LIST_CATEGORY = {
@@ -81,7 +83,7 @@ export const NO_DATA_MESSAGE = {
   NO_ADDRESS: 'Bạn không có địa chỉ nào !',
   NO_PRODUCT: 'Bạn không có sản phẩm nào !',
   NO_BRAND: 'Bạn không có thương hiệu nào !',
-  NO_PRODUCT_CART:'Bạn không có sản phẩm nào trong giỏ hàng !'
+  NO_PRODUCT_CART: 'Bạn không có sản phẩm nào trong giỏ hàng !'
 }
 export const STRING = {
   DELETE_PRODUCT: 'Xóa sản phẩm',
