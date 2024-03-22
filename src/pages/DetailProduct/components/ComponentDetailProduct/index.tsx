@@ -3,16 +3,16 @@ import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { DetailProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { StarProduct } from '../../../../components/StarProduct'
+import checkLogin from '../../../../helpers/checkLogin'
 import { ERROR_MESSAGES } from '../../../../helpers/contanst'
 import { useBuyNow } from '../../../../helpers/useBuyNow'
 import { useCalculateProductPercentage } from '../../../../helpers/useCalculateProductPercentage'
 import { useGetLengthOfCart } from '../../../../helpers/useGetLengthOfCart'
 import { isDialogLogin } from '../../../../redux/Slices/appSlices'
-import { RootState } from '../../../../redux/Slices/rootReducer'
 import { getListCartProduct } from '../../../../services/cart'
 import { addProductCart } from '../../../../services/detailProduct'
 import { ProductType } from '../../../Cart'
@@ -53,7 +53,7 @@ export default function ComponentDetailProduct({
   const [getLengthOfCart] = useGetLengthOfCart()
   const [handleBuyNow] = useBuyNow()
   const calculateDiscountPercentage = useCalculateProductPercentage()
-  const login = useSelector((state: RootState) => state.app.isLogin)
+  const login = checkLogin()
   const dispatch = useDispatch()
 
   // hàm xử lý check sp có trong giỏ hàng và add sp vào giỏ hàng

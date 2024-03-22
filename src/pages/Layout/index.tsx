@@ -6,6 +6,7 @@ import DialogLogin from '../../components/DialogLogin'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 import SocialMediaIcons from '../../components/SocialMediaIcons'
+import checkLogin from '../../helpers/checkLogin'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useGetUserInfo } from '../../helpers/useGetUserInfo'
 import { RootState } from '../../redux/Slices/rootReducer'
@@ -14,7 +15,7 @@ import { ItemHeader, ItemOutlet, MainItem, Wrapper } from './styles'
 function Layout() {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [getUserInfo] = useGetUserInfo()
-  const login = useSelector((state: RootState) => state.app.isLogin)
+  const login = checkLogin()
   const dialogLogin = useSelector((state: RootState) => state.app.isDialogLogin)
 
   useEffect(() => {

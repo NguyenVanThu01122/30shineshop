@@ -8,4 +8,4 @@ const checkLogin = (): boolean => {
   }
 }
 
-export { checkLogin }
+export default checkLogin

@@ -6,6 +6,7 @@ import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-ico
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import checkLogin from '../../../../helpers/checkLogin'
 import { ERROR_MESSAGES, PLACEHOLDER, PRODUCT_RESULT_PATH } from '../../../../helpers/contanst'
 import { getLocalStorageValue, setLocalStorageValue } from '../../../../helpers/localStorageUtils'
 import logo30shine from '../../../../images/Logo_30shine.svg'
@@ -26,13 +27,12 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
   const [keyword, setKeyword] = useState('')
   const user = useSelector((state: RootState) => state.app.user)
   const totalCart = useSelector((state: RootState) => state.app.totalCart)
-  const login = useSelector((state: RootState) => state.app.isLogin)
   const productSearch = useSelector((state: RootState) => state.app.productSearch)
   const keywordSearch = useSelector((state: RootState) => state.app.keywordSearch)
   const savedSearchKeyword = getLocalStorageValue('searchKeyword')
   const savedSearchResults = getLocalStorageValue('searchResults')
+  const login = checkLogin()
 
-  console.log(login)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = window.location // Lấy thông tin về URL hiện tại
