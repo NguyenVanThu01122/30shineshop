@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import AppSlice from '../appSlices'
+import appSlice from '../appSlices'
 
 const rootReducer = combineReducers({
-  app: AppSlice // đây là reducer của app
+  app: appSlice // đây là reducer của app
 })
 
 export type RootState = ReturnType<typeof rootReducer>

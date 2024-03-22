@@ -49,7 +49,7 @@ const initialState: InitialStateType = {
 }
 
 // createSlice này sẽ được sử dụng để tạo ra các action và reducer cho app
-const AppSlice = createSlice({
+const appSlice = createSlice({
   name: 'app',
   initialState,
   reducers: {
@@ -96,6 +96,6 @@ export const {
   saveRelateProducts,
   isLogin,
   isDialogLogin
-} = AppSlice.actions
+} = appSlice.actions
 
-export default AppSlice.reducer
+export default appSlice.reducer
