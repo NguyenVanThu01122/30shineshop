@@ -16,11 +16,11 @@ function Layout() {
   const [getUserInfo] = useGetUserInfo()
   const login = useSelector((state: RootState) => state.app.isLogin)
   const dialogLogin = useSelector((state: RootState) => state.app.isDialogLogin)
-  getLengthOfCart() // lấy số lượng sản phẩm trong giỏ hàng
 
   useEffect(() => {
     if (login) {
       getUserInfo() // lấy thông tin user
+      getLengthOfCart() // lấy số lượng sản phẩm trong giỏ hàng
     }
   }, [])
 

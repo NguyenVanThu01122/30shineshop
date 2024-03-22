@@ -3,9 +3,10 @@ import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import CustomLoading from '../../components/customLoading'
-import { ERROR_MESSAGES } from '../../helpers/contanst'
+import { ERROR_MESSAGES, INITIAL_COUNT } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
+import { RootState } from '../../redux/Slices/rootReducer'
 import { getDetailProduct } from '../../services/detailProduct'
 import { RelateProducts } from './components/RelateProducts'
 import { ContentDetail, Wrapper } from './styles'
@@ -25,10 +26,10 @@ const ModalCartLazy = lazy(() => import('./components/modalCart'))
 export default function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState({})
   const [imageSelect, setImageSelect] = useState('')
-  const [count, setCount] = useState(1)
+  const [count, setCount] = useState(INITIAL_COUNT)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const relatedProducts = useSelector((state: any) => state.app.relateProducts) // lấy sản phẩm liên quan trong store
-  const totalCart = useSelector((state: any) => state.app.totalCart) // lấy số lượng sản phẩm trong store
+  const relatedProducts = useSelector((state: RootState) => state.app.relateProducts)
+  const totalCart = useSelector((state: RootState) => state.app.totalCart)
   const params = useParams()
   const idDetail = params?.id
   const [isLoading, setIsLoading] = useIsLoading()

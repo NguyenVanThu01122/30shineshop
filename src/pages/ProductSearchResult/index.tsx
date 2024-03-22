@@ -39,7 +39,7 @@ const ProductSearchResult = () => {
           )}
         </ContainerProduct>
       )}
-      {!products.length && <NoDataMessage message={NO_PRODUCT_FOUND_MESSAGE} />}
+      {!products.length && !isLoading && <NoDataMessage message={NO_PRODUCT_FOUND_MESSAGE} />}
     </Wrapper>
   )
 }

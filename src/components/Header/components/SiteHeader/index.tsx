@@ -7,11 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ERROR_MESSAGES, PLACEHOLDER, PRODUCT_RESULT_PATH } from '../../../../helpers/contanst'
-import {
-  getLocalStorageValue,
-  removeLocalStorageValue,
-  setLocalStorageValue
-} from '../../../../helpers/localStorageUtils'
+import { getLocalStorageValue, setLocalStorageValue } from '../../../../helpers/localStorageUtils'
 import logo30shine from '../../../../images/Logo_30shine.svg'
 import { saveIsLoading, saveKeywordSearch, saveProductSearch } from '../../../../redux/Slices/appSlices'
 import { RootState } from '../../../../redux/Slices/rootReducer'
@@ -33,12 +29,14 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
   const login = useSelector((state: RootState) => state.app.isLogin)
   const productSearch = useSelector((state: RootState) => state.app.productSearch)
   const keywordSearch = useSelector((state: RootState) => state.app.keywordSearch)
+  const savedSearchKeyword = getLocalStorageValue('searchKeyword')
+  const savedSearchResults = getLocalStorageValue('searchResults')
+
+  console.log(login)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = window.location // Lấy thông tin về URL hiện tại
-
-  // Kiểm tra xem đang ở trang kết quả tìm kiếm hay không
-  const isSearchResultPage = location.pathname === PRODUCT_RESULT_PATH
+  const isSearchResultPage = location.pathname === PRODUCT_RESULT_PATH // Kiểm tra xem đang ở trang kết quả tìm kiếm hay không
 
   // Hàm xử lý tìm kiếm sản phẩm
   const handleSearchProduct = () => {
@@ -48,9 +46,9 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
       dispatch(saveIsLoading(true))
       searchProduct(keyword)
         .then((res) => {
-          dispatch(saveProductSearch(res.data?.data))
-          dispatch(saveKeywordSearch(keyword)) // Lưu từ khóa vào store
-          setLocalStorageValue('searchKeyword', keyword) // Lưu từ khóa vào localStorage
+          dispatch(saveProductSearch(res.data?.data)) // Lưu kết quả tìm kiếm vào store
+          dispatch(saveKeywordSearch(keyword)) // Lưu keyword vào store
+          setLocalStorageValue('searchKeyword', keyword) // Lưu keyword vào local
           dispatch(saveIsLoading(false))
           navigate('/product-search-result')
         })
@@ -70,40 +68,37 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
     }
   }
 
-  // Reset dữ liệu khi đổi trang (nếu không phải ở trang kết quả tìm kiếm)
+  const savedProductSearchResults = () => {
+    if (savedSearchResults) {
+      dispatch(saveProductSearch(JSON.parse(savedSearchResults))) // dispatch productSearch từ localStorage vào store
+    }
+  }
+
+  // update keyword từ localStorage vào state và store
+  const updateSavedSearchKeyword = () => {
+    if (savedSearchKeyword && isSearchResultPage) {
+      setKeyword(JSON.parse(savedSearchKeyword)) // set keyword từ localStorage vào state
+      dispatch(saveKeywordSearch(JSON.parse(savedSearchKeyword))) // dispatch keyword từ localStorage vào store
+    }
+  }
+
+  // check có đang ở trang kết quả tìm kiếm hay không
   useEffect(() => {
-    if (!isSearchResultPage) {
+    if (isSearchResultPage) {
+      updateSavedSearchKeyword()
+    } else {
       setKeyword('')
       dispatch(saveKeywordSearch(''))
-      dispatch(saveProductSearch([]))
-      removeLocalStorageValue('searchKeyword')
-      removeLocalStorageValue('searchResults')
     }
   }, [location.pathname])
-
-  // Load dữ liệu từ localStorage vào store
-  useEffect(() => {
-    const savedSearchResults = getLocalStorageValue('searchResults')
-    if (savedSearchResults) {
-      dispatch(saveProductSearch(JSON.parse(savedSearchResults)))
-    }
-  }, [])
 
   // Lưu dữ liệu vào localStorage khi thay đổi
   useEffect(() => {
     setLocalStorageValue('searchResults', [...productSearch])
   }, [productSearch])
 
-  // Lấy từ khóa tìm kiếm từ localStorage khi load trang
   useEffect(() => {
-    const savedSearchKeyword = getLocalStorageValue('searchKeyword')
-    if (savedSearchKeyword) {
-      setKeyword(JSON.parse(savedSearchKeyword))
-      dispatch(saveKeywordSearch(JSON.parse(savedSearchKeyword)))
-    } else {
-      setKeyword('')
-      dispatch(saveKeywordSearch(''))
-    }
+    savedProductSearchResults()
   }, [])
 
   return (
@@ -115,7 +110,10 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
         <img src={logo30shine} alt='img' />
       </div>
       <div className={styles.selectItem}>
-        <div onClick={handleSearchProduct} className={styles.searchBar}>
+        <div
+          onClick={handleSearchProduct}
+          className={`${styles.searchBar} ${keyword && keyword !== keywordSearch && styles.active}`}
+        >
           Tìm Kiếm
         </div>
         <div className={styles.inputSearch}>

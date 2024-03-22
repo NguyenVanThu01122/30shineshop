@@ -22,7 +22,7 @@ export const FormLogin = ({ form, setIsOpenModal }: FormLoginProps) => {
   const pathName = window.location.pathname
   const dispatch = useDispatch()
 
-  const onFinish = (values: any) => {
+  const onFinish = (values: { email: string; password: string }) => {
     const data = { email: values.email, password: values.password }
     login(data)
       .then((res) => {

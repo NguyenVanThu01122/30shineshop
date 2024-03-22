@@ -16,7 +16,7 @@ export const ModalForgetPassword = ({
 }: {
   form: FormInstance<any>
   isOpenModal: boolean
-  setIsOpenModal: any
+  setIsOpenModal: (value: boolean) => void
 }) => {
   // hàm xử lý chức năng quên mật khẩu
   const handleForgetPassword = (values: { password: number; email: string }) => {

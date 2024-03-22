@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { removeLocalStorageValue } from '../helpers/localStorageUtils'
 import { generateToken } from './generateToken'
 
 const privateAxios = axios.create({
@@ -39,8 +40,8 @@ privateAxios.interceptors.response.use(
         })
         .catch((error) => {
           // xóa token và refreshToken và bắt người dùng đăng nhập lại
-          localStorage.removeItem('token')
-          localStorage.removeItem('refreshToken')
+          removeLocalStorageValue('token')
+          removeLocalStorageValue('refreshToken')
           window.location.assign('/main-login')
         })
     }

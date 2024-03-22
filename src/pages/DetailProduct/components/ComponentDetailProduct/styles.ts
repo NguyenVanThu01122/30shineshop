@@ -133,16 +133,26 @@ export const WrapperDetail = styled.div`
             font-size: 30px;
             cursor: pointer;
             color: rgba(61, 61, 61);
+            &:hover {
+              color: red;
+              scale: 1.3;
+            }
           }
           & > div:last-child {
             cursor: pointer;
             font-size: 30px;
             color: rgba(61, 61, 61);
+            &:hover {
+              color: red;
+              scale: 1.3;
+            }
           }
           & > div:nth-child(2) {
+            width: 35px;
             padding: 5px 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
             border-left: 1px solid rgba(209, 209, 209);
             border-right: 1px solid rgba(209, 209, 209);
           }

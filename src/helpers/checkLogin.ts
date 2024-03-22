@@ -1,6 +1,7 @@
+import { getLocalStorageValue } from './localStorageUtils'
 
 const checkLogin = (): boolean => {
-  if (localStorage.getItem('token')) {
+  if (getLocalStorageValue('token')) {
     return true
   } else {
     return false

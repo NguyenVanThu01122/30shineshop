@@ -3,6 +3,7 @@ import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 
+import { useDispatch, useSelector } from 'react-redux'
 import { DetailProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { StarProduct } from '../../../../components/StarProduct'
@@ -10,11 +11,18 @@ import { ERROR_MESSAGES } from '../../../../helpers/contanst'
 import { useBuyNow } from '../../../../helpers/useBuyNow'
 import { useCalculateProductPercentage } from '../../../../helpers/useCalculateProductPercentage'
 import { useGetLengthOfCart } from '../../../../helpers/useGetLengthOfCart'
+import { isDialogLogin } from '../../../../redux/Slices/appSlices'
+import { RootState } from '../../../../redux/Slices/rootReducer'
 import { getListCartProduct } from '../../../../services/cart'
 import { addProductCart } from '../../../../services/detailProduct'
 import { ProductType } from '../../../Cart'
 import { CustomerFeedback } from '../CustomerFeedback'
 import { WrapperDetail } from './styles'
+interface DataProductType {
+  data: {
+    listCart: ProductType[]
+  }
+}
 interface ComponentDetailProps {
   setCount: (value: number) => void
   count: number
@@ -24,53 +32,69 @@ interface ComponentDetailProps {
   handleGetDetail: () => void
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
 }
-
+interface ComponentDetailProps {
+  count: number
+  setCount: (value: number) => void
+  imageSelect: string
+  setImageSelect: (value: string) => void
+  detailProduct: DetailProductType
+  handleGetDetail: () => void
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+}
 export default function ComponentDetailProduct({
   count,
-  setCount,
   imageSelect,
-  setImageSelect,
   detailProduct,
+  setCount,
+  setImageSelect,
   handleGetDetail,
   setIsModalOpen
 }: ComponentDetailProps) {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [handleBuyNow] = useBuyNow()
   const calculateDiscountPercentage = useCalculateProductPercentage()
+  const login = useSelector((state: RootState) => state.app.isLogin)
+  const dispatch = useDispatch()
 
   // hàm xử lý check sp có trong giỏ hàng và add sp vào giỏ hàng
   const handleAddProductCart = (idProduct: string, amount: number) => {
-    getListCartProduct().then((res: any) => {
-      const currentCart = res.data?.listCart
-      // check đk nếu name sp trong pageCart và pageDetailProduct nếu là 1 thì hiện thông báo toast..
-      if (currentCart.some((item: ProductType) => item?.productName === detailProduct?.name)) {
-        toast.error(ERROR_MESSAGES?.NOTIFICATION_PlEASE_CHOOSE_ANOTHER_PRODUCT)
-        return
-      }
-      // add sp vào giỏ hàng
-      else {
-        addProductCart(idProduct, amount)
-          .then((res) => {
-            setIsModalOpen(true)
-            getLengthOfCart()
-          })
-          .catch((error) => {
-            toast.error(error.response?.data?.message)
-          })
-      }
-    })
-  }
-  // hàm giảm số lượng sản phẩm
-  const decreaseNumber = () => {
-    if (count > 1) {
-      setCount(count - 1)
+    if (login) {
+      getListCartProduct().then((res: DataProductType) => {
+        const currentCart = res.data?.listCart
+        // check đk nếu name sp trong pageCart và pageDetailProduct nếu là 1 thì hiện thông báo toast..
+        if (currentCart.some((item: ProductType) => item?.productName === detailProduct?.name)) {
+          toast.error(ERROR_MESSAGES?.NOTIFICATION_PlEASE_CHOOSE_ANOTHER_PRODUCT)
+          return
+        }
+        // add sp vào giỏ hàng
+        else {
+          addProductCart(idProduct, amount)
+            .then((res) => {
+              setIsModalOpen(true)
+              getLengthOfCart()
+            })
+            .catch((error) => {
+              toast.error(error.response?.data?.message)
+            })
+        }
+      })
+    } else {
+      dispatch(isDialogLogin(true))
     }
   }
 
-  // hàm tăng số lượng sản
-  const increaseNumber = () => {
-    setCount(count + 1)
+  // Hàm thay đổi số lượng sản phẩm
+  const changeQuantity = (action: string) => {
+    if (action === 'decrease' && count > 1) {
+      setCount(count - 1)
+    } else if (action === 'increase') {
+      setCount(count + 1)
+    }
   }
+  // hàm giảm số lượng sản phẩm
+  const decreaseNumber = () => changeQuantity('decrease')
+  // hàm tăng số lượng sản
+  const increaseNumber = () => changeQuantity('increase')
 
   // hàm chọn ảnh sản phẩm
   const handleSelectImage = (item: string) => setImageSelect(item)

@@ -4,6 +4,7 @@ export const PAGE = 1
 export const LIMIT = 15
 export const TOTAL = 0
 export const SORT = '-1'
+export const INITIAL_COUNT = 1
 export const TOTAL_PRICE = 0
 export const AMOUNT_PRODUCTS = 0
 export const NUMBER_STAR = 0

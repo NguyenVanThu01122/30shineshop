@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { getLocalStorageValue } from '../../../helpers/localStorageUtils'
 
 export interface ProductResultType {
   id?: number
@@ -44,7 +45,7 @@ const initialState: InitialStateType = {
   productSearch: [],
   keywordSearch: '',
   isLoading: false,
-  isLogin: false,
+  isLogin: getLocalStorageValue('token') ? true : false,
   isDialogLogin: false
 }
 

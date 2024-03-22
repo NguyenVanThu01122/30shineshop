@@ -10,9 +10,10 @@ import { MESSAGE_PICK_STAR, NUMBER_STAR, PLACEHOLDER } from '../../../../helpers
 import { scrollToTop } from '../../../../helpers/scrollToTop'
 import { validateComment } from '../../../../helpers/validationRules'
 import imgStarYellow from '../../../../images/images-star-yellow.jpg'
+import { isDialogLogin } from '../../../../redux/Slices/appSlices'
+import { RootState } from '../../../../redux/Slices/rootReducer'
 import { TypeEvaluate, getListEvaluate, sendEvaluate } from '../../../../services/detailProduct'
 import styles from './styles.module.scss'
-import { isDialogLogin } from '../../../../redux/Slices/appSlices'
 export const dataStar = [
   {
     numberStar: 5
@@ -53,11 +54,11 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
   const [numberStar, setNumberStar] = useState(NUMBER_STAR)
   const [errorStar, setErrorStar] = useState<any>()
   const [isOpenFeedback, setIsOpenFeedback] = useState(false)
+  const login = useSelector((state: RootState) => state.app.isLogin)
   const [comment, setComment] = useState('')
   const [form] = Form.useForm()
   const params = useParams()
   const dispatch = useDispatch()
-  const login = useSelector((state: any) => state.app.isLogin)
 
   // hàm lấy danh sách đánh giá sản phẩm
   const handleGetListEvaluate = () => {
@@ -130,7 +131,9 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
   }
 
   useEffect(() => {
-    handleGetListEvaluate()
+    if (login) {
+      handleGetListEvaluate()
+    }
   }, [])
 
   return (

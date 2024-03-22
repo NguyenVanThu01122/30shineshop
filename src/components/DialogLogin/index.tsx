@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { PLEASE_LOGIN_TO_CONTINUE } from '../../helpers/contanst'
 import { isDialogLogin } from '../../redux/Slices/appSlices'
-import { CommonModal } from '../Ui/modal'
+import { Content, StyledCommonModal } from './styles'
 
 export default function DialogLogin({ dialogLogin }: { dialogLogin: boolean }) {
   const navigate = useNavigate()
@@ -13,12 +13,8 @@ export default function DialogLogin({ dialogLogin }: { dialogLogin: boolean }) {
     onCancel()
   }
   return (
-    <CommonModal
-      width={450}
-      onOk={onOk}
-      onCancel={onCancel}
-      isModalOpen={dialogLogin}
-      modalTitle={PLEASE_LOGIN_TO_CONTINUE}
-    />
+    <StyledCommonModal width={450} onOk={onOk} onCancel={onCancel} isModalOpen={dialogLogin}>
+      <Content>{PLEASE_LOGIN_TO_CONTINUE}</Content>
+    </StyledCommonModal>
   )
 }

@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
@@ -8,6 +9,7 @@ import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import image from '../../images/empty cart.svg'
+import { RootState } from '../../redux/Slices/rootReducer'
 import { getListCartProduct } from '../../services/cart'
 import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart } from './style'
 export interface ProductType {
@@ -35,6 +37,7 @@ export default function Cart() {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [isLoading, setIsLoading] = useIsLoading()
   const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
+  const isLogin = useSelector((state: RootState) => state.app.isLogin)
   // hàm lấy danh sách sản phảm giỏ hàng
   const getListCart = () => {
     setIsLoading(true)
@@ -65,8 +68,13 @@ export default function Cart() {
   }
 
   useEffect(() => {
-    getListCart()
-  }, [])
+    if (isLogin) {
+      getListCart()
+    } else {
+      setListCart([])
+      setIsShowDataMessage(true)
+    }
+  }, [isLogin])
 
   return (
     <WrapperCart>
@@ -74,37 +82,40 @@ export default function Cart() {
       <ContainerCart>
         {isLoading && !listCart.length ? (
           <Loading />
-        ) : !isLoading && !listCart.length && isShowNoDataMessage ? (
+        ) : !isLogin && !isLoading && !listCart.length && isShowNoDataMessage ? (
           <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_PRODUCT_CART} />
         ) : (
           /* sử dụng suspense như 1 container chứa các component lazy */
-          <Suspense>
-            <ContentCart>
-              <TitlePage>GIỎ HÀNG</TitlePage>
-              <ItemProduct>
-                <TitleCartLazy
-                  listCart={listCart}
-                  listCartId={listCartId}
-                  setListCartId={setListCartId}
-                  isShowTitleProduct={isShowTitleProduct}
-                  setIsShowTitleProduct={setIsShowTitleProduct}
-                  handleOpenModal={handleOpenModal}
-                />
 
-                {listCart.length > 0 && (
-                  <ListProductCartLazy
+          <Suspense>
+            {isLogin && (
+              <ContentCart>
+                <TitlePage>GIỎ HÀNG</TitlePage>
+                <ItemProduct>
+                  <TitleCartLazy
                     listCart={listCart}
                     listCartId={listCartId}
-                    getListCart={getListCart}
-                    handleOpenModal={handleOpenModal}
                     setListCartId={setListCartId}
+                    isShowTitleProduct={isShowTitleProduct}
+                    setIsShowTitleProduct={setIsShowTitleProduct}
+                    handleOpenModal={handleOpenModal}
                   />
-                )}
-              </ItemProduct>
-            </ContentCart>
+
+                  {listCart.length > 0 && (
+                    <ListProductCartLazy
+                      listCart={listCart}
+                      listCartId={listCartId}
+                      getListCart={getListCart}
+                      handleOpenModal={handleOpenModal}
+                      setListCartId={setListCartId}
+                    />
+                  )}
+                </ItemProduct>
+              </ContentCart>
+            )}
 
             {/* thông tin đơn hàng */}
-            <InformationOrderLazy listCartId={listCartId} listCart={listCart} />
+            {listCart.length > 0 && <InformationOrderLazy listCart={listCart} listCartId={listCartId} />}
 
             {/* Modal xoa sp gio hang */}
             <ModalDeleteProductLazy

@@ -32,10 +32,13 @@
         border-bottom-left-radius: 0.375rem;
         background-color: rgba(0, 0, 0, 0.128);
         cursor: pointer;
+       
+      }
+      .active {
         &:hover{
           color: red;
         }
-      }
+      } 
       .iconSearch {
         color: rgba(163, 163, 163);
         font-size: 20px;
