@@ -1,8 +1,8 @@
+import { useSelector } from 'react-redux'
 import { LOGOUT_MESSAGE } from '../../../../helpers/contanst'
 import { useLogOut } from '../../../../helpers/useLogOut'
 import { CommonModal } from '../../../Ui/modal'
 import styles from './styles.module.scss'
-
 interface NavbarProps {
   isModal: boolean
   setIsModal: (value: boolean) => void
@@ -10,6 +10,7 @@ interface NavbarProps {
 }
 
 function Navbar({ isModal, setIsModal, handleRedirect }: NavbarProps) {
+  const isLoggedIn = useSelector((state: any) => state.app.isLogin)
   const logOut = useLogOut()
 
   const handleOk = () => {
@@ -17,15 +18,26 @@ function Navbar({ isModal, setIsModal, handleRedirect }: NavbarProps) {
     logOut()
   }
 
+  const menuItems = [
+    { title: 'TRANG CHỦ', path: '/', onClick: () => handleRedirect('/') },
+    { title: 'DANH SÁCH SẢN PHẨM', path: '/list-Product', onClick: () => handleRedirect('/list-Product') },
+    { title: 'THƯƠNG HIỆU', path: '/brand', onClick: () => handleRedirect('/brand') },
+    { title: 'GIỚI THIỆU', path: '/introduce', onClick: () => handleRedirect('/introduce') },
+    { title: 'LIÊN HỆ', path: '/contact', onClick: () => handleRedirect('/contact') }
+  ]
+  if (isLoggedIn) {
+    menuItems.push({ title: 'QUẢN LÝ TÀI KHOẢN', path: '/account', onClick: () => handleRedirect('/account') })
+  }
+
   return (
     <div className={styles.containerItem}>
-      <div onClick={() => handleRedirect('/')}>TRANG CHỦ</div>
-      <div onClick={() => handleRedirect('/list-Product')}>DANH SÁCH SẢN PHẨM</div>
-      <div onClick={() => handleRedirect('/brand')}>THƯƠNG HIỆU</div>
-      <div onClick={() => handleRedirect('/introduce')}>GIỚI THIỆU</div>
-      <div onClick={() => handleRedirect('/contact')}>LIÊN HỆ</div>
-      <div onClick={() => handleRedirect('/blog')}>TIN TỨC LÀM ĐẸP</div>
-      <div onClick={() => handleRedirect('/account')}>QUẢN LÝ TÀI KHOẢN</div>
+      <div className={styles.menuItem}>
+        {menuItems.map((item, index) => (
+          <div key={index} onClick={item.onClick} className={styles.item}>
+            {item.title}
+          </div>
+        ))}
+      </div>
       <CommonModal
         modalTitle={LOGOUT_MESSAGE.LOGOUT_AUTHENTICATION_MESSAGE}
         onOk={handleOk}

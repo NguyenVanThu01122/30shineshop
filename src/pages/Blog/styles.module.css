@@ -3,14 +3,14 @@
   padding: 10px 120px;
   background-color: rgb(232, 232, 232);
 }
-.headerBlog div{
+.headerBlog div {
   color: rgba(28, 28, 28, 0.731);
   cursor: pointer;
 }
-.headerBlog >div:last-child{
+.headerBlog > div:last-child {
   margin-left: 10px;
 }
-.iconBack{
+.iconBack {
   margin-right: 8px;
   font-size: x-large;
   display: none;
@@ -83,8 +83,8 @@
   margin: 10px 0px;
   font-size: 0.875rem;
   line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: rgba(61, 61, 61, var(--tw-text-opacity));
+
+  color: rgba(61, 61, 61);
 }
 .productDescription > div:last-child {
   font-size: 17px;
@@ -94,21 +94,24 @@
 .Categories {
   width: 35%;
 }
+
 .serviceSelection {
   border: 1px solid rgba(255, 204, 51);
   margin-bottom: 40px;
 }
+
 .serviceSelection div {
   padding: 15px;
   cursor: pointer;
   border: 1px solid rgb(228, 228, 228);
 }
+
 .serviceSelection > div:nth-child(5) {
   color: rgba(255, 204, 51);
 }
+
 .selectDiv {
   font-size: 17px;
-  --tw-text-opacity: 1;
   color: rgba(61, 61, 61);
 }
 .selectDiv:hover {
@@ -118,8 +121,7 @@
   border: none !important;
   font-size: 20px;
   font-weight: 550;
-  --tw-bg-opacity: 1;
-  background-color: rgba(255, 204, 51, var(--tw-bg-opacity));
+  background-color: rgba(255, 204, 51);
 }
 .posts > div:first-child {
   font-size: 1.5rem;

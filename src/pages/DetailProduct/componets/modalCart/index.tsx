@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom'
-import { DetailProductProps } from '../..'
+import { DetailProductType} from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { CommonModal } from '../../../../components/Ui/modal'
 import { useBuyNow } from '../../../../helpers/useBuyNow'
 import styles from './styles.module.scss'
 interface modalCartProps {
-  detailProduct: DetailProductProps
+  detailProduct: DetailProductType
   count: number
   totalCart: number
   isModalOpen: boolean

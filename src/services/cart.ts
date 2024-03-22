@@ -14,7 +14,7 @@ export const deleteCartOne = (idDeleteOne: string) => {
   return privateAxios.delete(`/cart/${idDeleteOne}`)
 }
 
-export const deleteCartAll = (listCartId: any) => {
+export const deleteCartAll = (listCartId: string | string[]) => {
   return privateAxios.post('/cart/delete-many', {
     listCartId
   })

@@ -4,7 +4,7 @@ import { FormLogin } from './components/FormLogin'
 import { ModalForgetPassword } from './components/ModalForgetPassword'
 import { WrapperLogin } from './styles'
 
-function NewLogin() {
+function MainLogin() {
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [form] = Form.useForm()
 
@@ -15,4 +15,4 @@ function NewLogin() {
     </WrapperLogin>
   )
 }
-export default NewLogin
+export default MainLogin

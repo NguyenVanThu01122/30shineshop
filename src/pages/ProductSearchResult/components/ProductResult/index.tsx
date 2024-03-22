@@ -1,5 +1,5 @@
 import Products from '../../../../components/Products'
-import { ProductResultType } from '../../../../redux/reducers/app'
+import { ProductResultType } from '../../../../redux/Slices/appSlices'
 import { Title, WrapperResult } from './styles'
 
 export const ProductResult = ({

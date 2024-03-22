@@ -1,12 +1,13 @@
 .pageSellingProducts{
   padding: 0px 135px;
+
   .homeSellingProducts{
     display: flex;
     margin: 20px 0px 25px 0px;
     color: rgba(61,61,61);
     font-size: .875rem;
     & >span{
-      margin: 0px 5px;
+      margin: 0px 6px;
     }
   }
   .sellingProducts{
@@ -43,14 +44,12 @@
         }
       }
       .product{
+        justify-content: space-between;
           display: flex;
-          justify-content: space-between;
         .informationProduct{
-          cursor: pointer;
-          // box-shadow: 0px 0px 20px  rgb(170, 168, 168);
-          // border: 1px solid black;
           padding: 10px;
           width: 23%;
+          cursor: pointer;
           &:hover{
           box-shadow: 0px 0px 20px rgb(132, 129, 129);
 
@@ -87,8 +86,8 @@
 
             }
             &>div:first-child span{
-              margin-right: 8px;
               color: rgba(229,77,62);
+              margin-right: 8px;
               font-family: 'Oswald';
               text-decoration: underline;
             }

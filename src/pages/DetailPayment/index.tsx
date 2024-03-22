@@ -2,6 +2,7 @@ import { Form } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { toast } from 'react-toastify'
+import { FormGeneral } from '../../components/Ui/form'
 import { InputGeneral } from '../../components/Ui/input'
 import { TextArealInput } from '../../components/Ui/textAreaInput'
 import { ERROR_MESSAGES, PLACEHOLDER } from '../../helpers/contanst'
@@ -27,7 +28,7 @@ export default function DetailPayment() {
   const [getLengthOfCart] = useGetLengthOfCart()
 
   useEffect(() => {
-    getDetailPayment(paymentId).then((res) => {
+    getDetailPayment(paymentId ?? '').then((res) => {
       setDetailPayment(res.data?.data)
     })
   }, [])
@@ -67,7 +68,7 @@ export default function DetailPayment() {
   return (
     <PaymentWrapper>
       <div>THANH TOÁN</div>
-      <Form
+      <FormGeneral
         onFinish={onFinish}
         scrollToFirstError //tự động cuộn đến lỗi đầu tiên trong quá trình xử lý lỗi form
         form={form}
@@ -106,7 +107,7 @@ export default function DetailPayment() {
           <Product detailPayment={detailPayment} />
         </div>
         <OrderInformation detailPayment={detailPayment} form={form} onFinish={onFinish} />
-      </Form>
+      </FormGeneral>
     </PaymentWrapper>
   )
 }

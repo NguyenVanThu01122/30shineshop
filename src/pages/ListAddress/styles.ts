@@ -10,8 +10,8 @@ export const WrapperListAddress = styled.div`
 export const ContainerAddress = styled.div`
   flex: 0.7;
   height: 80vh;
-  overflow-y: auto;
   position: relative;
+  overflow-y: auto;
   &::-webkit-scrollbar-thumb {
     border-radius: 5px !important;
   }

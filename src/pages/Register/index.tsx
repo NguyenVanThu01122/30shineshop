@@ -3,8 +3,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { message } from 'antd'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { register } from '../../services/auth.servie'
+import { TypeGenderEnum, register } from '../../services/auth'
 import styles from './styles.module.css'
+export type TypeRegister = {
+  name?: string
+  telephone?: number
+  email?: string
+  password?: string | number
+  gender?: TypeGenderEnum | undefined
+  date?: string
+}
 
 export default function Register() {
   const navigate = useNavigate()
@@ -156,7 +164,7 @@ export default function Register() {
       !errorPhone &&
       !errorRepeat
     ) {
-      const data = {
+      const data: any = {
         name: name,
         email: email,
         password: password,

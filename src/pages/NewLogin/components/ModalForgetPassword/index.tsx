@@ -1,5 +1,4 @@
 import { Form, FormInstance, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { FormGeneral } from '../../../../components/Ui/form'
@@ -7,7 +6,7 @@ import { InputGeneral } from '../../../../components/Ui/input'
 import { CommonModal } from '../../../../components/Ui/modal'
 import { LABEL, PLACEHOLDER } from '../../../../helpers/contanst'
 import { validateConfirmPassword, validateEmail, validatePassword } from '../../../../helpers/validationRules'
-import { forgetPassword } from '../../../../services/auth.servie'
+import { forgetPassword } from '../../../../services/auth'
 import { GroupButton } from './styles'
 
 export const ModalForgetPassword = ({
@@ -19,8 +18,6 @@ export const ModalForgetPassword = ({
   isOpenModal: boolean
   setIsOpenModal: any
 }) => {
-  // const [handlePasswordChange] = usePasswordValidation(form)
-  const navigate = useNavigate()
   // hàm xử lý chức năng quên mật khẩu
   const handleForgetPassword = (values: { password: number; email: string }) => {
     const body = {
@@ -31,7 +28,6 @@ export const ModalForgetPassword = ({
       .then((res) => {
         toast.success(res.data?.message)
         handleCancel()
-        navigate('/')
       })
       .catch((error) => {
         const messageError = error.response?.data

@@ -1,6 +1,8 @@
+import { useDispatch, useSelector } from 'react-redux'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { InputGeneral } from '../../../../components/Ui/input'
+import { isDialogLogin } from '../../../../redux/Slices/appSlices'
 import { FormValuesType } from '../../type'
 import { WrapperInformation } from './styles'
 
@@ -13,13 +15,19 @@ export const OrderInformation = ({
   onFinish: (values: FormValuesType) => void
   form: any
 }) => {
+  const dispatch = useDispatch()
+  const login = useSelector((state: any) => state.app.isLogin)
   // hàm Validate fields
   const validateAndSubmit = () => {
     form
       .validateFields() // sd validateFields của form Kiểm tra tất cả các trường trong form
       .then((values: FormValuesType) => {
         // Thêm đối số values để truyền vào hàm onFinish
-        onFinish(values) // Truyền values và gọi hàm onFinish
+        if (login) {
+          onFinish(values)
+        } else {
+          dispatch(isDialogLogin(true))
+        }
       })
       .catch(() => {
         // Nếu có lỗi scroll đến phần lỗi đầu tiên

@@ -19,6 +19,6 @@ export const addAddress = (body: TypeAddress) => {
   return privateAxios.post('/address', body)
 }
 
-export const deleteAddress = (id: any) => {
+export const deleteAddress = (id: string) => {
   return privateAxios.delete(`/address/${id}`)
 }

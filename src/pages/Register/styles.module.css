@@ -67,9 +67,11 @@
   margin-left: 5px;
   width: 84%;
 }
+
 .informationChild input:focus {
   outline: none;
 }
+
 .borderRed {
   border: 1px solid red !important;
 }
@@ -141,7 +143,7 @@
   .information > div {
     width: 100%;
   }
-  .pageRegister{
+  .pageRegister {
     width: 90%;
   }
 }

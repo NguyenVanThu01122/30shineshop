@@ -4,11 +4,11 @@ export type TypeEvaluate = {
   product: any
   numberStar: number
 }
-export const getDetailProduct = (params: any) => {
-  return privateAxios.get(`/product/${params}`)
+export const getDetailProduct = (idDetail: string) => {
+  return privateAxios.get(`/product/${idDetail}`)
 }
 
-export const getlistEvaluete = (id: string | undefined) => {
+export const getListEvaluate = (id: string | undefined) => {
   return privateAxios.get(`/evaluate/${id}`)
 }
 
@@ -23,7 +23,7 @@ export const addProductCart = (id: string, amount: number) => {
   })
 }
 
-export const getProductRelate = (id: any) => {
+export const getProductRelate = (id: string) => {
   return privateAxios.get(`/product/relate/${id}`)
 }
 

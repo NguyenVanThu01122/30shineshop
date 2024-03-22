@@ -1,32 +1,32 @@
-import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ProductResultType } from '../../redux/reducers/app'
+import { scrollToTop } from '../../helpers/scrollToTop'
+import { useCalculateProductPercentage } from '../../helpers/useCalculateProductPercentage'
+import { ProductResultType } from '../../redux/Slices/appSlices'
 import { CurrencyFormat } from '../CurrencyFormat'
 import { StarProduct } from '../StarProduct'
 import styles from './styles.module.scss'
 
 export default function Products({ products }: { products: ProductResultType[] }) {
+  const calculateDiscountPercentage = useCalculateProductPercentage()
   const navigate = useNavigate()
 
-  // hàm tính toán giảm giá phần trăm cho sản phẩm
-  const calculateDiscountPercentage = useMemo(() => {
-    return (salePrice: number, originPrice: number) => {
-      if (salePrice && originPrice) {
-        return Math.floor(100 - (salePrice / originPrice) * 100)
-      } else {
-        return 0
-      }
-    }
-  }, [])
+  const redirectDetailProduct = (idProduct: string) => {
+    navigate(idProduct)
+    scrollToTop()
+  }
+  if (!Array.isArray(products)) {
+    // Gán products thành một mảng trống
+    products = []
+  }
 
   return (
     <div className={styles.containerProduct}>
-      {products.map((item: ProductResultType) => (
+      {products?.map((item: ProductResultType) => (
         <div
           className={styles.itemProduct}
           key={item.id}
           onClick={() => {
-            navigate(`/detail-product/${item.id}`)
+            redirectDetailProduct(`/detail-product/${item.id}`)
           }}
         >
           <div className={styles.stickerPercent}>

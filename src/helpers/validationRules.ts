@@ -1,3 +1,46 @@
+export const validatePhone = [
+  {
+    required: true,
+    message: 'Vui lòng nhập số điện thoại !'
+  },
+  () => ({
+    validator(_: any, value: string) {
+      if (!value || value.trim() === '') {
+        // Kiểm tra nếu giá trị là rỗng hoặc chỉ chứa khoảng trắng
+        return Promise.resolve() // Trả về Promise giải quyết nếu không có lỗi
+      } else {
+        const phoneRegex = /^(03[2-9]|05[6-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/ // // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại
+        if (phoneRegex.test(value)) {
+          return Promise.resolve()
+        } else {
+          return Promise.reject(new Error('Vui lòng nhập đúng định dạng số điện thoại!'))
+        }
+      }
+    }
+  })
+]
+
+export const validateEmail = [
+  {
+    required: true,
+    message: 'Vui lòng nhập Email !'
+  },
+  () => ({
+    validator(_: any, value: string) {
+      if (!value || value.trim() === '') {
+        return Promise.resolve()
+      } else {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ // regex kiểm tra định dạng email
+        if (emailRegex.test(value) || value === '') {
+          return Promise.resolve()
+        } else {
+          return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+        }
+      }
+    }
+  })
+]
+
 export const validateName = [
   {
     required: true,
@@ -13,40 +56,6 @@ export const validateName = [
   }
 ]
 
-export const validatePhone = [
-  {
-    required: true,
-    message: 'Vui lòng nhập số điện thoại !'
-    // validateTrigger: 'onBlur' // chỉ kiểm tra khi focus rời khỏi trường
-  },
-  () => ({
-    validator(_: any, value: string) {
-      if (value[0] !== '0' && value !== '') {
-        return Promise.reject(new Error('vui lòng nhập đúng định dạng !'))
-      } else if ((value.length < 10 || value.length > 10) && value !== '') {
-        return Promise.reject(new Error('vui lòng nhập đúng 10 chữ số !'))
-      } else {
-        return Promise.resolve()
-      }
-    }
-  })
-]
-
-export const validateEmail = [
-  {
-    required: true,
-    message: 'Vui lòng nhập Email !'
-  },
-  () => ({
-    validator(_: any, value: string) {
-      if (value.includes('@') || value === '') {
-        return Promise.resolve()
-      } else {
-        return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
-      }
-    }
-  })
-]
 // export const validatePassword = [{ required: true, message: 'Vui lòng nhập mật khẩu !' }]
 export const validateBirthday = [{ required: true, message: 'Vui lòng nhập ngày sinh !' }]
 
@@ -71,6 +80,7 @@ export const validateComment = [
 export const validatePassword = [
   {
     required: true,
+    min: 6,
     message: 'Vui lòng nhập mật khẩu !'
   }
 ]

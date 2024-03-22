@@ -3,7 +3,6 @@ import { toast } from 'react-toastify'
 import { CommonModal } from '../../../../components/Ui/modal'
 import { STRING } from '../../../../helpers/contanst'
 import { deleteCartAll, deleteCartOne } from '../../../../services/cart'
-
 interface ModalDeleteProps {
   getListCart: () => void
   listCartId: string[]

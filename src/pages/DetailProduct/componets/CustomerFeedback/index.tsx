@@ -1,51 +1,71 @@
 import { Form, Rate } from 'antd'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { StarProduct } from '../../../../components/StarProduct'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { TextArealInput } from '../../../../components/Ui/textAreaInput'
-import { MESSAGE_PICK_STAR, PLACEHOLDER } from '../../../../helpers/contanst'
+import { MESSAGE_PICK_STAR, NUMBER_STAR, PLACEHOLDER } from '../../../../helpers/contanst'
 import { scrollToTop } from '../../../../helpers/scrollToTop'
 import { validateComment } from '../../../../helpers/validationRules'
-import { TypeEvaluate, getlistEvaluete, sendEvaluate } from '../../../../services/detailProduct'
+import imgStarYellow from '../../../../images/images-star-yellow.jpg'
+import { TypeEvaluate, getListEvaluate, sendEvaluate } from '../../../../services/detailProduct'
 import styles from './styles.module.scss'
-export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
-  const [listFeedback, setListFeedback] = useState<any>([])
-  const [numberStar, setNumberStar] = useState(0)
-  const [errorStar, setErrorStar] = useState<any>('')
+import { isDialogLogin } from '../../../../redux/Slices/appSlices'
+export const dataStar = [
+  {
+    numberStar: 5
+  },
+  {
+    numberStar: 4
+  },
+  {
+    numberStar: 3
+  },
+  {
+    numberStar: 2
+  },
+  {
+    numberStar: 1
+  }
+]
+interface TypeDataStar {
+  numberStar: number
+}
+interface FeedbackType {
+  id: string
+  user: string
+  star: number
+  time: string
+  comment: string
+}
+interface TypeListStar {
+  fiveStar: number
+  fourStar: number
+  threeStar: number
+  twoStar: number
+  oneStar: number
+}
+
+export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
+  const [listFeedback, setListFeedback] = useState<FeedbackType[]>([])
+  const [numberStar, setNumberStar] = useState(NUMBER_STAR)
+  const [errorStar, setErrorStar] = useState<any>()
   const [isOpenFeedback, setIsOpenFeedback] = useState(false)
   const [comment, setComment] = useState('')
   const [form] = Form.useForm()
   const params = useParams()
-
-  const dataStar = [
-    {
-      numberStar: 5
-    },
-    {
-      numberStar: 4
-    },
-    {
-      numberStar: 3
-    },
-    {
-      numberStar: 2
-    },
-    {
-      numberStar: 1
-    }
-  ]
+  const dispatch = useDispatch()
+  const login = useSelector((state: any) => state.app.isLogin)
 
   // hàm lấy danh sách đánh giá sản phẩm
-  const handleGetlistEvaluete = () => {
-    getlistEvaluete(params?.id)
+  const handleGetListEvaluate = () => {
+    getListEvaluate(params?.id)
       .then((res) => {
         setListFeedback(res.data?.data)
       })
-      .catch((error) => {
-        toast.error(error.response?.data?.message)
-      })
+      .catch((error) => toast.error(error.response?.data?.message))
   }
 
   // hàm tạo đánh giá sản phẩm
@@ -56,8 +76,8 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
         .then((res) => {
           toast.success(res.data?.message)
           closeFeedback()
-          handleGetlistEvaluete()
-          handleDetail()
+          handleGetListEvaluate()
+          handleGetDetail()
           scrollToTop()
         })
         .catch((error) => {
@@ -76,7 +96,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
     setComment('')
   }
 
-  const handleRateChange = (value: any) => {
+  const handleRateChange = (value: number) => {
     setNumberStar(value)
     if (value === 0) {
       setErrorStar(MESSAGE_PICK_STAR.MESSAGE)
@@ -86,7 +106,7 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   }
 
   // hàm tính toán số lượng đánh giá
-  const calculateStar = (star: number, listStar: any) => {
+  const calculateStar = (star: number, listStar: TypeListStar) => {
     return star === 5
       ? listStar?.fiveStar
       : star === 4
@@ -101,10 +121,16 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
   const openFeedback = () => setIsOpenFeedback(true)
 
   // hàm gửi yêu cầu đánh giá sp
-  const handleSubmit = () => form.submit()
+  const handleSubmit = () => {
+    if (login) {
+      form.submit()
+    } else {
+      dispatch(isDialogLogin(true))
+    }
+  }
 
   useEffect(() => {
-    handleGetlistEvaluete()
+    handleGetListEvaluate()
   }, [])
 
   return (
@@ -115,24 +141,18 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
           <div className={styles.noFeedback}>
             <div>{detailProduct?.star}</div>
             <div>
-              <div>
-                <StarProduct numberYellow={detailProduct?.star} numberGray={5 - detailProduct?.star} />
-              </div>
+              <StarProduct numberYellow={detailProduct?.star ?? 0} numberGray={5 - (detailProduct?.star ?? 0)} />
             </div>
             <div>{detailProduct?.totalEvaluate} phản hồi</div>
           </div>
           <div className={styles.starOder}>
-            {dataStar.map((item: any) => {
+            {dataStar.map((item: TypeDataStar, index: number) => {
               return (
-                <div className={styles.reviewStar}>
+                <div className={styles.reviewStar} key={index}>
                   <div className={styles.star}>
                     <div>{item?.numberStar}</div>
                     <div>
-                      <img
-                        className={styles.iconStarYellow}
-                        src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbpahTs3DQGUQxtS8nVwG8_I64DImoNFkaTadiHr5nNQGIn61I'
-                        alt=''
-                      />
+                      <img className={styles.iconStarYellow} src={imgStarYellow} />
                     </div>
                     <div className={styles.Crossbar}></div>
                     <div>{calculateStar(item?.numberStar, detailProduct?.listStar)}</div>
@@ -188,8 +208,9 @@ export const CustomerFeedback = ({ detailProduct, handleDetail }: any) => {
           </div>
         )}
 
+        {/* item deatail feedback */}
         <div className={styles.itemDetailFeedback}>
-          {listFeedback.map((item: any) => {
+          {listFeedback.map((item: FeedbackType) => {
             return (
               <div className={styles.detailFeedback} key={item.id}>
                 <div>{item.user}</div>

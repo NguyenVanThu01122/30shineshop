@@ -3,19 +3,19 @@ import { useSelector } from 'react-redux'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
-import { NO_PRODUCT_FOUND_MESSAGE, PAGE_NAMES } from '../../helpers/contanst'
+import { LIMIT, NO_PRODUCT_FOUND_MESSAGE, PAGE, PAGE_NAMES } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
-import { ProductResultType } from '../../redux/reducers/app'
+import { RootState } from '../../redux/Slices/rootReducer'
 import { PaginationItem } from './components/Pagination'
 import { ProductResult } from './components/ProductResult'
 import { ContainerProduct, Wrapper } from './styles'
 
 const ProductSearchResult = () => {
-  const products: ProductResultType[] = useSelector((state: any) => state.app.productSearch)
-  const keyword: string = useSelector((state: any) => state.app.keywordSearch)
-  const [currentPage, setCurrentPage] = useState(1)
-  const limit = 10 // Số lượng sản phẩm hiển thị trên mỗi trang
-  const isLoading = useSelector((state: any) => state.app.isLoading)
+  const products = useSelector((state: RootState) => state.app.productSearch)
+  const keyword = useSelector((state: RootState) => state.app.keywordSearch)
+  const isLoading = useSelector((state: RootState) => state.app.isLoading)
+  const [currentPage, setCurrentPage] = useState(PAGE)
+  const limit = LIMIT
 
   useEffect(() => {
     scrollToTop()

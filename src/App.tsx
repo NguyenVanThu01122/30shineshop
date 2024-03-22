@@ -16,8 +16,8 @@ import ListAddress from './pages/ListAddress'
 import ListOrder from './pages/ListOrder'
 import ListProduct from './pages/ListProduct'
 import Login from './pages/Login'
-import NewLogin from './pages/NewLogin'
-import NewRegister from './pages/NewRegister'
+import MainRegister from './pages/MainRegister'
+import MainLogin from './pages/NewLogin'
 import OrderSuccess from './pages/OrderSuccess'
 import ProductSearchResult from './pages/ProductSearchResult'
 import Register from './pages/Register'
@@ -45,8 +45,8 @@ function App() {
           <Route path='/product-search-result' element={<ProductSearchResult />} />
           {/* <Route path='/selling-Products' element={<SellingProducts />} /> */}
         </Route>
-        <Route path='/new-register' element={<NewRegister />} />
-        <Route path='/new-login' element={<NewLogin />} />
+        <Route path='/main-register' element={<MainRegister />} />
+        <Route path='/main-login' element={<MainLogin />} />
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
         {/* <Route path='/redux-demo' element={<ReduxDemo />} /> */}

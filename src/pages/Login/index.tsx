@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { login } from '../../services/auth.servie'
+import { login } from '../../services/auth'
 import styles from './styles.module.css'
 export default function Login() {
   const navigate = useNavigate()

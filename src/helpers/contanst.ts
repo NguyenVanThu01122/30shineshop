@@ -1,9 +1,13 @@
+import { TypeGenderEnum } from '../services/auth'
+
 export const PAGE = 1
 export const LIMIT = 15
 export const TOTAL = 0
 export const SORT = '-1'
 export const TOTAL_PRICE = 0
 export const AMOUNT_PRODUCTS = 0
+export const NUMBER_STAR = 0
+export const PRODUCT_RESULT_PATH = '/product-search-result'
 
 export const ERROR_MESSAGES = {
   SERVER_ERROR: 'Đã xảy ra lỗi từ máy chủ',
@@ -22,6 +26,7 @@ export const LOGOUT_MESSAGE = {
   LOGOUT_AUTHENTICATION_MESSAGE: 'Bạn có chắc chắn muốn đăng xuất không ?'
 }
 
+export const PLEASE_LOGIN_TO_CONTINUE = 'Vui lòng đăng nhập để tiếp tục !'
 export const NOTIFICATION = 'Tính  năng này đang phát triển'
 export const NO_PRODUCT_FOUND_MESSAGE = 'RẤT TIẾC BẠN KHÔNG TÌM THẤY SẢN PHẨM NÀO !'
 
@@ -107,7 +112,7 @@ export const optionSelect = [
 ]
 
 export const optionSelectGender = [
-  { value: 'male', label: 'Nam giới' },
-  { value: 'female', label: 'Nữ giới' },
-  { value: 'other', label: 'Khác' }
+  { value: TypeGenderEnum.MALE, label: 'Nam giới' },
+  { value: TypeGenderEnum.FEMALE, label: 'Nữ giới' },
+  { value: TypeGenderEnum.OTHER, label: 'Khác' }
 ]

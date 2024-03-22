@@ -29,7 +29,6 @@
   border-bottom: 1px solid #777;
   width: 50%;
   text-align: center;
-  /* padding-left: 50px; */
   text-align: center;
 }
 
@@ -43,15 +42,16 @@
   background-color: #f78421;
   color: white;
 }
+.email span {
+  margin-right: 4px;
+  color: red;
+}
 .email {
   font-weight: 400;
   font-size: 16px;
   margin-bottom: 5px;
 }
-.email span {
-  margin-right: 4px;
-  color: red;
-}
+
 .password span {
   margin-right: 4px;
   color: red;
@@ -74,7 +74,7 @@
   outline: none;
 }
 
-.iconEye{
+.iconEye {
   cursor: pointer;
   width: 18px;
 }
@@ -100,7 +100,6 @@
 .link a:hover {
   text-decoration: underline;
 }
-
 .loginButton {
   margin-top: 20px;
   width: 60%;
@@ -112,28 +111,25 @@
   color: #fff;
   cursor: pointer;
 }
-
-.error {
-  color: red;
-  margin-bottom: 10px;
-}
 .errorText {
   font-size: 12px;
   color: red;
   margin-bottom: 7px;
   font-style: italic;
 }
-/* responsive */
+.error {
+  color: red;
+  margin-bottom: 10px;
+}
+
 @media screen and (max-width: 768px) {
- 
-  .login{
+  .login {
     width: 90%;
   }
-  .iconEye{
+  .iconEye {
     width: 5%;
   }
-  .icon{
+  .icon {
     width: 2%;
   }
-
 }

@@ -1,9 +1,10 @@
+import { DetailPaymentType } from '../pages/DetailPayment/type'
 import { privateAxios } from './axios'
 
-export const getDetailPayment = (paymentId: any) => {
+export const getDetailPayment = (paymentId: string) => {
   return privateAxios.get(`/payment/${paymentId}`)
 }
 
-export const orderPayment = (Values: any) => {
-  return privateAxios.post('/order', Values)
+export const orderPayment = (body: DetailPaymentType | {}) => {
+  return privateAxios.post('/order', body)
 }

@@ -2,23 +2,29 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { StarProduct } from '../../../../components/StarProduct'
 import { ERROR_MESSAGES } from '../../../../helpers/contanst'
-import { addListProduct } from '../../../../redux/actions/app'
+import { scrollToTop } from '../../../../helpers/scrollToTop'
+import { useCalculateProductPercentage } from '../../../../helpers/useCalculateProductPercentage'
+
+import { ProductResultType, saveRelateProducts } from '../../../../redux/Slices/appSlices'
 import { getProductRelate } from '../../../../services/detailProduct'
 import styles from './styles.module.scss'
 
-export const RelateProducts = ({ handleGetDetail }: any) => {
-  const relatedProducts = useSelector((state: any) => state.app.products) // lấy sản phẩm liên quan trong store
+export const RelateProducts = ({ handleGetDetail, setDetailProduct }: any) => {
+  const relateProducts = useSelector((state: any) => state.app.relateProducts)
+  const calculateDiscountPercentage = useCalculateProductPercentage()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
   const params = useParams()
+  const dispatch = useDispatch()
 
   // lấy sp liên quan
   const handleGetRelate = () => {
-    getProductRelate(params?.id)
+    getProductRelate(params?.id ?? '')
       .then((res) => {
-        dispatch(addListProduct(res.data?.data))
+        setDetailProduct(res.data?.data)
+        dispatch(saveRelateProducts(res.data.data))
       })
       .catch((error) => {
         toast.error(ERROR_MESSAGES.SERVER_ERROR)
@@ -26,67 +32,56 @@ export const RelateProducts = ({ handleGetDetail }: any) => {
   }
 
   const redirectDetailProduct = (idProduct: string) => {
+    handleGetDetail()
     navigate(idProduct)
-    handleGetDetail() // call lại Getdetail
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    scrollToTop()
   }
 
   useEffect(() => {
     handleGetRelate()
   }, [])
 
-  // const [dotPosition, setDotPosition] = useState<DotPosition>('top') // chuyển slick-dots(dấu chấm bóng mượt) lên top
-  // const imagesRef = useRef(null)
-  // const handleImagePrev = () => {
-  //   ;(imagesRef.current as any).prev()
-  // }
-  // const handleImageNext = () => {
-  //   ;(imagesRef.current as any).next()
-  // }
-
   return (
     <div className={styles.otherProducts}>
       <div>SẢN PHẨM CÙNG LOẠI</div>
-      <div className={styles.similarProducts}>
-        {/* <Carousel
-          // dotPosition={dotPosition}
-          autoplay={true}
-          dots={true}
-          slidesToShow={5}
-          ref={imagesRef}
-          className={styles.itemCarousel}
-        > */}
-        {relatedProducts.map((item: any) => {
-          return (
-            <div
-              className={styles.informationProduct}
-              onClick={() => redirectDetailProduct(`/detail-product/${item.id}`)}
-            >
-              <img className={styles.otherImage} src={item.image} alt='icon' />
+      <div className={styles.containerProduct}>
+        {/* <Products products={relateProducts} /> */}
+        {relateProducts.map((item: ProductResultType) => (
+          <div
+            className={styles.itemProduct}
+            key={item.id}
+            onClick={() => {
+              redirectDetailProduct(`/detail-product/${item.id}`)
+            }}
+          >
+            <div className={styles.stickerPercent}>
+              <div></div>
+              <div className={styles.percent}>
+                <span>-</span> {calculateDiscountPercentage(item?.salePrice || 0, item?.originPrice || 0)}%
+              </div>
+              <div></div>
+            </div>
+            <div className={styles.product}>
+              <div className={styles.images}>
+                <img src={item.image} alt='images' />
+              </div>
               <div>{item.name}</div>
-              <div className={styles.priceProduct}>
+              <div className={styles.productPrice}>
                 <div>
-                  {item.originPrice}
+                  <CurrencyFormat amount={item.salePrice} />
                   <span>đ</span>
                 </div>
                 <div>
-                  {item.salePrice}
+                  <CurrencyFormat amount={item.originPrice} />
                   <span>đ</span>
                 </div>
               </div>
-              <div>
-                <StarProduct numberYellow={item?.star} numberGray={5 - item?.star} />
+              <div className={styles.iconStar}>
+                <StarProduct numberYellow={item.star || 0} numberGray={5 - (item.star || 0)} />
               </div>
             </div>
-          )
-        })}
-        {/* </Carousel> */}
-        {/* <div onClick={handleImagePrev} className={styles.otherPrev}>
-          {'<'}
-        </div>
-        <div onClick={handleImageNext} className={styles.otherNext}>
-          {'>'}
-        </div> */}
+          </div>
+        ))}
       </div>
     </div>
   )

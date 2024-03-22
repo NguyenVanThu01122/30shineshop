@@ -1,17 +1,22 @@
-.containerItem{
-    margin: auto;
+.containerItem {
+  width: 100%;
+  margin: auto;
+  background-color: rgba(255, 204, 51, 0.913);
+  .menuItem {
+    max-width: 1100px;
     display: flex;
-    justify-content: space-around;
-    padding: 11px 160px;
-    background-color: rgba(255, 204, 51, 0.913);
+    align-items: center;
+    justify-content: start;
+    gap: 80px;
+    margin: auto;
+   padding: 10px 0px;
     & div {
-      margin-left: 30px;
       font-weight: 800;
       cursor: pointer;
-      font-size: 15px;
-     
+
     }
     & :hover {
       color: #fff !important;
     }
   }
+}

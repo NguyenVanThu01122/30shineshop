@@ -6,7 +6,7 @@ import SidebarAccount from '../../components/SidebarAccount'
 import { ButtonGeneral } from '../../components/Ui/button'
 import { ERROR_MESSAGES, PLACEHOLDER } from '../../helpers/contanst'
 import { validateBirthday, validateEmail, validateName, validatePhone } from '../../helpers/validationRules'
-import { updateAccount } from '../../redux/actions/app'
+import { saveUser } from '../../redux/Slices/appSlices'
 import { TypeBodyUser, getUser, updateUser } from '../../services/account'
 import styles from './styles.module.css'
 
@@ -37,7 +37,7 @@ export default function Account() {
     updateUser(body)
       .then((res) => {
         toast.success(res.data.message)
-        dispatch(updateAccount({ ...user, name: values.name, date: values.date, telephone: values.telephone }))
+        dispatch(saveUser({ ...user, name: values.name, date: values.date, telephone: values.telephone }))
       })
       .catch((error) => {
         toast.error(error.response?.data?.message)

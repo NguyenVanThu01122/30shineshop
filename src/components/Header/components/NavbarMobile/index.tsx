@@ -10,9 +10,8 @@ interface NavbarMobileProps {
 const NavbarMobile = ({ showMenu, handleRedirect, setShowMenu }: NavbarMobileProps) => {
   const handleStop = (e: any) => e.stopPropagation() // ngăn chặn sự kiện click (closeMenu) cho thằng con
 
-  const closeMenu = () => {
-    setShowMenu(0)
-  }
+  const closeMenu = () => setShowMenu(0)
+
   return (
     <div
       className={`${styles.menu} ${

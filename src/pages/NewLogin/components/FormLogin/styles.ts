@@ -18,7 +18,7 @@ export const StyledFormLogin = styled.div`
     border: 2px solid transparent; /* Đặt đường viền ban đầu là trong suốt */
 
     /* animation: borderAnimationLogin 2s infinite; Áp dụng animation và infinite là lặp lại vô hạn */
-    @keyframes borderAnimationLogin {
+    /* @keyframes borderAnimationLogin {
       0% {
         border-top: 2px solid orangered;
       }
@@ -34,7 +34,7 @@ export const StyledFormLogin = styled.div`
       100% {
         border-bottom: 2px solid green;
       }
-    }
+    } */
     // class label của ant
     .ant-form-item-label > label {
       color: wheat;

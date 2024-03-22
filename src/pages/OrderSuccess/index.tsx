@@ -29,7 +29,7 @@ export default function OrderSuccess() {
     online: 'online'
   }
   useEffect(() => {
-    getOrderSuccess(params?.id).then((res) => {
+    getOrderSuccess(params?.id ?? '').then((res) => {
       setOrderDetail(res.data?.data)
     })
     scrollToTop()

@@ -7,12 +7,11 @@ import { Loading } from '../../components/Ui/loading'
 import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, PAGE_NAMES, SORT, TOTAL } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
-import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
-import { addListProduct } from '../../redux/actions/app'
+import { addListProduct } from '../../redux/Slices/appSlices'
 import { TypeListProduct, listProduct } from '../../services/listProduct'
 import { ListProducts, WrapperListProducts } from './styles'
 
-//Với React.lazy, chúng ta đã tự động tải component con chỉ khi ArtistComponent được hiển thị.
+//Với React.lazy, chúng ta đã tự động tải component con chỉ khi ListProduct được hiển thị.
 const ProductFilterPanelLazy = lazy(() => import('./components/ProductFilterPanel'))
 const ProductsComponentLazy = lazy(() => import('./components/Products'))
 const PaginationLazy = lazy(() => import('../../components/Ui/pagination'))
@@ -100,7 +99,7 @@ export default function ListProduct() {
         </Suspense>
       )}
 
-      {!isLoading && !products?.length &&  <NoDataMessage message={NO_DATA_MESSAGE.NO_PRODUCT} />}
+      {!isLoading && !products?.length && <NoDataMessage message={NO_DATA_MESSAGE.NO_PRODUCT} />}
     </WrapperListProducts>
   )
 }

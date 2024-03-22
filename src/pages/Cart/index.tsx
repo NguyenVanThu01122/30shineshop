@@ -35,7 +35,6 @@ export default function Cart() {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [isLoading, setIsLoading] = useIsLoading()
   const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
-
   // hàm lấy danh sách sản phảm giỏ hàng
   const getListCart = () => {
     setIsLoading(true)
