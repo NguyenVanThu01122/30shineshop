@@ -7,7 +7,7 @@ import { ERROR_MESSAGES } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { getDetailProduct } from '../../services/detailProduct'
-import { RelateProducts } from './componets/RelateProducts'
+import { RelateProducts } from './components/RelateProducts'
 import { ContentDetail, Wrapper } from './styles'
 export interface DetailProductType {
   name?: string
@@ -18,9 +18,9 @@ export interface DetailProductType {
   id?: string
   images?: string[] | any
 }
-const ComponentDetailProductLazy = lazy(() => import('./componets/ComponentDetailProduct'))
-const ProductSupportInfoLazy = lazy(() => import('./componets/ProductSupportInfo'))
-const ModalCartLazy = lazy(() => import('./componets/modalCart'))
+const ComponentDetailProductLazy = lazy(() => import('./components/ComponentDetailProduct'))
+const ProductSupportInfoLazy = lazy(() => import('./components/ProductSupportInfo'))
+const ModalCartLazy = lazy(() => import('./components/modalCart'))
 
 export default function DetailProduct() {
   const [detailProduct, setDetailProduct] = useState({})
