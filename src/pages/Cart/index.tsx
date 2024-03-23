@@ -1,15 +1,14 @@
 import { Suspense, lazy, useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
+import checkLogin from '../../helpers/checkLogin'
 import { NO_DATA_MESSAGE, PAGE_NAMES, STRING } from '../../helpers/contanst'
 import { useGetLengthOfCart } from '../../helpers/useGetLengthOfCart'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import image from '../../images/empty cart.svg'
-import { RootState } from '../../redux/Slices/rootReducer'
 import { getListCartProduct } from '../../services/cart'
 import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart } from './style'
 export interface ProductType {
@@ -37,7 +36,9 @@ export default function Cart() {
   const [getLengthOfCart] = useGetLengthOfCart()
   const [isLoading, setIsLoading] = useIsLoading()
   const [isShowNoDataMessage, setIsShowDataMessage] = useShowDataMessage()
-  const isLogin = useSelector((state: RootState) => state.app.isLogin)
+  const isLogin = checkLogin()
+  const isCartNotEmpty = listCart.length > 0
+
   // hàm lấy danh sách sản phảm giỏ hàng
   const getListCart = () => {
     setIsLoading(true)
@@ -80,15 +81,14 @@ export default function Cart() {
     <WrapperCart>
       <PageNavbar page={PAGE_NAMES.CART} />
       <ContainerCart>
-        {isLoading && !listCart.length ? (
+        {isLoading && !isCartNotEmpty ? (
           <Loading />
-        ) : !isLogin && !isLoading && !listCart.length && isShowNoDataMessage ? (
+        ) : !isLoading && !isCartNotEmpty && isShowNoDataMessage ? (
           <NoDataMessage image={image} message={NO_DATA_MESSAGE.NO_PRODUCT_CART} />
         ) : (
           /* sử dụng suspense như 1 container chứa các component lazy */
-
           <Suspense>
-            {isLogin && (
+            {isLogin && isCartNotEmpty && (
               <ContentCart>
                 <TitlePage>GIỎ HÀNG</TitlePage>
                 <ItemProduct>
@@ -101,21 +101,19 @@ export default function Cart() {
                     handleOpenModal={handleOpenModal}
                   />
 
-                  {listCart.length > 0 && (
-                    <ListProductCartLazy
-                      listCart={listCart}
-                      listCartId={listCartId}
-                      getListCart={getListCart}
-                      handleOpenModal={handleOpenModal}
-                      setListCartId={setListCartId}
-                    />
-                  )}
+                  <ListProductCartLazy
+                    listCart={listCart}
+                    listCartId={listCartId}
+                    getListCart={getListCart}
+                    handleOpenModal={handleOpenModal}
+                    setListCartId={setListCartId}
+                  />
                 </ItemProduct>
               </ContentCart>
             )}
 
             {/* thông tin đơn hàng */}
-            {listCart.length > 0 && <InformationOrderLazy listCart={listCart} listCartId={listCartId} />}
+            {isCartNotEmpty && <InformationOrderLazy listCart={listCart} listCartId={listCartId} />}
 
             {/* Modal xoa sp gio hang */}
             <ModalDeleteProductLazy
