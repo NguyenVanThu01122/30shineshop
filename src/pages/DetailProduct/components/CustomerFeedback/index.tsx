@@ -1,12 +1,13 @@
 import { Form, Rate } from 'antd'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { StarProduct } from '../../../../components/StarProduct'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { TextArealInput } from '../../../../components/Ui/textAreaInput'
-import { MESSAGE_PICK_STAR, NUMBER_STAR, PLACEHOLDER } from '../../../../helpers/contanst'
+import { MESSAGE_PICK_STAR, NUMBER_STAR } from '../../../../helpers/contanst'
 import { scrollToTop } from '../../../../helpers/scrollToTop'
 import { validateComment } from '../../../../helpers/validationRules'
 import imgStarYellow from '../../../../images/images-star-yellow.jpg'
@@ -59,6 +60,7 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
   const [form] = Form.useForm()
   const params = useParams()
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   // hàm lấy danh sách đánh giá sản phẩm
   const handleGetListEvaluate = () => {
@@ -138,7 +140,7 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
 
   return (
     <div className={styles.CustomerFeedback}>
-      <div>Phản hồi khách hàng</div>
+      <div>{t('CUSTOMER_FEEDBACK')}</div>
       <div className={styles.feedback}>
         <div className={styles.animationFeedback}>
           <div className={styles.noFeedback}>
@@ -146,7 +148,9 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
             <div>
               <StarProduct numberYellow={detailProduct?.star ?? 0} numberGray={5 - (detailProduct?.star ?? 0)} />
             </div>
-            <div>{detailProduct?.totalEvaluate} phản hồi</div>
+            <div>
+              {detailProduct?.totalEvaluate} {t('FEEDBACK')}
+            </div>
           </div>
           <div className={styles.starOder}>
             {dataStar.map((item: TypeDataStar, index: number) => {
@@ -155,7 +159,7 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
                   <div className={styles.star}>
                     <div>{item?.numberStar}</div>
                     <div>
-                      <img className={styles.iconStarYellow} src={imgStarYellow} />
+                      <img className={styles.iconStarYellow} src={imgStarYellow} alt='StarYellow' />
                     </div>
                     <div className={styles.Crossbar}></div>
                     <div>{calculateStar(item?.numberStar, detailProduct?.listStar)}</div>
@@ -167,11 +171,11 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
 
           {!isOpenFeedback ? (
             <div className={styles.review} onClick={openFeedback}>
-              VIẾT ĐÁNH GIÁ
+              {t('WRITE_REVIEW')}
             </div>
           ) : (
             <div className={styles.closeFeedback} onClick={closeFeedback}>
-              ĐÓNG
+              {t('CLOSE')}
             </div>
           )}
         </div>
@@ -179,7 +183,7 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
         {isOpenFeedback && (
           <div className={styles.itemFeedback}>
             <div className={styles.feedbackStar}>
-              <div>Chọn đánh giá của bạn</div>
+              <div>{t('CHOOSE_YOUR_REVIEW')}</div>
               <span>
                 <Rate value={numberStar} onChange={handleRateChange} />
               </span>
@@ -187,11 +191,11 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
             </div>
             <div className={styles.clickItem}>
               <Form onFinish={sendPostEvaluate} form={form}>
-                <Form.Item name='comment' rules={validateComment} className={styles.formItemText}>
+                <Form.Item name='comment' rules={validateComment()} className={styles.formItemText}>
                   <TextArealInput
                     onChange={(e) => setComment(e.target.value)}
                     className={styles.textArea}
-                    placeholder={PLACEHOLDER.ENTER_PRODUCT_REVIEW}
+                    placeholder={t('ENTER_PRODUCT_REVIEW')}
                     size='large'
                   />
                 </Form.Item>
@@ -203,7 +207,7 @@ export const CustomerFeedback = ({ detailProduct, handleGetDetail }: any) => {
                     onClick={handleSubmit}
                     className={styles.btnSubmit}
                   >
-                    Gửi đánh giá
+                    {t('SEND_REVIEW')}
                   </ButtonGeneral>
                 </div>
               </Form>

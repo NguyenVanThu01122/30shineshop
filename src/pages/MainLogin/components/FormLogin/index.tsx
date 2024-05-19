@@ -1,26 +1,38 @@
-import { Form, FormInstance, Input } from 'antd'
+import { Form, Input } from 'antd'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CheckboxGeneral } from '../../../../components/Ui/checkbox'
 import { FormGeneral } from '../../../../components/Ui/form'
 import { InputGeneral } from '../../../../components/Ui/input'
-import { LABEL, PLACEHOLDER, SUCCESS_MESSAGE } from '../../../../helpers/contanst'
+import { SUCCESS_MESSAGE } from '../../../../helpers/contanst'
 import { validateEmail, validatePassword } from '../../../../helpers/validationRules'
 import { isLogin } from '../../../../redux/Slices/appSlices'
+import { ROUTES } from '../../../../routes/routes'
 import { login } from '../../../../services/auth'
-import { StyledFormLogin } from './styles'
+import {
+  BrandName,
+  ForgotPassword,
+  ItemSubmit,
+  Register,
+  Remember,
+  SelectItem,
+  StyledFormLogin,
+  SubmitForm
+} from './styles'
 interface FormLoginProps {
-  form: FormInstance<any>
   setIsOpenModal: (value: boolean) => void
 }
 
-export const FormLogin = ({ form, setIsOpenModal }: FormLoginProps) => {
+export const FormLogin = ({ setIsOpenModal }: FormLoginProps) => {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [focusInput, setFocusInput] = useState('')
   const pathName = window.location.pathname
   const dispatch = useDispatch()
+  const [form] = Form.useForm()
 
   const onFinish = (values: { email: string; password: string }) => {
     const data = { email: values.email, password: values.password }
@@ -41,51 +53,45 @@ export const FormLogin = ({ form, setIsOpenModal }: FormLoginProps) => {
   return (
     <StyledFormLogin>
       <FormGeneral className='formGeneral' size='large' form={form} layout='vertical' onFinish={onFinish}>
-        <div className='select-item'>
-          <div className={`login ${pathName === '/main-login' && 'login-animation-border'}`}>
+        <SelectItem>
+          <div className={`login ${pathName === ROUTES.MAIN_LOGIN && 'login-animation-border'}`}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            ĐĂNG NHẬP
+            {t('login')}
           </div>
-          <div onClick={() => navigate('/main-register')} className='register'>
-            ĐĂNG KÝ
-          </div>
-        </div>
-        <Form.Item label={LABEL.EMAIL} name='email' rules={validateEmail}>
+          <Register onClick={() => navigate(ROUTES.MAIN_REGISTER)}>{t('register')}</Register>
+        </SelectItem>
+        <Form.Item label={t('email')} name='email' rules={validateEmail()}>
           <InputGeneral
             className={`custom-input ${focusInput === 'email' && 'border-violet'}`}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_EMAIL}
+            placeholder={t('email')}
             onClick={() => setFocusInput('email')}
             onBlur={() => setFocusInput('')}
           />
         </Form.Item>
-        <Form.Item label={LABEL.PASSWORD} name='password' rules={validatePassword}>
+        <Form.Item label={t('password')} name='password' rules={validatePassword()}>
           <Input.Password
             className={`custom-input  ${focusInput === 'password' && 'border-violet'}`}
             onClick={() => setFocusInput('password')}
             onBlur={() => setFocusInput('')}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_PASSWORD}
+            placeholder={t('password')}
           />
         </Form.Item>
-        <div className='select-box'>
+        <Remember>
           <Form.Item name='remember' valuePropName='checked'>
-            <CheckboxGeneral className='checkbox'>Remember me !</CheckboxGeneral>
+            <CheckboxGeneral className='checkbox'>{t('rememberMe')}</CheckboxGeneral>
           </Form.Item>
-          <div className='forgotPassword' onClick={() => setIsOpenModal(true)}>
-            Quên mật khẩu?
-          </div>
-        </div>
-        <div className='new-login'>
-          <div className='submit' onClick={() => form.submit()}>
-            ĐĂNG NHẬP
-          </div>
-        </div>
-        <div className='brand-name'>
+          <ForgotPassword onClick={() => setIsOpenModal(true)}>{t('forgotPassword')}</ForgotPassword>
+        </Remember>
+        <ItemSubmit>
+          <SubmitForm onClick={() => form.submit()}>{t('login')}</SubmitForm>
+        </ItemSubmit>
+        <BrandName>
           <span>30Shine</span>
           <span>Shop</span>
-        </div>
+        </BrandName>
       </FormGeneral>
     </StyledFormLogin>
   )

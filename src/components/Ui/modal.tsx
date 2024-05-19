@@ -1,4 +1,5 @@
 import { Modal } from 'antd'
+import { useTranslation } from 'react-i18next'
 interface CommonModalProps {
   children?: React.ReactNode
   modalTitle?: string
@@ -11,6 +12,7 @@ interface CommonModalProps {
   style?: React.CSSProperties
   className?: string
   title?: string
+  i18nKey?: string
 }
 export const CommonModal = ({
   children,
@@ -22,8 +24,10 @@ export const CommonModal = ({
   width,
   centered,
   style,
-  className
+  className,
+  i18nKey
 }: CommonModalProps) => {
+  const { t } = useTranslation()
   return (
     <Modal
       width={width}
@@ -36,7 +40,7 @@ export const CommonModal = ({
       className={className}
       centered={centered}
     >
-      {children}
+      {i18nKey ? t(i18nKey) : children}
     </Modal>
   )
 }

@@ -5,6 +5,11 @@ export const WrapperOrder = styled.div`
   display: flex;
   justify-content: center;
   margin: 35px 0px;
+
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    margin: 0px;
+  }
 `
 export const ItemOrder = styled.div`
   flex: 0.7;
@@ -12,7 +17,6 @@ export const ItemOrder = styled.div`
   padding: 20px 0px;
   height: 80vh;
   overflow-y: auto;
-  position: relative;
   ::-webkit-scrollbar {
     width: 5px; /* Độ rộng của thanh cuộn */
     margin-right: 10px !important; /* Khoảng cách margin bên phải */
@@ -31,6 +35,13 @@ export const ItemOrder = styled.div`
   ::-webkit-scrollbar-track:hover {
     background-color: #d4d4d4; /* Màu nền khi hover lên thanh cuộn */
   }
+  @media screen and (max-width: 768px) {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    margin: 0px;
+    padding: 16px 0px;
+  }
 `
 export const MyOrder = styled.div`
   color: red;
@@ -39,4 +50,7 @@ export const MyOrder = styled.div`
   font-family: 'Oswald';
   font-weight: 600;
   background-color: rgb(238, 238, 238);
+  @media screen and (max-width: 768px) {
+    margin-left: 16px;
+  }
 `

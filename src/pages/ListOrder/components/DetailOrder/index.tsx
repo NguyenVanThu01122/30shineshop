@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
@@ -10,6 +11,7 @@ export const ComponentDetailOrder = ({
   colorStatus
 }: ComponentDetailOrderProps) => {
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   return (
     <>
@@ -23,7 +25,7 @@ export const ComponentDetailOrder = ({
                   <img className='img-product' src={product?.image} alt='' />
                   <div className='name-product'>
                     <div>{product?.name}</div>
-                    <div>Phiên bản: default</div>
+                    <div>{t('VERSION')}: default</div>
                     <div>X{product?.amount}</div>
                   </div>
                 </div>
@@ -35,7 +37,7 @@ export const ComponentDetailOrder = ({
             ))}
           </div>
           <div className='total-price'>
-            <div>Tổng tiền:</div>
+            <div>{t('TOTAL_PRICE')}</div>
             <div>
               <CurrencyFormat amount={item?.totalPrice} />
               <span>đ</span>
@@ -49,7 +51,7 @@ export const ComponentDetailOrder = ({
                 size='large'
                 className='btn-detail-order'
               >
-                Chi tiết đơn hàng
+                {t('ORDER_DETAILS')}
               </ButtonGeneral>
             </div>
           </div>

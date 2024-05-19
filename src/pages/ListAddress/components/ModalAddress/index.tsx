@@ -1,4 +1,5 @@
 import { FormInstance } from 'antd'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { CommonModal } from '../../../../components/Ui/modal'
@@ -16,14 +17,9 @@ interface ModalAddressProps {
   setIsLoading?: (value: boolean) => void
 }
 
-export default function ModalAddress({
-  edit,
-  isOpenModal,
-  handleGetListAddress,
-  setIsOpenModal,
-  setEdit,
-  form
-}: ModalAddressProps) {
+export default function ModalAddress(props: ModalAddressProps) {
+  const { edit, isOpenModal, handleGetListAddress, setIsOpenModal, setEdit, form } = props
+  const { t } = useTranslation()
   // hàm xử lý render theo điều kiện
   const handleFinish = (values: TypeAddress) => {
     if (edit && edit?.id) {
@@ -74,7 +70,7 @@ export default function ModalAddress({
 
   return (
     <CommonModal isModalOpen={isOpenModal} footer={false} width={500} centered={true} onCancel={handleModalCancel}>
-      <ItemTitle>{edit ? 'Sửa địa chỉ' : 'Thêm địa chỉ'}</ItemTitle>
+      <ItemTitle>{edit ? t('EDIT_ADDRESS') : t('ADD_ADDRESS')}</ItemTitle>
       <FormComponent
         form={form}
         onFinish={handleFinish}
@@ -82,21 +78,33 @@ export default function ModalAddress({
           <GroupButton>
             {edit ? (
               <>
-                <ButtonGeneral className='buttonSubmit' htmlType='submit'>
-                  Sửa địa chỉ
-                </ButtonGeneral>
-                <ButtonGeneral className='buttonCancel' onClick={handleModalCancel}>
-                  Hủy
-                </ButtonGeneral>
+                <ButtonGeneral
+                  className='buttonSubmit'
+                  htmlType='submit'
+                  i18nKey={t('SUBMIT_ADDRESS')}
+                  children={undefined}
+                />
+                <ButtonGeneral
+                  className='buttonCancel'
+                  onClick={handleModalCancel}
+                  i18nKey={t('CANCEL')}
+                  children={undefined}
+                />
               </>
             ) : (
               <>
-                <ButtonGeneral className='buttonSubmit' onClick={handleSubmitForm}>
-                  Tạo địa chỉ
-                </ButtonGeneral>
-                <ButtonGeneral className='buttonCancel' onClick={handleModalCancel}>
-                  Hủy
-                </ButtonGeneral>
+                <ButtonGeneral
+                  className='buttonSubmit'
+                  onClick={handleSubmitForm}
+                  i18nKey={t('CREATE_ADDRESS')}
+                  children={undefined}
+                />
+                <ButtonGeneral
+                  className='buttonCancel'
+                  onClick={handleModalCancel}
+                  i18nKey={t('CANCEL')}
+                  children={undefined}
+                />
               </>
             )}
           </GroupButton>

@@ -16,6 +16,7 @@ export const WrapperDetailAddress = styled.div`
     padding: 10px;
     gap: 15px;
     .buttonEdit {
+      height: 40px;
       color: white !important;
       background-color: #1677ff;
       &:hover {
@@ -24,10 +25,18 @@ export const WrapperDetailAddress = styled.div`
     }
     .buttonDelete {
       background-color: yellow;
+      height: 40px;
     }
     .buttonDelete:hover {
       color: white;
       background-color: red;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .address {
+      & > div:nth-child(2) {
+        word-break: break-all;
+      }
     }
   }
 `

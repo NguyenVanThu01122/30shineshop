@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { ProductType } from '../..'
@@ -11,6 +12,7 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
   const [totalPrice, setTotalPrice] = useState(TOTAL_PRICE)
   const [amountProducts, setAmountProducts] = useState(AMOUNT_PRODUCTS)
   const navigate = useNavigate()
+  const { t } = useTranslation()
 
   // hàm click vào item đặt hàng
   const handleClickOrder = () => {
@@ -48,7 +50,7 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
     const { totalPrice, amountProducts } = calculateTotals(listCartId, listCart)
     setTotalPrice(totalPrice)
     setAmountProducts(amountProducts)
-  }, [listCartId, listCart]) // nó sẽ chỉ thay đổi giá trị của totalPrice và amountProdut khi biến phụ thuộc bị thay đổi.
+  }, [listCartId, listCart, calculateTotals]) // nó sẽ chỉ thay đổi giá trị của totalPrice và amountProdut khi biến phụ thuộc bị thay đổi.
 
   useEffect(() => {
     handleClickOrder()
@@ -56,12 +58,15 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
   return (
     <WrapperInformation>
       <div className='itemPay'>
-        <div>THÔNG TIN ĐƠN HÀNG</div>
+        <div>{t('ORDER_INFORMATION')}</div>
         <div className='itemProvisional'>
           <div className='provisional'>
             <div className='amountOrder'>
               <div>
-                Tạm tính <span>({listCartId?.length} sản phẩm)</span>
+                {t('TEMPORARY')}{' '}
+                <span>
+                  ({listCartId?.length} {t('PRODUCTS')})
+                </span>
               </div>
             </div>
             <div>
@@ -75,17 +80,17 @@ export default function InformationOrder({ listCartId, listCart }: { listCart: P
         </div>
         <div className='totalMoney'>
           <div className='money'>
-            <div>Tổng tiền</div>
+            <div>{t('TOTAL_MONEY')}</div>
             <div className='numberTotal'>
               <CurrencyFormat amount={totalPrice} /> <span>đ</span>
             </div>
           </div>
-          <div>Đã bao gồm VAT (nếu có)</div>
+          <div>{t('INCLUDED_VAT')}</div>
         </div>
       </div>
-      <div className={`order ${listCartId.length ? 'colorYelow' : ''}`} onClick={handleClickOrder}>
-        <div>TIẾN HÀNH ĐẶT HÀNG</div>
-        <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
+      <div className={`order ${listCartId.length ? 'colorYellow' : ''}`} onClick={handleClickOrder}>
+        <div>{t('PROCEED_TO_ORDER')}</div>
+        <div>{t('EXCHANGE_IF_NOT_SATISFIED')}</div>
       </div>
     </WrapperInformation>
   )

@@ -30,4 +30,13 @@ export const GroupButton = styled.div`
       filter: brightness(0.7);
     }
   }
+  @media screen and (max-width: 768px) {
+    justify-content: space-between;
+    .buttonSubmit {
+      width: 50%;
+    }
+    .buttonCancel {
+      width: 50%;
+    }
+  }
 `

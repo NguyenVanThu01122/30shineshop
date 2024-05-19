@@ -1,6 +1,7 @@
 import { Timeline } from 'antd'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CurrencyFormat } from '../../components/CurrencyFormat'
@@ -8,7 +9,6 @@ import NoDataMessage from '../../components/NodataMessage'
 import SidebarAccount from '../../components/SidebarAccount'
 import { ButtonGeneral } from '../../components/Ui/button'
 import { Loading } from '../../components/Ui/loading'
-import { NO_DATA_MESSAGE } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
@@ -17,6 +17,7 @@ import { ItemDetailOrder, WrapperDetailOrder } from './styles'
 import { OrderDetailType, ProductType, TimelineDetailItemType } from './type'
 
 function DetailOrder() {
+  const { t } = useTranslation()
   const [orderDetail, setOrderDetail] = useState<OrderDetailType>()
   const navigate = useNavigate()
   const params = useParams()
@@ -47,17 +48,17 @@ function DetailOrder() {
     <WrapperDetailOrder>
       <SidebarAccount />
       <ItemDetailOrder>
-        <div className='order'>Chi Tiết Đơn Hàng</div>
+        <div className='order'>{t('ORDER_DETAILS')}</div>
         <div className='order-detail'>
           {isOrderDetailValid && (
             <div>
               <div className='delivery-address'>
-                <div>Địa chỉ nhận hàng</div>
-                <div>
+                <div>{t('DELIVERY_ADDRESS')}</div>
+                {/* <div>
                   {orderDetail?.timelineDetail.map((item: TimelineDetailItemType) => {
                     return <span style={{ color: colorStatus(item.status) }}>{orderStatusCommon(item?.status)}</span>
                   })}
-                </div>
+                </div> */}
               </div>
               <div className='item-information'>
                 <div className='order-information'>
@@ -102,10 +103,10 @@ function DetailOrder() {
               ))}
               <div className='total-price'>
                 <div className='title-price'>
-                  <div>Tổng tiền hàng:</div>
-                  <div>Phí giao hàng:</div>
-                  <div>Khuyến mãi:</div>
-                  <div>Tổng tiền:</div>
+                  <div>{t('TOTAL_PRODUCT_PRICE')}:</div>
+                  <div>{t('DELIVERY_FEE')}:</div>
+                  <div>{t('DISCOUNT')}:</div>
+                  <div>{t('TOTAL')}:</div>
                 </div>
                 <div className='money-price'>
                   <div>
@@ -126,20 +127,20 @@ function DetailOrder() {
                 </div>
               </div>
               <div className='itemInfo-order'>
-                <div style={{ color: colorStatus(orderDetail?.status) }}>
+                {/* <div style={{ color: colorStatus(orderDetail?.status) }}>
                   {orderDetail?.timelineDetail?.map((item: TimelineDetailItemType) => orderStatusCommon(item?.status))}
-                </div>
+                </div> */}
                 <div className='payment-method'>
-                  <div>Phương thức thanh toán</div>
+                  <div>{t('PAYMENT_METHOD')}</div>
                   <div>{orderDetail?.methodPayment}</div>
                 </div>
               </div>
               <div className='item-buy'>
                 <ButtonGeneral onClick={() => navigate('/list-order')} className='btnListOrder' size='large'>
-                  Danh sách đơn hàng
+                  {t('ORDER_LIST')}
                 </ButtonGeneral>
                 <ButtonGeneral onClick={() => navigate('/')} size='large' className='btnHome'>
-                  Tiếp tục mua sắm
+                  {t('CONTINUE_SHOPPING')}
                 </ButtonGeneral>
               </div>
             </div>
@@ -148,7 +149,7 @@ function DetailOrder() {
           {/* item Loading */}
           {isLoading && <Loading />}
           {!isLoading && (!orderDetail || !orderDetail.products || orderDetail.products.length === 0) && (
-            <NoDataMessage message={NO_DATA_MESSAGE.NO_ORDER} />
+            <NoDataMessage message={t('NO_ORDER')} />
           )}
         </div>
       </ItemDetailOrder>

@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const WrapperBrand = styled.div`
-  padding: 0px 140px;
+  max-width: 1200px;
+  margin: auto;
   & > div:first-child {
     font-weight: 600;
     font-family: 'Oswald';
@@ -72,6 +73,40 @@ export const WrapperBrand = styled.div`
       &:hover {
         background-color: #ffcc33;
         color: #e8e8e8;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .list_Brand {
+      position: relative;
+      margin-bottom: 50px;
+      .ant-carousel {
+        & .slick-dots li {
+          display: none;
+        }
+      }
+      .ant-carousel .slick-dots {
+      }
+      .images_Brand {
+        width: 700px;
+        .child-brand {
+          padding: 10px;
+          img {
+            cursor: pointer;
+            width: 100%;
+            border: 1px solid rgba(105, 105, 105, 0.163);
+            &:hover {
+              box-shadow: 0px 0px 5px gray;
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+      .brand_Next {
+        right: 0;
+      }
+      .brand_Prev {
+        left: 0;
       }
     }
   }

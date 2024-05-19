@@ -1,6 +1,6 @@
 import { ItemCommitment, ItemService, Wrapper } from './styles'
 
-export const ServiceSection  = () => {
+export const ServiceSection = () => {
   return (
     <Wrapper>
       <ItemCommitment>
@@ -16,7 +16,7 @@ export const ServiceSection  = () => {
           <img src='https://shop.30shine.com/_next/image?url=%2Ficons%2Fnew-usp-icon-3.svg&w=48&q=75' alt='' />
           <div>Đổi trả tận nơi</div>
         </div>
-        <div className='icon_Commitment'>
+        <div className='detail_Commitment'>
           <img src='https://shop.30shine.com/_next/image?url=%2Ficons%2Fnew-usp-icon-4.svg&w=48&q=75' alt='' />
           <div>Cam kết 7 ngày hiệu quả</div>
         </div>

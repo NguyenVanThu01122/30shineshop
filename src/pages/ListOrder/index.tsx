@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import SidebarAccount from '../../components/SidebarAccount'
 import CustomLoading from '../../components/customLoading'
+import Translations from '../../components/translations'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
@@ -42,7 +43,6 @@ function ListOrder() {
   }
 
   useEffect(() => {
-    // dùng filter lọc trạng thái đơn hàng theo trạng thái đã chọn
     const arrStatus = orders.filter((item: any) => {
       if (SaveOrderStatus === '') {
         return true
@@ -66,18 +66,22 @@ function ListOrder() {
     <WrapperOrder>
       <SidebarAccount />
       <ItemOrder>
-        <MyOrder>Đơn hàng của tôi</MyOrder>
+        <MyOrder>
+          <Translations text='MY_ORDER' />
+        </MyOrder>
         <TitleStatusOrder
           arrStatusOrder={arrStatusOrder}
           SaveOrderStatus={SaveOrderStatus}
           setSaveOrderStatus={setSaveOrderStatus}
         />
         {/* <Input className='custom-input' size='large' placeholder='Tìm id đơn hàng hoặc tên sản phẩm '></Input> */}
-        <ComponentDetailOrder
-          listStatusOrder={listStatusOrder}
-          orderStatusCommon={orderStatusCommon}
-          colorStatus={colorStatus}
-        />
+        {!isLoading && listStatusOrder.length > 0 && (
+          <ComponentDetailOrder
+            listStatusOrder={listStatusOrder}
+            orderStatusCommon={orderStatusCommon}
+            colorStatus={colorStatus}
+          />
+        )}
 
         {/* item Loading */}
         {isLoading && <CustomLoading />}

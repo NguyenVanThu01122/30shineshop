@@ -1,14 +1,16 @@
+import { useTranslation } from 'react-i18next'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { ContentTitle, WrapperTitle } from './styles'
 
 export default function TitleAddress({ setIsOpenModal }: { setIsOpenModal: (value: boolean) => void }) {
+  const { t } = useTranslation()
   return (
     <WrapperTitle>
-      <ContentTitle>Địa chỉ nhận hàng</ContentTitle>
+      <ContentTitle>{t('DELIVERY_ADDRESS')}</ContentTitle>
       <ButtonGeneral className='button' onClick={() => setIsOpenModal(true)}>
         <div>
           <span className='icon-plus'>+</span>
-          Thêm địa chỉ mới
+          {t('ADD_NEW_ADDRESS')}
         </div>
       </ButtonGeneral>
     </WrapperTitle>

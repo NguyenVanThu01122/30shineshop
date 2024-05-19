@@ -123,4 +123,33 @@ export const WrapperBlogs = styled.div`
     position: relative;
     top: -40px;
   }
+  @media screen and (max-width: 768px) {
+    .blogs {
+      padding: 5px;
+      width: 100%;
+      .title_Blogs {
+        & > div:first-child {
+        }
+      }
+      .detail_blogs {
+        padding: 4px;
+        img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          border-radius: 5px;
+        }
+        & > div:nth-child(2) {
+          font-size: 18px;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        & > div:last-child {
+        }
+      }
+    }
+  }
 `

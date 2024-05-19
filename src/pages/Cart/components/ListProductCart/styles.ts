@@ -117,4 +117,61 @@ export const DetailProductCart = styled.div`
       cursor: pointer;
     }
   }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+    .informationProduct {
+      width: 100%;
+      .imgProduct {
+        width: 20%;
+      }
+      & > div:nth-child(3) {
+        width: 100%;
+      }
+      & input[type='checkbox'] {
+        margin-left: 8px;
+        width: 60px;
+        height: 60px;
+      }
+      .priceProduct {
+        width: 100%;
+        & > div:first-child {
+          font-size: 1rem;
+        }
+        .priceSale {
+          & > div:first-child {
+            font-size: 10px;
+          }
+          & > div:last-child {
+            font-size: 12px;
+            padding: 5px 10px;
+          }
+        }
+      }
+      & span {
+        font-size: 1rem;
+      }
+    }
+    .upDown {
+      width: 100%;
+      .buttonUpDown {
+        width: 45%;
+        .btn {
+          font-size: 15px;
+          padding: 0px 10px;
+        }
+        .btnAmount {
+          font-size: 16px;
+          padding: 5px;
+        }
+        & > div:last-child {
+          font-size: 25px;
+        }
+      }
+      & > div:nth-child(2) {
+        font-size: 1rem;
+      }
+    }
+  }
 `

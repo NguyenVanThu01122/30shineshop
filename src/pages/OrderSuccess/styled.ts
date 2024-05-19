@@ -94,14 +94,24 @@ export const OderSuccessWrapper = styled.div`
   @media screen and (max-width: 768px) {
     .informationOrder {
       width: 100%;
+      .informationPayment {
+        & > div:first-child {
+        }
+        & > div:last-child {
+          font-size: 16px;
+        }
+      }
     }
     .orderDetail {
       width: 100%;
       & > div:first-child {
-        padding: 5px;
+        font-size: 13px;
+        font-weight: bold;
+        border: 1px solid red;
       }
       & > div:last-child {
-        padding: 10px;
+        font-size: 13px;
+        font-weight: bold;
       }
       & > div:last-child span {
         font-size: 10px;

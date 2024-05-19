@@ -3,34 +3,46 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
+import Products from '../../components/Products'
 import { Loading } from '../../components/Ui/loading'
-import { ERROR_MESSAGES, LIMIT, NO_DATA_MESSAGE, PAGE, PAGE_NAMES, SORT, TOTAL } from '../../helpers/contanst'
+import Translations from '../../components/translations'
+import {
+  ERROR_MESSAGES,
+  LIMIT,
+  MAXPRICE,
+  MINPRICE,
+  NO_DATA_MESSAGE,
+  PAGE,
+  PAGE_NAMES,
+  SORT,
+  TOTAL
+} from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { addListProduct } from '../../redux/Slices/appSlices'
+import { RootState } from '../../redux/Slices/rootReducer'
 import { TypeListProduct, listProduct } from '../../services/listProduct'
-import { ListProducts, WrapperListProducts } from './styles'
+import { FindProduct, ListProducts, WrapperListProducts, WrapperPagination } from './styles'
 
-//Với React.lazy, chúng ta đã tự động tải component con chỉ khi ListProduct được hiển thị.
 const ProductFilterPanelLazy = lazy(() => import('./components/ProductFilterPanel'))
-const ProductsComponentLazy = lazy(() => import('./components/Products'))
 const PaginationLazy = lazy(() => import('../../components/Ui/pagination'))
 
 export default function ListProduct() {
   const [keyword, setKeyword] = useState('')
   const [category, setCategory] = useState('')
-  const [minPrice, setMinPrice] = useState('')
-  const [maxPrice, setMaxPrice] = useState('')
+  const [minPrice, setMinPrice] = useState(MINPRICE)
+  const [maxPrice, setMaxPrice] = useState(MAXPRICE)
   const [sort, setSort] = useState(SORT)
   const [page, setPage] = useState(PAGE)
-  const [limit, setLimit] = useState(LIMIT)
+  const [limit] = useState(LIMIT)
   const [total, setTotal] = useState(TOTAL)
 
   let [isLoading, setIsLoading] = useIsLoading()
   const [isCategory, setIsCategory] = useState(false)
 
   const dispatch = useDispatch()
-  const products = useSelector((state: any) => state.app.products)
+  const products = useSelector((state: RootState) => state.app.products)
+  const productsLength = products ? products.length : 0
 
   const handleGetLitsProduct = () => {
     setIsLoading(true)
@@ -47,10 +59,10 @@ export default function ListProduct() {
       params.category = category
     }
     if (minPrice) {
-      params.minPrice = minPrice
+      params.minPrice = String(minPrice)
     }
     if (maxPrice) {
-      params.maxPrice = maxPrice
+      params.maxPrice = String(maxPrice)
     }
     listProduct(params)
       .then((response) => {
@@ -85,16 +97,27 @@ export default function ListProduct() {
             setMinPrice={setMinPrice}
             setMaxPrice={setMaxPrice}
             setSort={setSort}
+            sort={sort}
             setPage={setPage}
             setKeyword={setKeyword}
           />
           <ListProducts>
-            <ProductsComponentLazy />
+            <FindProduct>
+              {!isLoading && (
+                <div>
+                  <span>{productsLength}</span>
+                  <Translations text={'PRODUCT_FOUND'} />
+                </div>
+              )}
+            </FindProduct>
+            <Products products={products} />
           </ListProducts>
 
           {/* pagination */}
           {products?.length > 0 && (
-            <PaginationLazy current={page} total={total} pageSize={limit} onChange={(page) => setPage(page)} />
+            <WrapperPagination>
+              <PaginationLazy current={page} total={total} pageSize={limit} onChange={(page) => setPage(page)} />
+            </WrapperPagination>
           )}
         </Suspense>
       )}

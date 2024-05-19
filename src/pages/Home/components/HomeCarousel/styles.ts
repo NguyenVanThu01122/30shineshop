@@ -1,46 +1,59 @@
 import styled from 'styled-components'
 
 export const WrapperCarousel = styled.div`
+  position: relative;
+  .prev,
   .next {
     width: 40px;
     height: 40px;
-    background-color: rgb(239, 232, 232);
     color: black;
     font-size: 20px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
     position: absolute;
-    z-index: 1000;
     top: 50%;
-    right: 20px;
     transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+  }
+  .prev {
+    left: 10px;
     &:hover {
       background-color: #ffcc33;
       color: white;
     }
   }
-  .prev {
-    width: 40px;
-    height: 40px;
-    background-color: rgb(239, 232, 232);
-    color: black;
-    font-size: large;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: absolute;
-    z-index: 1000;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
+
+  .next {
+    right: 10px;
     &:hover {
       background-color: #ffcc33;
       color: white;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    position: relative;
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .prev {
+      left: 10px;
+    }
+
+    .next {
+      right: 10px;
     }
   }
 `

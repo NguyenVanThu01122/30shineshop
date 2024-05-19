@@ -1,5 +1,6 @@
 import { Button } from 'antd'
 import { CSSProperties, MouseEventHandler, ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const ButtonGeneral = ({
   children,
@@ -10,7 +11,9 @@ export const ButtonGeneral = ({
   span,
   disabled,
   style,
-  htmlType
+  htmlType,
+  loading,
+  i18nKey
 }: {
   children: ReactNode
   onClick?: MouseEventHandler<HTMLElement>
@@ -21,7 +24,10 @@ export const ButtonGeneral = ({
   span?: any
   style?: CSSProperties
   disabled?: boolean
+  loading?: boolean
+  i18nKey?: string
 }) => {
+  const { t } = useTranslation()
   return (
     <Button
       onClick={onClick}
@@ -31,8 +37,9 @@ export const ButtonGeneral = ({
       size={size}
       style={style}
       type={type}
+      loading={loading}
     >
-      {children}
+      {i18nKey ? t(i18nKey) : children}
     </Button>
   )
 }

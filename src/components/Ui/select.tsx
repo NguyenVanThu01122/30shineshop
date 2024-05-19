@@ -1,6 +1,7 @@
 import { Select } from 'antd'
 
 export const SelectGeneral = ({
+  children,
   className,
   defaultValue,
   onChange,
@@ -8,8 +9,11 @@ export const SelectGeneral = ({
   onBlur,
   options,
   size,
-  placeholder
+  placeholder,
+  value
 }: {
+  children?: React.ReactNode
+  value?: string | number | string[]
   size?: 'large' | 'small' | 'middle'
   className?: string
   placeholder?: string
@@ -21,6 +25,7 @@ export const SelectGeneral = ({
 }) => {
   return (
     <Select
+      value={value}
       size={size}
       className={className}
       defaultValue={defaultValue}
@@ -29,6 +34,8 @@ export const SelectGeneral = ({
       onClick={onClick}
       onBlur={onBlur}
       placeholder={placeholder}
-    />
+    >
+      {children}
+    </Select>
   )
 }

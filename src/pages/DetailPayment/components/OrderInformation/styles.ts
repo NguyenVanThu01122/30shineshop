@@ -125,14 +125,13 @@ export const WrapperInformation = styled.div`
   }
 
   @media screen and (max-width: 768px) {
-    .informationLine {
-      width: 100%;
+    width: 100%;
+    .itemOrder {
       .order {
-        width: 60%;
-        margin: auto;
-      }
-      .itemOrder > div:last-child {
-        padding: 0px 10px;
+        width: 100%;
+        position: fixed;
+        bottom: 0;
+        left: 0;
       }
     }
   }

@@ -1,14 +1,16 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson, BsPersonCircle, BsPinMap } from 'react-icons/bs'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import checkLogin from '../../helpers/checkLogin'
-import { LOGOUT_MESSAGE } from '../../helpers/contanst'
 import { useLogOut } from '../../helpers/useLogOut'
+import { ROUTES } from '../../routes/routes'
 import { CommonModal } from '../Ui/modal'
 import styles from './styles.module.scss'
 
 function SidebarAccount() {
+  const { t } = useTranslation()
   const [isModal, setIsModel] = useState(false)
   const navigate = useNavigate()
   const user = useSelector((state: any) => state.app.user)
@@ -23,6 +25,12 @@ function SidebarAccount() {
   const handleShowModel = () => setIsModel(true)
   const handleCancel = () => setIsModel(false)
 
+  const arrMenu = [
+    { path: ROUTES.ACCOUNT, icon: <BsPerson />, label: t('ACCOUNT_INFORMATION') },
+    { path: ROUTES.lIST_ADDRESS, icon: <BsPinMap />, label: t('DELIVERY_ADDRESS') },
+    { path: ROUTES.LIST_ORDER, icon: <BsLayoutTextSidebarReverse />, label: t('ORDERS') }
+  ]
+
   return (
     <div className={styles.wrapperSidebar}>
       <div className={styles.informationSelection}>
@@ -34,36 +42,25 @@ function SidebarAccount() {
           <div>{user?.telephone}</div>
         </div>
       </div>
-      <div
-        className={`${styles.list} ${pathname === '/account' && styles.border}`}
-        onClick={() => navigate('/account')}
-      >
-        <BsPerson />
-        <div>Thông tin tài khoản</div>
-      </div>
-      <div
-        className={`${styles.list} ${pathname === '/list-address' && styles.border}`}
-        onClick={() => navigate('/list-address')}
-      >
-        <BsPinMap />
-        <div>Địa chỉ nhận hàng</div>
-      </div>
-      <div
-        className={`${styles.list} ${pathname === '/list-order' && styles.border}`}
-        onClick={() => navigate('/list-order')}
-      >
-        <BsLayoutTextSidebarReverse />
-        <div>Đơn hàng</div>
-      </div>
-      <div className={styles.list}>
+      {arrMenu.map((menu) => (
+        <div
+          key={menu.path}
+          className={`${styles.listMenu} ${pathname === menu.path && styles.border}`}
+          onClick={() => navigate(menu.path)}
+        >
+          {menu.icon}
+          <div>{menu.label}</div>
+        </div>
+      ))}
+      <div className={styles.listMenu}>
         <BsBoxArrowRight />
         {isLogin && (
           <div className={styles.logOut} onClick={handleShowModel}>
-            Đăng xuất
+            {t('LOG_OUT')}
           </div>
         )}
         <CommonModal
-          modalTitle={LOGOUT_MESSAGE.LOGOUT_AUTHENTICATION_MESSAGE}
+          modalTitle={t('LOGOUT_AUTHENTICATION_MESSAGE')}
           isModalOpen={isModal}
           onOk={handleOk}
           onCancel={handleCancel}

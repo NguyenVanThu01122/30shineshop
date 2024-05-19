@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { ProductType } from '../..'
 import { ButtonGeneral } from '../../../../components/Ui/button'
@@ -12,14 +13,9 @@ interface TitleCartProps {
   isShowTitleProduct: boolean
   setIsShowTitleProduct: Dispatch<SetStateAction<boolean>>
 }
-export default function TitleCart({
-  handleOpenModal,
-  listCartId,
-  listCart,
-  isShowTitleProduct,
-  setIsShowTitleProduct,
-  setListCartId
-}: TitleCartProps) {
+export default function TitleCart(props: TitleCartProps) {
+  const { handleOpenModal, listCartId, listCart, isShowTitleProduct, setIsShowTitleProduct, setListCartId } = props
+  const { t } = useTranslation()
   // hàm mở tiêu đề thông tin sản phẩm
   const showTitle = () => {
     setIsShowTitleProduct(!isShowTitleProduct)
@@ -39,30 +35,36 @@ export default function TitleCart({
   return (
     <WrapperTitle>
       <div className='detailTitle'>
-        <input
-          checked={isShowTitleProduct}
-          disabled={!listCart.length}
-          onClick={showTitle}
-          type='checkbox'
-          id='checkbox1'
-        />
+        <div className='selectAll'>
+          <input
+            checked={isShowTitleProduct}
+            disabled={!listCart.length}
+            onClick={showTitle}
+            type='checkbox'
+            id='checkbox1'
+          />
+          <span>{t('Select All')}</span>
+        </div>
         <div className='checkboxProduct'>
           {!isShowTitleProduct ? (
             <div className='titleProduct'>
-              <div>Sản phẩm</div>
-              <div>Đơn giá</div>
-              <div>Số lượng</div>
-              <div>Tạm tính</div>
-              <div>Xóa</div>
+              <div>{t('PRODUCT')}</div>
+              <div>{t('UNIT_PRICE')}</div>
+              <div>{t('QUANTITY')}</div>
+              <div>{t('TEMPORARY_CALCULATION')}</div>
+              <div>{t('DELETE')}</div>
             </div>
           ) : (
             <div className='cartProduct'>
               <div>
-                Sản phẩm <span>({listCartId?.length} sản phẩm)</span>
+                {t('PRODUCTS')}{' '}
+                <span>
+                  ({listCartId?.length} {t('PRODUCTS')})
+                </span>
               </div>
               <ButtonGeneral type='primary' onClick={() => handleOpenModal('deleteAll', '')} className='deleteProduct'>
                 <AiOutlineDelete className='iconDelete'>/</AiOutlineDelete>
-                <div>Xóa tất cả</div>
+                <div>{t('DELETE_ALL')}</div>
               </ButtonGeneral>
             </div>
           )}

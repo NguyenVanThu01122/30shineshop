@@ -161,8 +161,9 @@ export const WrapperDetail = styled.div`
           }
         }
       }
-      .orderProducts {
+      .selectProduct {
         display: flex;
+        height: 65px;
         .addCart {
           width: 40%;
           border: 1px solid black;
@@ -171,13 +172,14 @@ export const WrapperDetail = styled.div`
           align-items: center;
           padding-left: 20px;
           margin-right: 10px;
+          text-align: center;
           cursor: pointer;
           &:hover {
             color: red;
             border-color: red;
           }
           & > div:last-child {
-            font-size: 1.125rem;
+            font-size: 20px;
             font-weight: 600;
             font-family: 'Oswald';
           }
@@ -200,14 +202,13 @@ export const WrapperDetail = styled.div`
             color: red;
           }
           & > div:first-child {
-            margin-bottom: 10px;
             font-size: 1.125rem;
             font-weight: 600;
             margin-right: 10px;
             font-family: 'Oswald';
           }
           & > div:last-child {
-            font-size: 13px;
+            font-size: 12px;
             font-family: 'Be Vietnam Pro';
           }
         }
@@ -425,54 +426,80 @@ export const WrapperDetail = styled.div`
         // }
       }
     }
-
-    @media screen and (max-width: 768px) {
-      width: 100%;
-      .product {
-        display: block;
-        .imgProduct {
-          width: 100%;
+  }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    .product {
+      flex-direction: column;
+      .imgProduct {
+        width: 100%;
+        border: 1px solid rgba(209, 209, 209);
+        margin-bottom: 10px;
+      }
+      .detailInformation {
+        width: 100%;
+        & > div:nth-child(3) {
+          margin: 0px;
         }
-        .detailInformation {
+        .selectProduct {
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          background-color: #fff;
+          z-index: 100;
           width: 100%;
-
-          .orderProducts {
-            .addCart {
-              width: 50%;
+          .addCart {
+            width: 50%;
+            margin: 0px;
+            color: red;
+            border-color: red;
+            & > div:first-child {
             }
-            .buyNow {
-              width: 50%;
-              & > div:first-child {
-                font-size: 17px;
-                margin-bottom: 4px;
-              }
-              & > div:last-child {
-                font-size: 8px;
-              }
+            & > div:last-child {
+              font-size: 18px;
             }
           }
+          .buyNow {
+            width: 50%;
+            & > div:first-child {
+              font-size: 22px;
+              margin-bottom: 4px;
+            }
+            & > div:last-child {
+              font-size: 8px;
+            }
+          }
+        }
+        .salePrice {
+          gap: 20px;
+          & > div:last-child {
+            width: 40%;
+          }
+        }
+        .quantity {
+          margin: 20px 0px 0px 0px;
         }
       }
-      .informationItem {
-        .itemProduct {
-          .instruct div {
-            font-size: 16px !important;
-            padding: 10px 14px !important;
-            margin: auto !important;
-          }
+    }
+    .informationItem {
+      .itemProduct {
+        .instruct div {
+          font-size: 16px !important;
+          margin: auto;
+          height: 60px;
         }
-        .CustomerFeedback > div:first-child {
-          width: 50%;
-        }
-        .CustomerFeedback {
-          .feedback {
-            .starOder {
-              .reviewStar {
-                margin: 0px 15px;
-              }
-              & > div:last-child {
-                margin-left: 20px;
-              }
+      }
+      .CustomerFeedback > div:first-child {
+        width: 50%;
+      }
+      .CustomerFeedback {
+        .feedback {
+          .starOder {
+            .reviewStar {
+              margin: 0px 15px;
+            }
+            & > div:last-child {
+              margin-left: 20px;
             }
           }
         }

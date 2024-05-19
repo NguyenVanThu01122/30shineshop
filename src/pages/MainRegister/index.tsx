@@ -1,12 +1,13 @@
 import { DatePicker, Form, Input } from 'antd'
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { CheckboxGeneral } from '../../components/Ui/checkbox'
 import { FormGeneral } from '../../components/Ui/form'
 import { InputGeneral } from '../../components/Ui/input'
 import { SelectGeneral } from '../../components/Ui/select'
-import { LABEL, PLACEHOLDER, TOOLTIP, optionSelectGender } from '../../helpers/contanst'
+import { TOOLTIP, optionSelectGender } from '../../helpers/contanst'
 import {
   validateBirthday,
   validateCheckBox,
@@ -17,10 +18,13 @@ import {
   validatePassword,
   validatePhone
 } from '../../helpers/validationRules'
+import { ROUTES } from '../../routes/routes'
 import { register } from '../../services/auth'
-import { WrapperRegister } from './styles'
+import { BrandName, SubmitForm } from '../MainLogin/components/FormLogin/styles'
+import { SelectItem, WrapperRegister } from './styles'
 
 function MainRegister() {
+  const { t } = useTranslation()
   const [focusInput, setFocusInput] = useState('')
   const [form] = Form.useForm()
   const navigate = useNavigate()
@@ -41,7 +45,7 @@ function MainRegister() {
     register(data)
       .then((res) => {
         toast.success(res.data?.message)
-        navigate('/main-login')
+        navigate(ROUTES.MAIN_LOGIN)
       })
       .catch((error) => {
         handleRegisterError(error)
@@ -72,30 +76,30 @@ function MainRegister() {
         size='large'
         scrollToFirstError // tự động cuộn đến lỗi đầu tiên trong quá trình xử lý lỗi form
       >
-        <div className='select-item'>
-          <div onClick={() => navigate('/main-login')} className='login'>
-            ĐĂNG NHẬP
+        <SelectItem>
+          <div onClick={() => navigate(ROUTES.MAIN_LOGIN)} className='login'>
+            {t('LOGIN')}
           </div>
-          <div className={`register ${pathName === '/main-register' && 'register-animation-border'}`}>
+          <div className={`register ${pathName === ROUTES.MAIN_REGISTER && 'register-animation-border'}`}>
             <span></span>
             <span></span>
             <span></span>
             <span></span>
-            ĐĂNG KÝ
+            {t('REGISTER')}
           </div>
-        </div>
-        <Form.Item className='form' name='nickname' label={LABEL.NICK_NAME} tooltip={TOOLTIP} rules={validateName}>
+        </SelectItem>
+        <Form.Item className='form' name='nickname' label={t('NAME')} tooltip={TOOLTIP} rules={validateName()}>
           <InputGeneral
             className={`custom-input ${focusInput === 'name' && 'border-violet'}`}
             onClick={() => handleFocusInput('name')}
             onBlur={handleBlurInput}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_NAME}
+            placeholder={t('PLEASE_ENTER_NAME')}
           />
         </Form.Item>
-        <Form.Item className='form' name='email' label={LABEL.EMAIL} rules={validateEmail}>
+        <Form.Item className='form' name='email' label={t('EMAIL')} rules={validateEmail()}>
           <InputGeneral
             className={`custom-input ${focusInput === 'email' && 'border-violet'}`}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_EMAIL}
+            placeholder={t('PLEASE_ENTER_EMAIL')}
             onClick={() => handleFocusInput('email')}
             onBlur={handleBlurInput}
           />
@@ -103,70 +107,66 @@ function MainRegister() {
         <Form.Item
           className='form'
           name='password'
-          label={LABEL.PASSWORD}
-          rules={validatePassword}
+          label={t('PASSWORD')}
+          rules={validatePassword()}
           hasFeedback // icon thành công
         >
           <Input.Password
             className={`custom-input ${focusInput === 'password' && 'border-violet'}`}
             onClick={() => handleFocusInput('password')}
             onBlur={handleBlurInput}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_PASSWORD}
+            placeholder={t('PLEASE_ENTER_PASSWORD')}
           />
         </Form.Item>
         <Form.Item
           className='form'
           name='confirm'
-          label={LABEL.CONFIRM_PASSWORD}
+          label={t('CONFIRM_PASSWORD')}
           dependencies={['password']} // Xác định phụ thuộc vào trường "password"
           hasFeedback // icon thành công
-          rules={validateConfirmPassword}
+          rules={validateConfirmPassword()}
         >
           <Input.Password
             className={`custom-input ${focusInput === 'repeatPassword' && 'border-violet'}`}
-            placeholder={PLACEHOLDER.PLEASE_CONFIRM_PASSWORD}
+            placeholder={t('PLEASE_CONFIRM_PASSWORD')}
             onClick={() => handleFocusInput('repeatPassword')}
             onBlur={handleBlurInput}
           />
         </Form.Item>
-        <Form.Item className='form' name='phone' label={LABEL.PHONE} rules={validatePhone}>
+        <Form.Item className='form' name='phone' label={t('PHONE')} rules={validatePhone()}>
           <InputGeneral
             className={`custom-input ${focusInput === 'phone' && 'border-violet'}`}
             onClick={() => handleFocusInput('phone')}
             onBlur={handleBlurInput}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_PHONE}
+            placeholder={t('PLEASE_ENTER_PHONE')}
             type='number'
           />
         </Form.Item>
-        <Form.Item className='form' name='gender' label={LABEL.GENDER} rules={validateGender}>
+        <Form.Item className='form' name='gender' label={t('GENDER')} rules={validateGender()}>
           <SelectGeneral
             className={`select-gender ${focusInput === 'gender' && 'border-violet'}`}
             onClick={() => handleFocusInput('gender')}
             onBlur={handleBlurInput}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_GENDER}
+            placeholder={t('PLEASE_ENTER_GENDER')}
             options={optionSelectGender}
           />
         </Form.Item>
-        <Form.Item className='form' label={LABEL.BIRTHDAY} name='date' rules={validateBirthday}>
+        <Form.Item className='form' label={t('BIRTHDAY')} name='date' rules={validateBirthday()}>
           <DatePicker
             className={`custom-input ${focusInput === 'birthday' && 'border-violet'}`}
             onClick={() => handleFocusInput('birthday')}
             onBlur={handleBlurInput}
-            placeholder={PLACEHOLDER.PLEASE_ENTER_BIRTHDAY}
+            placeholder={t('PLEASE_ENTER_BIRTHDAY')}
           />
         </Form.Item>
-        <Form.Item className='form' name='agreement' valuePropName='checked' rules={validateCheckBox}>
-          <CheckboxGeneral className='checkbox'>
-            Tôi cam kết tuân theo Chính sách bảo mật và Điều khoản sử dụng của 30shineshop.
-          </CheckboxGeneral>
+        <Form.Item className='form' name='agreement' valuePropName='checked' rules={validateCheckBox()}>
+          <CheckboxGeneral className='checkbox'>{t('AGREEMENT')}</CheckboxGeneral>
         </Form.Item>
-        <div className='submit-register' onClick={() => form.submit()}>
-          ĐĂNG KÝ
-        </div>
-        <div className='brand-name'>
+        <SubmitForm onClick={() => form.submit()}>{t('REGISTER')}</SubmitForm>
+        <BrandName>
           <span>30Shine</span>
           <span>Shop</span>
-        </div>
+        </BrandName>
       </FormGeneral>
     </WrapperRegister>
   )

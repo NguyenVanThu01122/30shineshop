@@ -18,7 +18,14 @@ const PaginationUi = ({
         total={total} //Prop này xác định tổng số mục (hoặc tổng số trang) có sẵn để phân trang.
         pageSize={pageSize}
         onChange={onChange}
-        style={{ display: 'flex', borderRadius: '6px', margin: 'auto', width: '10%', fontSize: 'large' }}
+        style={{
+          display: 'flex',
+          borderRadius: '6px',
+          margin: 'auto',
+          textAlign: 'center',
+          width: '10%',
+          fontSize: 'large'
+        }}
       />
     </div>
   )

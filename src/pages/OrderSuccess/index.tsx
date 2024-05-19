@@ -1,5 +1,7 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import { ArrowRightOutlined } from '@ant-design/icons'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate, useParams } from 'react-router-dom'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useOrderStatusUtils } from '../../helpers/useOrderStatusUtils'
@@ -20,6 +22,7 @@ interface OrderDetilType {
 }
 
 export default function OrderSuccess() {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const params = useParams()
   const [orderDetail, setOrderDetail] = useState<OrderDetilType>()
@@ -42,31 +45,29 @@ export default function OrderSuccess() {
           src='https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRD1_iLdSCXYqP0nMTvneuyTPs8YUbkhdfUSXUPU2miv0dlrkPd'
           alt='image'
         />
-        <div>ĐẶT HÀNG THÀNH CÔNG</div>
-        <div>Cảm ơn bạn đã mua hàng tại 30shine</div>
+        <div>{t('ORDER_SUCCESS')}</div>
+        <div>{t('THANK_YOU_FOR_SHOPPING')}</div>
       </div>
       <div className='informationOrder'>
-        <div>Thông Tin Đơn Hàng</div>
+        <div>{t('ORDER_INFORMATION')}</div>
         <div className='informationPayment'>
-          <div>Mã đơn hàng</div>
+          <div>{t('ORDER_ID')}</div>
           <div>{orderDetail?.orderId}</div>
         </div>
         <div className='informationPayment'>
-          <div>Trạng thái thanh toán</div>
+          <div>{t('PAYMENT_STATUS')}</div>
           <div>{orderStatusCommon(orderDetail?.orderStatus || '')}</div>
         </div>
         <div className='informationPayment'>
-          <div>Phương thức thanh toán</div>
-          <div>
-            {orderDetail?.methodPayment === methodPayment.offline ? 'Thanh toán khi nhận hàng' : 'Thanh toán online'}
-          </div>
+          <div>{t('PAYMENT_METHOD')}</div>
+          <div>{orderDetail?.methodPayment === methodPayment.offline ? t('PAY_ON_DELIVERY') : t('ONLINE_PAYMENT')}</div>
         </div>
         <div className='informationPayment'>
-          <div>Tổng thanh toán</div>
+          <div>{t('TOTAL_PAYMENT')}</div>
           <div>{orderDetail?.totalPrice} ₫</div>
         </div>
         <div className='informationPayment'>
-          <div>Thông tin nhận hàng</div>
+          <div>{t('RECEIVING_INFORMATION')}</div>
           <div className='personalInformation'>
             <div>{orderDetail?.address?.name}</div>
             <div>{orderDetail?.address?.phone}</div>
@@ -75,9 +76,9 @@ export default function OrderSuccess() {
         </div>
       </div>
       <div className='orderDetail'>
-        <div onClick={() => navigate(`/detail-order/${orderDetail?.orderId}`)}>Chi tiết đơn hàng</div>
+        <div onClick={() => navigate(`/detail-order/${orderDetail?.orderId}`)}>{t('ORDER_DETAILS')}</div>
         <div onClick={() => navigate('/')}>
-          Tiếp tục mua sắm{' '}
+          {t('CONTINUE_SHOPPING')}{' '}
           <span>
             <ArrowRightOutlined />
           </span>

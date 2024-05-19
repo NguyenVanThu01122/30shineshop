@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components'
 
 export const ItemDetailOrder = styled.div`
   background-color: white;
@@ -89,6 +89,30 @@ export const ItemDetailOrder = styled.div`
       }
       .button-add {
         background-color: orange;
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .information-product {
+      .detail-order {
+        .img-product {
+          object-fit: cover;
+        }
+      }
+    }
+    .select {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      & > div:first-child {
+        color: gray;
+      }
+      .group-button {
+        .btn-detail-order {
+          height: 45px;
+        }
+        .button-add {
+        }
       }
     }
   }

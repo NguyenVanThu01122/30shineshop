@@ -7,7 +7,7 @@ import { HomeCarousel } from './components/HomeCarousel'
 import ProductRecommendations from './components/ProductRecommendations'
 import { ProductsHome } from './components/Products'
 import SearchProducts from './components/SearchProduct'
-import { Wrapper } from './styles'
+import { MainContent, Wrapper } from './styles'
 
 function Home() {
   useEffect(() => {
@@ -17,12 +17,14 @@ function Home() {
   return (
     <Wrapper>
       <HomeCarousel />
-      <ServiceSection />
-      <SearchProducts />
-      <ProductsHome />
-      <ProductRecommendations />
-      <Brands />
-      <Blogs />
+      <MainContent>
+        <ServiceSection />
+        <SearchProducts />
+        <ProductsHome />
+        <ProductRecommendations />
+        <Brands />
+        <Blogs />
+      </MainContent>
     </Wrapper>
   )
 }

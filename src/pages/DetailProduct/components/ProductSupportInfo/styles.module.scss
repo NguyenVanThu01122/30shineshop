@@ -3,6 +3,7 @@
   .support {
     display: flex;
     align-items: center;
+    gap: 12px;
     cursor: pointer;
     font-size: 15px;
     color: rgb(49, 49, 49);
@@ -39,6 +40,8 @@
     }
   }
   @media screen and (max-width: 768px) {
+    width: 100%;
+    margin-top: 20px;
     .endProduct {
       display: none;
     }

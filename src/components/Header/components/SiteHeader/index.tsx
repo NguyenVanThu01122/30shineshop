@@ -1,29 +1,36 @@
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { Select } from 'antd'
+import select from 'antd/es/select'
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
 import { BsBoxArrowRight, BsLayoutTextSidebarReverse, BsPerson } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import checkLogin from '../../../../helpers/checkLogin'
-import { ERROR_MESSAGES, PLACEHOLDER, PRODUCT_RESULT_PATH } from '../../../../helpers/contanst'
+import { ERROR_MESSAGES, PRODUCT_RESULT_PATH } from '../../../../helpers/contanst'
 import { getLocalStorageValue, setLocalStorageValue } from '../../../../helpers/localStorageUtils'
 import logo30shine from '../../../../images/Logo_30shine.svg'
 import { saveIsLoading, saveKeywordSearch, saveProductSearch } from '../../../../redux/Slices/appSlices'
 import { RootState } from '../../../../redux/Slices/rootReducer'
+import { ROUTES } from '../../../../routes/routes'
 import { searchProduct } from '../../../../services/header'
 import { InputGeneral } from '../../../Ui/input'
+import NavbarMobile from '../NavbarMobile'
 import styles from './styles.module.scss'
 interface SiteHeaderProps {
   handleRedirect: (path: string) => void
-  setShowMenu: (value: number) => void
   setIsModal: (value: boolean) => void
   setIsAccount: (value: boolean) => void
   isAccount: boolean
+  setOpenMenuMobile: (value: boolean) => void
+  openMenuMobile: boolean
 }
 
-const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isAccount }: SiteHeaderProps) => {
+const SiteHeader = (props: SiteHeaderProps) => {
+  const { handleRedirect, setIsModal, setIsAccount, isAccount, setOpenMenuMobile, openMenuMobile } = props
   const [keyword, setKeyword] = useState('')
   const user = useSelector((state: RootState) => state.app.user)
   const totalCart = useSelector((state: RootState) => state.app.totalCart)
@@ -31,8 +38,16 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
   const keywordSearch = useSelector((state: RootState) => state.app.keywordSearch)
   const savedSearchKeyword = getLocalStorageValue('searchKeyword')
   const savedSearchResults = getLocalStorageValue('searchResults')
-  const login = checkLogin()
 
+  const { i18n, t } = useTranslation()
+  const [selectedLanguage, setSelectedLanguage] = useState(() => getLocalStorageValue('LANG_STORAGE_KEY') || 'vie')
+  const handleChangeLanguage = (value: string) => {
+    setSelectedLanguage(value)
+    i18n.changeLanguage(value) // Thay đổi ngôn ngữ
+    setLocalStorageValue('LANG_STORAGE_KEY', value) // Lưu ngôn ngữ vào localStorage
+  }
+
+  const login = checkLogin()
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const location = window.location // Lấy thông tin về URL hiện tại
@@ -50,21 +65,20 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
           dispatch(saveKeywordSearch(keyword)) // Lưu keyword vào store
           setLocalStorageValue('searchKeyword', keyword) // Lưu keyword vào local
           dispatch(saveIsLoading(false))
-          navigate('/product-search-result')
+          navigate(ROUTES.PRODUCT_SEARCH_RESULT)
         })
         .catch((error) => toast.error(ERROR_MESSAGES.SERVER_ERROR))
     }
   }
 
-  const openMenu = () => setShowMenu(1)
   const handleShowModalLogOut = () => setIsModal(true)
 
-  // Mở tài khoản
+  // show user account
   const openAccount = () => {
     if (login) {
       setIsAccount(!isAccount)
     } else {
-      navigate('/main-login')
+      navigate(ROUTES.MAIN_LOGIN)
     }
   }
 
@@ -103,7 +117,12 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
 
   return (
     <div className={styles.itemHeader}>
-      <div onClick={openMenu} className={styles.iconHome}>
+      <NavbarMobile
+        openMenuMobile={openMenuMobile}
+        setOpenMenuMobile={setOpenMenuMobile}
+        handleRedirect={handleRedirect}
+      />
+      <div onClick={() => setOpenMenuMobile(true)} className={styles.iconHome}>
         <FontAwesomeIcon className={styles.iconFabars} icon={faBars} />
       </div>
       <div className={styles.img}>
@@ -114,7 +133,7 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
           onClick={handleSearchProduct}
           className={`${styles.searchBar} ${keyword && keyword !== keywordSearch && styles.active}`}
         >
-          Tìm Kiếm
+          {t('SEARCH')}
         </div>
         <div className={styles.inputSearch}>
           <InputGeneral
@@ -123,7 +142,7 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
             type='text'
             name='keyword'
             className={styles.input}
-            placeholder={PLACEHOLDER.ENTER_PRODUCT}
+            placeholder={t('ENTER_PRODUCT')}
           />
           <FontAwesomeIcon onClick={handleSearchProduct} className={styles.iconSearch} icon={faMagnifyingGlass} />
         </div>
@@ -132,27 +151,38 @@ const SiteHeader = ({ handleRedirect, setShowMenu, setIsModal, setIsAccount, isA
           {login ? (
             <div className={styles.nameAccount}>{user?.name}</div>
           ) : (
-            <div onClick={() => navigate('/main-login')}>ĐĂNG NHẬP</div>
+            <div onClick={() => navigate('/main-login')}>{t('LOGIN')}</div>
           )}
           {isAccount && (
             <div className={styles.boxMenu}>
               <div onClick={() => handleRedirect('/account')} className={styles.detailItem}>
                 <BsPerson className={styles.iconMenu} />
-                <div>Tài khoản của tôi</div>
+                <div>{t('MY_ACCOUNT')}</div>
               </div>
               <div onClick={() => handleRedirect('/list-order')} className={styles.detailItem}>
                 <BsLayoutTextSidebarReverse className={styles.iconMenu} />
-                <div>Đơn hàng</div>
+                <div>{t('ORDERS')}</div>
               </div>
               <div onClick={handleShowModalLogOut} className={styles.detailItem}>
                 <BsBoxArrowRight className={styles.iconMenu} />
-                <div>Đăng xuất</div>
+                <div>{t('LOGOUT')}</div>
               </div>
             </div>
           )}
         </div>
+        <Select
+          className={styles.selectLanguage}
+          size='large'
+          value={selectedLanguage}
+          style={{ width: 140, marginLeft: 10 }}
+          onChange={handleChangeLanguage}
+        >
+          <select.Option value='vie'>Vietnamese</select.Option>
+          <select.Option value='eng'>English</select.Option>
+        </Select>
+
         <div className={styles.iconCart}>
-          <AiOutlineShoppingCart className={styles.icon} onClick={() => handleRedirect('/cart')} />
+          <AiOutlineShoppingCart className={styles.icon} onClick={() => handleRedirect(ROUTES.CART)} />
           {totalCart > 0 && <div className={styles.totalCart}>{totalCart}</div>}
         </div>
       </div>

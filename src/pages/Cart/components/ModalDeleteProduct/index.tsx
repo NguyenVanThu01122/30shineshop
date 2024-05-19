@@ -18,21 +18,22 @@ interface ModalDeleteProps {
   setModalTitle: Dispatch<SetStateAction<string>>
   setIsShowTitleProduct: Dispatch<SetStateAction<boolean>>
 }
-export default function ModalDeleteProduct({
-  getListCart,
-  listCartId,
-  idDeleteOne,
-  setListCartId,
-  setIsLoading,
-  getLengthOfCart,
-  isModalOpen,
-  setIsModalOpen,
-  setModalContent,
-  modalContent,
-  modalTitle,
-  setModalTitle,
-  setIsShowTitleProduct
-}: ModalDeleteProps) {
+export default function ModalDeleteProduct(props: ModalDeleteProps) {
+  const {
+    getListCart,
+    listCartId,
+    idDeleteOne,
+    isModalOpen,
+    modalContent,
+    modalTitle,
+    setListCartId,
+    setIsLoading,
+    getLengthOfCart,
+    setIsModalOpen,
+    setModalContent,
+    setModalTitle,
+    setIsShowTitleProduct
+  } = props
   // hàm xử lý xóa sản phẩm khỏi giỏ hàng
   const handleDeleteProduct = () => {
     if (modalTitle === STRING.DELETE_PRODUCT) {

@@ -1,5 +1,6 @@
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
-import { DetailProductType} from '../..'
+import { DetailProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { CommonModal } from '../../../../components/Ui/modal'
@@ -13,6 +14,7 @@ interface modalCartProps {
   setIsModalOpen: any
 }
 export default function ModalCart({ detailProduct, count, totalCart, isModalOpen, setIsModalOpen }: modalCartProps) {
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const [handleBuyNow] = useBuyNow()
   const handleCancel = () => {
@@ -23,8 +25,8 @@ export default function ModalCart({ detailProduct, count, totalCart, isModalOpen
     <CommonModal className={styles.modal} width={400} isModalOpen={isModalOpen} onCancel={handleCancel} footer={false}>
       <div className={styles.ItemModalCart}>
         <div className={styles.cart}>
-          <div>GIỎ HÀNG</div>
-          <div>Thêm giỏ hàng thành công</div>
+          <div>{t('CART')}</div>
+          <div>{t('ADD_TO_CART_SUCCESS')}</div>
         </div>
         <div className={styles.detailCart}>
           <img src={detailProduct?.images[0]} alt='' />
@@ -45,9 +47,11 @@ export default function ModalCart({ detailProduct, count, totalCart, isModalOpen
             </div>
           </div>
         </div>
-        <div className={styles.numberProduct}>Giỏ hàng của bạn đang có: {totalCart} sản phẩm</div>
+        <div className={styles.numberProduct}>
+          {t('YOUR_CART_HAS')}: {totalCart} {t('PRODUCTS')}
+        </div>
         <div className={styles.totalMoney}>
-          <div>TỔNG TIỀN: </div>
+          <div>{t('TOTAL_MONEY')}: </div>
           <div>
             <CurrencyFormat amount={(detailProduct?.salePrice || 0) * count} />
             <span>đ</span>
@@ -55,10 +59,10 @@ export default function ModalCart({ detailProduct, count, totalCart, isModalOpen
         </div>
         <div className={styles.buyNow}>
           <ButtonGeneral className={styles.btnByNow} type='primary' size='large' onClick={() => navigate('/cart')}>
-            XEM GIỎ HÀNG
+            {t('VIEW_CART')}
           </ButtonGeneral>
           <ButtonGeneral size='large' onClick={() => handleBuyNow(detailProduct?.id || '', count)}>
-            MUA NGAY
+            {t('BUY_NOW')}
           </ButtonGeneral>
         </div>
       </div>

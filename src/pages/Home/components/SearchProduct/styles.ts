@@ -2,9 +2,10 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   position: relative;
-  padding: 0px 140px;
+  max-width: 1200px;
+  margin: auto;
   margin-top: 40px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   .ant-carousel .slick-dots li {
     background-color: pink;
     bottom: 25px;
@@ -15,6 +16,7 @@ export const Wrapper = styled.div`
     cursor: pointer;
     font-family: 'Oswald';
     font-weight: 600;
+    margin-bottom: 20px;
   }
   .carousel_List_Products {
     border-radius: 5px;
@@ -44,12 +46,14 @@ export const Wrapper = styled.div`
     z-index: 1000;
     top: 55%;
     right: 120px;
+    z-index: 1 !important;
     &:hover {
       background-color: #ffcc33;
       color: white;
     }
   }
   .prev {
+    z-index: 1 !important;
     width: 40px;
     height: 40px;
     color: blue;
@@ -67,6 +71,19 @@ export const Wrapper = styled.div`
     &:hover {
       background-color: #ffcc33;
       color: white;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    padding: 0px 0px;
+    .next {
+      right: 0px;
+      &:hover {
+        background-color: #ffcc33;
+        color: white;
+      }
+    }
+    .prev {
+      left: 0px;
     }
   }
 `

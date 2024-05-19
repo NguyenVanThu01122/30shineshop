@@ -8,12 +8,15 @@ import { ERROR_MESSAGES } from '../../../../helpers/contanst'
 import { scrollToTop } from '../../../../helpers/scrollToTop'
 import { useCalculateProductPercentage } from '../../../../helpers/useCalculateProductPercentage'
 
+import Translations from '../../../../components/translations'
 import { ProductResultType, saveRelateProducts } from '../../../../redux/Slices/appSlices'
+import { RootState } from '../../../../redux/Slices/rootReducer'
 import { getProductRelate } from '../../../../services/detailProduct'
 import styles from './styles.module.scss'
 
 export const RelateProducts = ({ handleGetDetail, setDetailProduct }: any) => {
-  const relateProducts = useSelector((state: any) => state.app.relateProducts)
+  const relatedProducts = useSelector((state: RootState) => state.app.relateProducts)
+
   const calculateDiscountPercentage = useCalculateProductPercentage()
   const navigate = useNavigate()
   const params = useParams()
@@ -43,10 +46,12 @@ export const RelateProducts = ({ handleGetDetail, setDetailProduct }: any) => {
 
   return (
     <div className={styles.otherProducts}>
-      <div>SẢN PHẨM CÙNG LOẠI</div>
+      <div>
+        <Translations text={'SAME_TYPE_PRODUCTS'} />
+      </div>
       <div className={styles.containerProduct}>
         {/* <Products products={relateProducts} /> */}
-        {relateProducts.map((item: ProductResultType) => (
+        {relatedProducts.map((item: ProductResultType) => (
           <div
             className={styles.itemProduct}
             key={item.id}

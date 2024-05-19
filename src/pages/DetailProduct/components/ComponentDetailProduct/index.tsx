@@ -3,6 +3,7 @@ import { BiChevronDown } from 'react-icons/bi'
 import { BsCartPlus } from 'react-icons/bs'
 import { toast } from 'react-toastify'
 
+import { useTranslation } from 'react-i18next'
 import { useDispatch } from 'react-redux'
 import { DetailProductType } from '../..'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
@@ -55,6 +56,7 @@ export default function ComponentDetailProduct({
   const calculateDiscountPercentage = useCalculateProductPercentage()
   const login = checkLogin()
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   // hàm xử lý check sp có trong giỏ hàng và add sp vào giỏ hàng
   const handleAddProductCart = (idProduct: string, amount: number) => {
@@ -115,7 +117,9 @@ export default function ComponentDetailProduct({
                 numberGray={detailProduct ? 5 - (detailProduct?.star || 0) : 5}
               />
             </div>
-            <div>{detailProduct?.totalEvaluate} đánh giá</div>
+            <div>
+              {detailProduct?.totalEvaluate} {t('Evaluate')}
+            </div>
           </div>
           <div className='vnd'>
             <CurrencyFormat amount={detailProduct?.salePrice} /> VND
@@ -125,28 +129,28 @@ export default function ComponentDetailProduct({
               <CurrencyFormat amount={detailProduct?.originPrice} /> VND
             </div>
             <div>
-              Giảm
+              {t('DISCOUNT')}
               <span>{calculateDiscountPercentage(detailProduct.salePrice ?? 0, detailProduct.originPrice ?? 0)}%</span>
             </div>
           </div>
           <div className='quantity'>
-            <div>Số lượng</div>
+            <div>{t('QUANTITY')}</div>
             <div className='count'>
               <div onClick={() => decreaseNumber()}>-</div>
               <div>{count}</div>
               <div onClick={() => increaseNumber()}>+</div>
             </div>
           </div>
-          <div className='orderProducts'>
+          <div className='selectProduct'>
             <div className='addCart' onClick={() => handleAddProductCart(detailProduct.id || '', count)}>
               <div>
                 <BsCartPlus className='icon' />
               </div>
-              <div>THÊM GIỎ HÀNG</div>
+              <div>{t('ADD_TO_CART')}</div>
             </div>
             <div className='buyNow' onClick={() => handleBuyNow(detailProduct.id || '', count)}>
-              <div>MUA NGAY</div>
-              <div>Không ưng đổi ngay trong 30 ngày</div>
+              <div>{t('BUY_NOW')}</div>
+              <div>{t('NOT_SATISFIED_EXCHANGE')}</div>
             </div>
           </div>
         </div>
@@ -164,13 +168,13 @@ export default function ComponentDetailProduct({
       <div className='informationItem'>
         <div className='itemProduct'>
           <div className='instruct'>
-            <div>Thông tin sản phẩm</div>
-            <div>Thành phần</div>
-            <div>Hướng dẫn sử dụng</div>
+            <div>{t('PRODUCT_INFO')}</div>
+            <div>{t('INGREDIENTS')}</div>
+            <div>{t('USAGE_GUIDE')}</div>
           </div>
           <div>[NEW 2023] Combo Diệt Mụn </div>
           <div className='readMore'>
-            <div>Đọc thêm</div>
+            <div>{t('READ_MORE')}</div>
             <BiChevronDown className='iconDown' />
           </div>
         </div>

@@ -1,21 +1,22 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 
 export const useOrderStatusUtils = () => {
   const [messageStatusOrder, setMessageStatusOrder] = useState('')
-
+  const { t } = useTranslation()
   // Hàm xử lý trạng thái đơn hàng
   const orderStatusCommon = (status: string) => {
     switch (status) {
       case 'processing':
-        return 'Đang xử lý'
+        return t('PROCESSING')
       case 'confirmed':
-        return 'Đã xác nhận'
+        return t('CONFIRMED')
       case 'in_transit':
-        return 'Đang giao hàng'
+        return t('IN_TRANSIT')
       case 'delivered':
-        return 'Đã giao hàng'
+        return t('DELIVERED')
       default:
-        return 'Đã hủy'
+        return t('CANCELLED')
     }
   }
 
@@ -46,32 +47,32 @@ export const useOrderStatusUtils = () => {
     {
       id: 1,
       status: '',
-      title: 'Tất cả'
+      title: t('ALL')
     },
     {
       id: 2,
       status: 'processing',
-      title: 'Đang xử lý'
+      title: t('PROCESSING')
     },
     {
       id: 3,
       status: 'confirmed',
-      title: 'Đã xác nhận'
+      title: t('CONFIRMED')
     },
     {
       id: 4,
       status: 'in_transit',
-      title: 'Đang giao hàng'
+      title: t('IN_TRANSIT')
     },
     {
       id: 5,
       status: 'delivered',
-      title: 'Đã giao hàng'
+      title: t('DELIVERED')
     },
     {
       id: 6,
       status: 'canceled',
-      title: 'Đã hủy'
+      title: t('CANCELLED')
     }
   ]
 
@@ -79,17 +80,17 @@ export const useOrderStatusUtils = () => {
   const updateOrderStatusMessage = (status: any) => {
     switch (status) {
       case '':
-        return setMessageStatusOrder('Bạn không có đơn hàng nào !')
+        return setMessageStatusOrder(t('NO_ORDER'))
       case 'processing':
-        return setMessageStatusOrder('Bạn không có đơn hàng nào đang xử lý !')
+        return setMessageStatusOrder(t('NO_PROCESSING_ORDER'))
       case 'confirmed':
-        return setMessageStatusOrder('Bạn không có đơn hàng nào đã xác nhận !')
+        return setMessageStatusOrder(t('NO_CONFIRMED_ORDER'))
       case 'in_transit':
-        return setMessageStatusOrder('Bạn không có đơn hàng nào đang giao hàng !')
+        return setMessageStatusOrder(t('NO_IN_TRANSIT_ORDER'))
       case 'delivered':
-        return setMessageStatusOrder('Bạn không có đơn hàng nào đã giao hàng !')
+        return setMessageStatusOrder(t('NO_DELIVERED_ORDER'))
       default:
-        return setMessageStatusOrder('Bạn không có đơn hàng nào đã hủy')
+        return setMessageStatusOrder(t('NO_CANCELLED_ORDER'))
     }
   }
 

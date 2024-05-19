@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { useDispatch, useSelector } from 'react-redux'
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
 import { ButtonGeneral } from '../../../../components/Ui/button'
@@ -9,12 +10,15 @@ import { WrapperInformation } from './styles'
 export const OrderInformation = ({
   detailPayment,
   onFinish,
-  form
+  form,
+  loading
 }: {
   detailPayment: any
   onFinish: (values: FormValuesType) => void
   form: any
+  loading: boolean
 }) => {
+  const { t } = useTranslation()
   const dispatch = useDispatch()
   const login = useSelector((state: any) => state.app.isLogin)
   // hàm Validate fields
@@ -41,10 +45,13 @@ export const OrderInformation = ({
   return (
     <WrapperInformation>
       <div className='information'>
-        <div>THÔNG TIN ĐƠN HÀNG</div>
+        <div>{t('ORDER_INFORMATION')}</div>
         <div className='itemProvisional'>
           <div>
-            Tạm tính <span>({detailPayment?.products?.length} sản phẩm)</span>
+            {t('PROVISIONAL')}{' '}
+            <span>
+              ({detailPayment?.products?.length} {t('PRODUCTS')})
+            </span>
           </div>
           <div>
             <CurrencyFormat amount={detailPayment?.totalOriginPrice} />
@@ -52,47 +59,45 @@ export const OrderInformation = ({
           </div>
         </div>
         <div className='itemProvisional'>
-          <div>Phí giao hàng</div>
+          <div>{t('DELIVERY_FEE')}</div>
           <div>
             <CurrencyFormat amount={detailPayment?.deliveryPrice} />
             <span>đ</span>
           </div>
         </div>
         <div className='itemProvisional'>
-          <div>Khuyến mãi</div>
+          <div>{t('PROMOTION')}</div>
           <div>
             - 0<span>₫</span>
           </div>
         </div>
-        <div>Chọn hoặc nhập mã khuyến mãi</div>
+        <div>{t('ENTER_PROMO_CODE')}</div>
         <div className='totalMoney'>
-          <div>Tổng tiền</div>
+          <div>{t('TOTAL')}</div>
           <div>
             <CurrencyFormat amount={detailPayment?.totalPrice} />
             <span>₫</span>
           </div>
         </div>
-        <div>Đã bao gồm VAT (nếu có)</div>
+        <div>{t('INCLUDED_VAT')}</div>
       </div>
       <div className='paymentMethods'>
-        <div>Phương Thức Thanh Toán</div>
+        <div>{t('PAYMENT_METHODS')}</div>
         <div className='paymentCheckbox'>
           <InputGeneral type='radio' name='payment' checked={true} />
-          <div>Thanh toán khi nhận hàng</div>
+          <div>{t('PAY_ON_DELIVERY')}</div>
         </div>
         <div className='paymentCheckbox'>
           <InputGeneral type='radio' name='payment' />
-          <div>Thanh toán qua cổng VNpay</div>
+          <div>{t('PAY_VIA_VNPAY')}</div>
         </div>
       </div>
       <div className='itemOrder'>
-        <ButtonGeneral onClick={validateAndSubmit} className='order'>
-          <div>ĐẶT HÀNG</div>
-          <div>Không Ưng Đổi Ngay Trong 30 Ngày</div>
+        <ButtonGeneral onClick={validateAndSubmit} className='order' loading={loading}>
+          <div>{t('PLACE_ORDER')}</div>
+          <div>{t('NOT_SATISFIED_EXCHANGE')}</div>
         </ButtonGeneral>
-        <div>
-          Nhấn <span> "ĐẶT HÀNG”</span> đồng nghĩa với việc bạn đồng ý tuân theo Điều khoản của 30Shine
-        </div>
+        <div>{t('AGREE_TERMS')}</div>
       </div>
     </WrapperInformation>
   )

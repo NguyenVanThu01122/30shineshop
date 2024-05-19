@@ -1,11 +1,14 @@
 import { CurrencyFormat } from '../../../../components/CurrencyFormat'
+import Translations from '../../../../components/translations'
 import { ProductType } from '../../type'
 import { WrapperProduct } from './styles'
 
 export const Product = ({ detailPayment }: any) => {
   return (
     <WrapperProduct>
-      <div>Sản Phẩm</div>
+      <div>
+        <Translations text={'PRODUCT'} />
+      </div>
       {detailPayment?.products?.map((product: ProductType) => (
         <div className='product' key={product?.id}>
           <img src={product?.image} alt='imageProduct' />

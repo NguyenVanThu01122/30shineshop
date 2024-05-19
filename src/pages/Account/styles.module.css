@@ -1,6 +1,7 @@
 .pageAccount {
   display: flex;
-  padding: 0px 10%;
+  margin: auto;
+  max-width: 1200px;
 }
 .accountInformation {
   width: 70%;
@@ -36,11 +37,17 @@
 @media screen and (max-width: 768px) {
   .accountInformation {
     width: 100%;
+    position: absolute;
+    margin: auto;
   }
   .formLogin {
     width: 100%;
   }
   .accountInformation > div:first-child {
     padding: 0px;
+  }
+  .btnUpdate {
+    height: 50px !important;
+    width: 100%;
   }
 }

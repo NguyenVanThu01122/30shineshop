@@ -126,7 +126,6 @@
         .btnSubmit {
           background-color: #1677ff;
           color: white !important;
-          height: 40px;
           &:hover{
             filter:brightness(0.7)
           }
@@ -136,9 +135,6 @@
         margin: 10px 0px;
       }
     }
-    // .itemDetailFeedback{
-    //   height: 300px;
-    //   overflow-y: auto ;
     .detailFeedback {
       padding: 10px;
       margin: 20px;
@@ -160,6 +156,86 @@
         color: rgb(79, 79, 79);
       }
     }
-    // }
+  }
+  @media screen and (max-width: 768px){
+    & > div:first-child {
+      width: 100%;
+    }
+    .feedback {
+      .animationFeedback {
+        flex-direction: column;
+        padding: 20px 10px;
+      }
+      .noFeedback {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        border: 1px solid rgba(209, 209, 209);
+        & > div:first-child {
+          font-size: 2.5rem;
+        }
+        & > div:last-child {
+          font-size: 16px;
+        }
+      }
+      .starOder {
+        width: 100%;
+        margin-left: 0px;
+      }
+      .review {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .closeFeedback {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .reviewStar {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .itemFeedback {
+        .feedbackStar {
+          flex-direction: column;
+          margin-bottom: 20px;
+          & > div:first-child {
+            margin-right: 0px;
+          }
+          .selectStar {
+            font-size: 20px;
+          }
+          .errorStar {
+            font-size: 13px;
+          }
+        }
+        .formItemText {
+          .textArea {
+          }
+        }
+        .itemForm {
+          .btnSubmit {
+            width: 100%;
+            height: 45px ;
+          }
+        }
+      }
+      .detailFeedback {
+        padding: 5px;
+        margin: 10px;
+        & > div:first-child {
+          font-size: 16px;
+        }
+        .timeFeedback {
+          & > div:last-child {
+            font-size: 12px;
+          }
+        }
+        & > div:last-child {
+          font-size: 14px;
+        }
+      }
+    }
   }
 }

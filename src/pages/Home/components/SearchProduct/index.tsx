@@ -13,6 +13,17 @@ const SearchProducts = () => {
   const handleNextSearch = () => {
     ;(searchRef.current as any).next()
   }
+
+  const images = [
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_3.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_4.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_5.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_6.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_7.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_2.jpg&w=1920&q=75',
+    'https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_1.jpg&w=1920&q=75'
+  ]
+
   return (
     <Wrapper>
       <div>TOP TÌM KIẾM</div>
@@ -25,34 +36,9 @@ const SearchProducts = () => {
         infinite={false}
         dotPosition={dotPosition}
       >
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_3.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_4.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_5.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_6.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_7.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_2.jpg&w=1920&q=75'
-          alt=''
-        />
-        <img
-          src='https://shop.30shine.com/_next/image?url=https%3A%2F%2Fstatic.30shine.com%2Fshop-web%2Fbanners%2Ftopsearch_t33_1.jpg&w=1920&q=75'
-          alt=''
-        />
+        {images.map((image, index) => (
+          <img key={index} src={image} alt='' />
+        ))}
       </Carousel>
       <div className='prev' onClick={handlePrevSearch}>
         {'<'}

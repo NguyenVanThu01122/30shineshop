@@ -1,29 +1,31 @@
+import { useTranslation } from 'react-i18next'
 import { InputGeneral } from '../../../../components/Ui/input'
 import { WrapperDeliveryTime } from './styles'
 interface DeliveryTimeProps {
   setTimeDelivery: (time: number) => void
 }
 export const DeliveryTime = ({ setTimeDelivery }: DeliveryTimeProps) => {
+  const { t } = useTranslation()
   return (
     <WrapperDeliveryTime>
       <div className='time'>
-        <div>Thời Gian Nhận Hàng</div>
+        <div>{t('DELIVERY_TIME')}</div>
         <div className='inputDelivery'>
           <InputGeneral type='radio' name='address-delivery' defaultChecked={true} onClick={() => setTimeDelivery(1)} />
           <div>
-            Chỉ giao hàng giờ hành chính <span>(phù hợp với địa chỉ văn phòng/cơ quan)</span>
+            {t('DELIVERY_OFFICE_HOURS')} <span>{t('SUITABLE_OFFICE_ADDRESS')}</span>
           </div>
         </div>
         <div className='inputDelivery'>
           <InputGeneral type='radio' name='address-delivery' onClick={() => setTimeDelivery(2)} />
           <div>
-            Tất cả các ngày trong tuần <span>(phù hợp với địa chỉ nhà riêng, luôn có người nhận hàng)</span>
+            {t('ALL_DAYS_OF_WEEK')} <span>{t('SUITABLE_HOME_ADDRESS')}</span>
           </div>
         </div>
         <div className='inputDelivery'>
           <InputGeneral type='radio' name='address-delivery' onClick={() => setTimeDelivery(3)} />
           <div>
-            Giao nhanh trong 2h <span>(áp dụng với địa chỉ giao hàng tại Hà Nội và Hồ Chí Minh)</span>
+            {t('FAST_DELIVERY_2H')} <span>{t('APPLY_HANOI_HCM')}</span>
           </div>
         </div>
       </div>

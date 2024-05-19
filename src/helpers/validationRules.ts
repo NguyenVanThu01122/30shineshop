@@ -1,112 +1,138 @@
-export const validatePhone = [
-  {
-    required: true,
-    message: 'Vui lòng nhập số điện thoại !'
-  },
-  () => ({
-    validator(_: any, value: string) {
-      if (!value || value.trim() === '') {
-        // Kiểm tra nếu giá trị là rỗng hoặc chỉ chứa khoảng trắng
-        return Promise.resolve() // Trả về Promise giải quyết nếu không có lỗi
-      } else {
-        const phoneRegex = /^(03[2-9]|05[6-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/ // // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại
-        if (phoneRegex.test(value)) {
+import { t } from 'i18next'
+
+export const validatePhone = () => {
+  return [
+    {
+      required: true,
+      message: t('enterPhone')
+    },
+    () => ({
+      validator(_: any, value: string) {
+        if (!value || value.trim() === '') {
           return Promise.resolve()
         } else {
-          return Promise.reject(new Error('Vui lòng nhập đúng định dạng số điện thoại!'))
+          const phoneRegex = /^(03[2-9]|05[6-9]|07[0-9]|08[1-9]|09[0-9])[0-9]{7}$/
+          if (phoneRegex.test(value)) {
+            return Promise.resolve()
+          } else {
+            return Promise.reject(new Error(t('correctPhoneFormat')))
+          }
         }
       }
-    }
-  })
-]
+    })
+  ]
+}
 
-export const validateEmail = [
-  {
-    required: true,
-    message: 'Vui lòng nhập Email !'
-  },
-  () => ({
-    validator(_: any, value: string) {
-      if (!value || value.trim() === '') {
-        return Promise.resolve()
-      } else {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/ // regex kiểm tra định dạng email
-        if (emailRegex.test(value) || value === '') {
+export const validateEmail = () => {
+  return [
+    {
+      required: true,
+      message: t('enterEmail')
+    },
+    () => ({
+      validator(_: any, value: string) {
+        if (!value || value.trim() === '') {
           return Promise.resolve()
         } else {
-          return Promise.reject(new Error('Vui lòng nhập đúng định dạng !'))
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          if (emailRegex.test(value) || value === '') {
+            return Promise.resolve()
+          } else {
+            return Promise.reject(new Error(t('correctFormat')))
+          }
         }
       }
+    })
+  ]
+}
+
+export const validateName = () => {
+  return [
+    {
+      required: true,
+      message: t('enterName')
+    },
+    {
+      min: 3,
+      message: t('nameLength')
+    },
+    {
+      max: 30,
+      message: t('nameLength')
     }
-  })
-]
+  ]
+}
 
-export const validateName = [
-  {
-    required: true,
-    message: 'Vui lòng nhập tên !'
-  },
-  {
-    min: 3,
-    message: 'Vui lòng nhập từ 3 đến 16 ký tự'
-  },
-  {
-    max: 30,
-    message: 'Vui lòng nhập từ 3 đến 16 ký tự'
-  }
-]
+export const validateBirthday = () => {
+  return [{ required: true, message: t('enterBirthday') }]
+}
 
-// export const validatePassword = [{ required: true, message: 'Vui lòng nhập mật khẩu !' }]
-export const validateBirthday = [{ required: true, message: 'Vui lòng nhập ngày sinh !' }]
+export const validateAddress = () => {
+  return [{ required: true, message: t('enterAddress') }]
+}
 
-export const validateAddress = [
-  {
-    required: true,
-    message: 'Vui lòng nhập địa chỉ !'
-  }
-]
+export const validateComment = () => {
+  return [
+    {
+      required: true,
+      message: t('enterComment')
+    },
+    {
+      min: 3,
+      message: t('commentLength')
+    }
+  ]
+}
 
-export const validateComment = [
-  {
-    required: true,
-    message: 'Vui lòng nhập đánh giá !'
-  },
-  {
-    min: 3,
-    message: 'Vui lòng nhập từ 3 kí tự trở lên !'
-  }
-]
-
-export const validatePassword = [
-  {
-    required: true,
-    min: 6,
-    message: 'Vui lòng nhập mật khẩu !'
-  }
-]
-
-export const validateConfirmPassword = [
-  {
-    required: true,
-    message: 'Vui lòng xác nhận mật khẩu của bạn !'
-  },
-  (obj: any) => ({
-    validator(_: any, value: string) {
-      if (!value || obj.getFieldValue('password') === value) {
-        return Promise.resolve()
-      } else {
-        return Promise.reject(new Error('Mật khẩu của bạn không khớp !'))
+export const validatePassword = () => {
+  return [
+    {
+      required: true,
+      message: t('enterPassword')
+    },
+    () => ({
+      validator(_: any, value: string) {
+        if (!value) {
+          return Promise.resolve()
+        } else if (value.length < 6) {
+          return Promise.reject(new Error(t('Please enter at least 6 characters')))
+        } else {
+          return Promise.resolve()
+        }
       }
+    })
+  ]
+}
+
+export const validateConfirmPassword = () => {
+  return [
+    {
+      required: true,
+      message: t('PLEASE_CONFIRM_PASSWORD')
+    },
+    ({ getFieldValue }: { getFieldValue: any }) => ({
+      validator(_: any, value: string) {
+        if (!value || getFieldValue('password') === value) {
+          return Promise.resolve()
+        }
+        return Promise.reject(new Error(t('The two passwords that you entered do not match')))
+      }
+    })
+  ]
+}
+
+export const validateGender = () => {
+  return [{ required: true, message: t('selectGender') }]
+}
+
+export const validateCheckBox = () => {
+  return [
+    {
+      validator: (_: any, value: any) => (value ? Promise.resolve() : Promise.reject(new Error(t('confirm'))))
     }
-  })
-]
+  ]
+}
 
-export const validateGender = [{ required: true, message: 'Vui lòng chọn giới tính !' }]
-
-export const validateCheckBox = [
-  {
-    validator: (_: any, value: any) => (value ? Promise.resolve() : Promise.reject(new Error('Vui lòng xác nhận !')))
-  }
-]
-
-export const validateContent = [{ required: true, message: 'Nội dung liên hệ không được để trống!' }]
+export const validateContent = () => {
+  return [{ required: true, message: t('enterContent') }]
+}

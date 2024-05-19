@@ -41,4 +41,15 @@ export const Wrapper = styled.div`
     font-size: 20px;
     padding: 10px;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    .product-recommendations {
+      & > div:first-child {
+        font-size: 25px;
+      }
+    }
+    .custom-tabs {
+      width: 100%;
+    }
+  }
 `

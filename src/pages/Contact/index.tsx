@@ -74,18 +74,18 @@ export default function Contact() {
               thể
             </div>
             <FormGeneral form={form} onFinish={onFinish}>
-              <Form.Item name='name' rules={validateName}>
+              <Form.Item name='name' rules={validateName()}>
                 <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_NAME} />
               </Form.Item>
               <div className={styles.groupInput}>
-                <Form.Item style={{ width: '100%' }} name='phone' rules={validatePhone}>
+                <Form.Item style={{ width: '100%' }} name='phone' rules={validatePhone()}>
                   <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_PHONE} />
                 </Form.Item>
-                <Form.Item name='email' style={{ width: '100%' }} rules={validateEmail}>
+                <Form.Item name='email' style={{ width: '100%' }} rules={validateEmail()}>
                   <InputGeneral className={styles.input} placeholder={PLACEHOLDER.PLEASE_ENTER_EMAIL} />
                 </Form.Item>
               </div>
-              <Form.Item name='content' rules={validateContent}>
+              <Form.Item name='content' rules={validateContent()}>
                 <TextArealInput className={styles.inputTextAreal} placeholder={PLACEHOLDER.PLEASE_ENTER_CONTENT} />
               </Form.Item>
               <Form.Item>

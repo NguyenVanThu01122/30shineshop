@@ -7,10 +7,23 @@ export const WrapperTitle = styled.div`
   z-index: 1;
   .detailTitle {
     display: flex;
-    & > input {
-      margin-left: 10px;
-      width: 20px;
+    height: 55px;
+    .selectAll {
+      display: flex;
+      align-items: center;
+      #checkbox1 {
+        width: 25px;
+        height: 25px;
+      }
+      & > span {
+        display: none;
+      }
+      & > input {
+        margin-left: 10px;
+        width: 50px;
+      }
     }
+
     .checkboxProduct {
       width: 100%;
       .titleProduct {
@@ -63,20 +76,39 @@ export const WrapperTitle = styled.div`
     }
   }
   @media screen and (max-width: 768px) {
-    margin-bottom: 10px;
-    padding: 0px 10px;
-    .checkboxProduct {
-      width: 20%;
-      & span {
-        margin: 0px;
-        font-size: 12px;
+    .detailTitle {
+      .selectAll {
+        gap: 20px;
+        padding: 8px 0px;
+        width: 100%;
+        & > span {
+          display: inline-block;
+        }
+        & > input {
+          margin-left: 10px;
+          width: 50px;
+        }
       }
     }
-    .titleProduct {
-      width: 80%;
-      & div {
-        font-size: 12px;
-        margin-left: 35px;
+    .checkboxProduct {
+      .titleProduct {
+        display: none !important;
+      }
+      .cartProduct {
+        padding: 10px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        & > div:first-child {
+          display: none;
+          & span {
+            margin-left: 0px;
+            color: gray;
+            font-size: 15px;
+          }
+        }
+        .deleteProduct {
+        }
       }
     }
   }

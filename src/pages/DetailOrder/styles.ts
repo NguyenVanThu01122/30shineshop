@@ -5,6 +5,10 @@ export const WrapperDetailOrder = styled.div`
   display: flex;
   justify-content: center;
   margin: 35px 0px;
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    margin: 0px;
+  }
 `
 export const ItemDetailOrder = styled.div`
   background-color: rgb(238, 238, 238);
@@ -169,6 +173,7 @@ export const ItemDetailOrder = styled.div`
         color: orange;
       }
       .btnHome {
+        width: 20%;
         height: 40px;
         background-color: orange;
         font-weight: 600;
@@ -181,6 +186,7 @@ export const ItemDetailOrder = styled.div`
         }
       }
       .btnListOrder {
+        width: 20%;
         height: 40px;
         background-color: #1677ff;
         font-weight: 600;
@@ -190,6 +196,95 @@ export const ItemDetailOrder = styled.div`
         &:hover {
           color: red;
           filter: brightness(0.8);
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    .ant-timeline-item {
+      padding-bottom: 0px;
+    }
+    .order {
+      font-size: 20px;
+      position: fixed;
+      top: 60px;
+      width: 100%;
+      padding-left: 20px;
+    }
+    .order-detail {
+      .delivery-address {
+        flex-direction: column;
+        & > div:first-child {
+          font-size: 15px;
+        }
+        & > div:last-child {
+          font-size: 15px;
+        }
+      }
+      .item-information {
+        flex-direction: column;
+        .order-information {
+          border-right: none;
+        }
+        .custom-timeLine {
+          margin-top: 20px;
+        }
+      }
+      .product-information {
+        flex-direction: column;
+        .product {
+          .img-product {
+            width: 20%;
+          }
+          .name-product {
+            width: 80%;
+          }
+        }
+        .price {
+          margin-top: 10px;
+        }
+      }
+      .total-price {
+        justify-content: center;
+        gap: 20px;
+        .title-price {
+          align-items: start;
+          gap: 10px;
+          & > div:last-child {
+            font-size: 15px;
+          }
+        }
+        .money-price {
+          align-items: start;
+          gap: 10px;
+          & div {
+            font-size: 15px;
+          }
+          & > div:last-child {
+            font-size: 15px;
+          }
+        }
+      }
+      .itemInfo-order {
+        flex-direction: column;
+        .payment-method {
+          gap: 10px;
+        }
+      }
+      .item-buy {
+        gap: 10px;
+        .btnHome {
+          width: 50%;
+          height: 50px;
+          font-size: 13px;
+        }
+        .btnListOrder {
+          width: 50%;
+          height: 50px;
+          font-size: 13px;
         }
       }
     }

@@ -1,147 +1,179 @@
 .itemHeader {
-    display: flex;
-    justify-content: space-around;
-    position: relative;
-    & > div:last-child {
-      width: 60%;
-    }
-    .iconHome {
-      position: absolute;
-      left: 0px;
-      font-size: 30px;
-      display: none;
-    }
-    .img img {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  .iconHome {
+    font-size: 30px;
+    display: none;
+  }
+  .img {
+    img {
       width: 30%;
       padding-left: 15px;
       margin-left: 130px;
       cursor: pointer;
     }
-    .selectItem {
-      display: flex;
+  }
+  .selectItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .searchBar {
+      height: 45px;
+      padding: 10px 15px;
+      text-align: center !important;
+      border: 1px solid rgba(0, 0, 0, 0.196);
+      font-weight: bold;
+      font-size: 18px;
+      border-top-left-radius: 0.375rem;
+      border-bottom-left-radius: 0.375rem;
+      background-color: rgba(0, 0, 0, 0.128);
+      cursor: pointer;
+    }
+    .active {
+      &:hover {
+        color: red;
+      }
+    }
+    .iconSearch {
+      color: rgba(163, 163, 163);
+      font-size: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .inputSearch {
+      height: 45px;
+      border: 1px solid rgba(0, 0, 0, 0.196);
+      border-top-right-radius: 0.4rem;
+      border-bottom-right-radius: 0.4rem;
+      margin-right: 15px;
+      .input {
+        height: 100%;
+        outline: none !important;
+        border: none !important;
+        padding: 18px 10px;
+        background-color: rgba(68, 68, 68, 0.03);
+        text-decoration: none;
+        width: 300px;
+      }
+      &::placeholder {
+        color: red !important;
+      }
+    }
+    .itemAccount {
+      height: 45px;
+      max-width: 25%;
+      position: relative;
       align-items: center;
-      justify-content: center;
-      .searchBar {
-        height: 45px;
-        padding: 10px 15px;
-        text-align: center !important;
-        border: 1px solid rgba(0, 0, 0, 0.196);
-        font-weight: bold;
+      display: flex;
+      padding: 15px 10px;
+      border-radius: 0.3rem;
+      border: 1px solid white;
+      font-weight: bold;
+      background-color: rgba(255, 204, 51, 0.913);
+      & > div {
+        margin-left: 10px;
+        cursor: pointer;
         font-size: 18px;
-        border-top-left-radius: 0.375rem;
-        border-bottom-left-radius: 0.375rem;
-        background-color: rgba(0, 0, 0, 0.128);
-        cursor: pointer;
-       
       }
-      .active {
-        &:hover{
-          color: red;
-        }
-      } 
-      .iconSearch {
-        color: rgba(163, 163, 163);
-        font-size: 20px;
-        margin-right: 10px;
-        cursor: pointer;
-
+      .nameAccount {
+        font-size: 18px;
       }
-      .inputSearch {
-        height: 45px;
-        border: 1px solid rgba(0, 0, 0, 0.196);
-        border-top-right-radius: 0.4rem;
-        border-bottom-right-radius: 0.4rem;
-        margin-right: 15px;
-        .input {
-          height: 100%;
-          outline: none !important;
-          border: none !important;
-          padding: 18px 10px;
-          background-color: rgba(68, 68, 68, 0.03);
-          text-decoration: none;
-          width: 300px;
-        }
-        &::placeholder {
-          color: red !important;
-        }
-      }
-      .itemAccount {
-        height: 45px;
-        max-width: 25%;
-        position: relative;
-        align-items: center;
+      .boxMenu {
+        width: 220px;
+        position: absolute;
+        bottom: 0px;
+        transform: translateY(100%);
+        z-index: 100;
         display: flex;
-        padding: 15px 10px;
-        border-radius: 0.3rem;
-        border: 1px solid white;
-        font-weight: bold;
-        background-color: rgba(255, 204, 51, 0.913);
-        & > div {
-          margin-left: 10px;
-          cursor: pointer;
-          font-size: 18px;
-        }
-        .nameAccount {
-          font-size: 18px;
-        }
-        .boxMenu {
-          width: 220px;
-          position: absolute;
-          bottom: 0px;
-          transform: translateY(100%);
-          z-index: 100;
+        flex-direction: column;
+        align-items: flex-start;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 10px;
+        z-index: 1000;
+        border: 1px solid rgb(224, 220, 220);
+        .detailItem {
+          width: max-content;
           display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          background-color: #fff;
-          border-radius: 5px;
-          padding: 10px;
-          z-index: 1000;
-          border: 1px solid rgb(224, 220, 220);
-          .detailItem {
-            width: max-content;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-            cursor: pointer;
-            & div {
-              margin-left: 8px;
-              &:hover {
-                color: rgba(255, 204, 51, 0.913);
-              }
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 15px;
+          cursor: pointer;
+          & div {
+            margin-left: 8px;
+            &:hover {
+              color: rgba(255, 204, 51, 0.913);
             }
           }
         }
       }
+    }
 
-      .iconCart {
-        position: relative;
-        .totalCart {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: 13px;
-          font-weight: 600;
-          width: 25px;
-          height: 25px;
-          border-radius: 50%;
-          background-color: rgba(255, 204, 51, 0.913);
-          position: absolute;
-          top: -5px;
-          right: -10px;
-        }
-        .icon {
-          color: rgba(0, 0, 0, 0.507);
-          width: 45px;
-          height: 45px;
-          border: 1px solid rgba(0, 0, 0, 0.148);
-          border-radius: 50%;
-          padding: 10px;
-          margin-left: 12px;
-          background-color: rgba(50, 50, 50, 0.03);
-          cursor: pointer;
-        }
+    .iconCart {
+      position: relative;
+      .totalCart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+        font-weight: 600;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background-color: rgba(255, 204, 51, 0.913);
+        position: absolute;
+        top: -5px;
+        right: -10px;
+      }
+      .icon {
+        color: rgba(0, 0, 0, 0.507);
+        width: 45px;
+        height: 45px;
+        border: 1px solid rgba(0, 0, 0, 0.148);
+        border-radius: 50%;
+        padding: 10px;
+        margin-left: 12px;
+        background-color: rgba(50, 50, 50, 0.03);
+        cursor: pointer;
       }
     }
   }
+  @media screen and (max-width: 768px) {
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    background-color: #fff;
+    z-index: 100;
+    .img {
+      width: 32%;
+      img {
+        width: 100%;
+        padding-left: 15px;
+        margin-left: 0px;
+        cursor: pointer;
+      }
+    }
+
+    .iconHome  {
+      display: block;
+    }
+    .searchBar {
+      display: none;
+    }
+    .inputSearch {
+      display: none;
+    }
+    .itemAccount {
+      display: none !important;
+    }
+    .selectLanguage {
+      display: none;
+    }
+  }
+}

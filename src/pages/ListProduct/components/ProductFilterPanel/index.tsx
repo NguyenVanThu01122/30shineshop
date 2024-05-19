@@ -1,9 +1,11 @@
 import { debounce } from 'lodash'
 import { Dispatch, SetStateAction, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ButtonGeneral } from '../../../../components/Ui/button'
 import { InputGeneral } from '../../../../components/Ui/input'
 import { SelectGeneral } from '../../../../components/Ui/select'
-import { LIST_CATEGORY, PLACEHOLDER, optionSelect } from '../../../../helpers/contanst'
+import Translations from '../../../../components/translations'
+import { LIST_CATEGORY } from '../../../../helpers/contanst'
 import Category from '../Category'
 import styles from './styles.module.scss'
 
@@ -12,24 +14,29 @@ interface ProductFilterPanelProps {
   setIsCategory: Dispatch<SetStateAction<boolean>>
   category: string
   setCategory: Dispatch<SetStateAction<string>>
-  setMinPrice: any
-  setMaxPrice: any
+  setMinPrice: (value: number) => void
+  setMaxPrice: (value: number) => void
+  sort: string
   setSort: Dispatch<SetStateAction<string>>
   setPage: Dispatch<SetStateAction<number>>
   setKeyword: Dispatch<SetStateAction<string>>
 }
-export default function ProductFilterPanel({
-  isCategory,
-  setIsCategory,
-  category,
-  setCategory,
-  setMinPrice,
-  setMaxPrice,
-  setSort,
-  setPage,
-  setKeyword
-}: ProductFilterPanelProps) {
+export default function ProductFilterPanel(props: ProductFilterPanelProps) {
+  const {
+    isCategory,
+    setIsCategory,
+    category,
+    setCategory,
+    setMinPrice,
+    setMaxPrice,
+    setSort,
+    sort,
+    setPage,
+    setKeyword
+  } = props
+
   const [fnTimeout, setFnTimeout] = useState<any>()
+  const { t } = useTranslation()
 
   // hàm xử lý changeKeyword kết hợp kĩ thuật debounce (cách 1: logic tự nhiên)
   const handleChangeKeyword = (value: string) => {
@@ -56,34 +63,38 @@ export default function ProductFilterPanel({
     <div className={styles.optionItem}>
       <div className={styles.itemCategory}>
         <ButtonGeneral onClick={() => setIsCategory(!isCategory)} className={styles.btnCategory}>
-          Danh Mục
+          <Translations text='CATEGORY' />
         </ButtonGeneral>
         {isCategory && <Category category={category} setCategory={setCategory} listCategory={LIST_CATEGORY} />}
       </div>
       <InputGeneral
         className={styles.customInput}
-        placeholder={PLACEHOLDER.ENTER_PRODUCT_NAME}
+        placeholder={t('ENTER_PRODUCT_NAME')}
         type='text'
         onChange={handleChangeKeyword}
       />
       <InputGeneral
         className={styles.customInput}
-        placeholder={PLACEHOLDER.LOWEST_PRICE}
+        placeholder={t('LOWEST_PRICE')}
         type='number'
         onChange={handleChangeMinPrice}
       />
       <InputGeneral
         className={styles.customInput}
-        placeholder={PLACEHOLDER.HIGHEST_PRICE}
+        placeholder={t('HIGHEST_PRICE')}
         type='number'
         onChange={handleChangeMaxPrice}
       />
       <SelectGeneral
         className={styles.customSelect}
-        defaultValue='Mặc định'
+        value={sort}
         size='large'
         onChange={(value: any) => setSort(value)}
-        options={optionSelect}
+        options={[
+          { value: '-1', label: t('DEFAULT') },
+          { value: '0', label: t('FROM_LOW_TO_HIGH') },
+          { value: '1', label: t('FROM_HIGH_TO_LOW') }
+        ]}
       />
     </div>
   )

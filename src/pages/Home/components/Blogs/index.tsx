@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Carousel } from 'antd'
 import { DotPosition } from 'antd/es/carousel'
 import { useRef, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 import { imagesBlog } from '../../data'
 import { WrapperBlogs } from './styles'
@@ -11,6 +12,7 @@ export const Blogs = () => {
   const [dotPosition, setDotPosition] = useState<DotPosition>('top')
   const navigate = useNavigate()
   const blogsRef = useRef(null)
+  const { t } = useTranslation()
 
   const handlePrevBlogs = () => {
     ;(blogsRef.current as any).prev()
@@ -22,7 +24,7 @@ export const Blogs = () => {
     <WrapperBlogs>
       <div className='blogs'>
         <div className='title_Blogs'>
-          <div>BLOGS</div>
+          <div>{t('BLOGS')}</div>
           <div className='icon_blogs'>
             <div className='blogs_Prev' onClick={handlePrevBlogs}>
               {'<'}
@@ -44,7 +46,7 @@ export const Blogs = () => {
           })}
           <div className='see_all' onClick={() => navigate('/blog')}>
             <FontAwesomeIcon icon={faArrowRight} className='icon_arrow' />
-            <div>Xem tất cả</div>
+            <div>{t('SEE_ALL')}</div>
           </div>
         </Carousel>
       </div>

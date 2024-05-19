@@ -91,34 +91,29 @@ export const WrapperInformation = styled.div`
       font-size: 12px;
     }
   }
-  /* .border {
-      background-color: yellow;
-    } */
-  .colorYelow {
+
+  .colorYellow {
     background-color: rgba(255, 204, 51, 0.913);
   }
 
   @media screen and (max-width: 768px) {
-    .informationLine {
-      width: 100%;
-      .itemPay {
-        & > div:first-child {
-          font-size: large;
-        }
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    .itemPay {
+      margin: 0px;
+      & > div:first-child {
+        font-size: large;
+        display: none;
       }
-      .order {
-        width: 50%;
-        margin: auto;
-        padding: 5px;
-        border-radius: 6px;
-        & > div:first-child {
-          margin-bottom: 5px;
-          font-size: 16px;
-        }
-        & > div:last-child {
-          font-size: 10px;
-        }
+      .itemProvisional {
       }
+      .totalMoney {
+        display: none;
+      }
+    }
+    .order {
     }
   }
 `
