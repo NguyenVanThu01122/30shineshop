@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { Outlet } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,13 +18,16 @@ function Layout() {
   const [getUserInfo] = useGetUserInfo()
   const login = checkLogin()
   const dialogLogin = useSelector((state: RootState) => state.app.isDialogLogin)
-
+  const { i18n } = useTranslation()
   useEffect(() => {
     if (login) {
       getUserInfo() // lấy thông tin user
       getLengthOfCart() // lấy số lượng sản phẩm trong giỏ hàng
     }
   }, [])
+  useEffect(() => {
+    i18n.changeLanguage(localStorage.getItem('LANG_STORAGE_KEY') || 'en')
+  }, [i18n])
 
   return (
     <Wrapper>

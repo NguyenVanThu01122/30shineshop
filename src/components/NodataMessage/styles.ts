@@ -22,12 +22,8 @@ export const WrapperMessage = styled.div`
   }
   @media screen and (max-width: 768px) {
     width: 100%;
-    height: 100vh;
-    position: absolute;
-    left: 50%;
-    top: 50%;
     & > div {
-      font-size: 16px;
+      font-size: 25px;
     }
     .iconGifDuck {
       width: 120px;

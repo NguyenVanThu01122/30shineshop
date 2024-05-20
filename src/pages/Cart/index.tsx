@@ -11,7 +11,7 @@ import { useIsLoading } from '../../helpers/useIsLoading'
 import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import image from '../../images/empty cart.svg'
 import { getListCartProduct } from '../../services/cart'
-import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart } from './style'
+import { ContainerCart, ContentCart, ItemProduct, TitlePage, WrapperCart, WrapperLoading } from './style'
 export interface ProductType {
   id: string
   image: string
@@ -84,7 +84,9 @@ export default function Cart() {
       <PageNavbar page={t('CART')} />
       <ContainerCart>
         {isLoading && !isCartNotEmpty ? (
-          <Loading />
+          <WrapperLoading>
+            <Loading />
+          </WrapperLoading>
         ) : !isLoading && !isCartNotEmpty && isShowNoDataMessage ? (
           <NoDataMessage image={image} message={t('NO_PRODUCT_CART')} />
         ) : (

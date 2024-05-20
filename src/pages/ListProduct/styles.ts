@@ -14,6 +14,7 @@ export const ListProducts = styled.div`
   margin: auto;
   padding: 0px 20px;
   @media screen and (max-width: 768px) {
+    padding: 0px 0px;
   }
 `
 

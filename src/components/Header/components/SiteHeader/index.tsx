@@ -1,7 +1,6 @@
 import { faBars, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Select } from 'antd'
-import select from 'antd/es/select'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
@@ -38,10 +37,10 @@ const SiteHeader = (props: SiteHeaderProps) => {
   const keywordSearch = useSelector((state: RootState) => state.app.keywordSearch)
   const savedSearchKeyword = getLocalStorageValue('searchKeyword')
   const savedSearchResults = getLocalStorageValue('searchResults')
-
   const { i18n, t } = useTranslation()
-  const [selectedLanguage, setSelectedLanguage] = useState(() => getLocalStorageValue('LANG_STORAGE_KEY') || 'vie')
+  const [selectedLanguage, setSelectedLanguage] = useState(() => localStorage.getItem('LANG_STORAGE_KEY') || 'vi')
   const handleChangeLanguage = (value: string) => {
+    console.log(value)
     setSelectedLanguage(value)
     i18n.changeLanguage(value) // Thay đổi ngôn ngữ
     setLocalStorageValue('LANG_STORAGE_KEY', value) // Lưu ngôn ngữ vào localStorage
@@ -151,15 +150,15 @@ const SiteHeader = (props: SiteHeaderProps) => {
           {login ? (
             <div className={styles.nameAccount}>{user?.name}</div>
           ) : (
-            <div onClick={() => navigate('/main-login')}>{t('LOGIN')}</div>
+            <div onClick={() => navigate(ROUTES.MAIN_LOGIN)}>{t('LOGIN')}</div>
           )}
           {isAccount && (
             <div className={styles.boxMenu}>
-              <div onClick={() => handleRedirect('/account')} className={styles.detailItem}>
+              <div onClick={() => handleRedirect(ROUTES.ACCOUNT)} className={styles.detailItem}>
                 <BsPerson className={styles.iconMenu} />
                 <div>{t('MY_ACCOUNT')}</div>
               </div>
-              <div onClick={() => handleRedirect('/list-order')} className={styles.detailItem}>
+              <div onClick={() => handleRedirect(ROUTES.LIST_ORDER)} className={styles.detailItem}>
                 <BsLayoutTextSidebarReverse className={styles.iconMenu} />
                 <div>{t('ORDERS')}</div>
               </div>
@@ -177,8 +176,8 @@ const SiteHeader = (props: SiteHeaderProps) => {
           style={{ width: 140, marginLeft: 10 }}
           onChange={handleChangeLanguage}
         >
-          <select.Option value='vie'>Vietnamese</select.Option>
-          <select.Option value='eng'>English</select.Option>
+          <Select.Option value='vi'>Vietnamese</Select.Option>
+          <Select.Option value='en'>English</Select.Option>
         </Select>
 
         <div className={styles.iconCart}>

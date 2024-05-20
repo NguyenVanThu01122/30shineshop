@@ -6,23 +6,14 @@ import PageNavbar from '../../components/PageNavbar'
 import Products from '../../components/Products'
 import { Loading } from '../../components/Ui/loading'
 import Translations from '../../components/translations'
-import {
-  ERROR_MESSAGES,
-  LIMIT,
-  MAXPRICE,
-  MINPRICE,
-  NO_DATA_MESSAGE,
-  PAGE,
-  PAGE_NAMES,
-  SORT,
-  TOTAL
-} from '../../helpers/contanst'
+import { ERROR_MESSAGES, LIMIT, MAXPRICE, MINPRICE, NO_DATA_MESSAGE, PAGE, SORT, TOTAL } from '../../helpers/contanst'
 import { scrollToTop } from '../../helpers/scrollToTop'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { addListProduct } from '../../redux/Slices/appSlices'
 import { RootState } from '../../redux/Slices/rootReducer'
 import { TypeListProduct, listProduct } from '../../services/listProduct'
 import { FindProduct, ListProducts, WrapperListProducts, WrapperPagination } from './styles'
+import { t } from 'i18next'
 
 const ProductFilterPanelLazy = lazy(() => import('./components/ProductFilterPanel'))
 const PaginationLazy = lazy(() => import('../../components/Ui/pagination'))
@@ -83,7 +74,7 @@ export default function ListProduct() {
 
   return (
     <WrapperListProducts>
-      <PageNavbar page={PAGE_NAMES.LIST_PRODUCTS} />
+      <PageNavbar page={t('PRODUCT_LIST')} />
       {isLoading ? (
         <Loading />
       ) : (

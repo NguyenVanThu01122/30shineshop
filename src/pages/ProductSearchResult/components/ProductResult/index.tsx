@@ -1,4 +1,5 @@
 import Products from '../../../../components/Products'
+import Translations from '../../../../components/translations'
 import { ProductResultType } from '../../../../redux/Slices/appSlices'
 import { Title, WrapperResult } from './styles'
 
@@ -23,10 +24,11 @@ export const ProductResult = ({
   return (
     <WrapperResult>
       <Title>
-        Kết quả tìm kiếm cho:{' '}
+        <Translations text='SEARCH_RESULTS_FOR' />
         <span>
           {keyword} ({displayedProducts.length}
-          sản phẩm)
+          {''}
+          <Translations text='PRODUCT' />)
         </span>
       </Title>
       <Products products={displayedProducts} />

@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
 export const WrapperPagination = styled.div`
+  /* position: relative; */
+`
+
+export const ContentPagination = styled.div`
   display: flex;
   gap: 6px;
   display: flex;

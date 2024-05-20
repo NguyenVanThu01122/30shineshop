@@ -13,6 +13,6 @@ export const WrapperNavbar = styled.div`
     margin-left: 10px;
   }
   @media screen and (max-width: 768px) {
-    padding: 10px 20px;
+    padding: 20px;
   }
 `

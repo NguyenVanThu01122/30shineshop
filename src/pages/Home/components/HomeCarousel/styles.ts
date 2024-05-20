@@ -55,5 +55,10 @@ export const WrapperCarousel = styled.div`
     .next {
       right: 10px;
     }
+    img {
+      height: 160px;
+      width: 100%;
+      /* object-fit: contain; */
+    }
   }
 `

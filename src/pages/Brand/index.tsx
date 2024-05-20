@@ -1,5 +1,5 @@
 import { faLeftLong } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { t } from 'i18next'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -7,14 +7,16 @@ import { toast } from 'react-toastify'
 import NoDataMessage from '../../components/NodataMessage'
 import PageNavbar from '../../components/PageNavbar'
 import { Loading } from '../../components/Ui/loading'
+import Translations from '../../components/translations'
 import checkLogin from '../../helpers/checkLogin'
-import { ERROR_MESSAGES, NO_DATA_MESSAGE, PAGE_NAMES } from '../../helpers/contanst'
+import { ERROR_MESSAGES, NO_DATA_MESSAGE } from '../../helpers/contanst'
 import { useIsLoading } from '../../helpers/useIsLoading'
 import { useShowDataMessage } from '../../helpers/useIsShowDataMessage'
 import { isDialogLogin } from '../../redux/Slices/appSlices'
+import { ROUTES } from '../../routes/routes'
 import { getListBrand } from '../../services/brand'
 import ContainerBrands from './ContainerBrands'
-import styles from './styles.module.css'
+import { IconBack, Title, WrapperBrand } from './styles'
 
 export interface ListBrandType {
   id: number
@@ -49,19 +51,17 @@ export default function Brand() {
   }, [])
 
   return (
-    <div className={styles.pageBrand}>
-      <PageNavbar page={PAGE_NAMES.BRAND} />
-      <div className={styles.title}>
-        <div className={styles.brand}>
-          <FontAwesomeIcon onClick={() => navigate('/list-product')} className={styles.iconBack} icon={faLeftLong} />
-          THƯƠNG HIỆU
-        </div>
-      </div>
+    <WrapperBrand>
+      <PageNavbar page={t('BRAND')} />
+      <Title>
+        <IconBack onClick={() => navigate(ROUTES.LIST_PRODUCT)} icon={faLeftLong} />
+        <Translations text='BRAND' />
+      </Title>
       <ContainerBrands listBrand={listBrand} />
       {isLoading && <Loading />}
       {!isLogin && !isLoading && !listBrand.length && isShowNoDataMessage && (
         <NoDataMessage message={NO_DATA_MESSAGE.NO_BRAND} />
       )}
-    </div>
+    </WrapperBrand>
   )
 }

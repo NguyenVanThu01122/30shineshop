@@ -9,7 +9,7 @@ export default function ContainerBrands({ listBrand }: { listBrand: ListBrandTyp
           {listBrand.map((item: ListBrandType) => {
             return (
               <div className='brandItem' key={item.id}>
-                <img src={item.image} />
+                <img src={item.image} alt='' />
                 <div>{item.name}</div>
               </div>
             )

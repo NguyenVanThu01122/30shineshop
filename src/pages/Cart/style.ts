@@ -18,6 +18,10 @@ export const ContainerCart = styled.div`
     display: block;
   }
 `
+export const WrapperLoading = styled.div`
+  margin: auto;
+  width: 100%;
+`
 export const ContentCart = styled.div`
   width: 75%;
   @media screen and (max-width: 768px) {

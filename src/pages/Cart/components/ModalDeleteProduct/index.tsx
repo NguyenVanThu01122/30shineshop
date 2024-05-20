@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import { CommonModal } from '../../../../components/Ui/modal'
-import { STRING } from '../../../../helpers/contanst'
 import { deleteCartAll, deleteCartOne } from '../../../../services/cart'
 interface ModalDeleteProps {
   getListCart: () => void
@@ -34,9 +34,10 @@ export default function ModalDeleteProduct(props: ModalDeleteProps) {
     setModalTitle,
     setIsShowTitleProduct
   } = props
+  const { t } = useTranslation()
   // hàm xử lý xóa sản phẩm khỏi giỏ hàng
   const handleDeleteProduct = () => {
-    if (modalTitle === STRING.DELETE_PRODUCT) {
+    if (modalTitle === t('DELETE_PRODUCT')) {
       deleteCartOne(idDeleteOne)
         .then((res) => {
           toast.success(res.data?.message)
@@ -50,7 +51,7 @@ export default function ModalDeleteProduct(props: ModalDeleteProps) {
         .catch((error) => {
           toast.error(error.response?.data?.message)
         })
-    } else if (modalTitle === STRING.DELETE_PRODUCT_ALL) {
+    } else if (modalTitle === t('DELETE_PRODUCT_ALL')) {
       deleteCartAll(listCartId)
         .then((res) => {
           toast.success(res.data?.message)
@@ -64,6 +65,8 @@ export default function ModalDeleteProduct(props: ModalDeleteProps) {
         .catch((error) => {
           toast.error(error.response?.message)
         })
+    } else {
+      console.log('error')
     }
   }
 
